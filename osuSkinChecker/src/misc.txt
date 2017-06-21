@@ -1,0 +1,39 @@
+===> Cursor
+- png cursor
+- png cursortrail
+- png cursormiddle
+- png cursor-smoke
+
+===> Grade Letters
+- png ranking-xh
+- png ranking-xh-small
+- png ranking-sh
+- png ranking-sh-small
+- png ranking-x
+- png ranking-x-small
+- png ranking-s
+- png ranking-s-small
+- png ranking-a
+- png ranking-a-small
+- png ranking-b
+- png ranking-b-small
+- png ranking-c
+- png ranking-c-small
+- png ranking-d
+- png ranking-d-small
+
+===> Score Numbers
+C png score-0
+C png score-1
+C png score-2
+C png score-3
+C png score-4
+C png score-5
+C png score-6
+C png score-7
+C png score-8
+C png score-9
+C png score-comma
+C png score-dot
+C png score-percent
+C png score-x

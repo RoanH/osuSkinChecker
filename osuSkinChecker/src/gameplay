@@ -1,0 +1,49 @@
+===> Scorebar
+- png scorebar-ng
+N png scorebar-colour
+- png scorebar-ki
+- png scorebar-kidanger
+- png scorebar-kidanger2
+- png scorebar-marker
+
+===> Countdown
+- png ready
+- png count3
+- png count2
+- png count1
+- png go
+
+===> Scoreboard Entry Numbers
+- png scoreentry-0
+- png scoreentry-1
+- png scoreentry-2
+- png scoreentry-3
+- png scoreentry-4
+- png scoreentry-5
+- png scoreentry-6
+- png scoreentry-7
+- png scoreentry-8
+- png scoreentry-9
+- png scoreentry-comma
+- png scoreentry-dot
+- png scoreentry-percent
+- png scoreentry-x
+
+===> Playfield
+N png comboburst
+N png play-skip
+- png star2
+- png menu-button-background
+- png play-unranked
+- png play-warningarrow
+- png arrow-pause
+- png arrow-warning
+- png section-pass
+- png section-fail
+- png multi-skipped
+- png masking-border
+- png hitcircleselect
+
+===> Key Counter
+- png inputoverlay-background
+- png inputoverlay-key

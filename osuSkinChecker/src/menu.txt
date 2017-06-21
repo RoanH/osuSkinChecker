@@ -1,0 +1,98 @@
+===> Home Screen
+S jpg,jpeg menu-background
+- png welcome_text
+- png menu-snow
+- png options-offset-tick
+
+===> Song Selection Carousel
+- png menu-button-background
+- png star
+- png star2
+
+===> Song Selection Buttons
+- png selection-mode
+- png selection-mode-over
+- png selection-mods
+- png selection-mods-over
+- png selection-random
+- png selection-random-over
+- png selection-options
+- png selection-options-over
+- png selection-tab
+
+===> Buttons
+- png button-left
+- png button-middle
+- png button-right
+N png menu-back
+
+===> Game Mode Indicators
+- png mode-osu
+- png mode-taiko
+- png mode-fruits
+- png mode-mania
+- png mode-osu-med
+- png mode-taiko-med
+- png mode-fruits-med
+- png mode-mania-med
+- png mode-osu-small
+- png mode-taiko-small
+- png mode-fruits-small
+- png mode-mania-small
+
+===> Game Modifier Icons
+- png selection-mod-easy
+- png selection-mod-nofail
+- png selection-mod-halftime
+- png selection-mod-hardrock
+- png selection-mod-suddendeath
+- png selection-mod-perfect
+- png selection-mod-doubletime
+- png selection-mod-nightcore
+- png selection-mod-hidden
+- png selection-mod-fadin
+- png selection-mod-flashlight
+- png selection-mod-relax
+- png selection-mod-relax2
+- png selection-mod-spunout
+- png selection-mod-autoplay
+- png selection-mod-cinema
+- png selection-mod-scorev2
+- png selection-mod-key1
+- png selection-mod-key2
+- png selection-mod-key3
+- png selection-mod-key4
+- png selection-mod-key5
+- png selection-mod-key6
+- png selection-mod-key7
+- png selection-mod-key8
+- png selection-mod-key9
+- png selection-mod-keycoop
+- png selection-mod-random
+
+===> Ranking Screen
+- png ranking-title
+- png ranking-panel
+- png ranking-maxcombo
+- png ranking-accuracy
+- png ranking-graph
+- png ranking-perfect
+- png ranking-winner
+L png ranking-replay
+L png ranking-retry
+
+===> Pause Screen
+S jpg,jpeg pause-overlay
+S jpg,jpeg fail-background
+- png menu-osu
+- png pause-back
+- png pause-continue
+- png pause-retry
+- png pause-replay
+
+
+
+
+
+
+
