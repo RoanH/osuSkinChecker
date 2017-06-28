@@ -1,0 +1,44 @@
+===> Pippidon
+M png pippidonidle
+M png pippidonclear
+M png pippidonkiai
+M png pippidonfail
+
+===> Slider Bar
+N png taiko-flower-group
+- png taiko-slider
+- png taiko-slider-fail
+
+===> Drum Bar
+- png taiko-bar-left
+- png taiko-drum-inner
+- png taiko-drum-outer
+- png taiko-bar-right
+- png taiko-bar-right-glow
+
+===> Notes
+- png approachcircle
+- png taikohitcircle
+N png taikohitcircleoverlay
+- png taikobigcircle
+N png taikobigcircleoverlay
+- png taiko-glow
+- png lighting
+
+===> Drumroll
+- png taiko-roll-middle
+- png taiko-roll-end
+- png sliderscorepoint
+
+===> Spinner
+- png spinner-warning
+- png spinner-circle
+- png spinner-approachcircle
+
+===> Hitbursts
+N png taiko-hit0
+N png taiko-hit100
+N png taiko-hit300
+N png taiko-hit100k
+N png taiko-hit300k
+- png taiko-hit300g
