@@ -38,6 +38,10 @@ public class SkinChecker {
 
 	private static final Map<String, Map<String, List<Info>>> imagesMap = new HashMap<String, Map<String, List<Info>>>();
 	private static File skinFolder;
+	private static boolean checkSD = true;
+	private static boolean checkHD = false;
+	private static boolean checkLegacy = false;
+	private static boolean showAll = false;
 
 	public static void main(String[] args){
 
@@ -89,7 +93,12 @@ public class SkinChecker {
 		for(Entry<String, Map<String, List<Info>>> entry : map.entrySet()){
 			JTabbedPane inner = new JTabbedPane();
 			for(Entry<String, List<Info>> e : entry.getValue().entrySet()){
-				inner.add(e.getKey(), new JScrollPane(getTableData(e.getValue())));
+				e.getValue().removeIf((item)->{
+					return !item.show();
+				});
+				if(!e.getValue().isEmpty()){
+					inner.add(e.getKey(), new JScrollPane(getTableData(e.getValue())));
+				}
 			}
 			tabs.add(entry.getKey(), inner);
 		}
@@ -185,6 +194,8 @@ public class SkinChecker {
 	private static abstract interface Info{
 
 		public abstract Info init(String data);
+		
+		public abstract boolean show();
 	}
 
 	private static final class ImageInfo implements Info{
@@ -203,7 +214,20 @@ public class SkinChecker {
 			return name;
 		}
 		
-		private boolean hasSDVersion(){//TODO test are incomplete
+		@Override
+		public boolean show(){
+			if(showAll){
+				return true;
+			}else{
+				if(legacy && !checkLegacy){
+					return false;
+				}else{
+					return (checkSD ? !hasSDVersion() : false) || (checkHD ? !hasHDVersion() : false);
+				}
+			}
+		}
+		
+		private boolean hasSDVersion(){//TODO test variable and path
 			for(String ext : extensions){
 				if(checkForFile(name, ext)){
 					return true;

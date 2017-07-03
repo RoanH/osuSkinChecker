@@ -1,4 +1,4 @@
-===> Catches & Playfield
+===> Catcher & Playfield
 N png comboburst-fruits
 N png fruit-catcher-idle
 N png fruit-catcher-kiai
