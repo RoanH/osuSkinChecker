@@ -14,7 +14,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -22,6 +21,9 @@ import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 
 public class SkinChecker {
 
@@ -37,11 +39,12 @@ public class SkinChecker {
 	//-= n/a
 
 	private static final Map<String, Map<String, List<Info>>> imagesMap = new HashMap<String, Map<String, List<Info>>>();
+	private static List<File> files = new ArrayList<File>();
 	private static File skinFolder;
 	private static boolean checkSD = true;
 	private static boolean checkHD = false;
 	private static boolean checkLegacy = false;
-	private static boolean showAll = false;
+	private static boolean showAll = true;
 
 	public static void main(String[] args){
 
@@ -54,9 +57,9 @@ public class SkinChecker {
 		} catch (Throwable t) {
 		}
 
-		//for(File f : skinDir.listFiles()){
-		//	System.out.println(f.getName());
-		//}
+		for(File f : skinDir.listFiles()){
+			files.add(f);
+		}
 		try {
 			readDatabase();
 		} catch (IOException e) {
@@ -82,10 +85,6 @@ public class SkinChecker {
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-	}
-
-	public static boolean checkForFile(String name, String extension){
-		return new File(skinFolder, name + '.' + extension).exists();
 	}
 
 	private static JTabbedPane mapToTabs(Map<String, Map<String, List<Info>>> map){
@@ -204,6 +203,8 @@ public class SkinChecker {
 		boolean variableWithDash = false;
 		boolean variableWithoutDash = false;
 		boolean customPath = false;
+		Boolean hasSD = null;
+		Boolean hasHD = null;
 
 		String[] extensions;
 
@@ -227,25 +228,67 @@ public class SkinChecker {
 			}
 		}
 		
-		private boolean hasSDVersion(){//TODO test variable and path
-			for(String ext : extensions){
-				if(checkForFile(name, ext)){
-					return true;
+		private boolean hasSDVersion(){
+			if(hasSD == null){
+				for(String ext : extensions){
+					if(checkForFile(name, false, ext, variableWithDash, variableWithoutDash, customPath)){
+						hasSD = true;
+					}
+				}
+				if(hasSD == null){
+					hasSD = false;
 				}
 			}
-			return false;
+			return hasSD;
 		}
 		
 		private boolean hasHDVersion(){
-			if(singleImage){
-				return true;
-			}
-			for(String ext : extensions){
-				if(checkForFile(name + "@2x", ext)){
-					return true;
+			if(hasHD == null){
+				if(singleImage){
+					hasHD = true;
+				}
+				for(String ext : extensions){
+					if(checkForFile(name, true, ext, variableWithDash, variableWithoutDash, customPath)){
+						hasHD = true;
+					}
+				}
+				if(hasHD == null){
+					hasHD = false;
 				}
 			}
-			return false;
+			return hasHD;
+		}
+		
+		private boolean checkForFile(String name, boolean hd, final String extension, boolean variableDash, boolean variableNoDash, boolean custom){
+			BooleanProperty match = new SimpleBooleanProperty(false);
+			files.removeIf((file)->{
+				String fileName = file.getName().toLowerCase(Locale.ROOT);
+				if(fileName.startsWith(name + (variableDash ? "-" : "") + ((!variableDash && !variableNoDash) ? (hd ? "@2x." : ".") : (hd ? "@2x" : ""))) && fileName.toLowerCase().endsWith(extension)){
+					if(!hd && fileName.endsWith("@2x." + extension)){
+						return false;
+					}
+					if(variableDash || variableNoDash){
+						String n = fileName.substring(0, fileName.length() - ((hd ? "@2x." : "") + extension).length() - 1).substring(name.length() + (variableDash ? 1 : 0));
+						boolean number = false;
+						try{
+							Integer.parseInt(n);
+							number = true;
+						}catch(NumberFormatException e){
+						}
+						match.set(number);
+						return number;
+					}else{
+						match.set(true);
+						//System.out.println("true");
+						return true;
+					}
+				}else{
+					return false;
+				}
+			});
+			//TODO test custom path
+			System.out.println("Had to find: " + name + " found " + match.getValue());
+			return match.getValue();
 		}
 
 		public ImageInfo init(String line){
