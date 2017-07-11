@@ -1,0 +1,59 @@
+===> Pause Screen
+- wav,mp3 pause-hover
+- wav,mp3 pause-continue-hover
+- wav,mp3 pause-retry-hover
+- wav,mp3 pause-back-hover
+- wav,mp3 pause-continue-hover
+- wav,mp3 pause-retry-click
+- wav,mp3 pause-back-click
+- wav,mp3 pause-loop
+
+===> Countdown
+- wav,mp3 readys
+- wav,mp3 count3s
+- wav,mp3 count2s
+- wav,mp3 count1s
+- wav,mp3 gos
+- wav count
+
+===> Gameplay
+- wav,mp3 metronomelow
+N wav,mp3 comboburst
+- wav,mp3 combobreak
+- wav,mp3 sectionpass
+- wav,mp3 sectionfail
+- wav,mp3 failsound
+- wav,mp3 applause
+  
+===> Nightcore Samples
+- wav nightcore-kick
+- wav nightcore-clap
+- wav nightcore-hat
+- wav nightcore-finish
+
+===> Normal Sample Set
+- wav,mp3 normal-hitnormal
+- wav,mp3 normal-hitclap
+- wav,mp3 normal-hitfinish
+- wav,mp3 normal-hitwhistle
+- wav,mp3 normal-slidertick
+- wav,mp3 normal-sliderslide
+- wav,mp3 normal-sliderwhistle
+
+===> Soft Sample Set
+- wav,mp3 soft-hitnormal
+- wav,mp3 soft-hitclap
+- wav,mp3 soft-hitfinish
+- wav,mp3 soft-hitwhistle
+- wav,mp3 soft-slidertick
+- wav,mp3 soft-sliderslide
+- wav,mp3 soft-sliderwhistle
+
+===> Drum Sample Set
+- wav,mp3 drum-hitnormal
+- wav,mp3 drum-hitclap
+- wav,mp3 drum-hitfinish
+- wav,mp3 drum-hitwhistle
+- wav,mp3 drum-slidertick
+- wav,mp3 drum-sliderslide
+- wav,mp3 drum-sliderwhistle

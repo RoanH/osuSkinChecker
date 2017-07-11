@@ -2,3 +2,58 @@
 - wav,mp3 welcome
 - wav,mp3 seeya
 - wav,mp3 heartbeat
+
+===> Clicks
+- wav,mp3 check-on
+- wav,mp3 check-off
+- wav,mp3 select-expand
+- wav,mp3 select-difficulty
+- wav,mp3 click-close
+- wav,mp3 click-short-confirm
+- wav,mp3 menuback
+- wav,mp3 menuhit
+- wav,mp3 shutter
+- wav,mp3 sliderbar
+
+===> Hovers
+- wav,mp3 click-short
+- wav,mp3 menuclick
+
+===> Multiplayer
+- wav,mp3 match-join
+- wav,mp3 match-leave
+- wav,mp3 match-ready
+- wav,mp3 match-notready
+- wav,mp3 match-confirm
+- wav,mp3 match-start
+
+===> Home Screen Buttons
+- wav,mp3 back-button-hover
+- wav,mp3 back-button-click
+- wav,mp3 menu-play-hover
+- wav,mp3 menu-edit-hover
+- wav,mp3 menu-options-hover
+- wav,mp3 menu-exit-hover
+- wav,mp3 menu-freeplay-hover
+- wav,mp3 menu-multiplayer-hover
+- wav,mp3 menu-charts-hover
+- wav,mp3 menu-back-hover
+- wav,mp3 menu-play-click
+- wav,mp3 menu-edit-click
+- wav,mp3 menu-options-click
+- wav,mp3 menu-exit-click
+- wav,mp3 menu-freeplay-click
+- wav,mp3 menu-multiplayer-click
+- wav,mp3 menu-charts-click
+- wav,mp3 menu-back-click
+- wav,mp3 menu-direct-hover
+- wav,mp3 menu-direct-click
+
+===> Key Input
+- wav,mp3 key-confirm
+- wav,mp3 key-delete
+- wav,mp3 key-movement
+- wav,mp3 key-press1
+- wav,mp3 key-press2
+- wav,mp3 key-press3
+- wav,mp3 key-press4

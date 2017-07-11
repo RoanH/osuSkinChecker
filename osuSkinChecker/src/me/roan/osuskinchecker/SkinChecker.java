@@ -581,13 +581,13 @@ public class SkinChecker {
 		
 		private boolean exists(){
 			if(exists == null){
+				exists = false;
 				for(String ext : extensions){
 					if(checkForFile(skinFolder, name, ext, variableWithDash)){
 						exists = true;
 						break;
 					}
 				}
-				exists = false;
 			}
 			return exists;
 		}
