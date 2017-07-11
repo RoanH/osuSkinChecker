@@ -40,6 +40,7 @@ public class SkinChecker {
 	//-= n/a
 
 	private static final Map<String, Map<String, List<Info>>> imagesMap = new HashMap<String, Map<String, List<Info>>>();
+	private static final Map<String, Map<String, List<Info>>> soundsMap = new HashMap<String, Map<String, List<Info>>>();
 	private static List<File> files = new ArrayList<File>();
 	private static File skinFolder;
 	private static boolean checkSD = true;
@@ -160,6 +161,10 @@ public class SkinChecker {
 		mapToTabs(im, imagesMap);
 		categories.add("Images", im);
 		
+		JTabbedPane sm = new JTabbedPane();
+		mapToTabs(sm, soundsMap);
+		categories.add("Sounds", sm);
+		
 		categories.setBorder(BorderFactory.createTitledBorder("Files"));
 		content.add(categories);
 		
@@ -222,7 +227,7 @@ public class SkinChecker {
 	
 	private static JTable getTableData(final List<Info> info){
 		JTable table = new JTable();
-		Model model = new Model(info);
+		Model model = info.get(0) instanceof ImageInfo ? new ImageModel(info) : (info.get(0) instanceof SoundInfo ? new SoundModel(info) : null);
 		listeners.add(model);
 		table.setModel(model);
 		
@@ -230,16 +235,20 @@ public class SkinChecker {
 	}
 
 	private static void readDatabase() throws IOException{
-		imagesMap.put("Menu", readDataFile("menu.txt"));
-		imagesMap.put("osu!", readDataFile("osu.txt"));
-		imagesMap.put("Taiko", readDataFile("taiko.txt"));
-		imagesMap.put("Mania", readDataFile("mania.txt"));
-		imagesMap.put("Catch", readDataFile("catch.txt"));
-		imagesMap.put("Miscellaneous", readDataFile("misc.txt"));
-		imagesMap.put("Gameplay", readDataFile("gameplay.txt"));
+		imagesMap.put("Menu", readDataFile("menu.txt", false));
+		imagesMap.put("osu!", readDataFile("osu.txt", false));
+		imagesMap.put("Taiko", readDataFile("taiko.txt", false));
+		imagesMap.put("Mania", readDataFile("mania.txt", false));
+		imagesMap.put("Catch", readDataFile("catch.txt", false));
+		imagesMap.put("Miscellaneous", readDataFile("misc.txt", false));
+		imagesMap.put("Gameplay", readDataFile("gameplay.txt", false));
+		soundsMap.put("Gameplay", readDataFile("gameplay-sounds.txt", true));
+		soundsMap.put("Menu", readDataFile("menu-sounds.txt", true));
+		soundsMap.put("osu!", readDataFile("osu-sounds.txt", true));
+		soundsMap.put("Taiko", readDataFile("taiko-sounds.txt", true));
 	}
 
-	private static Map<String, List<Info>> readDataFile(String name) throws IOException{
+	private static Map<String, List<Info>> readDataFile(String name, boolean isSound) throws IOException{
 		Map<String, List<Info>> data = new HashMap<String, List<Info>>();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(name)));
 		List<Info> writing = null;
@@ -251,39 +260,26 @@ public class SkinChecker {
 				writing = new ArrayList<Info>();
 				data.put(line.substring(4).trim(), writing);
 			}else{
-				writing.add(new ImageInfo().init(line));
+				if(isSound){
+					writing.add(new SoundInfo().init(line));
+				}else{
+					writing.add(new ImageInfo().init(line));
+				}
 			}
 		}
 		return data;
 	}
 	
-	private static class Model extends DefaultTableModel{
+	private static class ImageModel extends Model{
+		
+		public ImageModel(List<Info> list) {
+			super(list);
+		}
+
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = 1L;
-		private List<Info> view = new ArrayList<Info>();
-		private List<Info> data;
-		
-		private Model(List<Info> list){
-			data = list;
-			updateView();
-		}
-		
-		private void updateView(){
-			view.clear();
-			for(Info i : data){
-				if(i.show()){
-					view.add(i);
-				}
-			}
-			this.fireTableDataChanged();
-		}
-		
-		@Override
-		public int getRowCount(){
-			return view == null ? 0 : view.size();
-		}
 		
 		@Override
 		public int getColumnCount(){
@@ -303,10 +299,6 @@ public class SkinChecker {
 			return null;
 		}
 		
-		@Override
-		public boolean isCellEditable(int row, int col){
-			return false;
-		}
 		
 		@Override
 		public Object getValueAt(int row, int col){
@@ -324,6 +316,83 @@ public class SkinChecker {
 			}
 			return null;
 		}	
+	};
+	
+	private static class SoundModel extends Model{
+		
+		public SoundModel(List<Info> list) {
+			super(list);
+		}
+
+		/**
+		 * Serial ID
+		 */
+		private static final long serialVersionUID = 2L;
+		
+		@Override
+		public int getColumnCount(){
+			return 2;
+		}
+		
+		@Override
+		public String getColumnName(int col){
+			switch(col){
+			case 0:
+				return "Filename";
+			case 1:
+				return "Exists";
+			}
+			return null;
+		}
+		
+		@Override
+		public Object getValueAt(int row, int col){
+			try{
+				switch(col){
+				case 0:
+					return view.get(row);
+				case 1: 
+					return ((SoundInfo)view.get(row)).exists();
+				}
+			}catch(Exception e){
+				return "error";
+			}
+			return null;
+		}	
+	};
+	
+	private static abstract class Model extends DefaultTableModel{
+		/**
+		 * Serial ID
+		 */
+		private static final long serialVersionUID = 1L;
+		protected List<Info> view = new ArrayList<Info>();
+		private List<Info> data;
+		
+		public Model(List<Info> list){
+			data = list;
+			updateView();
+		}
+		
+		protected void updateView(){
+			view.clear();
+			for(Info i : data){
+				if(i.show()){
+					view.add(i);
+				}
+			}
+			this.fireTableDataChanged();
+		}
+		
+		@Override
+		public int getRowCount(){
+			return view == null ? 0 : view.size();
+		}	
+		
+		@Override
+		public boolean isCellEditable(int row, int col){
+			return false;
+		}
 	};
 
 	private static abstract interface Info{
@@ -484,6 +553,100 @@ public class SkinChecker {
 			}
 			this.extensions = data[1 + (customPath ? 1 : 0)].split(",");
 			this.name = data[2 + (customPath ? 1 : 0)];
+			return this;
+		}
+	}
+	
+	private static final class SoundInfo implements Info{
+		boolean variableWithDash = false;
+		Boolean exists = null;
+
+		String[] extensions;
+
+		String name;
+
+		@Override
+		public String toString(){
+			return name;
+		}
+		
+		@Override
+		public boolean show(){
+			if(showAll){
+				return true;
+			}else{
+				return !exists();
+			}
+		}
+		
+		private boolean exists(){
+			if(exists == null){
+				for(String ext : extensions){
+					if(checkForFile(skinFolder, name, ext, variableWithDash)){
+						exists = true;
+						break;
+					}
+				}
+				exists = false;
+			}
+			return exists;
+		}
+		
+		private boolean checkForFile(File folder, String name, final String extension, boolean variableDash){
+			boolean match = false;
+			for(File file : folder.listFiles()){
+				String fileName = file.getName().toLowerCase(Locale.ROOT);
+				if(fileName.startsWith(name) && fileName.toLowerCase().endsWith("." + extension)){
+					if(variableDash){
+						System.out.println(fileName);
+						String n = fileName.substring(name.length());
+						if(n.startsWith("-")){
+							n = n.substring((variableDash ? 1 : 0));
+						}
+						System.out.println(n + " / " + n.length());
+						n = n.substring(0, n.length() - 1 - extension.length());
+						if(n.isEmpty()){
+							match = true;
+							break;
+						}
+						boolean number = false;
+						try{
+							Integer.parseInt(n);
+							number = true;
+						}catch(NumberFormatException e){
+						}
+						match = number;
+						if(match){
+							break;
+						}else{
+							continue;
+						}
+					}else{
+						match = true;
+						break;
+					}
+				}else{
+					continue;
+				}
+			}
+			System.out.println("Had to find: " + name + " found " + match);
+			return match;
+		}
+
+		public SoundInfo init(String line){
+			String[] data = line.split(" ");
+			if(!data[0].equals("-")){
+				char[] args = data[0].toUpperCase(Locale.ROOT).toCharArray();
+				for(char option : args){
+					switch(option){
+					case 'N':
+						variableWithDash = true;
+						break;
+					}
+				}
+			}
+			this.extensions = data[1].split(",");
+			this.name = data[2];
 			return this;
 		}
 	}

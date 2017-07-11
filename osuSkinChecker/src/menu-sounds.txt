@@ -1,0 +1,4 @@
+===> Home Screen
+- wav,mp3 welcome
+- wav,mp3 seeya
+- wav,mp3 heartbeat
