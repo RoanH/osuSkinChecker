@@ -23,17 +23,17 @@
 - png ranking-d-small
 
 ===> Score Numbers
-C png score-0
-C png score-1
-C png score-2
-C png score-3
-C png score-4
-C png score-5
-C png score-6
-C png score-7
-C png score-8
-C png score-9
-C png score-comma
-C png score-dot
-C png score-percent
-C png score-x
+P 2 png score-0
+P 2 png score-1
+P 2 png score-2
+P 2 png score-3
+P 2 png score-4
+P 2 png score-5
+P 2 png score-6
+P 2 png score-7
+P 2 png score-8
+P 2 png score-9
+P 2 png score-comma
+P 2 png score-dot
+P 2 png score-percent
+P 2 png score-x

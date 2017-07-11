@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -23,8 +24,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 
 public class SkinChecker {
 
@@ -36,6 +35,7 @@ public class SkinChecker {
 	//M=variable amount not preceded by a -
 	//S=single image only no higher/lower res
 	//C=custom path
+	//P=custom path prefix
 	//L=legacy
 	//-= n/a
 
@@ -45,19 +45,98 @@ public class SkinChecker {
 	private static boolean checkSD = true;
 	private static boolean checkHD = false;
 	private static boolean checkLegacy = false;
-	private static boolean showAll = true;
+	private static boolean showAll = false;
+	private static Map<Integer, File> customPathing = new HashMap<Integer, File>();
 
 	public static void main(String[] args){
 
 		checkSkin(skinFolder = new File("C:\\Users\\RoanH\\Documents\\osu!\\Skins\\Roan v4.0"));
+	}
+	
+	private static void parseIni() throws IOException{
+		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(skinFolder, "skin.ini"))));
+		String line;
+		while((line = reader.readLine()) != null){
+			if(line.startsWith("ScorePrefix:") || line.startsWith("ComboPrefix:")){
+				customPathing.put(2, new File(skinFolder, line.substring(12).trim()));
+			}else if(line.startsWith("HitCirclePrefix:")){
+				customPathing.put(1, new File(skinFolder, line.substring(16).trim()));
+			}else if(line.trim().equals("[Mania]")){
+				int keys = -1;
+				while(true){
+					reader.mark(100);
+					line = reader.readLine();
+					if(line == null || line.startsWith("[")){
+						reader.reset();
+						break;
+					}
+					String[] args = line.split(":");
+					if(args[0].startsWith("Keys")){
+						keys = Integer.parseInt(args[1].trim());
+					}else if(args[0].startsWith("KeyImage")){
+						if(args[0].endsWith("D")){
+							customPathing.put(keys * 100 + 22, new File(skinFolder, args[1].trim()));
+						}else{
+							customPathing.put(keys * 100 + 21, new File(skinFolder, args[1].trim()));
+						}
+					}else if(args[0].startsWith("NoteImage")){
+						if(args[0].endsWith("H")){
+							customPathing.put(keys * 100 + 32, new File(skinFolder, args[1].trim()));
+						}else if(args[0].endsWith("T")){
+							customPathing.put(keys * 100 + 33, new File(skinFolder, args[1].trim()));
+						}else if(args[0].endsWith("L")){
+							customPathing.put(keys * 100 + 34, new File(skinFolder, args[1].trim()));
+						}else{
+							customPathing.put(keys * 100 + 31, new File(skinFolder, args[1].trim()));
+						}
+					}else if(args[0].startsWith("StageLeft")){
+						customPathing.put(keys * 100 + 11, new File(skinFolder, args[1].trim()));
+					}else if(args[0].startsWith("StageRight")){
+						customPathing.put(keys * 100 + 12, new File(skinFolder, args[1].trim()));
+					}else if(args[0].startsWith("StageBottom")){
+						customPathing.put(keys * 100 + 13, new File(skinFolder, args[1].trim()));
+					}else if(args[0].startsWith("StageHint")){
+						customPathing.put(keys * 100 + 14, new File(skinFolder, args[1].trim()));
+					}else if(args[0].startsWith("StageLight")){
+						customPathing.put(keys * 100 + 15, new File(skinFolder, args[1].trim()));
+					}else if(args[0].startsWith("LightingN")){
+						customPathing.put(keys * 100 + 17, new File(skinFolder, args[1].trim()));
+					}else if(args[0].startsWith("LightingL")){
+						customPathing.put(keys * 100 + 18, new File(skinFolder, args[1].trim()));
+					}else if(args[0].startsWith("WarningArrow")){
+						customPathing.put(keys * 100 + 16, new File(skinFolder, args[1].trim()));
+					}else if(args[0].startsWith("Hit0")){
+						customPathing.put(keys * 100 + 41, new File(skinFolder, args[1].trim()));
+					}else if(args[0].startsWith("Hit50")){
+						customPathing.put(keys * 100 + 42, new File(skinFolder, args[1].trim()));
+					}else if(args[0].startsWith("Hit100")){
+						customPathing.put(keys * 100 + 43, new File(skinFolder, args[1].trim()));
+					}else if(args[0].startsWith("Hit200")){
+						customPathing.put(keys * 100 + 44, new File(skinFolder, args[1].trim()));
+					}else if(args[0].startsWith("Hit300")){
+						customPathing.put(keys * 100 + 45, new File(skinFolder, args[1].trim()));
+					}else if(args[0].startsWith("Hit300g")){
+						customPathing.put(keys * 100 + 6, new File(skinFolder, args[1].trim()));
+					}
+				}
+			}
+		}
+		System.out.println(customPathing);
+		reader.close();
 	}
 
 	public static void checkSkin(File skinDir){
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Throwable t) {
-		}
+		}//TODO check missing .ini
 
+		try {
+			parseIni();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		for(File f : skinDir.listFiles()){
 			files.add(f);
 		}
@@ -81,8 +160,6 @@ public class SkinChecker {
 		mapToTabs(im, imagesMap);
 		categories.add("Images", im);
 		
-		
-
 		categories.setBorder(BorderFactory.createTitledBorder("Files"));
 		content.add(categories);
 		
@@ -135,9 +212,6 @@ public class SkinChecker {
 		for(Entry<String, Map<String, List<Info>>> entry : map.entrySet()){
 			JTabbedPane inner = new JTabbedPane();
 			for(Entry<String, List<Info>> e : entry.getValue().entrySet()){
-				e.getValue().removeIf((item)->{
-					return !item.show();
-				});
 				inner.add(e.getKey(), new JScrollPane(getTableData(e.getValue())));
 			}
 			tabs.add(entry.getKey(), inner);
@@ -270,6 +344,8 @@ public class SkinChecker {
 		boolean variableWithDash = false;
 		boolean variableWithoutDash = false;
 		boolean customPath = false;
+		boolean customPathPrefix = false;
+		int customID = -1;
 		Boolean hasSD = null;
 		Boolean hasHD = null;
 
@@ -298,7 +374,7 @@ public class SkinChecker {
 		private boolean hasSDVersion(){
 			if(hasSD == null){
 				for(String ext : extensions){
-					if(checkForFile(name, false, ext, variableWithDash, variableWithoutDash, customPath)){
+					if(checkForFile(skinFolder, name, false, ext, variableWithDash, variableWithoutDash, customPath, customPathPrefix)){
 						hasSD = true;
 					}
 				}
@@ -315,7 +391,7 @@ public class SkinChecker {
 					hasHD = true;
 				}
 				for(String ext : extensions){
-					if(checkForFile(name, true, ext, variableWithDash, variableWithoutDash, customPath)){
+					if(checkForFile(skinFolder, name, true, ext, variableWithDash, variableWithoutDash, customPath, customPathPrefix)){
 						hasHD = true;
 					}
 				}
@@ -326,42 +402,54 @@ public class SkinChecker {
 			return hasHD;
 		}
 		
-		private boolean checkForFile(String name, boolean hd, final String extension, boolean variableDash, boolean variableNoDash, boolean custom){
-			BooleanProperty match = new SimpleBooleanProperty(false);
-			files.removeIf((file)->{
+		private boolean checkForFile(File folder, String name, boolean hd, final String extension, boolean variableDash, boolean variableNoDash, boolean custom, boolean customPrefix){
+			boolean match = false;
+			for(File file : folder.listFiles()){
 				String fileName = file.getName().toLowerCase(Locale.ROOT);
-				if(fileName.startsWith(name + (variableDash ? "-" : "") + ((!variableDash && !variableNoDash) ? (hd ? "@2x." : ".") : (hd ? "@2x" : ""))) && fileName.toLowerCase().endsWith(extension)){
+				if(fileName.startsWith(name + (variableDash ? "-" : "")) && fileName.toLowerCase().endsWith((hd ? "@2x." : ".") + extension)){
 					if(!hd && fileName.endsWith("@2x." + extension)){
-						return false;
+						continue;
 					}
 					if(variableDash || variableNoDash){
 						String n = fileName.substring(0, fileName.length() - ((hd ? "@2x." : "") + extension).length() - 1).substring(name.length() + (variableDash ? 1 : 0));
+						if(n.isEmpty()){
+							match = true;
+							break;
+						}
 						boolean number = false;
 						try{
 							Integer.parseInt(n);
 							number = true;
 						}catch(NumberFormatException e){
 						}
-						match.set(number);
-						return number;
+						match = number;
+						break;
 					}else{
-						match.set(true);
-						//System.out.println("true");
-						return true;
+						match = true;
+						break;
 					}
 				}else{
-					return false;
+					continue;
 				}
-			});
-			//TODO test custom path
-			System.out.println("Had to find: " + name + " found " + match.getValue());
-			return match.getValue();
+			}
+			if(!match && (custom || customPrefix) && this.customID != -1){
+				System.out.println("Initiating custom search for: " + name + " (match: " + match + ")");
+				if(customPrefix){
+					return checkForFile(customPathing.get(this.customID), name, hd, extension, variableDash, variableNoDash, false, false);
+				}else{
+					File f = customPathing.get(this.customID);
+					if(f == null){
+						System.out.println("File null for: " + this.name + " (id: " + this.customID + ")");
+					}
+					return f == null ? false : checkForFile(f.getParentFile(), f.getName(), hd, extension, variableDash, variableNoDash, false, false);
+				}
+			}
+			System.out.println("Had to find: " + name + " found " + match);
+			return match;
 		}
 
 		public ImageInfo init(String line){
-			String[] data = line.split(" ", 3);
-			this.extensions = data[1].split(",");
-			this.name = data[2];
+			String[] data = line.split(" ");
 			if(!data[0].equals("-")){
 				char[] args = data[0].toUpperCase(Locale.ROOT).toCharArray();
 				for(char option : args){
@@ -377,6 +465,11 @@ public class SkinChecker {
 						break;
 					case 'C':
 						customPath = true;
+						customID = Integer.parseInt(data[1]);
+						break;
+					case 'P':
+						customPath = true;
+						customID = Integer.parseInt(data[1]);
 						break;
 					case 'L':
 						legacy = true;
@@ -384,6 +477,8 @@ public class SkinChecker {
 					}
 				}
 			}
+			this.extensions = data[1 + (customPath ? 1 : 0)].split(",");
+			this.name = data[2 + (customPath ? 1 : 0)];
 			return this;
 		}
 	}
