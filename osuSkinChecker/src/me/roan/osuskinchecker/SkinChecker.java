@@ -1,6 +1,7 @@
 package me.roan.osuskinchecker;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,6 +14,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.swing.BorderFactory;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,8 +23,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
@@ -75,11 +76,53 @@ public class SkinChecker {
 		JFrame frame = new JFrame("Skin Checker for osu!");
 		JPanel content = new JPanel(new BorderLayout());
 		JTabbedPane categories = new JTabbedPane();
-		categories.add("Images", mapToTabs(imagesMap));
+		
+		JTabbedPane im = new JTabbedPane();
+		mapToTabs(im, imagesMap);
+		categories.add("Images", im);
+		
+		
 
-
+		categories.setBorder(BorderFactory.createTitledBorder("Files"));
 		content.add(categories);
+		
+		JPanel controls = new JPanel(new GridLayout(4, 1, 0, 0));
+		JCheckBox chd = new JCheckBox("Report files that are missing a HD version (only applies to images).", false);
+		JCheckBox csd = new JCheckBox("Report files that are missing a SD version (only applies to images).", true);
+		JCheckBox call = new JCheckBox("Show all files, even if they have both a SD and a HD version (only applies to images).", false);
+		JCheckBox clegacy = new JCheckBox("Report missing legacy files", false);
+		controls.add(chd);
+		controls.add(csd);
+		controls.add(call);
+		controls.add(clegacy);
+		chd.addActionListener((e)->{
+			checkHD = chd.isSelected();
+			for(Model m : listeners){
+				m.updateView();
+			}
+		});
+		csd.addActionListener((e)->{
+			checkSD = csd.isSelected();
+			for(Model m : listeners){
+				m.updateView();
+			}
+		});
+		call.addActionListener((e)->{
+			showAll = call.isSelected();
+			for(Model m : listeners){
+				m.updateView();
+			}
+		});
+		clegacy.addActionListener((e)->{
+			checkLegacy = clegacy.isSelected();
+			for(Model m : listeners){
+				m.updateView();
+			}
+		});
 
+		controls.setBorder(BorderFactory.createTitledBorder("Filter"));
+		content.add(controls, BorderLayout.PAGE_START);
+		
 		frame.add(content);
 		frame.setSize(Toolkit.getDefaultToolkit().getScreenSize().width / 2, Toolkit.getDefaultToolkit().getScreenSize().height / 2);
 		frame.setLocationRelativeTo(null);
@@ -87,76 +130,26 @@ public class SkinChecker {
 		frame.setVisible(true);
 	}
 
-	private static JTabbedPane mapToTabs(Map<String, Map<String, List<Info>>> map){
-		JTabbedPane tabs = new JTabbedPane();
+	private static void mapToTabs(JTabbedPane tabs, Map<String, Map<String, List<Info>>> map){
+		tabs.removeAll();
 		for(Entry<String, Map<String, List<Info>>> entry : map.entrySet()){
 			JTabbedPane inner = new JTabbedPane();
 			for(Entry<String, List<Info>> e : entry.getValue().entrySet()){
 				e.getValue().removeIf((item)->{
 					return !item.show();
 				});
-				if(!e.getValue().isEmpty()){
-					inner.add(e.getKey(), new JScrollPane(getTableData(e.getValue())));
-				}
+				inner.add(e.getKey(), new JScrollPane(getTableData(e.getValue())));
 			}
 			tabs.add(entry.getKey(), inner);
 		}
-		return tabs;
 	}
 	
-	private static JTable getTableData(List<Info> info){
+	private static List<Model> listeners = new ArrayList<Model>();
+	
+	private static JTable getTableData(final List<Info> info){
 		JTable table = new JTable();
-		TableModel model = new DefaultTableModel(){
-			/**
-			 * Serial ID
-			 */
-			private static final long serialVersionUID = 1L;
-			
-			@Override
-			public int getRowCount(){
-				return info.size();
-			}
-			
-			@Override
-			public int getColumnCount(){
-				return 3;
-			}
-			
-			@Override
-			public String getColumnName(int col){
-				switch(col){
-				case 0:
-					return "Filename";
-				case 1:
-					return "SD version present";
-				case 2:
-					return "HD version present";
-				}
-				return null;
-			}
-			
-			@Override
-			public boolean isCellEditable(int row, int col){
-				return false;
-			}
-			
-			@Override
-			public Object getValueAt(int row, int col){
-				try{
-					switch(col){
-					case 0:
-						return info.get(row);
-					case 1: 
-						return ((ImageInfo)info.get(row)).hasSDVersion();
-					case 2: 
-						return ((ImageInfo)info.get(row)).hasHDVersion();
-					}
-				}catch(Exception e){
-					return "error";
-				}
-				return null;
-			}	
-		};
+		Model model = new Model(info);
+		listeners.add(model);
 		table.setModel(model);
 		
 		return table;
@@ -189,6 +182,80 @@ public class SkinChecker {
 		}
 		return data;
 	}
+	
+	private static class Model extends DefaultTableModel{
+		/**
+		 * Serial ID
+		 */
+		private static final long serialVersionUID = 1L;
+		private List<Info> view = new ArrayList<Info>();
+		private List<Info> data;
+		
+		private Model(List<Info> list){
+			data = list;
+			updateView();
+		}
+		
+		private void updateView(){
+			System.out.println("update view");
+			view.clear();
+			for(Info i : data){
+				if(i.show()){
+					view.add(i);
+				}
+			}
+			this.fireTableDataChanged();
+		}
+		
+		@Override
+		public int getRowCount(){
+			if(view == null){
+				System.out.println("v: " + view);
+				return 0;
+			}
+			return view.size();
+		}
+		
+		@Override
+		public int getColumnCount(){
+			return 3;
+		}
+		
+		@Override
+		public String getColumnName(int col){
+			switch(col){
+			case 0:
+				return "Filename";
+			case 1:
+				return "SD version present";
+			case 2:
+				return "HD version present";
+			}
+			return null;
+		}
+		
+		@Override
+		public boolean isCellEditable(int row, int col){
+			return false;
+		}
+		
+		@Override
+		public Object getValueAt(int row, int col){
+			try{
+				switch(col){
+				case 0:
+					return view.get(row);
+				case 1: 
+					return ((ImageInfo)view.get(row)).hasSDVersion();
+				case 2: 
+					return ((ImageInfo)view.get(row)).hasHDVersion();
+				}
+			}catch(Exception e){
+				return "error";
+			}
+			return null;
+		}	
+	};
 
 	private static abstract interface Info{
 
