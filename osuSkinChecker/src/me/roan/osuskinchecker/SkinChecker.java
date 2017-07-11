@@ -53,7 +53,7 @@ public class SkinChecker {
 		checkSkin(skinFolder = new File("C:\\Users\\RoanH\\Documents\\osu!\\Skins\\Roan v4.0"));
 	}
 	
-	private static void parseIni() throws IOException{
+	private static void parseINI() throws IOException{
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(skinFolder, "skin.ini"))));
 		String line;
 		while((line = reader.readLine()) != null){
@@ -132,7 +132,7 @@ public class SkinChecker {
 		}//TODO check missing .ini
 
 		try {
-			parseIni();
+			parseINI();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -166,8 +166,8 @@ public class SkinChecker {
 		JPanel controls = new JPanel(new GridLayout(4, 1, 0, 0));
 		JCheckBox chd = new JCheckBox("Report files that are missing a HD version (only applies to images).", false);
 		JCheckBox csd = new JCheckBox("Report files that are missing a SD version (only applies to images).", true);
-		JCheckBox call = new JCheckBox("Show all files, even if they have both a SD and a HD version (only applies to images).", false);
-		JCheckBox clegacy = new JCheckBox("Report missing legacy files", false);
+		JCheckBox call = new JCheckBox("Report all files (show files that aren't missing in the skin).", false);
+		JCheckBox clegacy = new JCheckBox("Report missing legacy files.", false);
 		controls.add(chd);
 		controls.add(csd);
 		controls.add(call);
@@ -271,7 +271,6 @@ public class SkinChecker {
 		}
 		
 		private void updateView(){
-			System.out.println("update view");
 			view.clear();
 			for(Info i : data){
 				if(i.show()){
@@ -283,11 +282,7 @@ public class SkinChecker {
 		
 		@Override
 		public int getRowCount(){
-			if(view == null){
-				System.out.println("v: " + view);
-				return 0;
-			}
-			return view.size();
+			return view == null ? 0 : view.size();
 		}
 		
 		@Override
@@ -361,7 +356,7 @@ public class SkinChecker {
 		@Override
 		public boolean show(){
 			if(showAll){
-				return true;
+				return !legacy || checkLegacy;
 			}else{
 				if(legacy && !checkLegacy){
 					return false;
@@ -406,12 +401,18 @@ public class SkinChecker {
 			boolean match = false;
 			for(File file : folder.listFiles()){
 				String fileName = file.getName().toLowerCase(Locale.ROOT);
-				if(fileName.startsWith(name + (variableDash ? "-" : "")) && fileName.toLowerCase().endsWith((hd ? "@2x." : ".") + extension)){
+				if(fileName.startsWith(name) && fileName.toLowerCase().endsWith((hd ? "@2x." : ".") + extension)){
 					if(!hd && fileName.endsWith("@2x." + extension)){
 						continue;
 					}
 					if(variableDash || variableNoDash){
-						String n = fileName.substring(0, fileName.length() - ((hd ? "@2x." : "") + extension).length() - 1).substring(name.length() + (variableDash ? 1 : 0));
+						System.out.println(fileName);
+						String n = fileName.substring(name.length());
+						if(n.startsWith("-")){
+							n = n.substring((variableDash ? 1 : 0));
+						}
+						System.out.println(n + " / " + n.length());
+						n = n.substring(0, n.length() - (hd ? 4 : 1) - extension.length());
 						if(n.isEmpty()){
 							match = true;
 							break;
@@ -423,7 +424,11 @@ public class SkinChecker {
 						}catch(NumberFormatException e){
 						}
 						match = number;
-						break;
+						if(match){
+							break;
+						}else{
+							continue;
+						}
 					}else{
 						match = true;
 						break;
