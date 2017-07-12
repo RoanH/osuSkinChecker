@@ -18,6 +18,7 @@ import java.util.Map.Entry;
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -47,6 +48,7 @@ public class SkinChecker {
 	private static boolean checkLegacy = false;
 	private static boolean showAll = false;
 	private static Map<Integer, File> customPathing = new HashMap<Integer, File>();
+	private static final JFrame frame = new JFrame("Skin Checker for osu!");
 
 	public static void main(String[] args){
 		try {
@@ -67,7 +69,10 @@ public class SkinChecker {
 	}
 
 	public static void checkSkin(File skinDir) throws IOException{
-		//TODO check missing .ini
+		if(!new File(skinDir, "skin.ini").exists()){
+			JOptionPane.showMessageDialog(frame, "This folder doesn't have a skin.ini file.\nWithout this file this skin won't even be recognized as a skin!\nAdd a skin.ini and then run this program again.", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 		skinFolder = skinDir;
 			
 		parseINI();
@@ -147,7 +152,6 @@ public class SkinChecker {
 	}
 
 	public static void buildGUI(){
-		JFrame frame = new JFrame("Skin Checker for osu!");
 		JPanel content = new JPanel(new BorderLayout());
 		JTabbedPane categories = new JTabbedPane();
 				
