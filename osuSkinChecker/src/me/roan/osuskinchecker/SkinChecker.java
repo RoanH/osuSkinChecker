@@ -8,10 +8,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -24,11 +25,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
-import javax.swing.table.DefaultTableModel;
 
 public class SkinChecker {
 
-	//https://puu.sh/woI9Q/03bc8befea.txt
 	//https://docs.google.com/spreadsheets/d/1bhnV-CQRMy3Z0npQd9XSoTdkYxz0ew5e648S00qkJZ8/edit#gid=2074725196
 
 	//options:
@@ -42,12 +41,13 @@ public class SkinChecker {
 
 	private static final Map<String, Map<String, List<Info>>> imagesMap = new HashMap<String, Map<String, List<Info>>>();
 	private static final Map<String, Map<String, List<Info>>> soundsMap = new HashMap<String, Map<String, List<Info>>>();
-	private static File skinFolder;
-	private static boolean checkSD = true;
-	private static boolean checkHD = false;
-	private static boolean checkLegacy = false;
-	private static boolean showAll = false;
-	private static Map<Integer, File> customPathing = new HashMap<Integer, File>();
+	static File skinFolder;
+	static boolean checkSD = true;
+	static boolean checkHD = false;
+	static boolean checkLegacy = false;
+	static boolean showAll = false;
+	static Map<Integer, File> customPathing = new HashMap<Integer, File>();
+	private static List<Model> listeners = new ArrayList<Model>();
 	private static final JFrame frame = new JFrame("Skin Checker for osu!");
 
 	public static void main(String[] args){
@@ -78,6 +78,44 @@ public class SkinChecker {
 		parseINI();
 		
 		buildGUI();
+	}
+	
+	/**
+	 * Check the SkinChecker version to see
+	 * if we are running the latest version
+	 * @return The latest version
+	 */
+	private static final String checkVersion(){
+		try{ 			
+			HttpURLConnection con = (HttpURLConnection) new URL("https://api.github.com/repos/RoanH/osuSkinChecker/tags").openConnection(); 			
+			con.setRequestMethod("GET"); 		
+			con.setConnectTimeout(10000); 					   
+			BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream())); 	
+			String line = reader.readLine(); 		
+			reader.close(); 	
+			String[] versions = line.split("\"name\":\"v");
+			int max_main = 3;
+			int max_sub = 0;
+			String[] tmp;
+			for(int i = 1; i < versions.length; i++){
+				tmp = versions[i].split("\",\"")[0].split("\\.");
+				if(Integer.parseInt(tmp[0]) > max_main){
+					max_main = Integer.parseInt(tmp[0]);
+					max_sub = Integer.parseInt(tmp[1]);
+				}else if(Integer.parseInt(tmp[0]) < max_main){
+					continue;
+				}else{
+					if(Integer.parseInt(tmp[1]) > max_sub){
+						max_sub = Integer.parseInt(tmp[1]);
+					}
+				}
+			}
+			return "v" + max_main + "." + max_sub;
+		}catch(Exception e){ 	
+			return null;
+			//No Internet access or something else is wrong,
+			//No problem though since this isn't a critical function
+		}
 	}
 	
 	private static void parseINI() throws IOException{
@@ -218,8 +256,6 @@ public class SkinChecker {
 		return tabs;
 	}
 	
-	private static List<Model> listeners = new ArrayList<Model>();
-	
 	private static JTable getTableData(final List<Info> info){
 		JTable table = new JTable();
 		Model model = info.get(0) instanceof ImageInfo ? new ImageModel(info) : (info.get(0) instanceof SoundInfo ? new SoundModel(info) : null);
@@ -262,376 +298,5 @@ public class SkinChecker {
 			}
 		}
 		return data;
-	}
-	
-	private static class ImageModel extends Model{
-		
-		public ImageModel(List<Info> list) {
-			super(list);
-		}
-
-		/**
-		 * Serial ID
-		 */
-		private static final long serialVersionUID = 1L;
-		
-		@Override
-		public int getColumnCount(){
-			return 3;
-		}
-		
-		@Override
-		public String getColumnName(int col){
-			switch(col){
-			case 0:
-				return "Filename";
-			case 1:
-				return "SD version present";
-			case 2:
-				return "HD version present";
-			}
-			return null;
-		}
-		
-		
-		@Override
-		public Object getValueAt(int row, int col){
-			try{
-				switch(col){
-				case 0:
-					return view.get(row);
-				case 1: 
-					return ((ImageInfo)view.get(row)).hasSDVersion();
-				case 2: 
-					return ((ImageInfo)view.get(row)).hasHDVersion();
-				}
-			}catch(Exception e){
-				return "error";
-			}
-			return null;
-		}	
-	};
-	
-	private static class SoundModel extends Model{
-		
-		public SoundModel(List<Info> list) {
-			super(list);
-		}
-
-		/**
-		 * Serial ID
-		 */
-		private static final long serialVersionUID = 2L;
-		
-		@Override
-		public int getColumnCount(){
-			return 2;
-		}
-		
-		@Override
-		public String getColumnName(int col){
-			switch(col){
-			case 0:
-				return "Filename";
-			case 1:
-				return "Exists";
-			}
-			return null;
-		}
-		
-		@Override
-		public Object getValueAt(int row, int col){
-			try{
-				switch(col){
-				case 0:
-					return view.get(row);
-				case 1: 
-					return ((SoundInfo)view.get(row)).exists();
-				}
-			}catch(Exception e){
-				return "error";
-			}
-			return null;
-		}	
-	};
-	
-	private static abstract class Model extends DefaultTableModel{
-		/**
-		 * Serial ID
-		 */
-		private static final long serialVersionUID = 1L;
-		protected List<Info> view = new ArrayList<Info>();
-		private List<Info> data;
-		
-		public Model(List<Info> list){
-			data = list;
-			updateView();
-		}
-		
-		protected void updateView(){
-			view.clear();
-			for(Info i : data){
-				if(i.show()){
-					view.add(i);
-				}
-			}
-			this.fireTableDataChanged();
-		}
-		
-		@Override
-		public int getRowCount(){
-			return view == null ? 0 : view.size();
-		}	
-		
-		@Override
-		public boolean isCellEditable(int row, int col){
-			return false;
-		}
-	};
-
-	private static abstract interface Info{
-
-		public abstract Info init(String data);
-		
-		public abstract boolean show();
-	}
-
-	private static final class ImageInfo implements Info{
-		boolean singleImage = false;
-		boolean legacy = false;
-		boolean variableWithDash = false;
-		boolean variableWithoutDash = false;
-		boolean customPath = false;
-		boolean customPathPrefix = false;
-		int customID = -1;
-		Boolean hasSD = null;
-		Boolean hasHD = null;
-
-		String[] extensions;
-
-		String name;
-
-		@Override
-		public String toString(){
-			return name;
-		}
-		
-		@Override
-		public boolean show(){
-			if(showAll){
-				return !legacy || checkLegacy;
-			}else{
-				if(legacy && !checkLegacy){
-					return false;
-				}else{
-					return (checkSD ? !hasSDVersion() : false) || (checkHD ? !hasHDVersion() : false);
-				}
-			}
-		}
-		
-		private boolean hasSDVersion(){
-			if(hasSD == null){
-				for(String ext : extensions){
-					if(checkForFile(skinFolder, name, false, ext, variableWithDash, variableWithoutDash, customPath, customPathPrefix)){
-						hasSD = true;
-					}
-				}
-				if(hasSD == null){
-					hasSD = false;
-				}
-			}
-			return hasSD;
-		}
-		
-		private boolean hasHDVersion(){
-			if(hasHD == null){
-				if(singleImage){
-					hasHD = true;
-				}
-				for(String ext : extensions){
-					if(checkForFile(skinFolder, name, true, ext, variableWithDash, variableWithoutDash, customPath, customPathPrefix)){
-						hasHD = true;
-					}
-				}
-				if(hasHD == null){
-					hasHD = false;
-				}
-			}
-			return hasHD;
-		}
-		
-		private boolean checkForFile(File folder, String name, boolean hd, final String extension, boolean variableDash, boolean variableNoDash, boolean custom, boolean customPrefix){
-			boolean match = false;
-			for(File file : folder.listFiles()){
-				String fileName = file.getName().toLowerCase(Locale.ROOT);
-				if(fileName.startsWith(name) && fileName.toLowerCase().endsWith((hd ? "@2x." : ".") + extension)){
-					if(!hd && fileName.endsWith("@2x." + extension)){
-						continue;
-					}
-					if(variableDash || variableNoDash){
-						String n = fileName.substring(name.length());
-						if(n.startsWith("-")){
-							n = n.substring((variableDash ? 1 : 0));
-						}
-						n = n.substring(0, n.length() - (hd ? 4 : 1) - extension.length());
-						if(n.isEmpty()){
-							match = true;
-							break;
-						}
-						boolean number = false;
-						try{
-							Integer.parseInt(n);
-							number = true;
-						}catch(NumberFormatException e){
-						}
-						match = number;
-						if(match){
-							break;
-						}else{
-							continue;
-						}
-					}else{
-						match = true;
-						break;
-					}
-				}else{
-					continue;
-				}
-			}
-			if(!match && (custom || customPrefix) && this.customID != -1){
-				if(customPrefix){
-					return checkForFile(customPathing.get(this.customID), name, hd, extension, variableDash, variableNoDash, false, false);
-				}else{
-					File f = customPathing.get(this.customID);
-					return f == null ? false : checkForFile(f.getParentFile(), f.getName(), hd, extension, variableDash, variableNoDash, false, false);
-				}
-			}
-			return match;
-		}
-
-		public ImageInfo init(String line){
-			String[] data = line.split(" ");
-			if(!data[0].equals("-")){
-				char[] args = data[0].toUpperCase(Locale.ROOT).toCharArray();
-				for(char option : args){
-					switch(option){
-					case 'N':
-						variableWithDash = true;
-						break;
-					case 'M':
-						variableWithoutDash = true;
-						break;
-					case 'S':
-						singleImage = true;
-						break;
-					case 'C':
-						customPath = true;
-						customID = Integer.parseInt(data[1]);
-						break;
-					case 'P':
-						customPath = true;
-						customID = Integer.parseInt(data[1]);
-						break;
-					case 'L':
-						legacy = true;
-						break;
-					}
-				}
-			}
-			this.extensions = data[1 + (customPath ? 1 : 0)].split(",");
-			this.name = data[2 + (customPath ? 1 : 0)];
-			return this;
-		}
-	}
-	
-	private static final class SoundInfo implements Info{
-		boolean variableWithDash = false;
-		Boolean exists = null;
-
-		String[] extensions;
-
-		String name;
-
-		@Override
-		public String toString(){
-			return name;
-		}
-		
-		@Override
-		public boolean show(){
-			if(showAll){
-				return true;
-			}else{
-				return !exists();
-			}
-		}
-		
-		private boolean exists(){
-			if(exists == null){
-				exists = false;
-				for(String ext : extensions){
-					if(checkForFile(skinFolder, name, ext, variableWithDash)){
-						exists = true;
-						break;
-					}
-				}
-			}
-			return exists;
-		}
-		
-		private boolean checkForFile(File folder, String name, final String extension, boolean variableDash){
-			boolean match = false;
-			for(File file : folder.listFiles()){
-				String fileName = file.getName().toLowerCase(Locale.ROOT);
-				if(fileName.startsWith(name) && fileName.toLowerCase().endsWith("." + extension)){
-					if(variableDash){
-						String n = fileName.substring(name.length());
-						if(n.startsWith("-")){
-							n = n.substring((variableDash ? 1 : 0));
-						}
-						n = n.substring(0, n.length() - 1 - extension.length());
-						if(n.isEmpty()){
-							match = true;
-							break;
-						}
-						boolean number = false;
-						try{
-							Integer.parseInt(n);
-							number = true;
-						}catch(NumberFormatException e){
-						}
-						match = number;
-						if(match){
-							break;
-						}else{
-							continue;
-						}
-					}else{
-						match = true;
-						break;
-					}
-				}else{
-					continue;
-				}
-			}
-			return match;
-		}
-
-		public SoundInfo init(String line){
-			String[] data = line.split(" ");
-			if(!data[0].equals("-")){
-				char[] args = data[0].toUpperCase(Locale.ROOT).toCharArray();
-				for(char option : args){
-					switch(option){
-					case 'N':
-						variableWithDash = true;
-						break;
-					}
-				}
-			}
-			this.extensions = data[1].split(",");
-			this.name = data[2];
-			return this;
-		}
 	}
 }
