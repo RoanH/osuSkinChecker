@@ -41,7 +41,6 @@ public class SkinChecker {
 
 	private static final Map<String, Map<String, List<Info>>> imagesMap = new HashMap<String, Map<String, List<Info>>>();
 	private static final Map<String, Map<String, List<Info>>> soundsMap = new HashMap<String, Map<String, List<Info>>>();
-	private static List<File> files = new ArrayList<File>();
 	private static File skinFolder;
 	private static boolean checkSD = true;
 	private static boolean checkHD = false;
@@ -50,8 +49,30 @@ public class SkinChecker {
 	private static Map<Integer, File> customPathing = new HashMap<Integer, File>();
 
 	public static void main(String[] args){
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Throwable t) {
+		}
+		try {
+			readDatabase();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			checkSkin(new File("C:\\Users\\RoanH\\Documents\\osu!\\Skins\\Roan v4.0"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
-		checkSkin(skinFolder = new File("C:\\Users\\RoanH\\Documents\\osu!\\Skins\\Roan v4.0"));
+	public static void checkSkin(File skinDir) throws IOException{
+		//TODO check missing .ini
+		skinFolder = skinDir;
+			
+		parseINI();
+		
+		buildGUI();
 	}
 	
 	private static void parseINI() throws IOException{
@@ -122,48 +143,16 @@ public class SkinChecker {
 				}
 			}
 		}
-		System.out.println(customPathing);
 		reader.close();
-	}
-
-	public static void checkSkin(File skinDir){
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Throwable t) {
-		}//TODO check missing .ini
-
-		try {
-			parseINI();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		for(File f : skinDir.listFiles()){
-			files.add(f);
-		}
-		try {
-			readDatabase();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		buildGUI();
-
-
 	}
 
 	public static void buildGUI(){
 		JFrame frame = new JFrame("Skin Checker for osu!");
 		JPanel content = new JPanel(new BorderLayout());
 		JTabbedPane categories = new JTabbedPane();
-		
-		JTabbedPane im = new JTabbedPane();
-		mapToTabs(im, imagesMap);
-		categories.add("Images", im);
-		
-		JTabbedPane sm = new JTabbedPane();
-		mapToTabs(sm, soundsMap);
-		categories.add("Sounds", sm);
+				
+		categories.add("Images", mapToTabs(imagesMap));
+		categories.add("Sounds", mapToTabs(soundsMap));
 		
 		categories.setBorder(BorderFactory.createTitledBorder("Files"));
 		content.add(categories);
@@ -212,7 +201,8 @@ public class SkinChecker {
 		frame.setVisible(true);
 	}
 
-	private static void mapToTabs(JTabbedPane tabs, Map<String, Map<String, List<Info>>> map){
+	private static JTabbedPane mapToTabs(Map<String, Map<String, List<Info>>> map){
+		JTabbedPane tabs = new JTabbedPane();
 		tabs.removeAll();
 		for(Entry<String, Map<String, List<Info>>> entry : map.entrySet()){
 			JTabbedPane inner = new JTabbedPane();
@@ -221,6 +211,7 @@ public class SkinChecker {
 			}
 			tabs.add(entry.getKey(), inner);
 		}
+		return tabs;
 	}
 	
 	private static List<Model> listeners = new ArrayList<Model>();
@@ -230,7 +221,6 @@ public class SkinChecker {
 		Model model = info.get(0) instanceof ImageInfo ? new ImageModel(info) : (info.get(0) instanceof SoundInfo ? new SoundModel(info) : null);
 		listeners.add(model);
 		table.setModel(model);
-		
 		return table;
 	}
 
@@ -475,12 +465,10 @@ public class SkinChecker {
 						continue;
 					}
 					if(variableDash || variableNoDash){
-						System.out.println(fileName);
 						String n = fileName.substring(name.length());
 						if(n.startsWith("-")){
 							n = n.substring((variableDash ? 1 : 0));
 						}
-						System.out.println(n + " / " + n.length());
 						n = n.substring(0, n.length() - (hd ? 4 : 1) - extension.length());
 						if(n.isEmpty()){
 							match = true;
@@ -507,18 +495,13 @@ public class SkinChecker {
 				}
 			}
 			if(!match && (custom || customPrefix) && this.customID != -1){
-				System.out.println("Initiating custom search for: " + name + " (match: " + match + ")");
 				if(customPrefix){
 					return checkForFile(customPathing.get(this.customID), name, hd, extension, variableDash, variableNoDash, false, false);
 				}else{
 					File f = customPathing.get(this.customID);
-					if(f == null){
-						System.out.println("File null for: " + this.name + " (id: " + this.customID + ")");
-					}
 					return f == null ? false : checkForFile(f.getParentFile(), f.getName(), hd, extension, variableDash, variableNoDash, false, false);
 				}
 			}
-			System.out.println("Had to find: " + name + " found " + match);
 			return match;
 		}
 
@@ -598,12 +581,10 @@ public class SkinChecker {
 				String fileName = file.getName().toLowerCase(Locale.ROOT);
 				if(fileName.startsWith(name) && fileName.toLowerCase().endsWith("." + extension)){
 					if(variableDash){
-						System.out.println(fileName);
 						String n = fileName.substring(name.length());
 						if(n.startsWith("-")){
 							n = n.substring((variableDash ? 1 : 0));
 						}
-						System.out.println(n + " / " + n.length());
 						n = n.substring(0, n.length() - 1 - extension.length());
 						if(n.isEmpty()){
 							match = true;
@@ -629,7 +610,6 @@ public class SkinChecker {
 					continue;
 				}
 			}
-			System.out.println("Had to find: " + name + " found " + match);
 			return match;
 		}
 
