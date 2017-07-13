@@ -13,7 +13,7 @@ It is a simple program that shows you which elements of your skin are skinned an
 Well I hope some of you find this program useful :)<br>
 And if you find any bugs feel free to report them (spelling mistakes included :3).
 
-[heading]Downloads[/heading](Java 8 required, should run on any OS)<br>
+## Downloads (Java 8 required, should run on any OS)<br>
 ![Windows executable](https://github.com/RoanH/osuSkinChecker/releases/download/v1.0/SkinChecker-v1.0.exe)<br>
 ![Runnable Java Archive](https://github.com/RoanH/osuSkinChecker/releases/download/v1.0/SkinChecker-v1.0.jar)
 
