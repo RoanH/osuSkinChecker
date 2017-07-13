@@ -62,6 +62,7 @@ public class SkinChecker {
 	private static JLabel skin;
 	private static JTabbedPane imageTabs;
 	private static JTabbedPane soundTabs;
+	private static JFileChooser chooser;
 
 	public static void main(String[] args){
 		try {
@@ -74,6 +75,9 @@ public class SkinChecker {
 			e.printStackTrace();
 		}
 		
+		chooser = new JFileChooser();
+		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		chooser.setMultiSelectionEnabled(false);
 		imageTabs = new JTabbedPane();
 		soundTabs = new JTabbedPane();
 		skin = new JLabel("<html><i>no skin selected</i></html>");
@@ -82,9 +86,6 @@ public class SkinChecker {
 
 	public static void checkSkin(File folder) throws IOException{
 		if(folder == null){
-			JFileChooser chooser = new JFileChooser();
-			chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-			chooser.setMultiSelectionEnabled(false);
 			if(chooser.showOpenDialog(frame) != JFileChooser.APPROVE_OPTION){
 				JOptionPane.showMessageDialog(frame, "No skin selected!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
 				return;

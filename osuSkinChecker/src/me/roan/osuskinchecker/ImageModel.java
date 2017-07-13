@@ -29,7 +29,7 @@ public class ImageModel extends Model{
 
 	@Override
 	public int getColumnCount(){
-		return 3;
+		return 4;
 	}
 	
 	@Override
@@ -41,6 +41,8 @@ public class ImageModel extends Model{
 			return "SD version present";
 		case 2:
 			return "HD version present";
+		case 3:
+			return "Animated";
 		}
 		return null;
 	}
@@ -53,10 +55,13 @@ public class ImageModel extends Model{
 			case 0:
 				return view.get(row);
 			case 1: 
-				return ((ImageInfo)view.get(row)).hasSDVersion();
+				return ((ImageInfo)view.get(row)).hasSDVersion() == true ? "Yes" : "No";
 			case 2: 
 				ImageInfo info = ((ImageInfo)view.get(row));
-				return (info.ignored && SkinChecker.ignoreEmpty) ? "ignored" : info.hasHDVersion();
+				return (info.ignored && SkinChecker.ignoreEmpty) ? "Ignored" : (info.hasHDVersion() == true ? "Yes" : "No");
+			case 3:
+				ImageInfo i = ((ImageInfo)view.get(row));
+				return (i.variableWithDash || i.variableWithoutDash) ? (i.animated ? "Yes" : "No") : "N/A";
 			}
 		}catch(Exception e){
 			return "Error";

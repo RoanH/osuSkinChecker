@@ -50,7 +50,7 @@ public class SoundModel extends Model{
 			case 0:
 				return view.get(row);
 			case 1: 
-				return ((SoundInfo)view.get(row)).exists();
+				return ((SoundInfo)view.get(row)).exists() == true ? "Yes" : "No";
 			}
 		}catch(Exception e){
 			return "Error";
