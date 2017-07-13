@@ -18,6 +18,7 @@ import java.util.Map.Entry;
 
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -60,24 +61,42 @@ public class SkinChecker {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		imageTabs = new JTabbedPane();
+		soundTabs = new JTabbedPane();
+		buildGUI();
+		
 		try {
-			checkSkin(new File("C:\\Users\\RoanH\\Documents\\osu!\\Skins\\Roan v4.0"));
+			//new File("C:\\Users\\RoanH\\Documents\\osu!\\Skins\\Roan v4.0")
+			checkSkin();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
+	private static JTabbedPane imageTabs;
+	private static JTabbedPane soundTabs;
 
-	public static void checkSkin(File skinDir) throws IOException{
-		if(!new File(skinDir, "skin.ini").exists()){
+	public static void checkSkin() throws IOException{
+		JFileChooser chooser = new JFileChooser();
+		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		chooser.setMultiSelectionEnabled(false);
+		if(chooser.showOpenDialog(frame) != JFileChooser.APPROVE_OPTION){
+			JOptionPane.showMessageDialog(frame, "No skin selected!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		skinFolder = chooser.getSelectedFile();
+		
+		if(!new File(skinFolder, "skin.ini").exists()){
 			JOptionPane.showMessageDialog(frame, "This folder doesn't have a skin.ini file.\nWithout this file this skin won't even be recognized as a skin!\nAdd a skin.ini and then run this program again.", "Skin Checker", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		skinFolder = skinDir;
+		
+		mapToTabs(imageTabs, imagesMap);
+		mapToTabs(soundTabs, soundsMap);
 			
 		parseINI();
-		
-		buildGUI();
 	}
 	
 	/**
@@ -193,8 +212,8 @@ public class SkinChecker {
 		JPanel content = new JPanel(new BorderLayout());
 		JTabbedPane categories = new JTabbedPane();
 				
-		categories.add("Images", mapToTabs(imagesMap));
-		categories.add("Sounds", mapToTabs(soundsMap));
+		categories.add("Images", imageTabs);
+		categories.add("Sounds", soundTabs);
 		
 		categories.setBorder(BorderFactory.createTitledBorder("Files"));
 		content.add(categories);
@@ -243,8 +262,7 @@ public class SkinChecker {
 		frame.setVisible(true);
 	}
 
-	private static JTabbedPane mapToTabs(Map<String, Map<String, List<Info>>> map){
-		JTabbedPane tabs = new JTabbedPane();
+	private static void mapToTabs(JTabbedPane tabs, Map<String, Map<String, List<Info>>> map){
 		tabs.removeAll();
 		for(Entry<String, Map<String, List<Info>>> entry : map.entrySet()){
 			JTabbedPane inner = new JTabbedPane();
@@ -253,7 +271,6 @@ public class SkinChecker {
 			}
 			tabs.add(entry.getKey(), inner);
 		}
-		return tabs;
 	}
 	
 	private static JTable getTableData(final List<Info> info){
