@@ -55,7 +55,8 @@ public class ImageModel extends Model{
 			case 1: 
 				return ((ImageInfo)view.get(row)).hasSDVersion();
 			case 2: 
-				return ((ImageInfo)view.get(row)).hasHDVersion();
+				ImageInfo info = ((ImageInfo)view.get(row));
+				return (info.ignored && SkinChecker.ignoreEmpty) ? "ignored" : info.hasHDVersion();
 			}
 		}catch(Exception e){
 			return "Error";

@@ -55,6 +55,7 @@ public class SkinChecker {
 	static boolean checkHD = false;
 	static boolean checkLegacy = false;
 	static boolean showAll = false;
+	static boolean ignoreEmpty = true;
 	static Map<Integer, File> customPathing = new HashMap<Integer, File>();
 	private static List<Model> listeners = new ArrayList<Model>();
 	private static final JFrame frame = new JFrame("Skin Checker for osu!");
@@ -229,7 +230,7 @@ public class SkinChecker {
 		JCheckBox csd = new JCheckBox("Report images that are missing a SD version.", true);
 		JCheckBox call = new JCheckBox("Report all files (show files that aren't missing in the skin).", false);
 		JCheckBox clegacy = new JCheckBox("Report missing legacy files.", false);
-		JCheckBox cempty = new JCheckBox("Ignore a missing HD image if an 'empty' SD image exists.", false);//TODO implement
+		JCheckBox cempty = new JCheckBox("Ignore a missing HD image if an 'empty' SD image exists.", true);
 		controls.add(chd);
 		controls.add(csd);
 		controls.add(call);
@@ -255,6 +256,12 @@ public class SkinChecker {
 		});
 		clegacy.addActionListener((e)->{
 			checkLegacy = clegacy.isSelected();
+			for(Model m : listeners){
+				m.updateView();
+			}
+		});
+		cempty.addActionListener((e)->{
+			ignoreEmpty = cempty.isSelected();
 			for(Model m : listeners){
 				m.updateView();
 			}

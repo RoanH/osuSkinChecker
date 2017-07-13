@@ -1,7 +1,11 @@
 package me.roan.osuskinchecker;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.Locale;
+
+import javax.imageio.ImageIO;
 
 public final class ImageInfo implements Info{
 	boolean singleImage = false;
@@ -13,6 +17,7 @@ public final class ImageInfo implements Info{
 	int customID = -1;
 	Boolean hasSD = null;
 	Boolean hasHD = null;
+	boolean ignored;
 
 	String[] extensions;
 
@@ -31,7 +36,7 @@ public final class ImageInfo implements Info{
 			if(legacy && !SkinChecker.checkLegacy){
 				return false;
 			}else{
-				return (SkinChecker.checkSD ? !hasSDVersion() : false) || (SkinChecker.checkHD ? !hasHDVersion() : false);
+				return (SkinChecker.checkSD ? !hasSDVersion() : false) || (SkinChecker.checkHD ? ((ignored && SkinChecker.ignoreEmpty) ? false : !hasHDVersion()) : false);
 			}
 		}
 	}
@@ -39,7 +44,7 @@ public final class ImageInfo implements Info{
 	boolean hasSDVersion(){
 		if(hasSD == null){
 			for(String ext : extensions){
-				if(checkForFile(SkinChecker.skinFolder, name, false, ext, variableWithDash, variableWithoutDash, customPath, customPathPrefix)){
+				if(checkForFile(SkinChecker.skinFolder, name, false, ext, variableWithDash, variableWithoutDash, customPath, customPathPrefix) != null){
 					hasSD = true;
 				}
 			}
@@ -56,7 +61,7 @@ public final class ImageInfo implements Info{
 				hasHD = true;
 			}
 			for(String ext : extensions){
-				if(checkForFile(SkinChecker.skinFolder, name, true, ext, variableWithDash, variableWithoutDash, customPath, customPathPrefix)){
+				if(checkForFile(SkinChecker.skinFolder, name, true, ext, variableWithDash, variableWithoutDash, customPath, customPathPrefix) != null){
 					hasHD = true;
 				}
 			}
@@ -67,31 +72,50 @@ public final class ImageInfo implements Info{
 		return hasHD;
 	}
 	
-	private boolean checkForFile(File folder, String name, boolean hd, String extension, boolean variableDash, boolean variableNoDash, boolean custom, boolean customPrefix){
-		boolean match = false;
+	private File checkForFile(File folder, String name, boolean hd, String extension, boolean variableDash, boolean variableNoDash, boolean custom, boolean customPrefix){
+		File match;
 		if(hd){
+			if(hasSD == null || hasSD == true){
+				File sdver = checkForFile(folder, name, false, extension, variableDash, variableNoDash, custom, customPrefix);
+				if(sdver != null && isEmptyImage(sdver)){
+					ignored = true;
+					return null;
+				}
+			}
 			extension = "@2x." + extension;
 		}else{
 			extension = "." + extension;
 		}
-		if(new File(folder, name + extension).exists()){
-			return true;
+		if((match = new File(folder, name + extension)).exists()){
+			return match;
 		}
-		if(variableDash && new File(folder, name + "-0" + extension).exists()){
-			return true;
+		if(variableDash && (match = new File(folder, name + "-0" + extension)).exists()){
+			return match;
 		}
-		if(variableNoDash && new File(folder, name + "0" + extension).exists()){
-			return true;
+		if(variableNoDash && (match = new File(folder, name + "0" + extension)).exists()){
+			return match;
 		}
-		if(!match && (custom || customPrefix) && this.customID != -1){
+		if((custom || customPrefix) && this.customID != -1){
 			if(customPrefix){
 				return checkForFile(SkinChecker.customPathing.get(this.customID), name, hd, extension, variableDash, variableNoDash, false, false);
 			}else{
 				File f = SkinChecker.customPathing.get(this.customID);
-				return f == null ? false : checkForFile(f.getParentFile(), f.getName(), hd, extension, variableDash, variableNoDash, false, false);
+				return f == null ? null : checkForFile(f.getParentFile(), f.getName(), hd, extension, variableDash, variableNoDash, false, false);
 			}
 		}
-		return match;
+		return null;
+	}
+	
+	private static boolean isEmptyImage(File img){
+		if(img.length() > 4096){
+			return false;
+		}
+		try {
+			BufferedImage image = ImageIO.read(img);
+			return image.getHeight() + image.getWidth() == 2;
+		} catch (IOException e) {
+			return false;
+		}
 	}
 	
 	/*private boolean checkForFile(File folder, String name, boolean hd, final String extension, boolean variableDash, boolean variableNoDash, boolean custom, boolean customPrefix){
