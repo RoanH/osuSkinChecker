@@ -19,24 +19,24 @@ public final class SoundInfo implements Info{
 	 * <code>-n</code> to the name. Where <code>n</code> is an
 	 * integer <code>>= 0</code>.
 	 */
-	protected boolean variableWithDash = false;
+	private boolean variableWithDash = false;
 	/**
 	 * Boolean to store whether or not a file
 	 * exists that matches the criteria specified
 	 * by this information object. This variable is
 	 * <code>null</code> if no checks have been executed yet.
 	 */
-	protected Boolean exists = null;
+	private Boolean exists = null;
 	/**
 	 * A list of allowed extensions for the
 	 * file described by this information object
 	 */
-	protected String[] extensions;
+	private String[] extensions;
 	/**
 	 * The base name of the file described
 	 * by this information object
 	 */
-	protected String name;
+	private String name;
 	
 	/**
 	 * Creates an information object

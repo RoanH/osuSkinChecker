@@ -7,23 +7,104 @@ import java.util.Locale;
 
 import javax.imageio.ImageIO;
 
+/**
+ * ImageInfo objects are used to describe an
+ * image file and check whether or not a
+ * matching image file exists.
+ * @author Roan
+ * @see Info
+ * @see ImageModel
+ */
 public final class ImageInfo implements Info{
-	boolean singleImage = false;
-	boolean legacy = false;
-	boolean variableWithDash = false;
-	boolean variableWithoutDash = false;
-	boolean customPath = false;
-	boolean customPathPrefix = false;
-	int customID = -1;
-	Boolean hasSD = null;
-	Boolean hasHD = null;
-	boolean ignored = false;
-	boolean animated = false;
-
-	String[] extensions;
-
-	String name;
+	/**
+	 * Whether or not the SD/HD distinction
+	 * does not apply to the image described
+	 * by this information object
+	 */
+	private boolean singleImage = false;
+	/**
+	 * Whether or not the image described by this
+	 * information object is a legacy file and not 
+	 * used anymore by recent skins.
+	 */
+	private boolean legacy = false;
+	/**
+	 * Whether or not multiple versions of the
+	 * image described by this information
+	 * object can exist, where extra files are named by adding
+	 * <code>-n</code> to the name. Where <code>n</code> is an
+	 * integer <code>>= 0</code>.
+	 */
+	protected boolean variableWithDash = false;
+	/**
+	 * Whether or not multiple versions of the
+	 * image described by this information
+	 * object can exist, where extra files are named by adding
+	 * <code>n</code> to the name. Where <code>n</code> is an
+	 * integer <code>>= 0</code>.
+	 */
+	protected boolean variableWithoutDash = false;
+	 /**
+	  * Whether or not the image could be located in a 
+	  * different folder relative to the base folder
+	  */
+	private boolean customPath = false;
+	/**
+	 * Whether or not the image file itself could
+	 * be located somewhere else relative to the base folder
+	 */
+	private boolean customPathPrefix = false;
+	/**
+	 * If there is a possible custom path for the file
+	 * described by this object then this ID specifies
+	 * the alternative location to search for a matching
+	 * file
+	 */
+	private int customID = -1;
+	/**
+	 * Boolean to store whether or not a SD image
+	 * exists that matches the criteria specified
+	 * by this information object. This variable is
+	 * <code>null</code> if no checks have been executed yet.
+	 */
+	private Boolean hasSD = null;
+	/**
+	 * Boolean to store whether or not a HD image
+	 * exists that matches the criteria specified
+	 * by this information object. This variable is
+	 * <code>null</code> if no checks have been executed yet.
+	 */
+	private Boolean hasHD = null;
+	/**
+	 * Boolean to store whether or not a missing
+	 * HD image for a file could be ignored because
+	 * its SD variant is empty
+	 */
+	protected boolean ignored = false;
+	/**
+	 * Boolean to store whether or not the match
+	 * found for this image is animated
+	 */
+	protected boolean animated = false;
+	/**
+	 * A list of allowed extensions for the
+	 * file described by this information object
+	 */
+	private String[] extensions;
+	/**
+	 * The base name of the file described
+	 * by this information object
+	 */
+	private String name;
 	
+	/**
+	 * Creates an information object
+	 * for a file as specified by its
+	 * database entry.
+	 * @param line The database entry
+	 *        specifying the properties
+	 *        for this information object
+	 */
 	public ImageInfo(String line){
 		String[] data = line.split(" ");
 		if(!data[0].equals("-")){
