@@ -6,6 +6,7 @@ import java.util.List;
  * This class determines how a list of
  * {@link ImageInfo} objects are displayed.
  * @author Roan
+ * @see Model
  */
 public class ImageModel extends Model{
 	/**

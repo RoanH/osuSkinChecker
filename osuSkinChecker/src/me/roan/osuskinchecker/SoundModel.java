@@ -6,6 +6,7 @@ import java.util.List;
  * This class determines how a list of
  * {@link SoundInfo} objects are displayed.
  * @author Roan
+ * @see Model
  */
 public class SoundModel extends Model{
 	/**
