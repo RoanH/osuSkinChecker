@@ -195,7 +195,7 @@ public class SkinChecker {
 		JPanel buttons = new JPanel(new GridLayout(3, 1));
 		JButton openSkin = new JButton("Open skin");
 		JButton openFolder = new JButton("Open skin folder for the current skin");
-		JButton recheck = new JButton("Re-check skin");
+		JButton recheck = new JButton("Recheck skin");
 		buttons.add(openSkin);
 		buttons.add(openFolder);
 		buttons.add(recheck);
