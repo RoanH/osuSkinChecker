@@ -2,6 +2,7 @@ package me.roan.osuskinchecker;
 
 import java.awt.BorderLayout;
 import java.awt.Desktop;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
@@ -21,6 +22,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -30,6 +32,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 public class SkinChecker {
@@ -55,6 +58,9 @@ public class SkinChecker {
 	static Map<Integer, File> customPathing = new HashMap<Integer, File>();
 	private static List<Model> listeners = new ArrayList<Model>();
 	private static final JFrame frame = new JFrame("Skin Checker for osu!");
+	private static JLabel skin;
+	private static JTabbedPane imageTabs;
+	private static JTabbedPane soundTabs;
 
 	public static void main(String[] args){
 		try {
@@ -69,29 +75,24 @@ public class SkinChecker {
 		
 		imageTabs = new JTabbedPane();
 		soundTabs = new JTabbedPane();
+		skin = new JLabel("<html><i>no skin selected</i></html>");
 		buildGUI();
-		
-		try {
-			//new File("C:\\Users\\RoanH\\Documents\\osu!\\Skins\\Roan v4.0")
-			checkSkin();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
-	
-	private static JTabbedPane imageTabs;
-	private static JTabbedPane soundTabs;
 
-	public static void checkSkin() throws IOException{
-		JFileChooser chooser = new JFileChooser();
-		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		chooser.setMultiSelectionEnabled(false);
-		if(chooser.showOpenDialog(frame) != JFileChooser.APPROVE_OPTION){
-			JOptionPane.showMessageDialog(frame, "No skin selected!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
-			return;
+	public static void checkSkin(File folder) throws IOException{
+		if(folder == null){
+			JFileChooser chooser = new JFileChooser();
+			chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			chooser.setMultiSelectionEnabled(false);
+			if(chooser.showOpenDialog(frame) != JFileChooser.APPROVE_OPTION){
+				JOptionPane.showMessageDialog(frame, "No skin selected!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			skinFolder = chooser.getSelectedFile();
+		}else{
+			skinFolder = folder;
 		}
-		skinFolder = chooser.getSelectedFile();
+		skin.setText(skinFolder.getName());
 		
 		if(!new File(skinFolder, "skin.ini").exists()){
 			JOptionPane.showMessageDialog(frame, "This folder doesn't have a skin.ini file.\nWithout this file this skin won't even be recognized as a skin!\nAdd a skin.ini and then run this program again.", "Skin Checker", JOptionPane.ERROR_MESSAGE);
@@ -223,15 +224,17 @@ public class SkinChecker {
 		categories.setBorder(BorderFactory.createTitledBorder("Files"));
 		content.add(categories);
 		
-		JPanel controls = new JPanel(new GridLayout(4, 1, 0, 0));
-		JCheckBox chd = new JCheckBox("Report files that are missing a HD version (only applies to images).", false);
-		JCheckBox csd = new JCheckBox("Report files that are missing a SD version (only applies to images).", true);
+		JPanel controls = new JPanel(new GridLayout(5, 1, 0, 0));
+		JCheckBox chd = new JCheckBox("Report images that are missing a HD version.", false);
+		JCheckBox csd = new JCheckBox("Report images that are missing a SD version.", true);
 		JCheckBox call = new JCheckBox("Report all files (show files that aren't missing in the skin).", false);
 		JCheckBox clegacy = new JCheckBox("Report missing legacy files.", false);
+		JCheckBox cempty = new JCheckBox("Ignore a missing HD image if an 'empty' SD image exists.", false);//TODO implement
 		controls.add(chd);
 		controls.add(csd);
 		controls.add(call);
 		controls.add(clegacy);
+		controls.add(cempty);
 		chd.addActionListener((e)->{
 			checkHD = chd.isSelected();
 			for(Model m : listeners){
@@ -257,8 +260,59 @@ public class SkinChecker {
 			}
 		});
 		
+		JPanel buttons = new JPanel(new GridLayout(3, 1));
+		JButton openSkin = new JButton("Open skin");
+		JButton openFolder = new JButton("Open skin folder for the current skin");
+		JButton recheck = new JButton("Re-check skin");
+		buttons.add(openSkin);
+		buttons.add(openFolder);
+		buttons.add(recheck);
+		openSkin.addActionListener((e)->{
+			try {
+				checkSkin(null);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		});
+		openFolder.addActionListener((e)->{
+			if(skinFolder != null){
+				try {
+					Desktop.getDesktop().open(skinFolder);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}else{
+				JOptionPane.showMessageDialog(frame, "No skin currently selected!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+			}
+		});
+		recheck.addActionListener((e)->{
+			if(skinFolder != null){
+				try {
+					checkSkin(skinFolder);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}else{
+				JOptionPane.showMessageDialog(frame, "No skin currently selected!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+			}
+		});
+		
+		JPanel flow = new JPanel();
+		flow.setBorder(BorderFactory.createTitledBorder("Controls"));
+		flow.add(buttons);
+		
+		JPanel side = new JPanel(new BorderLayout());
+		skin.setBorder(BorderFactory.createTitledBorder("Skin"));
+		skin.setFont(new Font("Dialog", Font.BOLD, 12));
+		skin.setHorizontalAlignment(SwingConstants.CENTER);
+		side.add(flow, BorderLayout.CENTER);
+		side.add(skin, BorderLayout.PAGE_END);
+		
+		JPanel controlPanel = new JPanel(new BorderLayout());
+		controlPanel.add(controls, BorderLayout.CENTER);
+		controlPanel.add(side, BorderLayout.LINE_END);
 		controls.setBorder(BorderFactory.createTitledBorder("Filter"));
-		content.add(controls, BorderLayout.PAGE_START);
+		content.add(controlPanel, BorderLayout.PAGE_START);
 		
 		JPanel links = new JPanel(new GridLayout(2, 1, 0, 4));
 		links.setBorder(BorderFactory.createTitledBorder("Links"));
