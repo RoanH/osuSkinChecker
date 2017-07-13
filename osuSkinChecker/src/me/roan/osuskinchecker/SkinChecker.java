@@ -1,14 +1,18 @@
 package me.roan.osuskinchecker;
 
 import java.awt.BorderLayout;
+import java.awt.Desktop;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +24,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -251,9 +256,83 @@ public class SkinChecker {
 				m.updateView();
 			}
 		});
-
+		
 		controls.setBorder(BorderFactory.createTitledBorder("Filter"));
 		content.add(controls, BorderLayout.PAGE_START);
+		
+		JPanel links = new JPanel(new GridLayout(2, 1, 0, 4));
+		links.setBorder(BorderFactory.createTitledBorder("Links"));
+		JLabel forumPost = new JLabel("<html>Forum post: <font color=blue><u><i></i></u></font></html>");//TODO fill in forum link
+		JLabel sheet = new JLabel("<html>Spreadsheet with information on each file: <font color=blue><u><i>https://docs.google.com/spreadsheets/d/1bhnV-CQRMy3Z0npQd9XSoTdkYxz0ew5e648S00qkJZ8/edit</font></i></u></html>");
+		links.add(forumPost);
+		links.add(sheet);
+		forumPost.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(Desktop.isDesktopSupported()){
+					try {//TODO fill in link
+						Desktop.getDesktop().browse(new URL("").toURI());
+					} catch (IOException | URISyntaxException e1) {
+						//pity
+					}
+				}
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+		});
+		sheet.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(Desktop.isDesktopSupported()){
+					try {
+						Desktop.getDesktop().browse(new URL("https://docs.google.com/spreadsheets/d/1bhnV-CQRMy3Z0npQd9XSoTdkYxz0ew5e648S00qkJZ8/edit").toURI());
+					} catch (IOException | URISyntaxException e1) {
+						//pity
+					}
+				}
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+		});
+		JPanel lower = new JPanel(new BorderLayout());
+		lower.add(links, BorderLayout.CENTER);
+		JPanel version = new JPanel(new GridLayout(2, 1, 0, 4));
+		version.add(new JLabel("Running version: v1.0"));//XXX version
+		String ver = checkVersion();
+		version.add(new JLabel("Latest version: " + (ver == null ? "Unknown" : ver)));
+		version.setBorder(BorderFactory.createTitledBorder("Version"));
+		lower.add(version, BorderLayout.LINE_END);
+		content.add(lower, BorderLayout.PAGE_END);
 		
 		frame.add(content);
 		frame.setSize(Toolkit.getDefaultToolkit().getScreenSize().width / 2, Toolkit.getDefaultToolkit().getScreenSize().height / 2);
