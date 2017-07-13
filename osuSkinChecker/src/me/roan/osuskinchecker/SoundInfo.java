@@ -3,14 +3,49 @@ package me.roan.osuskinchecker;
 import java.io.File;
 import java.util.Locale;
 
+/**
+ * SoundInfo objects are used to describe a
+ * sound file and check whether or not a
+ * matching sound file exists.
+ * @author Roan
+ * @see Info
+ * @see SoundModel
+ */
 public final class SoundInfo implements Info{
-	boolean variableWithDash = false;
-	Boolean exists = null;
-
-	String[] extensions;
-
-	String name;
+	/**
+	 * Whether or not multiple versions of the
+	 * sound file described by this information
+	 * object can exist, where extra files are named by adding
+	 * <code>-n</code> to the name. Where <code>n</code> is an
+	 * integer <code>>= 0</code>.
+	 */
+	protected boolean variableWithDash = false;
+	/**
+	 * Boolean to store whether or not a file
+	 * exists that matches the criteria specified
+	 * by this information object. This variable is
+	 * <code>null</code> if no checks have been executed yet.
+	 */
+	protected Boolean exists = null;
+	/**
+	 * A list of allowed extensions for the
+	 * file described by this information object
+	 */
+	protected String[] extensions;
+	/**
+	 * The base name of the file described
+	 * by this information object
+	 */
+	protected String name;
 	
+	/**
+	 * Creates an information object
+	 * for a file as specified by its
+	 * database entry.
+	 * @param line The database entry
+	 *        specifying the properties
+	 *        for this information object
+	 */
 	public SoundInfo(String line){
 		String[] data = line.split(" ");
 		if(!data[0].equals("-")){
@@ -69,7 +104,7 @@ public final class SoundInfo implements Info{
 	 * @param name The base name of the file
 	 * @param extension The extension of the file
 	 * @param variableDash Whether or not multiple versions of the
-	 *        image can exist, where extra files are named by adding
+	 *        sound file can exist, where extra files are named by adding
 	 *        <code>-n</code> to the name. Where <code>n</code> is an
 	 *        integer <code>>= 0</code>.
 	 * @return True if a file exists that matches the given conditions
