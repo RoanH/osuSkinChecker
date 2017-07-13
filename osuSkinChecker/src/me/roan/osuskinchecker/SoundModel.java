@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * This class determines how a list of
- * {@link SoundInfo} objects is displayed.
+ * {@link SoundInfo} objects are displayed.
  * @author Roan
  */
 public class SoundModel extends Model{

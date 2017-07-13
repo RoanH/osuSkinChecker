@@ -2,17 +2,31 @@ package me.roan.osuskinchecker;
 
 import java.util.List;
 
+/**
+ * This class determines how a list of
+ * {@link ImageInfo} objects are displayed.
+ * @author Roan
+ */
 public class ImageModel extends Model{
-	
+	/**
+	 * Serial ID
+	 */
+	private static final long serialVersionUID = -4101484259624457322L;
+
+	/**
+	 * Constructs a new ImageModel with
+	 * the given list of data to display.
+	 * @param list A list with data to display
+	 *        the {@link Info} objects should
+	 *        be of the {@link ImageInfo} type.
+	 * @see Info
+	 * @see Model
+	 * @see ImageInfo
+	 */
 	public ImageModel(List<Info> list) {
 		super(list);
 	}
 
-	/**
-	 * Serial ID
-	 */
-	private static final long serialVersionUID = 1L;
-	
 	@Override
 	public int getColumnCount(){
 		return 3;
@@ -44,7 +58,7 @@ public class ImageModel extends Model{
 				return ((ImageInfo)view.get(row)).hasHDVersion();
 			}
 		}catch(Exception e){
-			return "error";
+			return "Error";
 		}
 		return null;
 	}	
