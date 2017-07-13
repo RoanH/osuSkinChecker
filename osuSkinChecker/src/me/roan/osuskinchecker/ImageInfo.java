@@ -77,7 +77,7 @@ public final class ImageInfo implements Info{
 	}
 	
 	/**
-	 * Check whether or not a SD
+	 * Checks whether or not a SD
 	 * version exists of the image
 	 * described by this information
 	 * object.
@@ -99,7 +99,7 @@ public final class ImageInfo implements Info{
 	}
 	
 	/**
-	 * Check whether or not a HD
+	 * Checks whether or not a HD
 	 * version exists of the image
 	 * described by this information
 	 * object. An image is considered 
