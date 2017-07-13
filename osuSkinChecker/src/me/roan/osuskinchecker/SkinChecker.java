@@ -35,35 +35,88 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
+/**
+ * This program can be used to see what
+ * elements a skin skins and to see what
+ * elements are still missing from a skin.
+ * It can also be used to find missing HD
+ * images or vice versa.
+ * @author Roan
+ */
 public class SkinChecker {
-
-	//https://docs.google.com/spreadsheets/d/1bhnV-CQRMy3Z0npQd9XSoTdkYxz0ew5e648S00qkJZ8/edit#gid=2074725196
-
-	//options:
-	//N=variable amount
-	//M=variable amount not preceded by a -
-	//S=single image only no higher/lower res
-	//C=custom path
-	//P=custom path prefix
-	//L=legacy
-	//-= n/a
-
+	/**
+	 * Layered map with the information
+	 * about all the images
+	 */
 	private static final Map<String, Map<String, List<Info>>> imagesMap = new HashMap<String, Map<String, List<Info>>>();
+	/**
+	 * Layered map with the information
+	 * about all the sound files
+	 */
 	private static final Map<String, Map<String, List<Info>>> soundsMap = new HashMap<String, Map<String, List<Info>>>();
-	static File skinFolder;
-	static boolean checkSD = true;
-	static boolean checkHD = false;
-	static boolean checkLegacy = false;
-	static boolean showAll = false;
-	static boolean ignoreEmpty = true;
-	static Map<Integer, File> customPathing = new HashMap<Integer, File>();
+	/**
+	 * Folder of the skin currently being checked
+	 */
+	protected static File skinFolder;
+	/**
+	 * Whether or not to check for missing SD images
+	 */
+	protected static boolean checkSD = true;
+	/**
+	 * Whether or not to check for missing HD images
+	 */
+	protected static boolean checkHD = false;
+	/**
+	 * Whether or not to check for missing legacy images
+	 */
+	protected static boolean checkLegacy = false;
+	/**
+	 * Whether or not to show all files regardless of whether
+	 * they are present or not
+	 */
+	protected static boolean showAll = false;
+	/**
+	 * Whether or not to ignore missing HD files of
+	 * images that have an empty SD image
+	 */
+	protected static boolean ignoreEmpty = true;
+	/**
+	 * Map, mapping all the custom path ID's to the File
+	 * specified in the skin.ini
+	 */
+	protected static Map<Integer, File> customPathing = new HashMap<Integer, File>();
+	/**
+	 * List of all the tables model that is used to
+	 * update the tables when the filter changes
+	 */
 	private static List<Model> listeners = new ArrayList<Model>();
+	/**
+	 * Main frame
+	 */
 	private static final JFrame frame = new JFrame("Skin Checker for osu!");
+	/**
+	 * The JLabel that displays the name of the skin
+	 * currently being checked
+	 */
 	private static JLabel skin;
+	/**
+	 * The JTabbedPane that lists all the images
+	 */
 	private static JTabbedPane imageTabs;
+	/**
+	 * The JTabbedPane that lists all the sound files
+	 */
 	private static JTabbedPane soundTabs;
+	/**
+	 * The JFileChooser used to ask the user
+	 * for skin
+	 */
 	private static JFileChooser chooser;
 
+	/**
+	 * Main method
+	 * @param args No valid command line options
+	 */
 	public static void main(String[] args){
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -84,138 +137,9 @@ public class SkinChecker {
 		buildGUI();
 	}
 
-	public static void checkSkin(File folder) throws IOException{
-		if(folder == null){
-			if(chooser.showOpenDialog(frame) != JFileChooser.APPROVE_OPTION){
-				JOptionPane.showMessageDialog(frame, "No skin selected!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-			skinFolder = chooser.getSelectedFile();
-		}else{
-			skinFolder = folder;
-		}
-		skin.setText(skinFolder.getName());
-		
-		if(!new File(skinFolder, "skin.ini").exists()){
-			JOptionPane.showMessageDialog(frame, "This folder doesn't have a skin.ini file.\nWithout this file this skin won't even be recognized as a skin!\nAdd a skin.ini and then run this program again.", "Skin Checker", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		
-		mapToTabs(imageTabs, imagesMap);
-		mapToTabs(soundTabs, soundsMap);
-			
-		parseINI();
-	}
-	
 	/**
-	 * Check the SkinChecker version to see
-	 * if we are running the latest version
-	 * @return The latest version
+	 * Builds the GUI
 	 */
-	private static final String checkVersion(){
-		try{ 			
-			HttpURLConnection con = (HttpURLConnection) new URL("https://api.github.com/repos/RoanH/osuSkinChecker/tags").openConnection(); 			
-			con.setRequestMethod("GET"); 		
-			con.setConnectTimeout(10000); 					   
-			BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream())); 	
-			String line = reader.readLine(); 		
-			reader.close(); 	
-			String[] versions = line.split("\"name\":\"v");
-			int max_main = 3;
-			int max_sub = 0;
-			String[] tmp;
-			for(int i = 1; i < versions.length; i++){
-				tmp = versions[i].split("\",\"")[0].split("\\.");
-				if(Integer.parseInt(tmp[0]) > max_main){
-					max_main = Integer.parseInt(tmp[0]);
-					max_sub = Integer.parseInt(tmp[1]);
-				}else if(Integer.parseInt(tmp[0]) < max_main){
-					continue;
-				}else{
-					if(Integer.parseInt(tmp[1]) > max_sub){
-						max_sub = Integer.parseInt(tmp[1]);
-					}
-				}
-			}
-			return "v" + max_main + "." + max_sub;
-		}catch(Exception e){ 	
-			return null;
-			//No Internet access or something else is wrong,
-			//No problem though since this isn't a critical function
-		}
-	}
-	
-	private static void parseINI() throws IOException{
-		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(skinFolder, "skin.ini"))));
-		String line;
-		while((line = reader.readLine()) != null){
-			if(line.startsWith("ScorePrefix:") || line.startsWith("ComboPrefix:")){
-				customPathing.put(2, new File(skinFolder, line.substring(12).trim()));
-			}else if(line.startsWith("HitCirclePrefix:")){
-				customPathing.put(1, new File(skinFolder, line.substring(16).trim()));
-			}else if(line.trim().equals("[Mania]")){
-				int keys = -1;
-				while(true){
-					reader.mark(100);
-					line = reader.readLine();
-					if(line == null || line.startsWith("[")){
-						reader.reset();
-						break;
-					}
-					String[] args = line.split(":");
-					if(args[0].startsWith("Keys")){
-						keys = Integer.parseInt(args[1].trim());
-					}else if(args[0].startsWith("KeyImage")){
-						if(args[0].endsWith("D")){
-							customPathing.put(keys * 100 + 22, new File(skinFolder, args[1].trim()));
-						}else{
-							customPathing.put(keys * 100 + 21, new File(skinFolder, args[1].trim()));
-						}
-					}else if(args[0].startsWith("NoteImage")){
-						if(args[0].endsWith("H")){
-							customPathing.put(keys * 100 + 32, new File(skinFolder, args[1].trim()));
-						}else if(args[0].endsWith("T")){
-							customPathing.put(keys * 100 + 33, new File(skinFolder, args[1].trim()));
-						}else if(args[0].endsWith("L")){
-							customPathing.put(keys * 100 + 34, new File(skinFolder, args[1].trim()));
-						}else{
-							customPathing.put(keys * 100 + 31, new File(skinFolder, args[1].trim()));
-						}
-					}else if(args[0].startsWith("StageLeft")){
-						customPathing.put(keys * 100 + 11, new File(skinFolder, args[1].trim()));
-					}else if(args[0].startsWith("StageRight")){
-						customPathing.put(keys * 100 + 12, new File(skinFolder, args[1].trim()));
-					}else if(args[0].startsWith("StageBottom")){
-						customPathing.put(keys * 100 + 13, new File(skinFolder, args[1].trim()));
-					}else if(args[0].startsWith("StageHint")){
-						customPathing.put(keys * 100 + 14, new File(skinFolder, args[1].trim()));
-					}else if(args[0].startsWith("StageLight")){
-						customPathing.put(keys * 100 + 15, new File(skinFolder, args[1].trim()));
-					}else if(args[0].startsWith("LightingN")){
-						customPathing.put(keys * 100 + 17, new File(skinFolder, args[1].trim()));
-					}else if(args[0].startsWith("LightingL")){
-						customPathing.put(keys * 100 + 18, new File(skinFolder, args[1].trim()));
-					}else if(args[0].startsWith("WarningArrow")){
-						customPathing.put(keys * 100 + 16, new File(skinFolder, args[1].trim()));
-					}else if(args[0].startsWith("Hit0")){
-						customPathing.put(keys * 100 + 41, new File(skinFolder, args[1].trim()));
-					}else if(args[0].startsWith("Hit50")){
-						customPathing.put(keys * 100 + 42, new File(skinFolder, args[1].trim()));
-					}else if(args[0].startsWith("Hit100")){
-						customPathing.put(keys * 100 + 43, new File(skinFolder, args[1].trim()));
-					}else if(args[0].startsWith("Hit200")){
-						customPathing.put(keys * 100 + 44, new File(skinFolder, args[1].trim()));
-					}else if(args[0].startsWith("Hit300")){
-						customPathing.put(keys * 100 + 45, new File(skinFolder, args[1].trim()));
-					}else if(args[0].startsWith("Hit300g")){
-						customPathing.put(keys * 100 + 6, new File(skinFolder, args[1].trim()));
-					}
-				}
-			}
-		}
-		reader.close();
-	}
-
 	public static void buildGUI(){
 		JPanel content = new JPanel(new BorderLayout());
 		JTabbedPane categories = new JTabbedPane();
@@ -402,7 +326,119 @@ public class SkinChecker {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
+	
+	/**
+	 * Check the given skin folder and
+	 * displays the results in the GUI
+	 * @param folder The skin folder to check
+	 * @throws IOException When an IOException occurs
+	 */
+	public static void checkSkin(File folder) throws IOException{
+		if(folder == null){
+			if(chooser.showOpenDialog(frame) != JFileChooser.APPROVE_OPTION){
+				JOptionPane.showMessageDialog(frame, "No skin selected!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			skinFolder = chooser.getSelectedFile();
+		}else{
+			skinFolder = folder;
+		}
+		skin.setText(skinFolder.getName());
+		
+		if(!new File(skinFolder, "skin.ini").exists()){
+			JOptionPane.showMessageDialog(frame, "This folder doesn't have a skin.ini file.\nWithout this file this skin won't even be recognized as a skin!\nAdd a skin.ini and then run this program again.", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+		mapToTabs(imageTabs, imagesMap);
+		mapToTabs(soundTabs, soundsMap);
+			
+		parseINI();
+	}
+	
+	/**
+	 * This subroutine read the skin.ini file and maps
+	 * custom file paths to a map with a specific ID
+	 * @throws IOException When an IOException occurs
+	 */
+	private static void parseINI() throws IOException{
+		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(skinFolder, "skin.ini"))));
+		String line;
+		while((line = reader.readLine()) != null){
+			if(line.startsWith("ScorePrefix:") || line.startsWith("ComboPrefix:")){
+				customPathing.put(2, new File(skinFolder, line.substring(12).trim()));
+			}else if(line.startsWith("HitCirclePrefix:")){
+				customPathing.put(1, new File(skinFolder, line.substring(16).trim()));
+			}else if(line.trim().equals("[Mania]")){
+				int keys = -1;
+				while(true){
+					reader.mark(100);
+					line = reader.readLine();
+					if(line == null || line.startsWith("[")){
+						reader.reset();
+						break;
+					}
+					String[] args = line.split(":");
+					if(args[0].startsWith("Keys")){
+						keys = Integer.parseInt(args[1].trim());
+					}else if(args[0].startsWith("KeyImage")){
+						if(args[0].endsWith("D")){
+							customPathing.put(keys * 100 + 22, new File(skinFolder, args[1].trim()));
+						}else{
+							customPathing.put(keys * 100 + 21, new File(skinFolder, args[1].trim()));
+						}
+					}else if(args[0].startsWith("NoteImage")){
+						if(args[0].endsWith("H")){
+							customPathing.put(keys * 100 + 32, new File(skinFolder, args[1].trim()));
+						}else if(args[0].endsWith("T")){
+							customPathing.put(keys * 100 + 33, new File(skinFolder, args[1].trim()));
+						}else if(args[0].endsWith("L")){
+							customPathing.put(keys * 100 + 34, new File(skinFolder, args[1].trim()));
+						}else{
+							customPathing.put(keys * 100 + 31, new File(skinFolder, args[1].trim()));
+						}
+					}else if(args[0].startsWith("StageLeft")){
+						customPathing.put(keys * 100 + 11, new File(skinFolder, args[1].trim()));
+					}else if(args[0].startsWith("StageRight")){
+						customPathing.put(keys * 100 + 12, new File(skinFolder, args[1].trim()));
+					}else if(args[0].startsWith("StageBottom")){
+						customPathing.put(keys * 100 + 13, new File(skinFolder, args[1].trim()));
+					}else if(args[0].startsWith("StageHint")){
+						customPathing.put(keys * 100 + 14, new File(skinFolder, args[1].trim()));
+					}else if(args[0].startsWith("StageLight")){
+						customPathing.put(keys * 100 + 15, new File(skinFolder, args[1].trim()));
+					}else if(args[0].startsWith("LightingN")){
+						customPathing.put(keys * 100 + 17, new File(skinFolder, args[1].trim()));
+					}else if(args[0].startsWith("LightingL")){
+						customPathing.put(keys * 100 + 18, new File(skinFolder, args[1].trim()));
+					}else if(args[0].startsWith("WarningArrow")){
+						customPathing.put(keys * 100 + 16, new File(skinFolder, args[1].trim()));
+					}else if(args[0].startsWith("Hit0")){
+						customPathing.put(keys * 100 + 41, new File(skinFolder, args[1].trim()));
+					}else if(args[0].startsWith("Hit50")){
+						customPathing.put(keys * 100 + 42, new File(skinFolder, args[1].trim()));
+					}else if(args[0].startsWith("Hit100")){
+						customPathing.put(keys * 100 + 43, new File(skinFolder, args[1].trim()));
+					}else if(args[0].startsWith("Hit200")){
+						customPathing.put(keys * 100 + 44, new File(skinFolder, args[1].trim()));
+					}else if(args[0].startsWith("Hit300")){
+						customPathing.put(keys * 100 + 45, new File(skinFolder, args[1].trim()));
+					}else if(args[0].startsWith("Hit300g")){
+						customPathing.put(keys * 100 + 6, new File(skinFolder, args[1].trim()));
+					}
+				}
+			}
+		}
+		reader.close();
+	}
 
+	/**
+	 * Converts the given map of information
+	 * objects to a set of tabbedpanes for
+	 * the GUI
+	 * @param tabs The tabbed pane to map the data to
+	 * @param map The data to map to the tabs
+	 */
 	private static void mapToTabs(JTabbedPane tabs, Map<String, Map<String, List<Info>>> map){
 		tabs.removeAll();
 		for(Entry<String, Map<String, List<Info>>> entry : map.entrySet()){
@@ -414,6 +450,13 @@ public class SkinChecker {
 		}
 	}
 	
+	/**
+	 * Creates a JTable with the correct model
+	 * to display the given list of information
+	 * objects and registers listeners.
+	 * @param info The table data
+	 * @return The newly created JTable
+	 */
 	private static JTable getTableData(final List<Info> info){
 		JTable table = new JTable();
 		Model model = info.get(0) instanceof ImageInfo ? new ImageModel(info) : (info.get(0) instanceof SoundInfo ? new SoundModel(info) : null);
@@ -422,6 +465,10 @@ public class SkinChecker {
 		return table;
 	}
 
+	/**
+	 * Reads all the data from the data files to layered maps
+	 * @throws IOException When an IO Exception occurs
+	 */
 	private static void readDatabase() throws IOException{
 		imagesMap.put("Menu", readDataFile("menu.txt", false));
 		imagesMap.put("osu!", readDataFile("osu.txt", false));
@@ -436,6 +483,16 @@ public class SkinChecker {
 		soundsMap.put("Taiko", readDataFile("taiko-sounds.txt", true));
 	}
 
+	/**
+	 * Read the internal database to create a layered
+	 * mapping of all the files in a given database file
+	 * @param name The name of the database file to read
+	 * @param isSound Whether or not the given database file
+	 *        contains sound entries. (this is used to distinguish
+	 *        between image and sound files)
+	 * @return A layered map of all the file descriptors
+	 * @throws IOException When an IOException occurs
+	 */
 	private static Map<String, List<Info>> readDataFile(String name, boolean isSound) throws IOException{
 		Map<String, List<Info>> data = new HashMap<String, List<Info>>();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(name)));
@@ -456,5 +513,43 @@ public class SkinChecker {
 			}
 		}
 		return data;
+	}
+	
+	/**
+	 * Check the SkinChecker version to see
+	 * if we are running the latest version
+	 * @return The latest version
+	 */
+	private static final String checkVersion(){
+		try{ 			
+			HttpURLConnection con = (HttpURLConnection) new URL("https://api.github.com/repos/RoanH/osuSkinChecker/tags").openConnection(); 			
+			con.setRequestMethod("GET"); 		
+			con.setConnectTimeout(10000); 					   
+			BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream())); 	
+			String line = reader.readLine(); 		
+			reader.close(); 	
+			String[] versions = line.split("\"name\":\"v");
+			int max_main = 3;
+			int max_sub = 0;
+			String[] tmp;
+			for(int i = 1; i < versions.length; i++){
+				tmp = versions[i].split("\",\"")[0].split("\\.");
+				if(Integer.parseInt(tmp[0]) > max_main){
+					max_main = Integer.parseInt(tmp[0]);
+					max_sub = Integer.parseInt(tmp[1]);
+				}else if(Integer.parseInt(tmp[0]) < max_main){
+					continue;
+				}else{
+					if(Integer.parseInt(tmp[1]) > max_sub){
+						max_sub = Integer.parseInt(tmp[1]);
+					}
+				}
+			}
+			return "v" + max_main + "." + max_sub;
+		}catch(Exception e){ 	
+			return null;
+			//No Internet access or something else is wrong,
+			//No problem though since this isn't a critical function
+		}
 	}
 }

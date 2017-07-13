@@ -1,0 +1,37 @@
+Format for the .txt files that contain all the data about all the files.
+
+1. A new sub section (tab in the GUI) is denoted by starting a line with ===>
+   all subsequent entries will be placed under said section. 
+   
+2. Everything after the arrow (===>) will be considered as the title for the subsection.
+   
+3. File entries can only be declared after a subsection has been declared.
+
+4. The declaration of file entries takes the following format:
+   <options> [id] <extensions> <name>
+   
+5. Options are specified by a single letter.
+   Valid options are:
+   N - The file can consist of multiple files where subsequent files are denoted
+       by appending -n to the end of the filename.
+   M - Same as N but instead of appending -n only n is appended.
+   S - Indicates that the SD/HD distinction does not apply to this
+       file and that there will always be only one version of the file.
+   L - Indicates that this file is a legacy file and no longer used for
+       recent skins.
+   C - Indicates that the location for this file including the filename can be
+       set in the skin.ini and therefore might not exist in the root folder of the skin.
+       If the file could not be found in the root folder of the skin the custom path set
+       in the skin.ini file is checked.
+   P - Same as C but instead only the folder name can be specified in the skin.ini
+       and not the filename.
+   - - A dash means that not special options apply to the file.
+
+6. If the C or P option is used then the options section has to be followed directly by an
+   integer specifying the id of the skin.ini property that specifies the custom location for
+   the file. The id section should be omitted for files that don't have the C or P option.
+   
+7. The extension section is a list of extension that are allowed for the file. If more then on 
+   extension is possible they should be separated by a , (comma) and not spaces should be used.
+   
+8. The filename of the file is the name of the file without the extension, hd indicator and animation indicators.
