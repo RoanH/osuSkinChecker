@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -141,6 +142,10 @@ public class SkinChecker {
 	 * Builds the GUI
 	 */
 	public static void buildGUI(){
+		try {
+			frame.setIconImage(ImageIO.read(ClassLoader.getSystemResource("skinchecker.png")));
+		} catch (IOException e2) {
+		}
 		JPanel content = new JPanel(new BorderLayout());
 		JTabbedPane categories = new JTabbedPane();
 				
@@ -248,7 +253,7 @@ public class SkinChecker {
 		
 		JPanel links = new JPanel(new GridLayout(2, 1, 0, 4));
 		links.setBorder(BorderFactory.createTitledBorder("Links"));
-		JLabel forumPost = new JLabel("<html>Forum post: <font color=blue><u><i></i></u></font></html>");//TODO fill in forum link
+		JLabel forumPost = new JLabel("<html>Forum post: <font color=blue><u><i>https://osu.ppy.sh/community/forums/topics/617168</i></u></font></html>");
 		JLabel sheet = new JLabel("<html>Spreadsheet with information on each file: <font color=blue><u><i>https://docs.google.com/spreadsheets/d/1bhnV-CQRMy3Z0npQd9XSoTdkYxz0ew5e648S00qkJZ8/edit</font></i></u></html>");
 		links.add(forumPost);
 		links.add(sheet);
@@ -257,8 +262,8 @@ public class SkinChecker {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(Desktop.isDesktopSupported()){
-					try {//TODO fill in link
-						Desktop.getDesktop().browse(new URL("").toURI());
+					try {
+						Desktop.getDesktop().browse(new URL("https://osu.ppy.sh/community/forums/topics/617168").toURI());
 					} catch (IOException | URISyntaxException e1) {
 						//pity
 					}
@@ -529,7 +534,7 @@ public class SkinChecker {
 			String line = reader.readLine(); 		
 			reader.close(); 	
 			String[] versions = line.split("\"name\":\"v");
-			int max_main = 3;
+			int max_main = 0;
 			int max_sub = 0;
 			String[] tmp;
 			for(int i = 1; i < versions.length; i++){
