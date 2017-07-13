@@ -291,9 +291,9 @@ public class SkinChecker {
 				data.put(line.substring(4).trim(), writing);
 			}else{
 				if(isSound){
-					writing.add(new SoundInfo().init(line));
+					writing.add(new SoundInfo(line));
 				}else{
-					writing.add(new ImageInfo().init(line));
+					writing.add(new ImageInfo(line));
 				}
 			}
 		}

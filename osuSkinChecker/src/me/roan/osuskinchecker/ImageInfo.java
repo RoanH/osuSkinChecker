@@ -116,7 +116,7 @@ public final class ImageInfo implements Info{
 		return match;
 	}
 
-	public ImageInfo init(String line){
+	public ImageInfo(String line){
 		String[] data = line.split(" ");
 		if(!data[0].equals("-")){
 			char[] args = data[0].toUpperCase(Locale.ROOT).toCharArray();
@@ -147,6 +147,5 @@ public final class ImageInfo implements Info{
 		}
 		this.extensions = data[1 + (customPath ? 1 : 0)].split(",");
 		this.name = data[2 + (customPath ? 1 : 0)];
-		return this;
 	}
 }

@@ -76,7 +76,7 @@ public final class SoundInfo implements Info{
 		return match;
 	}
 
-	public SoundInfo init(String line){
+	public SoundInfo(String line){
 		String[] data = line.split(" ");
 		if(!data[0].equals("-")){
 			char[] args = data[0].toUpperCase(Locale.ROOT).toCharArray();
@@ -90,6 +90,5 @@ public final class SoundInfo implements Info{
 		}
 		this.extensions = data[1].split(",");
 		this.name = data[2];
-		return this;
 	}
 }
