@@ -67,7 +67,34 @@ public final class ImageInfo implements Info{
 		return hasHD;
 	}
 	
-	private boolean checkForFile(File folder, String name, boolean hd, final String extension, boolean variableDash, boolean variableNoDash, boolean custom, boolean customPrefix){
+	private boolean checkForFile(File folder, String name, boolean hd, String extension, boolean variableDash, boolean variableNoDash, boolean custom, boolean customPrefix){
+		boolean match = false;
+		if(hd){
+			extension = "@2x." + extension;
+		}else{
+			extension = "." + extension;
+		}
+		if(new File(folder, name + extension).exists()){
+			return true;
+		}
+		if(variableDash && new File(folder, name + "-0" + extension).exists()){
+			return true;
+		}
+		if(variableNoDash && new File(folder, name + "0" + extension).exists()){
+			return true;
+		}
+		if(!match && (custom || customPrefix) && this.customID != -1){
+			if(customPrefix){
+				return checkForFile(SkinChecker.customPathing.get(this.customID), name, hd, extension, variableDash, variableNoDash, false, false);
+			}else{
+				File f = SkinChecker.customPathing.get(this.customID);
+				return f == null ? false : checkForFile(f.getParentFile(), f.getName(), hd, extension, variableDash, variableNoDash, false, false);
+			}
+		}
+		return match;
+	}
+	
+	/*private boolean checkForFile(File folder, String name, boolean hd, final String extension, boolean variableDash, boolean variableNoDash, boolean custom, boolean customPrefix){
 		boolean match = false;
 		for(File file : folder.listFiles()){
 			String fileName = file.getName().toLowerCase(Locale.ROOT);
@@ -114,7 +141,7 @@ public final class ImageInfo implements Info{
 			}
 		}
 		return match;
-	}
+	}*/
 
 	public ImageInfo(String line){
 		String[] data = line.split(" ");

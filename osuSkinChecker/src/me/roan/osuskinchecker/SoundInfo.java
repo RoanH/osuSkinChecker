@@ -39,41 +39,13 @@ public final class SoundInfo implements Info{
 	}
 	
 	private boolean checkForFile(File folder, String name, final String extension, boolean variableDash){
-		boolean match = false;
-		for(File file : folder.listFiles()){
-			String fileName = file.getName().toLowerCase(Locale.ROOT);
-			if(fileName.startsWith(name) && fileName.toLowerCase().endsWith("." + extension)){
-				if(variableDash){
-					String n = fileName.substring(name.length());
-					if(n.startsWith("-")){
-						n = n.substring((variableDash ? 1 : 0));
-					}
-					n = n.substring(0, n.length() - 1 - extension.length());
-					if(n.isEmpty()){
-						match = true;
-						break;
-					}
-					boolean number = false;
-					try{
-						Integer.parseInt(n);
-						number = true;
-					}catch(NumberFormatException e){
-					}
-					match = number;
-					if(match){
-						break;
-					}else{
-						continue;
-					}
-				}else{
-					match = true;
-					break;
-				}
-			}else{
-				continue;
-			}
+		if(new File(folder, name + "." + extension).exists()){
+			return true;
 		}
-		return match;
+		if(variableDash && new File(folder, name + "-0." + extension).exists()){
+			return true;
+		}
+		return false;
 	}
 
 	public SoundInfo(String line){
