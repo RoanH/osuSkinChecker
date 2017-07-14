@@ -18,8 +18,7 @@ And if you find any bugs feel free to report them (spelling mistakes included :3
 ![Runnable Java Archive](https://github.com/RoanH/osuSkinChecker/releases/download/v1.0/SkinChecker-v1.0.jar)
 
 All releases: ![releases](https://github.com/RoanH/osuSkinChecker/releases)<br>
-GitHub repository: ![repository](https://github.com/RoanH/osuSkinChecker]SkinChecker)<br>
-Credit for the icon goes to ![Agrrox](https://osu.ppy.sh/u/agrrox)
+GitHub repository: ![repository](https://github.com/RoanH/osuSkinChecker]SkinChecker)
 
 ## History
 Project development started: 19th of June, 2017.
