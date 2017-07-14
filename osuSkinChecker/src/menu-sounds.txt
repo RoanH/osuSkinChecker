@@ -53,7 +53,7 @@
 - wav,mp3 key-confirm
 - wav,mp3 key-delete
 - wav,mp3 key-movement
-- wav,mp3 key-press1
-- wav,mp3 key-press2
-- wav,mp3 key-press3
-- wav,mp3 key-press4
+- wav,mp3 key-press-1
+- wav,mp3 key-press-2
+- wav,mp3 key-press-3
+- wav,mp3 key-press-4
