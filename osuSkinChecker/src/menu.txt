@@ -50,7 +50,7 @@ N png menu-back
 - png selection-mod-doubletime
 - png selection-mod-nightcore
 - png selection-mod-hidden
-- png selection-mod-fadin
+- png selection-mod-fadein
 - png selection-mod-flashlight
 - png selection-mod-relax
 - png selection-mod-relax2
