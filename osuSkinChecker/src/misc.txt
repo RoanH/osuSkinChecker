@@ -4,7 +4,7 @@
 - png cursormiddle
 - png cursor-smoke
 
-===> Grade Letters
+===> Ranking Letters
 - png ranking-xh
 - png ranking-xh-small
 - png ranking-sh
