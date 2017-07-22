@@ -151,7 +151,8 @@ public final class ImageInfo implements Info{
 			if(legacy && !SkinChecker.checkLegacy){
 				return false;
 			}else{
-				boolean hd = hasHDVersion();
+				hasHDVersion();
+				boolean hd = hasHD;
 				return (SkinChecker.checkSD ? !hasSDVersion() : false) || (SkinChecker.checkHD ? ((ignored && SkinChecker.ignoreEmpty) ? false : !hd) : false);
 			}
 		}
@@ -189,11 +190,12 @@ public final class ImageInfo implements Info{
 	 * @return Whether or not a HD
 	 *         version exists.
 	 */
-	protected boolean hasHDVersion(){
+	protected String hasHDVersion(){
+		if(singleImage){
+			hasHD = true;
+			return "N/A";
+		}
 		if(hasHD == null){
-			if(singleImage){
-				hasHD = true;
-			}
 			for(String ext : extensions){
 				if(checkForFile(SkinChecker.skinFolder, name, true, ext, variableWithDash, variableWithoutDash, customPath, customPathPrefix) != null){
 					hasHD = true;
@@ -203,7 +205,7 @@ public final class ImageInfo implements Info{
 				hasHD = false;
 			}
 		}
-		return hasHD;
+		return hasHD ? "Yes" : "No";
 	}
 	
 	/**
