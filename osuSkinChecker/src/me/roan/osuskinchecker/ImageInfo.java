@@ -95,7 +95,7 @@ public final class ImageInfo implements Info{
 	 * The base name of the file described
 	 * by this information object
 	 */
-	private String name;
+	protected String name;
 	
 	/**
 	 * Creates an information object

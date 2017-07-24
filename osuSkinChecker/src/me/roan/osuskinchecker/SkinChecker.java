@@ -10,8 +10,11 @@ import java.awt.event.MouseListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -197,13 +200,15 @@ public class SkinChecker {
 			}
 		});
 		
-		JPanel buttons = new JPanel(new GridLayout(3, 1));
+		JPanel buttons = new JPanel(new GridLayout(4, 1));
 		JButton openSkin = new JButton("Open skin");
 		JButton openFolder = new JButton("Open skin folder for the current skin");
 		JButton recheck = new JButton("Recheck skin");
+		JButton print = new JButton("Write list of mising files to file");
 		buttons.add(openSkin);
 		buttons.add(openFolder);
 		buttons.add(recheck);
+		buttons.add(print);
 		openSkin.addActionListener((e)->{
 			try {
 				checkSkin(null);
@@ -229,6 +234,49 @@ public class SkinChecker {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
+			}else{
+				JOptionPane.showMessageDialog(frame, "No skin currently selected!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+			}
+		});
+		print.addActionListener((e)->{
+			if(skinFolder != null){
+				JFileChooser chooser = new JFileChooser();
+				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				chooser.setMultiSelectionEnabled(false);
+				if(chooser.showSaveDialog(frame) != JFileChooser.APPROVE_OPTION){
+					return;
+				}
+				File dest = chooser.getSelectedFile();
+				try {
+					final PrintWriter writer = new PrintWriter(new FileOutputStream(dest));
+					writer.println("========== Images ==========");
+					for(Entry<String, Map<String, List<Info>>> m : imagesMap.entrySet()){
+						for(Entry<String, List<Info>> ml : m.getValue().entrySet()){
+							for(Info mli : ml.getValue()){
+								if(mli.show()){
+									writer.println('[' + m.getKey() + "|" + ml.getKey() + "]: " + ((ImageInfo)mli).name);
+								}
+							}
+						}
+					}
+					writer.println();
+					writer.println("========== Sounds ==========");
+					for(Entry<String, Map<String, List<Info>>> m : soundsMap.entrySet()){
+						for(Entry<String, List<Info>> ml : m.getValue().entrySet()){
+							for(Info mli : ml.getValue()){
+								if(mli.show()){
+									writer.println('[' + m.getKey() + "|" + ml.getKey() + "]: " + ((SoundInfo)mli).name);
+								}
+							}
+						}
+					}
+					writer.flush();
+					writer.close();
+					JOptionPane.showMessageDialog(frame, "File list succesfully exported", "Skin Checker", JOptionPane.INFORMATION_MESSAGE);
+				} catch (FileNotFoundException e1) {
+					JOptionPane.showMessageDialog(frame, "An error occured: " + e1.getMessage(), "Skin Checker", JOptionPane.ERROR_MESSAGE);
+				}
+				
 			}else{
 				JOptionPane.showMessageDialog(frame, "No skin currently selected!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
 			}
