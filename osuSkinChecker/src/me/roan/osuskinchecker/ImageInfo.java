@@ -162,8 +162,8 @@ public final class ImageInfo implements Info{
 				return false;
 			}else{
 				hasHDVersion();
-				boolean hd = hasHD;
-				return (SkinChecker.checkSD ? !hasSDVersion() : false) || (SkinChecker.checkHD ? ((ignored && SkinChecker.ignoreEmpty) ? false : !hd) : false);
+				hasSDVersion();
+				return (SkinChecker.checkSD ? (SkinChecker.ignoreSD ? (hasHD ? false : !hasSD) : !hasSD) : false) || (SkinChecker.checkHD ? ((ignored && SkinChecker.ignoreEmpty) ? false : !hasHD) : false);
 			}
 		}
 	}
@@ -176,7 +176,7 @@ public final class ImageInfo implements Info{
 	 * @return Whether or not a SD
 	 *         version exists.
 	 */
-	protected boolean hasSDVersion(){
+	protected String hasSDVersion(){
 		if(hasSD == null){
 			for(String ext : extensions){
 				File file;
@@ -190,7 +190,11 @@ public final class ImageInfo implements Info{
 				hasSD = false;
 			}
 		}
-		return hasSD;
+		hasHDVersion();
+		if(hasHD && SkinChecker.ignoreSD && !hasSD){
+			return "Ignored";
+		}
+		return hasSD ? "Yes" : "No";
 	}
 	
 	/**

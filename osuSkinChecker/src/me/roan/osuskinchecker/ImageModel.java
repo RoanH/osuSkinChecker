@@ -56,7 +56,7 @@ public class ImageModel extends Model{
 			case 0:
 				return view.get(row);
 			case 1: 
-				return ((ImageInfo)view.get(row)).hasSDVersion() == true ? "Yes" : "No";
+				return ((ImageInfo)view.get(row)).hasSDVersion();
 			case 2: 
 				ImageInfo info = ((ImageInfo)view.get(row));
 				return (info.ignored && SkinChecker.ignoreEmpty) ? "Ignored" : info.hasHDVersion();

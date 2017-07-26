@@ -131,6 +131,11 @@ public class SkinChecker {
 	 * that should not be in the skin
 	 */
 	private static DefaultListModel<String> foreignFiles = new DefaultListModel<String>();
+	/**
+	 * Whether or not to ignore a missing
+	 * SD image when a HD version exists
+	 */
+	protected static boolean ignoreSD = false;
 
 	/**
 	 * Main method
@@ -178,17 +183,19 @@ public class SkinChecker {
 		categories.setBorder(BorderFactory.createTitledBorder("Files"));
 		content.add(categories);
 		
-		JPanel controls = new JPanel(new GridLayout(5, 1, 0, 0));
+		JPanel controls = new JPanel(new GridLayout(6, 1, 0, 0));
 		JCheckBox chd = new JCheckBox("Report images that are missing a HD version.", false);
 		JCheckBox csd = new JCheckBox("Report images that are missing a SD version.", true);
 		JCheckBox call = new JCheckBox("Report all files (show files that aren't missing in the skin).", false);
 		JCheckBox clegacy = new JCheckBox("Report missing legacy files.", false);
 		JCheckBox cempty = new JCheckBox("Ignore a missing HD image if an 'empty' SD image exists.", true);
+		JCheckBox cisd = new JCheckBox("Ignore a missing SD image if a HD image exists.", false);
 		controls.add(chd);
 		controls.add(csd);
 		controls.add(call);
 		controls.add(clegacy);
 		controls.add(cempty);
+		controls.add(cisd);
 		chd.addActionListener((e)->{
 			checkHD = chd.isSelected();
 			for(Model m : listeners){
@@ -215,6 +222,12 @@ public class SkinChecker {
 		});
 		cempty.addActionListener((e)->{
 			ignoreEmpty = cempty.isSelected();
+			for(Model m : listeners){
+				m.updateView();
+			}
+		});
+		cisd.addActionListener((e)->{
+			ignoreSD = cisd.isSelected();
 			for(Model m : listeners){
 				m.updateView();
 			}
