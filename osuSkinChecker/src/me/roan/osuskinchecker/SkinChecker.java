@@ -403,10 +403,10 @@ public class SkinChecker {
 			return;
 		}
 		
+		parseINI();
+		
 		mapToTabs(imageTabs, imagesMap);
 		mapToTabs(soundTabs, soundsMap);
-			
-		parseINI();
 	}
 	
 	/**

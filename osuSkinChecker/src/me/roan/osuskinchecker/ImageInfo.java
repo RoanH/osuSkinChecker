@@ -125,7 +125,7 @@ public final class ImageInfo implements Info{
 					customID = Integer.parseInt(data[1]);
 					break;
 				case 'P':
-					customPath = true;
+					customPathPrefix = true;
 					customID = Integer.parseInt(data[1]);
 					break;
 				case 'L':
@@ -262,7 +262,7 @@ public final class ImageInfo implements Info{
 				return checkForFile(SkinChecker.customPathing.get(this.customID), name, hd, extension, variableDash, variableNoDash, false, false);
 			}else{
 				File f = SkinChecker.customPathing.get(this.customID);
-				return f == null ? null : checkForFile(f.getParentFile(), f.getName(), hd, extension, variableDash, variableNoDash, false, false);
+				return f == null ? null : checkForFile(f.getParentFile(), f.getName(), hd, extension.substring(hd ? 4 : 1), variableDash, variableNoDash, false, false);
 			}
 		}
 		return null;
