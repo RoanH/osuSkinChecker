@@ -134,13 +134,23 @@ public final class ImageInfo implements Info{
 				}
 			}
 		}
-		this.extensions = data[1 + (customPath ? 1 : 0)].split(",");
-		this.name = data[2 + (customPath ? 1 : 0)];
+		this.extensions = data[1 + ((customPath || customPathPrefix) ? 1 : 0)].split(",");
+		this.name = data[2 + ((customPath || customPathPrefix) ? 1 : 0)];
 	}
 
 	@Override
 	public String toString(){
 		return name;
+	}
+	
+	@Override
+	public void reset(){
+		hasSD = null;
+		hasHD = null;
+		ignored = false;
+		animated = false;
+		hasSDVersion();
+		hasHDVersion();
 	}
 	
 	@Override
@@ -169,8 +179,11 @@ public final class ImageInfo implements Info{
 	protected boolean hasSDVersion(){
 		if(hasSD == null){
 			for(String ext : extensions){
-				if(checkForFile(SkinChecker.skinFolder, name, false, ext, variableWithDash, variableWithoutDash, customPath, customPathPrefix) != null){
+				File file;
+				if((file = checkForFile(SkinChecker.skinFolder, name, false, ext, variableWithDash, variableWithoutDash, customPath, customPathPrefix)) != null){
+					SkinChecker.allFiles.remove(file);
 					hasSD = true;
+					break;
 				}
 			}
 			if(hasSD == null){
@@ -197,8 +210,11 @@ public final class ImageInfo implements Info{
 		}
 		if(hasHD == null){
 			for(String ext : extensions){
-				if(checkForFile(SkinChecker.skinFolder, name, true, ext, variableWithDash, variableWithoutDash, customPath, customPathPrefix) != null){
+				File file;
+				if((file = checkForFile(SkinChecker.skinFolder, name, true, ext, variableWithDash, variableWithoutDash, customPath, customPathPrefix)) != null){
+					SkinChecker.allFiles.remove(file);
 					hasHD = true;
+					break;
 				}
 			}
 			if(hasHD == null){
@@ -233,36 +249,59 @@ public final class ImageInfo implements Info{
 	 *         if none were found.
 	 */
 	private File checkForFile(File folder, String name, boolean hd, String extension, boolean variableDash, boolean variableNoDash, boolean custom, boolean customPrefix){
-		File match;
+		File match = null;
 		if(hd){
 			if(hasSD == null || hasSD == true){
 				File sdver = checkForFile(folder, name, false, extension, variableDash, variableNoDash, custom, customPrefix);
 				if(sdver != null && isEmptyImage(sdver)){
 					ignored = true;
-					return null;
 				}
 			}
 			extension = "@2x." + extension;
 		}else{
 			extension = "." + extension;
 		}
+		
 		if(variableDash && (match = new File(folder, name + "-0" + extension)).exists()){
 			animated = true;
-			return match;
+			SkinChecker.allFiles.remove(match);
+			int c = 1;
+			File f;
+			while((f = new File(folder, name + "-" + c + extension)).exists()){
+				SkinChecker.allFiles.remove(f);
+				c++;
+			}
 		}
 		if(variableNoDash && (match = new File(folder, name + "0" + extension)).exists()){
 			animated = true;
-			return match;
+			SkinChecker.allFiles.remove(match);
+			int c = 1;
+			File f;
+			while((f = new File(folder, name + c + extension)).exists()){
+				SkinChecker.allFiles.remove(f);
+				c++;
+			}
 		}
-		if((match = new File(folder, name + extension)).exists()){
-			return match;
+		File orig = new File(folder, name + extension);
+		if(orig.exists()){
+			SkinChecker.allFiles.remove(orig);
 		}
+		if(animated && match != null){
+			return match;
+		}else if(orig.exists()){
+			return orig;
+		}
+			
 		if((custom || customPrefix) && this.customID != -1){
 			if(customPrefix){
-				return checkForFile(SkinChecker.customPathing.get(this.customID), name, hd, extension, variableDash, variableNoDash, false, false);
+				File file = checkForFile(SkinChecker.customPathing.get(this.customID), name, hd, extension, variableDash, variableNoDash, false, false);
+				SkinChecker.allFiles.remove(file);
+				return file;
 			}else{
 				File f = SkinChecker.customPathing.get(this.customID);
-				return f == null ? null : checkForFile(f.getParentFile(), f.getName(), hd, extension.substring(hd ? 4 : 1), variableDash, variableNoDash, false, false);
+				File file = (f == null ? null : checkForFile(f.getParentFile(), f.getName(), hd, extension.substring(hd ? 4 : 1), variableDash, variableNoDash, false, false));
+				SkinChecker.allFiles.remove(file);
+				return file;
 			}
 		}
 		return null;

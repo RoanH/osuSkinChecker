@@ -26,11 +26,13 @@ import java.util.Map.Entry;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -116,6 +118,19 @@ public class SkinChecker {
 	 * for skin
 	 */
 	private static JFileChooser chooser;
+	/**
+	 * Initial list of all the files in the skin folder
+	 */
+	protected static List<File> allFiles = new ArrayList<File>();
+	/**
+	 * List of all the information objects
+	 */
+	private static List<Info> info = new ArrayList<Info>();
+	/**
+	 * Model for the list that displays files
+	 * that should not be in the skin
+	 */
+	private static DefaultListModel<String> foreignFiles = new DefaultListModel<String>();
 
 	/**
 	 * Main method
@@ -151,9 +166,14 @@ public class SkinChecker {
 		}
 		JPanel content = new JPanel(new BorderLayout());
 		JTabbedPane categories = new JTabbedPane();
+		
+		JPanel foreign = new JPanel(new BorderLayout());
+		foreign.add(new JScrollPane(new JList<String>(foreignFiles)), BorderLayout.CENTER);
+		foreign.add(new JLabel("This is a list of files that are in the skin folder but serve no purpose."), BorderLayout.PAGE_START);
 				
 		categories.add("Images", imageTabs);
 		categories.add("Sounds", soundTabs);
+		categories.add("Foreign Files", foreign);
 		
 		categories.setBorder(BorderFactory.createTitledBorder("Files"));
 		content.add(categories);
@@ -403,10 +423,34 @@ public class SkinChecker {
 			return;
 		}
 		
+		allFiles.clear();
+		addAllFiles(skinFolder);
+		allFiles.remove(new File(skinFolder, "skin.ini"));
+		
 		parseINI();
+		
+		for(Info i : info){
+			i.reset();
+		}
 		
 		mapToTabs(imageTabs, imagesMap);
 		mapToTabs(soundTabs, soundsMap);
+		
+		foreignFiles.clear();
+		int offset = 1 + skinFolder.toString().length();
+		for(File file : allFiles){
+			foreignFiles.addElement(file.toString().substring(offset));
+		}
+	}
+	
+	private static void addAllFiles(File dir){
+		for(File f : dir.listFiles()){
+			if(f.isDirectory()){
+				addAllFiles(f);
+			}else{
+				allFiles.add(f);
+			}
+		}
 	}
 	
 	/**
@@ -436,19 +480,19 @@ public class SkinChecker {
 						keys = Integer.parseInt(args[1].trim());
 					}else if(args[0].startsWith("KeyImage")){
 						if(args[0].endsWith("D")){
-							customPathing.put(keys * 100 + 22, new File(skinFolder, args[1].trim()));
+							customPathing.put(keys * 100 + 22 + 10000 * Integer.parseInt(args[0].substring(args[0].length() - 2, args[0].length() - 1)), new File(skinFolder, args[1].trim()));
 						}else{
-							customPathing.put(keys * 100 + 21, new File(skinFolder, args[1].trim()));
+							customPathing.put(keys * 100 + 21 + 10000 * Integer.parseInt(args[0].substring(args[0].length() - 1)), new File(skinFolder, args[1].trim()));
 						}
 					}else if(args[0].startsWith("NoteImage")){
 						if(args[0].endsWith("H")){
-							customPathing.put(keys * 100 + 32, new File(skinFolder, args[1].trim()));
+							customPathing.put(keys * 100 + 32 + 10000 * Integer.parseInt(args[0].substring(args[0].length() - 2, args[0].length() - 1)), new File(skinFolder, args[1].trim()));
 						}else if(args[0].endsWith("T")){
-							customPathing.put(keys * 100 + 33, new File(skinFolder, args[1].trim()));
+							customPathing.put(keys * 100 + 33 + 10000 * Integer.parseInt(args[0].substring(args[0].length() - 2, args[0].length() - 1)), new File(skinFolder, args[1].trim()));
 						}else if(args[0].endsWith("L")){
-							customPathing.put(keys * 100 + 34, new File(skinFolder, args[1].trim()));
+							customPathing.put(keys * 100 + 34 + 10000 * Integer.parseInt(args[0].substring(args[0].length() - 2, args[0].length() - 1)), new File(skinFolder, args[1].trim()));
 						}else{
-							customPathing.put(keys * 100 + 31, new File(skinFolder, args[1].trim()));
+							customPathing.put(keys * 100 + 31 + 10000 * Integer.parseInt(args[0].substring(args[0].length() - 1)), new File(skinFolder, args[1].trim()));
 						}
 					}else if(args[0].startsWith("StageLeft")){
 						customPathing.put(keys * 100 + 11, new File(skinFolder, args[1].trim()));
@@ -534,6 +578,7 @@ public class SkinChecker {
 		soundsMap.put("Menu", readDataFile("menu-sounds.txt", true));
 		soundsMap.put("osu!", readDataFile("osu-sounds.txt", true));
 		soundsMap.put("Taiko", readDataFile("taiko-sounds.txt", true));
+		readDataFile("mania-extra.txt", false);
 	}
 
 	/**
@@ -555,6 +600,9 @@ public class SkinChecker {
 			if(line.trim().isEmpty()){
 				continue;
 			}else if(line.startsWith("===>")){
+				if(writing != null){
+					info.addAll(writing);
+				}
 				writing = new ArrayList<Info>();
 				data.put(line.substring(4).trim(), writing);
 			}else{
@@ -565,6 +613,7 @@ public class SkinChecker {
 				}
 			}
 		}
+		info.addAll(writing);
 		return data;
 	}
 	

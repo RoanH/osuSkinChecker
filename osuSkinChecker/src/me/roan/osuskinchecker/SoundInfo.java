@@ -68,6 +68,12 @@ public final class SoundInfo implements Info{
 	}
 	
 	@Override
+	public void reset(){
+		exists = null;
+		exists();
+	}
+	
+	@Override
 	public boolean show(){
 		if(SkinChecker.showAll){
 			return true;
@@ -111,10 +117,18 @@ public final class SoundInfo implements Info{
 	 *         false otherwise.
 	 */
 	private boolean checkForFile(File folder, String name, final String extension, boolean variableDash){
-		if(new File(folder, name + "." + extension).exists()){
+		File file;
+		if((file = new File(folder, name + "." + extension)).exists()){
+			SkinChecker.allFiles.remove(file);
 			return true;
 		}
-		if(variableDash && new File(folder, name + "-0." + extension).exists()){
+		if(variableDash && (file = new File(folder, name + "-0." + extension)).exists()){
+			SkinChecker.allFiles.remove(file);
+			int c = 1;
+			while((file = new File(folder, name + "-" + c + "." + extension)).exists()){
+				SkinChecker.allFiles.remove(file);
+				c++;
+			}
 			return true;
 		}
 		return false;
