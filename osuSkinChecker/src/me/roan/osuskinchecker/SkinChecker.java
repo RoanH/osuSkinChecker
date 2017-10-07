@@ -235,9 +235,9 @@ public class SkinChecker {
 		
 		JPanel buttons = new JPanel(new GridLayout(4, 1));
 		JButton openSkin = new JButton("Open skin");
-		JButton openFolder = new JButton("Open skin folder for the current skin");
+		JButton openFolder = new JButton("Open skin folder for the selected skin");
 		JButton recheck = new JButton("Recheck skin");
-		JButton print = new JButton("Write list of mising files to file");
+		JButton print = new JButton("Write list of missing files to file");
 		buttons.add(openSkin);
 		buttons.add(openFolder);
 		buttons.add(recheck);
