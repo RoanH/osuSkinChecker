@@ -1,5 +1,5 @@
 ===> Home Screen
-S jpg,jpeg menu-background
+- jpg,jpeg menu-background
 - png welcome_text
 - png menu-snow
 - png options-offset-tick
@@ -82,8 +82,8 @@ L png ranking-replay
 L png ranking-retry
 
 ===> Pause Screen
-S jpg,jpeg pause-overlay
-S jpg,jpeg fail-background
+- jpg,jpeg pause-overlay
+- jpg,jpeg fail-background
 - png menu-osu
 - png pause-back
 - png pause-continue
