@@ -400,8 +400,12 @@ public class SkinChecker {
 		lower.add(links, BorderLayout.CENTER);
 		JPanel version = new JPanel(new GridLayout(2, 1, 0, 4));
 		version.add(new JLabel("Running version: v1.4"));//XXX version
-		String ver = checkVersion();
-		version.add(new JLabel("Latest version: " + (ver == null ? "Unknown" : ver)));
+		JLabel latest = new JLabel("Latest version: loading...");
+		new Thread(()->{
+			String ver = checkVersion();
+			latest.setText("Lastest version: " + (ver == null ? "Unknown" : ver));
+		}).start();
+		version.add(latest);
 		version.setBorder(BorderFactory.createTitledBorder("Version"));
 		lower.add(version, BorderLayout.LINE_END);
 		content.add(lower, BorderLayout.PAGE_END);
