@@ -14,11 +14,11 @@ Well I hope some of you find this program useful :)<br>
 And if you find any bugs feel free to report them (spelling mistakes included :3).
 
 ## Downloads (Java 8 required, should run on any OS)<br>
-![Windows executable](https://github.com/RoanH/osuSkinChecker/releases/download/v1.4/SkinChecker-v1.4.exe)<br>
-![Runnable Java Archive](https://github.com/RoanH/osuSkinChecker/releases/download/v1.4/SkinChecker-v1.4.jar)
+[Windows executable](https://github.com/RoanH/osuSkinChecker/releases/download/v1.5/SkinChecker-v1.5.exe)<br>
+[Runnable Java Archive](https://github.com/RoanH/osuSkinChecker/releases/download/v1.5/SkinChecker-v1.5.jar)
 
-All releases: ![releases](https://github.com/RoanH/osuSkinChecker/releases)<br>
-GitHub repository: ![repository](https://github.com/RoanH/osuSkinChecker]SkinChecker)
+All releases: [releases](https://github.com/RoanH/osuSkinChecker/releases)<br>
+GitHub repository: [repository](https://github.com/RoanH/osuSkinChecker]SkinChecker)
 
 ## History
 Project development started: 19th of June, 2017.
