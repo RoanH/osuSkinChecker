@@ -631,6 +631,7 @@ public class SkinChecker {
 			}
 		}
 		info.addAll(writing);
+		reader.close();
 		return data;
 	}
 	
