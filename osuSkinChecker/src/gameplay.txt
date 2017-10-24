@@ -1,5 +1,5 @@
 ===> Scorebar
-- png scorebar-ng
+- png scorebar-bg
 N png scorebar-colour
 - png scorebar-ki
 - png scorebar-kidanger
