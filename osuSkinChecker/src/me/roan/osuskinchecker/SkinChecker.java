@@ -175,9 +175,13 @@ public class SkinChecker {
 		JPanel foreign = new JPanel(new BorderLayout());
 		foreign.add(new JScrollPane(new JList<String>(foreignFiles)), BorderLayout.CENTER);
 		foreign.add(new JLabel("This is a list of files that are in the skin folder but serve no purpose."), BorderLayout.PAGE_START);
+		
+		JPanel ini = new JPanel(new BorderLayout());
+		ini.add(new JScrollPane(new SkinIniTab()), BorderLayout.CENTER);
 				
 		categories.add("Images", imageTabs);
 		categories.add("Sounds", soundTabs);
+		categories.add("Skin configuration", ini);
 		categories.add("Foreign Files", foreign);
 		
 		categories.setBorder(BorderFactory.createTitledBorder("Files"));
