@@ -18,14 +18,13 @@ public class SkinIniTab extends JTabbedPane{
 	 * Serial ID
 	 */
 	private static final long serialVersionUID = -5575803475931849256L;
-	
-	protected static SkinIni ini;
-	
-	protected SkinIniTab(){
-		add("General", new GeneralTab());
-		add("osu! Standard", new StandardTab());
-		add("osu! Catch", new CtbTab());
-		add("osu! Mania", new ManiaTab());
+		
+	public void init(SkinIni ini){
+		removeAll();
+		add("General", new GeneralTab(ini));
+		add("osu! Standard", new StandardTab(ini));
+		add("osu! Catch", new CtbTab(ini));
+		add("osu! Mania", new ManiaTab(ini));
 	}
 	
 	private static final class GeneralTab extends JPanel{
@@ -34,7 +33,7 @@ public class SkinIniTab extends JTabbedPane{
 		 */
 		private static final long serialVersionUID = -4554355388349363415L;
 		
-		private GeneralTab(){
+		private GeneralTab(SkinIni ini){
 			super(new BorderLayout());
 			JPanel content = new JPanel();
 			BoxLayout layout = new BoxLayout(content, BoxLayout.Y_AXIS);
@@ -44,7 +43,7 @@ public class SkinIniTab extends JTabbedPane{
 			{
 				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
 				panel.add(new JLabel("Skin name: "));
-				JTextField name = new JTextField();
+				JTextField name = new JTextField(ini.name);
 				name.addKeyListener(new KeyListener(){
 
 					@Override
@@ -68,7 +67,7 @@ public class SkinIniTab extends JTabbedPane{
 				content.add(Box.createVerticalStrut(5));
 				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
 				panel.add(new JLabel("Author name: "));
-				JTextField author = new JTextField();
+				JTextField author = new JTextField(ini.author);
 				author.addKeyListener(new KeyListener(){
 
 					@Override
@@ -98,6 +97,9 @@ public class SkinIniTab extends JTabbedPane{
 		 */
 		private static final long serialVersionUID = -639789728841322306L;
 		
+		public StandardTab(SkinIni ini) {
+
+		}
 	}
 	
 	private static final class CtbTab extends JPanel{
@@ -106,6 +108,9 @@ public class SkinIniTab extends JTabbedPane{
 		 */
 		private static final long serialVersionUID = -5006508447206574607L;
 		
+		public CtbTab(SkinIni ini) {
+
+		}
 	}
 	
 	private static final class ManiaTab extends JTabbedPane{
@@ -114,5 +119,8 @@ public class SkinIniTab extends JTabbedPane{
 		 */
 		private static final long serialVersionUID = 337165984317388690L;
 		
+		public ManiaTab(SkinIni ini) {
+			
+		}
 	}
 }
