@@ -90,6 +90,55 @@ public class SkinIni {
 		protected boolean separateScore;
 		protected boolean keysUnderNotes;
 		protected boolean upsideDown;
-		//TODO finish all the options especially the column specific ones
+		protected boolean keyFlipWhenUpsideDown;
+		protected boolean noteFlipWhenUpsideDown;
+		protected int noteBodyStyle;//0, 1, 2
+		protected Color colourColumnLine;//rgb(a)
+		protected Color colourBarline;//rgb(a)
+		protected Color colourJudgementLine;
+		protected Color colourKeyWarning;
+		protected Color colourHold;//rgb(a)
+		protected Color colourBreak;
+		
+		protected Column[] columns;
+		
+		protected String stageLeft;
+		protected String stageRight;
+		protected String stageBottom;
+		protected String stageHint;
+		protected String stageLight;
+		protected String lightingN;
+		protected String lightingL;
+		protected String warningArrow;
+		
+		protected String hit0;
+		protected String hit50;
+		protected String hit100;
+		protected String hit200;
+		protected String hit300;
+		protected String hit300g;
+		
+		protected final class Column{
+			protected int key;
+			
+			protected boolean keyFlipWhenUpsideDown;
+			protected boolean keyFlipWhenUpsideDownD;
+			protected boolean noteFlipWhenUpsideDown;
+			protected boolean noteFlipWhenUpsideDownH;
+			protected boolean noteFlipWhenUpsideDownL;
+			protected boolean noteFlipWhenUpsideDownT;
+			
+			protected int noteBodyStyle;//0, 1, 2
+			
+			protected Color colour;//rgb(a)
+			protected Color colourLight;//rgb
+			
+			protected String keyImage;
+			protected String keyImageD;
+			protected String noteImage;
+			protected String noteImageH;
+			protected String noteImageL;
+			protected String noteImageT;
+		}
 	}
 }
