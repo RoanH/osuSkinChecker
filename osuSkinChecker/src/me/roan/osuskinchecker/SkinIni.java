@@ -56,19 +56,19 @@ public class SkinIni {
 	protected Color combo8 = null;
 	
 	//fonts
-	protected String hitCirclePrefix;
-	protected int HitCircleOverlap;//negative allowed
+	protected String hitCirclePrefix = "default";
+	protected int hitCircleOverlap = -2;//negative allowed
 	
-	protected String scorePrefix;
-	protected int scoreOverlap;//negative allowed
+	protected String scorePrefix = "score";
+	protected int scoreOverlap = -2;//negative allowed
 	
-	protected String comboPrefix;
-	protected int comboOverlap;//negative allowed
+	protected String comboPrefix = "score";
+	protected int comboOverlap = -2;//negative allowed
 	
 	//ctb
-	protected Color hyperDash;
-	protected Color hyperDashFruit;
-	protected Color hyperDashAfterImage;
+	protected Color hyperDash = Color.RED;
+	protected Color hyperDashFruit = null;
+	protected Color hyperDashAfterImage = null;
 	
 	protected List<ManiaIni> mania;
 	
@@ -265,6 +265,35 @@ public class SkinIni {
 				combo8 = parseColor(args[1]);
 				break;
 			//[Fonts]
+			case "HitCirclePrefix":
+				hitCirclePrefix = args[1];
+				break;
+			case "HitCircleOverlap":
+				hitCircleOverlap = Integer.parseInt(args[1]);
+				break;
+			case "ScorePrefix":
+				scorePrefix = args[1];
+				break;
+			case "ScoreOverlap":
+				scoreOverlap = Integer.parseInt(args[1]);
+				break;
+			case "ComboPrefix":
+				comboPrefix = args[1];
+				break;
+			case "ComboOverlap":
+				comboOverlap = Integer.parseInt(args[1]);
+				break;
+			//[CatchTheBeat]
+			case "HyperDash":
+				hyperDash = parseColor(args[1]);
+				break;
+			case "HyperDashFruit":
+				hyperDashFruit = parseColor(args[1]);
+				break;
+			case "HyperDashAfterImage":
+				hyperDashAfterImage = parseColor(args[1]);
+				break;
+			//[Mania]
 			}
 			
 			
