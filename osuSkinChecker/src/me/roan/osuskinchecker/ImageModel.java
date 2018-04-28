@@ -62,7 +62,7 @@ public class ImageModel extends Model{
 				return (info.ignored && SkinChecker.ignoreEmpty) ? "Ignored" : info.hasHDVersion();
 			case 3:
 				ImageInfo i = ((ImageInfo)view.get(row));
-				return (i.variableWithDash || i.variableWithoutDash) ? (i.animated ? "Yes" : "No") : "N/A";
+				return (i.variableWithDash || i.variableWithoutDash) ? (i.animated ? (i.frames + (i.frames == 1 ? " frame" : " frames")) : "No") : "N/A";
 			}
 		}catch(Exception e){
 			return "Error";

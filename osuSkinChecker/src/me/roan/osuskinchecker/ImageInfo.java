@@ -96,6 +96,10 @@ public final class ImageInfo implements Info{
 	 * by this information object
 	 */
 	protected String name;
+	/**
+	 * The number of frames this image 
+	 */
+	protected int frames;
 	
 	/**
 	 * Creates an information object
@@ -275,6 +279,7 @@ public final class ImageInfo implements Info{
 				SkinChecker.allFiles.remove(f);
 				c++;
 			}
+			frames = c;
 		}
 		if(variableNoDash && (match = new File(folder, name + "0" + extension)).exists()){
 			animated = true;
@@ -285,6 +290,7 @@ public final class ImageInfo implements Info{
 				SkinChecker.allFiles.remove(f);
 				c++;
 			}
+			frames = c;
 		}
 		File orig = new File(folder, name + extension);
 		if(orig.exists()){
