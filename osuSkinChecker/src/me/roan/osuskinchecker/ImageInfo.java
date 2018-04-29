@@ -97,7 +97,20 @@ public final class ImageInfo implements Info{
 	 */
 	protected String name;
 	/**
-	 * The number of frames this image 
+	 * Indicates the spinner style, null is this is not
+	 * a spinner image, true if this is an image for the
+	 * old spinner style, false if this is an image for
+	 * the new spinner style.
+	 */
+	private Boolean spinner = null;
+	/**
+	 * Boolean to store whether or not the
+	 * entire image could be ignored
+	 */
+	private boolean ignore = false;
+	/**
+	 * If this image is an animation the number
+	 * of frames in the animation
 	 */
 	protected int frames;
 	
@@ -135,11 +148,14 @@ public final class ImageInfo implements Info{
 				case 'L':
 					legacy = true;
 					break;
+				case 'O':
+					spinner = Boolean.parseBoolean(data[1]);
+					break;
 				}
 			}
 		}
-		this.extensions = data[1 + ((customPath || customPathPrefix) ? 1 : 0)].split(",");
-		this.name = data[2 + ((customPath || customPathPrefix) ? 1 : 0)];
+		this.extensions = data[1 + ((customPath || customPathPrefix || spinner != null) ? 1 : 0)].split(",");
+		this.name = data[2 + ((customPath || customPathPrefix || spinner != null) ? 1 : 0)];
 	}
 
 	@Override
@@ -153,6 +169,7 @@ public final class ImageInfo implements Info{
 		hasHD = null;
 		ignored = false;
 		animated = false;
+		ignore = false;
 		hasSDVersion();
 		hasHDVersion();
 	}
@@ -162,7 +179,7 @@ public final class ImageInfo implements Info{
 		if(SkinChecker.showAll){
 			return !legacy || SkinChecker.checkLegacy;
 		}else{
-			if(legacy && !SkinChecker.checkLegacy){
+			if((legacy && !SkinChecker.checkLegacy) || ignore){
 				return false;
 			}else{
 				hasHDVersion();
@@ -181,24 +198,28 @@ public final class ImageInfo implements Info{
 	 *         version exists.
 	 */
 	protected String hasSDVersion(){
-		if(hasSD == null){
-			for(String ext : extensions){
-				File file;
-				if((file = checkForFile(SkinChecker.skinFolder, name, false, ext, variableWithDash, variableWithoutDash, customPath, customPathPrefix)) != null){
-					SkinChecker.allFiles.remove(file);
-					hasSD = true;
-					break;
+		if(ignore){
+			return "Ignored";
+		}else{
+			if(hasSD == null){
+				for(String ext : extensions){
+					File file;
+					if((file = checkForFile(SkinChecker.skinFolder, name, false, ext, variableWithDash, variableWithoutDash, customPath, customPathPrefix)) != null){
+						SkinChecker.allFiles.remove(file);
+						hasSD = true;
+						break;
+					}
+				}
+				if(hasSD == null){
+					hasSD = false;
 				}
 			}
-			if(hasSD == null){
-				hasSD = false;
+			hasHDVersion();
+			if(ignore || (hasHD && SkinChecker.ignoreSD && !hasSD)){
+				return "Ignored";
 			}
+			return hasSD ? "Yes" : "No";
 		}
-		hasHDVersion();
-		if(hasHD && SkinChecker.ignoreSD && !hasSD){
-			return "Ignored";
-		}
-		return hasSD ? "Yes" : "No";
 	}
 	
 	/**
@@ -212,24 +233,28 @@ public final class ImageInfo implements Info{
 	 *         version exists.
 	 */
 	protected String hasHDVersion(){
-		if(singleImage){
-			hasHD = true;
-			return "N/A";
-		}
-		if(hasHD == null){
-			for(String ext : extensions){
-				File file;
-				if((file = checkForFile(SkinChecker.skinFolder, name, true, ext, variableWithDash, variableWithoutDash, customPath, customPathPrefix)) != null){
-					SkinChecker.allFiles.remove(file);
-					hasHD = true;
-					break;
-				}
+		if(ignore){
+			return "Ignored";
+		}else{
+			if(singleImage){
+				hasHD = true;
+				return "N/A";
 			}
 			if(hasHD == null){
-				hasHD = false;
+				for(String ext : extensions){
+					File file;
+					if((file = checkForFile(SkinChecker.skinFolder, name, true, ext, variableWithDash, variableWithoutDash, customPath, customPathPrefix)) != null){
+						SkinChecker.allFiles.remove(file);
+						hasHD = true;
+						break;
+					}
+				}
+				if(hasHD == null){
+					hasHD = false;
+				}
 			}
+			return hasHD ? "Yes" : "No";
 		}
-		return hasHD ? "Yes" : "No";
 	}
 	
 	/**
@@ -268,6 +293,21 @@ public final class ImageInfo implements Info{
 			extension = "@2x." + extension;
 		}else{
 			extension = "." + extension;
+		}
+		
+		if(spinner != null){
+			if(!new File(folder, "spinner-background.png").exists()){
+				if(spinner){
+					ignore = true;
+				}
+			}else{
+				if(!spinner){
+					ignore = true;
+				}
+			}
+		}
+		if(ignore){
+			return null;
 		}
 		
 		if(variableDash && (match = new File(folder, name + "-0" + extension)).exists()){
