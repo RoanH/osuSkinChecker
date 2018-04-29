@@ -84,7 +84,7 @@ L png ranking-retry
 ===> Pause Screen
 - png,jpg,jpeg pause-overlay
 - png,jpg,jpeg fail-background
-- png menu-osu
+L png menu-osu
 - png pause-back
 - png pause-continue
 - png pause-retry

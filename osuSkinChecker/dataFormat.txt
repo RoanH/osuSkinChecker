@@ -25,6 +25,9 @@ Format for the .txt files that contain all the data about all the files.
        in the skin.ini file is checked.
    P - Same as C but instead only the folder name can be specified in the skin.ini
        and not the filename.
+   O - Indicates the spinner style used if this image is for a specific spinner style. Has
+       to be followed by a boolean that indicates the style. True indicates the old style
+       and false indicates the new style.
    - - A dash means that no special options apply to the file.
 
 6. If the C or P option is used then the options section has to be followed directly by an

@@ -29,14 +29,14 @@ NM png sliderb
 - png sliderscorepoint
 
 ===> Spinner
-- png spinner-background
-- png spinner-circle
-- png spinner-metre
-- png spinner-bottom
-- png spinner-glow
-- png spinner-middle
-- png spinner-middle2
-- png spinner-top
+O true png spinner-background
+O true png spinner-circle
+O true png spinner-metre
+O false png spinner-bottom
+O false png spinner-glow
+O false png spinner-middle
+O false png spinner-middle2
+O false png spinner-top
 - png spinner-approachcircle
 - png spinner-rpm
 - png spinner-clear
