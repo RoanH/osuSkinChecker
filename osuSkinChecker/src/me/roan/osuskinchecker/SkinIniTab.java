@@ -7,11 +7,16 @@ import java.awt.event.KeyListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+
+import me.roan.osuskinchecker.SkinIni.Version;
 
 public class SkinIniTab extends JTabbedPane{
 	/**
@@ -38,7 +43,9 @@ public class SkinIniTab extends JTabbedPane{
 			JPanel content = new JPanel();
 			BoxLayout layout = new BoxLayout(content, BoxLayout.Y_AXIS);
 			content.setLayout(layout);
-			this.add(new JScrollPane(content), BorderLayout.CENTER);
+			JScrollPane pane = new JScrollPane(content);
+			pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+			this.add(pane, BorderLayout.CENTER);
 			
 			{
 				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
@@ -62,7 +69,6 @@ public class SkinIniTab extends JTabbedPane{
 				panel.add(name);
 				content.add(panel);
 			}
-			
 			{
 				content.add(Box.createVerticalStrut(5));
 				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
@@ -84,6 +90,42 @@ public class SkinIniTab extends JTabbedPane{
 					}
 				});
 				panel.add(author);
+				content.add(panel);
+			}
+			{
+				content.add(Box.createVerticalStrut(5));
+				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+				panel.add(new JLabel("Version: "));
+				JComboBox<Version> version = new JComboBox<Version>(Version.values());
+				version.setSelectedItem(ini.version);
+				version.addItemListener((e)->{
+					ini.version = (Version) version.getSelectedItem();
+				});
+				panel.add(version);
+				content.add(panel);
+			}
+			{
+				content.add(Box.createVerticalStrut(5));
+				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+				panel.add(new JLabel("Cursor Expand (should the cursor expand when clicking): "));
+				JCheckBox check = new JCheckBox();
+				check.setSelected(ini.cursorExpand);
+				check.addItemListener((e)->{
+					ini.cursorExpand = check.isSelected();
+				});
+				panel.add(check);
+				content.add(panel);
+			}
+			{
+				content.add(Box.createVerticalStrut(5));
+				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+				panel.add(new JLabel("Cursor Centre (should the cursor be centered): "));
+				JCheckBox check = new JCheckBox("(false implies the top left corner)");
+				check.setSelected(ini.cursorCentre);
+				check.addItemListener((e)->{
+					ini.cursorCentre = check.isSelected();
+				});
+				panel.add(check);
 				content.add(panel);
 			}
 			

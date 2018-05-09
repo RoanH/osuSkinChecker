@@ -136,6 +136,7 @@ public class SkinChecker {
 	 * SD image when a HD version exists
 	 */
 	protected static boolean ignoreSD = false;
+	private static SkinIniTab iniTab;
 
 	/**
 	 * Main method
@@ -177,7 +178,8 @@ public class SkinChecker {
 		foreign.add(new JLabel("This is a list of files that are in the skin folder but serve no purpose."), BorderLayout.PAGE_START);
 		
 		JPanel ini = new JPanel(new BorderLayout());
-		ini.add(new JScrollPane(new SkinIniTab()), BorderLayout.CENTER);
+		iniTab = new SkinIniTab();
+		ini.add(new JScrollPane(iniTab), BorderLayout.CENTER);
 				
 		categories.add("Images", imageTabs);
 		categories.add("Sounds", soundTabs);
@@ -443,6 +445,10 @@ public class SkinChecker {
 			JOptionPane.showMessageDialog(frame, "This folder doesn't have a skin.ini file.\nWithout this file this skin won't even be recognized as a skin!\nAdd a skin.ini and then run this program again.", "Skin Checker", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
+		
+		SkinIni skinIni = new SkinIni();
+		skinIni.readIni(new File(skinFolder, "skin.ini"));
+		iniTab.init(skinIni);
 		
 		allFiles.clear();
 		addAllFiles(skinFolder);

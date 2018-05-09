@@ -314,15 +314,17 @@ public class SkinIni {
 	}
 	
 	protected enum Version{
-		V1("1"),
-		V2("2"),
-		V25("2.5"),
-		LATEST("latest");
+		V1("1", "(old style)"),
+		V2("2", "(basic new style)"),
+		V25("2.5", "(derrived new style)"),
+		LATEST("latest", "(for personal skins)");
 		
-		private final String name;
+		public final String name;
+		public final String extra;
 		
-		private Version(String name){
+		private Version(String name, String extra){
 			this.name = name;
+			this.extra = extra;
 		}
 		
 		private static Version fromString(String str){
@@ -344,7 +346,7 @@ public class SkinIni {
 		
 		@Override
 		public String toString(){
-			return name;
+			return name + " " + extra;
 		}
 	}
 }
