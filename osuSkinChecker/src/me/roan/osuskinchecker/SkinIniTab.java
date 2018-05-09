@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
@@ -47,9 +48,10 @@ public class SkinIniTab extends JTabbedPane{
 			pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 			this.add(pane, BorderLayout.CENTER);
 			
+			content.add(Box.createVerticalStrut(2));
 			{
 				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
-				panel.add(new JLabel("Skin name: "));
+				panel.add(new JLabel(" Skin name: "));
 				JTextField name = new JTextField(ini.name);
 				name.addKeyListener(new KeyListener(){
 
@@ -69,10 +71,12 @@ public class SkinIniTab extends JTabbedPane{
 				panel.add(name);
 				content.add(panel);
 			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
 			{
-				content.add(Box.createVerticalStrut(5));
 				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
-				panel.add(new JLabel("Author name: "));
+				panel.add(new JLabel(" Author name: "));
 				JTextField author = new JTextField(ini.author);
 				author.addKeyListener(new KeyListener(){
 
@@ -92,10 +96,12 @@ public class SkinIniTab extends JTabbedPane{
 				panel.add(author);
 				content.add(panel);
 			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
 			{
-				content.add(Box.createVerticalStrut(5));
 				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
-				panel.add(new JLabel("Version: "));
+				panel.add(new JLabel(" Version: "));
 				JComboBox<Version> version = new JComboBox<Version>(Version.values());
 				version.setSelectedItem(ini.version);
 				version.addItemListener((e)->{
@@ -104,10 +110,12 @@ public class SkinIniTab extends JTabbedPane{
 				panel.add(version);
 				content.add(panel);
 			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
 			{
-				content.add(Box.createVerticalStrut(5));
 				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
-				panel.add(new JLabel("Cursor Expand (should the cursor expand when clicking): "));
+				panel.add(new JLabel(" Cursor Expand (should the cursor expand when clicking): "));
 				JCheckBox check = new JCheckBox();
 				check.setSelected(ini.cursorExpand);
 				check.addItemListener((e)->{
@@ -116,14 +124,81 @@ public class SkinIniTab extends JTabbedPane{
 				panel.add(check);
 				content.add(panel);
 			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
 			{
-				content.add(Box.createVerticalStrut(5));
 				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
-				panel.add(new JLabel("Cursor Centre (should the cursor be centered): "));
+				panel.add(new JLabel(" Cursor Centre (should the cursor be centered): "));
 				JCheckBox check = new JCheckBox("(false implies the top left corner)");
 				check.setSelected(ini.cursorCentre);
 				check.addItemListener((e)->{
 					ini.cursorCentre = check.isSelected();
+				});
+				panel.add(check);
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+				panel.add(new JLabel(" Cursor Rotate (should the cursor rotate): "));
+				JCheckBox check = new JCheckBox();
+				check.setSelected(ini.cursorRotate);
+				check.addItemListener((e)->{
+					ini.cursorRotate = check.isSelected();
+				});
+				panel.add(check);
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+				panel.add(new JLabel(" Cursor Trail Rotate (should the cursor trail rotate): "));
+				JCheckBox check = new JCheckBox();
+				check.setSelected(ini.cursorTrailRotate);
+				check.addItemListener((e)->{
+					ini.cursorTrailRotate = check.isSelected();
+				});
+				panel.add(check);
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+				panel.add(new JLabel(" Animation Framerate (how many frames per second for most animations): "));
+				panel.add(new JLabel("TODO"));
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+				panel.add(new JLabel(" Layered Hit Sounds (should hitnormal sounds always be played): "));
+				JCheckBox check = new JCheckBox();
+				check.setSelected(ini.layeredHitSounds);
+				check.addItemListener((e)->{
+					ini.layeredHitSounds = check.isSelected();
+				});
+				panel.add(check);
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+				panel.add(new JLabel(" Combo Burst Random (should combust be shown in a random order): "));
+				JCheckBox check = new JCheckBox("(false implies that they will appear in order)");
+				check.setSelected(ini.layeredHitSounds);
+				check.addItemListener((e)->{
+					ini.layeredHitSounds = check.isSelected();
 				});
 				panel.add(check);
 				content.add(panel);
