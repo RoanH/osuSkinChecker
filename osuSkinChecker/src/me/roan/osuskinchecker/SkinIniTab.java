@@ -1,13 +1,17 @@
 package me.roan.osuskinchecker;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
+import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -210,6 +214,61 @@ public class SkinIniTab extends JTabbedPane{
 				content.add(panel);
 			}
 			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+				panel.add(new JLabel(" Song Select Active Text (what colour should the text of active panels be tinted): "));
+				panel.add(new ColorSelector(ini.songSelectActiveText, (color)->{
+					ini.songSelectActiveText = color;
+				}));
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+				panel.add(new JLabel(" Song Select Inactive Text (what colour should the text of inactive panels be tinted): "));
+				panel.add(new ColorSelector(ini.songSelectInactiveText, (color)->{
+					ini.songSelectInactiveText = color;
+				}));
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+				panel.add(new JLabel(" Menu Glow (what colour should the spectrum bars be coloured in): "));
+				panel.add(new ColorSelector(ini.menuGlow, (color)->{
+					ini.menuGlow = color;
+				}));
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+				panel.add(new JLabel(" Star Break Additive (what colour should be added to star2 during breaks): "));
+				panel.add(new ColorSelector(ini.starBreakAdditive, (color)->{
+					ini.starBreakAdditive = color;
+				}));
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+				panel.add(new JLabel(" Input Overlay Text (what colour should the input keys be tinted): "));
+				panel.add(new ColorSelector(ini.inputOverlayText, (color)->{
+					ini.inputOverlayText = color;
+				}));
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
 			
 			content.add(new JPanel(new BorderLayout()));
 		}
@@ -350,6 +409,53 @@ public class SkinIniTab extends JTabbedPane{
 		
 		public ManiaTab(SkinIni ini) {
 			
+		}
+	}
+	
+	private static final class ColorSelector extends JPanel implements MouseListener {
+		/**
+		 * Serial ID
+		 */
+		private static final long serialVersionUID = 3286760817738876568L;
+		private Color color;
+		private ColorEvent handler;
+		
+		private ColorSelector(Color def, ColorEvent handler) {
+			this.setBackground(color = def);
+			this.addMouseListener(this);
+			this.handler = handler;
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			Color c = JColorChooser.showDialog(this, "Color Chooser", color);
+			if(c != null) {
+				this.color = c;
+				this.setBackground(c);
+				handler.colorChanged(c);
+			}
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {			
+		}
+		
+		@FunctionalInterface
+		private static abstract interface ColorEvent{
+			
+			public abstract void colorChanged(Color color);
 		}
 	}
 }
