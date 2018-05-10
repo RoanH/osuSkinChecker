@@ -15,7 +15,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
 
 import me.roan.osuskinchecker.SkinIni.Version;
 
@@ -44,9 +43,7 @@ public class SkinIniTab extends JTabbedPane{
 			JPanel content = new JPanel();
 			BoxLayout layout = new BoxLayout(content, BoxLayout.Y_AXIS);
 			content.setLayout(layout);
-			JScrollPane pane = new JScrollPane(content);
-			pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-			this.add(pane, BorderLayout.CENTER);
+			this.add(new JScrollPane(content), BorderLayout.CENTER);
 			
 			content.add(Box.createVerticalStrut(2));
 			{
@@ -196,13 +193,23 @@ public class SkinIniTab extends JTabbedPane{
 				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
 				panel.add(new JLabel(" Combo Burst Random (should combust be shown in a random order): "));
 				JCheckBox check = new JCheckBox("(false implies that they will appear in order)");
-				check.setSelected(ini.layeredHitSounds);
+				check.setSelected(ini.comboBurstRandom);
 				check.addItemListener((e)->{
-					ini.layeredHitSounds = check.isSelected();
+					ini.comboBurstRandom = check.isSelected();
 				});
 				panel.add(check);
 				content.add(panel);
 			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+				panel.add(new JLabel(" Custom Combo Burst Sounds (on which combo marks should the comboburst sounds be played): "));
+				panel.add(new JLabel("TODO comma sep"));
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
 			
 			content.add(new JPanel(new BorderLayout()));
 		}
@@ -215,7 +222,112 @@ public class SkinIniTab extends JTabbedPane{
 		private static final long serialVersionUID = -639789728841322306L;
 		
 		public StandardTab(SkinIni ini) {
-
+			super(new BorderLayout());
+			JPanel content = new JPanel();
+			BoxLayout layout = new BoxLayout(content, BoxLayout.Y_AXIS);
+			content.setLayout(layout);
+			this.add(new JScrollPane(content), BorderLayout.CENTER);
+			
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+				panel.add(new JLabel(" Hit Circle Overlay Above Number (should the hitcircleoverlay be drawn above the numbers): "));
+				JCheckBox check = new JCheckBox("(false implies that they will be drawn below the overlay)");
+				check.setSelected(ini.hitCircleOverlayAboveNumber);
+				check.addItemListener((e)->{
+					ini.hitCircleOverlayAboveNumber = check.isSelected();
+				});
+				panel.add(check);
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+				panel.add(new JLabel(" Slider Style (what filling to use for sliders): "));
+				JComboBox<String> sel = new JComboBox<String>(new String[] {"Segments", "Gradient"});
+				sel.setSelectedIndex(ini.sliderStyle - 1);
+				sel.addItemListener((e)->{
+					ini.sliderStyle = sel.getSelectedIndex() - 1;
+				});
+				panel.add(sel);
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+				panel.add(new JLabel(" Slider Ball Flip (should the sliderball flip at the reverse arrow): "));
+				JCheckBox check = new JCheckBox();
+				check.setSelected(ini.sliderBallFlip);
+				check.addItemListener((e)->{
+					ini.sliderBallFlip = check.isSelected();
+				});
+				panel.add(check);
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+				panel.add(new JLabel(" Allow Slider Ball Tint (should the sliderball be tinted in combo colours): "));
+				JCheckBox check = new JCheckBox();
+				check.setSelected(ini.allowSliderBallTint);
+				check.addItemListener((e)->{
+					ini.allowSliderBallTint = check.isSelected();
+				});
+				panel.add(check);
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+				panel.add(new JLabel(" Spinner No Blink (should the highest bar of the metre always be visible): "));
+				JCheckBox check = new JCheckBox();
+				check.setSelected(ini.spinnerNoBlink);
+				check.addItemListener((e)->{
+					ini.spinnerNoBlink = check.isSelected();
+				});
+				panel.add(check);
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+				panel.add(new JLabel(" Spinner Fade Playfield (should the spinner add black bars during spins): "));
+				JCheckBox check = new JCheckBox();
+				check.setSelected(ini.spinnerFadePlayfield);
+				check.addItemListener((e)->{
+					ini.spinnerFadePlayfield = check.isSelected();
+				});
+				panel.add(check);
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+				panel.add(new JLabel(" Spinner Frequency Modulate (should the spinnerspin sound pitch go up while spinning): "));
+				JCheckBox check = new JCheckBox();
+				check.setSelected(ini.spinnerFrequencyModulate);
+				check.addItemListener((e)->{
+					ini.spinnerFrequencyModulate = check.isSelected();
+				});
+				panel.add(check);
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
+			
+			content.add(new JPanel(new BorderLayout()));
 		}
 	}
 	
