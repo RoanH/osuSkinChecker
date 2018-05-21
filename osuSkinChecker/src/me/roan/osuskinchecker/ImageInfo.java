@@ -3,9 +3,11 @@ package me.roan.osuskinchecker;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Locale;
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
 
 /**
  * ImageInfo objects are used to describe an
@@ -366,12 +368,14 @@ public final class ImageInfo implements Info{
 	 * @return Whether or not the image is empty
 	 */
 	private static boolean isEmptyImage(File img){
-		if(img.length() > 4096){
-			return false;
-		}
 		try {
-			BufferedImage image = ImageIO.read(img);
-			return image.getHeight() + image.getWidth() == 2;
+			Iterator<ImageReader> readers = ImageIO.getImageReadersBySuffix(img.getName().substring(img.getName().lastIndexOf('.') + 1));
+			while(readers.hasNext()){
+				ImageReader reader = readers.next();
+				reader.setInput(ImageIO.createImageInputStream(img));
+				return reader.getWidth(0) == 1 && reader.getHeight(0) == 1;
+			}
+			return false;
 		} catch (IOException e) {
 			return false;
 		}
