@@ -385,6 +385,64 @@ public class SkinIniTab extends JTabbedPane{
 				content.add(panel);
 			}
 			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+				panel.add(new JLabel(" Slider Ball (what colour should the slider ball be coloured): "));
+				panel.add(new ColorSelector(ini.sliderBall, (color)->{
+					ini.sliderBall = color;
+				}));
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+				JCheckBox enabled = new JCheckBox("", ini.sliderTrackOverride != null);
+				JPanel settings = new JPanel(new BorderLayout());
+				settings.add(enabled, BorderLayout.LINE_START);
+				panel.add(new JLabel(" Slider Track Override (what colour should the slider body be coloured): "));
+				ColorSelector selector = new ColorSelector(ini.sliderTrackOverride, (color)->{
+					if(enabled.isSelected()){
+						ini.sliderTrackOverride = color;
+					}
+				});
+				settings.add(selector, BorderLayout.CENTER);
+				enabled.addActionListener((e)->{
+					if(enabled.isSelected()){
+						ini.sliderTrackOverride = selector.color;
+					}else{
+						ini.sliderTrackOverride = null;
+					}
+				});
+				panel.add(settings);
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+				panel.add(new JLabel(" Slider Border (what colour should be used for sliderborders): "));
+				panel.add(new ColorSelector(ini.sliderBorder, (color)->{
+					ini.sliderBorder = color;
+				}));
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+				panel.add(new JLabel(" Spinner Background (what colour should be added to the spinner-background): "));
+				panel.add(new ColorSelector(ini.spinnerBackground, (color)->{
+					ini.spinnerBackground = color;
+				}));
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
 			
 			content.add(new JPanel(new BorderLayout()));
 		}
@@ -421,7 +479,7 @@ public class SkinIniTab extends JTabbedPane{
 		private ColorEvent handler;
 		
 		private ColorSelector(Color def, ColorEvent handler) {
-			this.setBackground(color = def);
+			this.setBackground(def == null ? (color = Color.BLACK) : (color = def));
 			this.addMouseListener(this);
 			this.handler = handler;
 		}
