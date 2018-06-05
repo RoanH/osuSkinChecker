@@ -311,7 +311,7 @@ public class SkinIniTab extends JTabbedPane{
 			content.add(Box.createVerticalStrut(2));
 			{
 				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Combo4 (what colour is used for the third combo): "));
+				panel.add(new JLabel(" Combo 4 (what colour is used for the third combo): "));
 				panel.add(new ColorSelector(ini.combo4, (color)->{
 					ini.combo4 = color;
 				}));
