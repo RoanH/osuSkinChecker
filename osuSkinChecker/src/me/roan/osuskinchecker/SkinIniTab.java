@@ -687,6 +687,44 @@ public class SkinIniTab extends JTabbedPane{
 				content.add(panel);
 			}
 			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new SplitLayout());
+				panel.add(new JLabel(" Combo Prefix (what prefix to use for combo numbers): "));
+				JTextField field = new JTextField(ini.comboPrefix);
+				field.addKeyListener(new KeyListener(){
+
+					@Override
+					public void keyTyped(KeyEvent e) {					
+					}
+
+					@Override
+					public void keyPressed(KeyEvent e) {					
+					}
+
+					@Override
+					public void keyReleased(KeyEvent e) {
+						ini.comboPrefix = field.getText();
+					}
+				});
+				panel.add(field);
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new SplitLayout());
+				panel.add(new JLabel(" Combo Overlap (by how many pixels should the combo numbers overlap): "));
+				JSpinner spinner = new JSpinner(new SpinnerNumberModel(ini.comboOverlap, Integer.MIN_VALUE, Integer.MAX_VALUE, 1));
+				spinner.addChangeListener((e)->{
+					ini.comboOverlap = (Integer)spinner.getValue();
+				});
+				panel.add(spinner);
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
 			
 			content.add(new JPanel(new BorderLayout()));
 		}
