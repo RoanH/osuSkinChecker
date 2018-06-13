@@ -216,6 +216,44 @@ public class SkinIniTab extends JTabbedPane{
 				content.add(panel);
 			}
 			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new SplitLayout());
+				panel.add(new JLabel(" Score Prefix (what prefix to use for the score numbers): "));
+				JTextField field = new JTextField(ini.scorePrefix);
+				field.addKeyListener(new KeyListener(){
+
+					@Override
+					public void keyTyped(KeyEvent e) {					
+					}
+
+					@Override
+					public void keyPressed(KeyEvent e) {					
+					}
+
+					@Override
+					public void keyReleased(KeyEvent e) {
+						ini.scorePrefix = field.getText();
+					}
+				});
+				panel.add(field);
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new SplitLayout());
+				panel.add(new JLabel(" Score Overlap (by how many pixels should the score numbers overlap): "));
+				JSpinner spinner = new JSpinner(new SpinnerNumberModel(ini.scoreOverlap, Integer.MIN_VALUE, Integer.MAX_VALUE, 1));
+				spinner.addChangeListener((e)->{
+					ini.scoreOverlap = (Integer)spinner.getValue();
+				});
+				panel.add(spinner);
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
 					
 			content.add(new JPanel(new BorderLayout()));
 		}
