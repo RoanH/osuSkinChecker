@@ -2,9 +2,6 @@ package me.roan.osuskinchecker;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -22,7 +19,6 @@ import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
 import me.roan.osuskinchecker.SkinIni.Version;
@@ -737,7 +733,74 @@ public class SkinIniTab extends JTabbedPane{
 		private static final long serialVersionUID = -5006508447206574607L;
 		
 		public CtbTab(SkinIni ini) {
-
+			super(new BorderLayout());
+			JPanel content = new JPanel();
+			BoxLayout layout = new BoxLayout(content, BoxLayout.Y_AXIS);
+			content.setLayout(layout);
+			this.add(new JScrollPane(content), BorderLayout.CENTER);
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new SplitLayout());
+				panel.add(new JLabel(" Hyper Dash (what colour is used for the dash): "));
+				panel.add(new ColorSelector(ini.hyperDash, (color)->{
+					ini.hyperDash = color;
+				}));
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new SplitLayout());
+				JCheckBox enabled = new JCheckBox("", ini.hyperDashFruit != null);
+				JPanel settings = new JPanel(new BorderLayout());
+				settings.add(enabled, BorderLayout.LINE_START);
+				panel.add(new JLabel(" Hyper Dash Fruit (what colour is used for the fruits): "));
+				ColorSelector selector = new ColorSelector(ini.hyperDashFruit, (color)->{
+					if(enabled.isSelected()){
+						ini.hyperDashFruit = color;
+					}
+				});
+				settings.add(selector, BorderLayout.CENTER);
+				enabled.addActionListener((e)->{
+					if(enabled.isSelected()){
+						ini.hyperDashFruit = selector.color;
+					}else{
+						ini.hyperDashFruit = null;
+					}
+				});
+				panel.add(settings);
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			{
+				JPanel panel = new JPanel(new SplitLayout());
+				JCheckBox enabled = new JCheckBox("", ini.hyperDashAfterImage != null);
+				JPanel settings = new JPanel(new BorderLayout());
+				settings.add(enabled, BorderLayout.LINE_START);
+				panel.add(new JLabel(" Hyper Dash After Image (what colour is used for the after images): "));
+				ColorSelector selector = new ColorSelector(ini.hyperDashAfterImage, (color)->{
+					if(enabled.isSelected()){
+						ini.hyperDashAfterImage = color;
+					}
+				});
+				settings.add(selector, BorderLayout.CENTER);
+				enabled.addActionListener((e)->{
+					if(enabled.isSelected()){
+						ini.hyperDashAfterImage = selector.color;
+					}else{
+						ini.hyperDashAfterImage = null;
+					}
+				});
+				panel.add(settings);
+				content.add(panel);
+			}
+			content.add(Box.createVerticalStrut(2));
+			
+			content.add(new JPanel(new BorderLayout()));
 		}
 	}
 	
