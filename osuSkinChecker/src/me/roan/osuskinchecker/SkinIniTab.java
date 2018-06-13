@@ -261,7 +261,7 @@ public class SkinIniTab extends JTabbedPane{
 		 */
 		private static final long serialVersionUID = -639789728841322306L;
 		
-		public StandardTab(SkinIni ini) {
+		private StandardTab(SkinIni ini) {
 			super(new BorderLayout());
 			JPanel content = new JPanel();
 			BoxLayout layout = new BoxLayout(content, BoxLayout.Y_AXIS);
@@ -435,7 +435,7 @@ public class SkinIniTab extends JTabbedPane{
 		 */
 		private static final long serialVersionUID = -5006508447206574607L;
 		
-		public GameplayTab(SkinIni ini) {
+		private GameplayTab(SkinIni ini) {
 			super(new BorderLayout());
 			JPanel content = new JPanel();
 			BoxLayout layout = new BoxLayout(content, BoxLayout.Y_AXIS);
@@ -732,7 +732,7 @@ public class SkinIniTab extends JTabbedPane{
 		 */
 		private static final long serialVersionUID = -5006508447206574607L;
 		
-		public CtbTab(SkinIni ini) {
+		private CtbTab(SkinIni ini) {
 			super(new BorderLayout());
 			JPanel content = new JPanel();
 			BoxLayout layout = new BoxLayout(content, BoxLayout.Y_AXIS);
@@ -810,8 +810,21 @@ public class SkinIniTab extends JTabbedPane{
 		 */
 		private static final long serialVersionUID = 337165984317388690L;
 		
-		public ManiaTab(SkinIni ini) {
-			
+		private ManiaTab(SkinIni ini) {
+			for(int i = 1; i <= 10; i++){
+				add(i + " Keys", new ManiaKeyTab(ini, i));
+			}
+		}
+		
+		private static final class ManiaKeyTab extends JPanel{
+			/**
+			 * Serial ID
+			 */
+			private static final long serialVersionUID = -6820855921720231002L;
+
+			private ManiaKeyTab(SkinIni ini, int keys){
+				
+			}
 		}
 	}
 	
