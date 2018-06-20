@@ -855,6 +855,60 @@ public class SkinIniTab extends JTabbedPane{
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					panel.add(new JLabel(" Column Width (widths of the columns): "));
+					panel.add(new JLabel("TODO, list of length keys of ints"));
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					panel.add(new JLabel(" Column Line Width (widths of the column separators): "));
+					panel.add(new JLabel("TODO, list of length keys+1 of ints"));
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					panel.add(new JLabel(" Barline Height (thickness ofthe barline): "));
+					panel.add(new JLabel("TODO, non neg double"));
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					panel.add(new JLabel(" Lighting N Width (widths of LightingN for the columns): "));
+					panel.add(new JLabel("TODO, list of length keys of ints"));
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					panel.add(new JLabel(" Lighting L Width (widths of LightingL for the columns): "));
+					panel.add(new JLabel("TODO, list of length keys of ints"));
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					panel.add(new JLabel(" Width For Note Height Scale (height for all notes if columns have individual widths): "));
+					panel.add(new JLabel("TODO, non neg int"));
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
 				
 				content.add(new JPanel(new BorderLayout()));
 			}
