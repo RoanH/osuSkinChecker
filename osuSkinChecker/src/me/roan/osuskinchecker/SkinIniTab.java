@@ -823,7 +823,40 @@ public class SkinIniTab extends JTabbedPane{
 			private static final long serialVersionUID = -6820855921720231002L;
 
 			private ManiaKeyTab(SkinIni ini, int keys){
+				super(new BorderLayout());
+				JPanel content = new JPanel();
+				BoxLayout layout = new BoxLayout(content, BoxLayout.Y_AXIS);
+				content.setLayout(layout);
+				this.add(new JScrollPane(content), BorderLayout.CENTER);
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					panel.add(new JLabel(" Column Start (where does the left column start): "));
+					panel.add(new JLabel("TODO, non neg int"));
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					panel.add(new JLabel(" Column Right (up to which point can columns be drawn): "));
+					panel.add(new JLabel("TODO, non neg int"));
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					panel.add(new JLabel(" Column Spacing (distance between columns): "));
+					panel.add(new JLabel("TODO, list of length keys-1 of ints"));
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
 				
+				content.add(new JPanel(new BorderLayout()));
 			}
 		}
 	}
