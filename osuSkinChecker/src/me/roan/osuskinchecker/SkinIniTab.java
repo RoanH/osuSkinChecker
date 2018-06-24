@@ -2,10 +2,13 @@ package me.roan.osuskinchecker;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -20,6 +23,11 @@ import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.PlainDocument;
+import javax.swing.text.DocumentFilter.FilterBypass;
 
 import me.roan.osuskinchecker.SkinIni.Version;
 
@@ -959,6 +967,61 @@ public class SkinIniTab extends JTabbedPane{
 		private static abstract interface ColorEvent{
 			
 			public abstract void colorChanged(Color color);
+		}
+	}
+	
+	private static final class ValueArray extends JPanel{	
+		/**
+		 * Serial ID
+		 */
+		private static final long serialVersionUID = 3145876156701959606L;
+		private JTextField[] values;
+		
+		private ValueArray(boolean allowDecimal, String[] defaults){
+			values = new JTextField[defaults.length];
+			this.setLayout(new GridLayout(1, defaults.length, 2, 0));
+			for(int i = 0; i < defaults.length; i++){
+				values[i] = new JTextField(defaults[i]);
+				PlainDocument document = new PlainDocument();
+				document.setDocumentFilter(new NumberDocumentFilter(allowDecimal));
+				values[i].setDocument(document);
+				this.add(values[i]);
+			}
+		}
+		
+		private final String[] toArray(){
+			String[] array = new String[values.length];
+			for(int i = 0; i < array.length; i++){
+				array[i] = values[i].getText();
+			}
+			return array;
+		}
+		
+		private static final class NumberDocumentFilter extends DocumentFilter{
+			/**
+			 * Serial ID
+			 */
+			private static final long serialVersionUID = -2059559238716410609L;
+			private final boolean allowDecimal;
+			
+			private NumberDocumentFilter(boolean allowDecimal) {
+				this.allowDecimal = allowDecimal;
+			}
+
+			@Override
+			public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
+				fb.remove(offset, length);
+			}
+
+			@Override
+			public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+				fb.insertString(offset, string, attr);
+			}
+
+			@Override
+			public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+				fb.replace(offset, length, text, attrs);
+			}
 		}
 	}
 }
