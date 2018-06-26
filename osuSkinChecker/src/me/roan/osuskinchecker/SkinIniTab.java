@@ -907,7 +907,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Lighting L Width (widths of LightingL for the columns): "));
-					panel.add(new ValueArray(true, new String[]{"0","0","0"}));
+					panel.add(new ValueArray(false, new String[]{"0","0","0"}));
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
@@ -995,7 +995,7 @@ public class SkinIniTab extends JTabbedPane{
 		private final String[] toArray(){
 			String[] array = new String[values.length];
 			for(int i = 0; i < array.length; i++){
-				array[i] = values[i].getText();
+				array[i] = values[i].getText().replaceFirst("^\0", "0.");
 			}
 			return array;
 		}
