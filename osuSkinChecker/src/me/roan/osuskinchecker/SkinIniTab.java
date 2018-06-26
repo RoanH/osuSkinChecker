@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.Box;
@@ -906,7 +907,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Lighting L Width (widths of LightingL for the columns): "));
-					panel.add(new JLabel("TODO, list of length keys of ints"));
+					panel.add(new ValueArray(true, new String[]{"0","0","0"}));
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
@@ -1000,10 +1001,6 @@ public class SkinIniTab extends JTabbedPane{
 		}
 		
 		private static final class NumberDocumentFilter extends DocumentFilter{
-			/**
-			 * Serial ID
-			 */
-			private static final long serialVersionUID = -2059559238716410609L;
 			private final boolean allowDecimal;
 			private boolean hasDot = false;
 			
@@ -1016,28 +1013,22 @@ public class SkinIniTab extends JTabbedPane{
 				Segment seg = new Segment();
 				fb.getDocument().getText(offset, length, seg);
 				fb.remove(offset, length);
-				for(char ch : seg.array){
-					if(ch == '.'){
-						hasDot = false;
-					}
+				if(seg.toString().contains(".")){
+					hasDot = false;
 				}
 			}
 
 			@Override
 			public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-				string = string.replace(',', '.');
-				if(string.indexOf('.') != string.lastIndexOf('.')){
-					string = string.substring(0, string.lastIndexOf('.'));
+				string = string.replace(',', '.').replaceAll("[^0-9.]", "");
+				if(!allowDecimal || hasDot){
+					string = string.replace(".", "");
 				}
-				if(allowDecimal && !hasDot){
-					string = string.replaceAll("(?![0-9.]).", "");
-				}else{
-					string = string.replaceAll("(?![0-9]).", "");
-				}
-				fb.insertString(offset, string, attr);
 				if(string.contains(".")){
+					string = string.substring(0, string.indexOf('.') + 1) + string.substring(string.indexOf('.')).replace(".", "");
 					hasDot = true;
 				}
+				fb.insertString(offset, string, attr);
 			}
 
 			@Override
