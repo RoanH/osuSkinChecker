@@ -907,7 +907,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Lighting L Width (widths of LightingL for the columns): "));
-					panel.add(new ValueArray(false, new String[]{"0","0","0"}));
+					panel.add(new JLabel("TODO, list of length keys of ints"));
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
