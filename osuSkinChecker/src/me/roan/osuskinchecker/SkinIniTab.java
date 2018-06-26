@@ -27,9 +27,11 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import javax.swing.text.PlainDocument;
+import javax.swing.text.Segment;
 import javax.swing.text.DocumentFilter.FilterBypass;
 
 import me.roan.osuskinchecker.SkinIni.Version;
+import sun.swing.SwingUtilities2;
 
 public class SkinIniTab extends JTabbedPane{
 	/**
@@ -1003,6 +1005,7 @@ public class SkinIniTab extends JTabbedPane{
 			 */
 			private static final long serialVersionUID = -2059559238716410609L;
 			private final boolean allowDecimal;
+			private boolean hasDot = false;
 			
 			private NumberDocumentFilter(boolean allowDecimal) {
 				this.allowDecimal = allowDecimal;
@@ -1010,17 +1013,37 @@ public class SkinIniTab extends JTabbedPane{
 
 			@Override
 			public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
+				Segment seg = new Segment();
+				fb.getDocument().getText(offset, length, seg);
 				fb.remove(offset, length);
+				for(char ch : seg.array){
+					if(ch == '.'){
+						hasDot = false;
+					}
+				}
 			}
 
 			@Override
 			public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+				string = string.replace(',', '.');
+				if(string.indexOf('.') != string.lastIndexOf('.')){
+					string = string.substring(0, string.lastIndexOf('.'));
+				}
+				if(allowDecimal && !hasDot){
+					string = string.replaceAll("(?![0-9.]).", "");
+				}else{
+					string = string.replaceAll("(?![0-9]).", "");
+				}
 				fb.insertString(offset, string, attr);
+				if(string.contains(".")){
+					hasDot = true;
+				}
 			}
 
 			@Override
 			public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-				fb.replace(offset, length, text, attrs);
+				this.remove(fb, offset, length);
+				this.insertString(fb, offset, text, attrs);
 			}
 		}
 	}
