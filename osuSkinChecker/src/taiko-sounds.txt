@@ -1,18 +1,18 @@
 ===> Normal Sample Set
-- wav,mp3 taiko-normal-hitnormal
-- wav,mp3 taiko-normal-hitclap
-- wav,mp3 taiko-normal-hitfinish
-- wav,mp3 taiko-normal-hitwhistle
+- wav,mp3,ogg taiko-normal-hitnormal
+- wav,mp3,ogg taiko-normal-hitclap
+- wav,mp3,ogg taiko-normal-hitfinish
+- wav,mp3,ogg taiko-normal-hitwhistle
 
 
 ===> Soft Sample Set
-- wav,mp3 taiko-soft-hitnormal
-- wav,mp3 taiko-soft-hitclap
-- wav,mp3 taiko-soft-hitfinish
-- wav,mp3 taiko-soft-hitwhistle
+- wav,mp3,ogg taiko-soft-hitnormal
+- wav,mp3,ogg taiko-soft-hitclap
+- wav,mp3,ogg taiko-soft-hitfinish
+- wav,mp3,ogg taiko-soft-hitwhistle
 
 ===> Drum Sample Set
-- wav,mp3 taiko-drum-hitnormal
-- wav,mp3 taiko-drum-hitclap
-- wav,mp3 taiko-drum-hitfinish
-- wav,mp3 taiko-drum-hitwhistle
+- wav,mp3,ogg taiko-drum-hitnormal
+- wav,mp3,ogg taiko-drum-hitclap
+- wav,mp3,ogg taiko-drum-hitfinish
+- wav,mp3,ogg taiko-drum-hitwhistle

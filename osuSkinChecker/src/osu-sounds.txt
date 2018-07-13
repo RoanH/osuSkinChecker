@@ -1,3 +1,3 @@
 ===> Spinner
-- wav,mp3 spinnerspin
-- wav,mp3 spinnerbonus
+- wav,mp3,ogg spinnerspin
+- wav,mp3,ogg spinnerbonus
