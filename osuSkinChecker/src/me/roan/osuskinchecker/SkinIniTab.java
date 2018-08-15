@@ -844,7 +844,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Column Start (where does the left column start): "));
-					panel.add(new JLabel("TODO, non neg int"));
+					panel.add(new JLabel("TODO, non neg double"));
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
@@ -853,7 +853,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Column Right (up to which point can columns be drawn): "));
-					panel.add(new JLabel("TODO, non neg int"));
+					panel.add(new JLabel("TODO, non neg double"));
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
@@ -862,7 +862,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Column Spacing (distance between columns): "));
-					panel.add(new JLabel("TODO, list of length keys-1 of ints"));
+					panel.add(new JLabel("TODO, list of length keys-1 of double"));
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
@@ -871,7 +871,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Column Width (widths of the columns): "));
-					panel.add(new JLabel("TODO, list of length keys of ints"));
+					panel.add(new JLabel("TODO, list of length keys of double"));
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
@@ -880,7 +880,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Column Line Width (widths of the column separators): "));
-					panel.add(new JLabel("TODO, list of length keys+1 of ints"));
+					panel.add(new JLabel("TODO, list of length keys+1 of double"));
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
@@ -898,7 +898,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Lighting N Width (widths of LightingN for the columns): "));
-					panel.add(new JLabel("TODO, list of length keys of ints"));
+					panel.add(new JLabel("TODO, list of length keys of double"));
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
@@ -907,7 +907,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Lighting L Width (widths of LightingL for the columns): "));
-					panel.add(new JLabel("TODO, list of length keys of ints"));
+					panel.add(new JLabel("TODO, list of length keys of double"));
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
@@ -916,7 +916,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Width For Note Height Scale (height for all notes if columns have individual widths): "));
-					panel.add(new JLabel("TODO, non neg int"));
+					panel.add(new JLabel("TODO, non neg double"));
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
