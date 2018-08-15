@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.List;
 
 public class SkinIni {
 	//general
@@ -70,7 +69,7 @@ public class SkinIni {
 	protected Color hyperDashFruit = null;
 	protected Color hyperDashAfterImage = null;
 	
-	protected List<ManiaIni> mania;
+	protected ManiaIni[] mania = new ManiaIni[10];
 	
 	protected final class ManiaIni{
 		protected int keys;//non negative

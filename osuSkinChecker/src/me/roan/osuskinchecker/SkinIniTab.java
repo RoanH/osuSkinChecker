@@ -31,6 +31,7 @@ import javax.swing.text.PlainDocument;
 import javax.swing.text.Segment;
 import javax.swing.text.DocumentFilter.FilterBypass;
 
+import me.roan.osuskinchecker.SkinIni.ManiaIni;
 import me.roan.osuskinchecker.SkinIni.Version;
 import sun.swing.SwingUtilities2;
 
@@ -823,7 +824,7 @@ public class SkinIniTab extends JTabbedPane{
 		
 		private ManiaTab(SkinIni ini) {
 			for(int i = 1; i <= 10; i++){
-				add(i + " Keys", new ManiaKeyTab(ini, i));
+				add(i + (i == 1 ? " Key" : " Keys"), new ManiaKeyTab(ini.mania[i - 1], i));
 			}
 		}
 		
@@ -833,7 +834,7 @@ public class SkinIniTab extends JTabbedPane{
 			 */
 			private static final long serialVersionUID = -6820855921720231002L;
 
-			private ManiaKeyTab(SkinIni ini, int keys){
+			private ManiaKeyTab(ManiaIni ini, int keys){
 				super(new BorderLayout());
 				JPanel content = new JPanel();
 				BoxLayout layout = new BoxLayout(content, BoxLayout.Y_AXIS);
