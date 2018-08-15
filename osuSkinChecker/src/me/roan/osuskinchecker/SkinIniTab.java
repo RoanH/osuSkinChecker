@@ -920,6 +920,60 @@ public class SkinIniTab extends JTabbedPane{
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					panel.add(new JLabel(" Hit Position (at what height should the judgement line be drawn): "));
+					panel.add(new JLabel("TODO, non neg int"));
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					panel.add(new JLabel(" Light Position (at what height should the stage lights be drawn): "));
+					panel.add(new JLabel("TODO, non neg int"));
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					panel.add(new JLabel(" Score Position (at what height should the hitbursts be drawn): "));
+					panel.add(new JLabel("TODO, non neg int"));
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					panel.add(new JLabel(" Combo Position (at what height should the combo be drawn): "));
+					panel.add(new JLabel("TODO, non neg int"));
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					panel.add(new JLabel(" Judgement Line (should a solid line be drawn above the StageHint): "));
+					panel.add(new JLabel("TODO, boolean true/false"));
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					panel.add(new JLabel(" Special Style (what special style (if avaible) should be used for this keycount): "));
+					panel.add(new JLabel("TODO, chooice, 'none', 'left lane SP - outer lanes DP', 'right lane SP - outer lanes DP'"));
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
 				
 				content.add(new JPanel(new BorderLayout()));
 			}
