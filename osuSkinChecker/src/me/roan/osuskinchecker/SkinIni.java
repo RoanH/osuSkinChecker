@@ -150,8 +150,8 @@ public class SkinIni {
 		String line;
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 		while((line = reader.readLine()) != null){
-			String[] args = line.split(" ");
-			switch(args[0].endsWith(":") ? args[0].substring(0, args[0].length() - 1) : args[0]){
+			String[] args = line.split(": ", 2);
+			switch(args[0]){
 			//[Mania]
 			case "[Mania]":
 				readMania(reader);
