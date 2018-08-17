@@ -528,10 +528,24 @@ public class SkinIniTab extends JTabbedPane{
 			content.add(Box.createVerticalStrut(2));
 			{
 				JPanel panel = new JPanel(new SplitLayout());
+				JCheckBox enabled = new JCheckBox("", ini.combo2 != null);
+				JPanel settings = new JPanel(new BorderLayout());
+				settings.add(enabled, BorderLayout.LINE_START);
 				panel.add(new JLabel(" Combo 2 (what colour is used for the first combo): "));
-				panel.add(new ColorSelector(ini.combo2, (color)->{
-					ini.combo2 = color;
-				}));
+				ColorSelector selector = new ColorSelector(ini.combo2, (color)->{
+					if(enabled.isSelected()){
+						ini.combo2 = color;
+					}
+				});
+				settings.add(selector, BorderLayout.CENTER);
+				enabled.addActionListener((e)->{
+					if(enabled.isSelected()){
+						ini.combo2 = selector.color;
+					}else{
+						ini.combo2 = null;
+					}
+				});
+				panel.add(settings);
 				content.add(panel);
 			}
 			content.add(Box.createVerticalStrut(2));
@@ -539,10 +553,24 @@ public class SkinIniTab extends JTabbedPane{
 			content.add(Box.createVerticalStrut(2));
 			{
 				JPanel panel = new JPanel(new SplitLayout());
+				JCheckBox enabled = new JCheckBox("", ini.combo3 != null);
+				JPanel settings = new JPanel(new BorderLayout());
+				settings.add(enabled, BorderLayout.LINE_START);
 				panel.add(new JLabel(" Combo 3 (what colour is used for the second combo): "));
-				panel.add(new ColorSelector(ini.combo3, (color)->{
-					ini.combo3 = color;
-				}));
+				ColorSelector selector = new ColorSelector(ini.combo3, (color)->{
+					if(enabled.isSelected()){
+						ini.combo3 = color;
+					}
+				});
+				settings.add(selector, BorderLayout.CENTER);
+				enabled.addActionListener((e)->{
+					if(enabled.isSelected()){
+						ini.combo3 = selector.color;
+					}else{
+						ini.combo3 = null;
+					}
+				});
+				panel.add(settings);
 				content.add(panel);
 			}
 			content.add(Box.createVerticalStrut(2));
@@ -550,10 +578,24 @@ public class SkinIniTab extends JTabbedPane{
 			content.add(Box.createVerticalStrut(2));
 			{
 				JPanel panel = new JPanel(new SplitLayout());
+				JCheckBox enabled = new JCheckBox("", ini.combo4 != null);
+				JPanel settings = new JPanel(new BorderLayout());
+				settings.add(enabled, BorderLayout.LINE_START);
 				panel.add(new JLabel(" Combo 4 (what colour is used for the third combo): "));
-				panel.add(new ColorSelector(ini.combo4, (color)->{
-					ini.combo4 = color;
-				}));
+				ColorSelector selector = new ColorSelector(ini.combo4, (color)->{
+					if(enabled.isSelected()){
+						ini.combo4 = color;
+					}
+				});
+				settings.add(selector, BorderLayout.CENTER);
+				enabled.addActionListener((e)->{
+					if(enabled.isSelected()){
+						ini.combo4 = selector.color;
+					}else{
+						ini.combo4 = null;
+					}
+				});
+				panel.add(settings);
 				content.add(panel);
 			}
 			content.add(Box.createVerticalStrut(2));

@@ -322,6 +322,7 @@ public class SkinIni {
 		writer.println("Name: " + name);
 		writer.println("Author: " + author);
 		writer.println("Version: " + version.name);
+		writer.println();
 		
 		
 		
