@@ -49,10 +49,10 @@ public class SkinIni {
 	protected Color spinnerBackground = new Color(100, 100, 100);
 	
 	protected Color combo1 = new Color(255, 192, 0);
-	protected Color combo2 = new Color(0, 202, 0);
-	protected Color combo3 = new Color(18, 124, 255);
-	protected Color combo4 = new Color(242, 24, 57);
-	protected Color combo5 = null;//5-8 are null by default
+	protected Color combo2 = null;
+	protected Color combo3 = null;
+	protected Color combo4 = null;
+	protected Color combo5 = null;
 	protected Color combo6 = null;
 	protected Color combo7 = null;
 	protected Color combo8 = null;
