@@ -379,6 +379,18 @@ public class SkinIni {
 		if(combo8 != null){
 			writer.println("Combo8: " + combo8);
 		}
+		writer.println();
+		
+		writer.println("[Fonts]");
+		writer.println("HitCirclePrefix: " + hitCirclePrefix);
+		writer.println("HitCircleOverlap: " + hitCircleOverlap);
+		writer.println("ScorePrefix: " + scorePrefix);
+		writer.println("ScoreOverlap: " + scoreOverlap);
+		writer.println("ComboPrefix: " + comboPrefix);
+		writer.println("ComboOverlap: " + comboOverlap);
+		writer.println();
+		
+		writer.println("[CatchTheBeat]");
 		
 		
 		writer.flush();
