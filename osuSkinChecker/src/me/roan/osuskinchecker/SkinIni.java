@@ -343,9 +343,26 @@ public class SkinIni {
 		writer.println("SpinnerNoBlink" + (spinnerNoBlink ? 1 : 0));
 		writer.println("SpinnerFadePlayfield" + (spinnerFadePlayfield ? 1 : 0));
 		writer.println("SpinnerFrequencyModulate" + (spinnerFrequencyModulate ? 1 : 0));
+		writer.println();
+		
+		writer.println("[Colours]");
+		writer.println("SongSelectActiveText: " + rgb(songSelectActiveText));
+		writer.println("SongSelectInactiveText: " + rgb(songSelectInactiveText));
+		writer.println("MenuGlow: " + rgb(menuGlow));
+		
+		
 		
 		writer.flush();
 		writer.close();
+	}
+	
+	private static final String rgb(Color color){
+		return color.getRed() + "," + color.getGreen() + "," + color.getBlue();
+	}
+	
+	private static final String rgba(Color color){
+		//TODO
+		return null;
 	}
 	
 	private static final String arrayToList(int[] array){
