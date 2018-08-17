@@ -400,6 +400,17 @@ public class SkinIni {
 		}
 		writer.println();
 		
+		for(ManiaIni ini : mania){
+			if(ini != null){
+				writer.println("[Mania]");
+				
+				
+				
+				
+				writer.println();
+			}
+		}
+		
 		writer.flush();
 		writer.close();
 	}
