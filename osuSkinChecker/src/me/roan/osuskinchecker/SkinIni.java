@@ -4,8 +4,11 @@ import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 
 public class SkinIni {
 	//general
@@ -310,6 +313,23 @@ public class SkinIni {
 		}else{
 			return new Color(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
 		}
+	}
+	
+	public void writeIni(File file) throws FileNotFoundException{
+		PrintWriter writer = new PrintWriter(new FileOutputStream(file));
+		
+		writer.println("[General]");
+		writer.println("Name: " + name);
+		writer.println("Author: " + author);
+		writer.println("Version: " + version.name);
+		
+		
+		
+		
+		
+		
+		writer.flush();
+		writer.close();
 	}
 	
 	protected enum Version{
