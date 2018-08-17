@@ -302,7 +302,7 @@ public class SkinIniTab extends JTabbedPane{
 				JComboBox<String> sel = new JComboBox<String>(new String[] {"Segments", "Gradient"});
 				sel.setSelectedIndex(ini.sliderStyle - 1);
 				sel.addItemListener((e)->{
-					ini.sliderStyle = sel.getSelectedIndex() - 1;
+					ini.sliderStyle = sel.getSelectedIndex() + 1;
 				});
 				panel.add(sel);
 				content.add(panel);
