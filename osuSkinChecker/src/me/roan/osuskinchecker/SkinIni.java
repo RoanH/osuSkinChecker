@@ -391,7 +391,14 @@ public class SkinIni {
 		writer.println();
 		
 		writer.println("[CatchTheBeat]");
-		
+		writer.println("HyperDash: " + hyperDash);
+		if(hyperDashFruit != null){
+			writer.println("HyperDashFruit: " + hyperDashFruit);
+		}
+		if(hyperDashAfterImage != null){
+			writer.println("HyperDashAfterImage: " + hyperDashAfterImage);
+		}
+		writer.println();
 		
 		writer.flush();
 		writer.close();
