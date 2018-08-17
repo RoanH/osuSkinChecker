@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.StringJoiner;
 
 public class SkinIni {
 	//general
@@ -323,14 +324,31 @@ public class SkinIni {
 		writer.println("Author: " + author);
 		writer.println("Version: " + version.name);
 		writer.println();
-		
-		
-		
-		
-		
+		writer.println("CursorExpand: " + (cursorExpand ? 1 : 0));
+		writer.println("CursorCentre: " + (cursorCentre ? 1 : 0));
+		writer.println("CursorRotate: " + (cursorRotate ? 1 : 0));
+		writer.println("CursorTrailRotate: " + (cursorTrailRotate ? 1 : 0));
+		if(animationFramerate != -1){
+			writer.println("AnimationFramerate: " + animationFramerate);
+		}
+		writer.println("LayeredHitSounds: " + (layeredHitSounds ? 1 : 0));
+		writer.println("ComboBurstRandom: " + (comboBurstRandom ? 1 : 0));
+		if(customComboBurstSounds != null){
+			writer.println("CustomComboBurstSounds: " + arrayToList(customComboBurstSounds));
+		}
+		writer.println("HitCircleOverlayAboveNumber: " + (hitCircleOverlayAboveNumber ? 1 : 0));
+		writer.println("SliderStyle: " + sliderStyle);
 		
 		writer.flush();
 		writer.close();
+	}
+	
+	private static final String arrayToList(int[] array){
+		StringJoiner joiner = new StringJoiner(",");
+		for(int i : array){
+			joiner.add(String.valueOf(i));
+		}
+		return joiner.toString();
 	}
 	
 	protected enum Version{
