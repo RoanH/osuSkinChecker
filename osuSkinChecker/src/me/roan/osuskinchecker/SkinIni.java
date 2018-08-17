@@ -349,7 +349,36 @@ public class SkinIni {
 		writer.println("SongSelectActiveText: " + rgb(songSelectActiveText));
 		writer.println("SongSelectInactiveText: " + rgb(songSelectInactiveText));
 		writer.println("MenuGlow: " + rgb(menuGlow));
-		
+		writer.println("StarBreakAdditive: " + rgb(starBreakAdditive));
+		writer.println("InputOverlayText: " + rgb(inputOverlayText));
+		writer.println("SliderBall: " + rgb(sliderBall));
+		if(sliderTrackOverride != null){
+			writer.println("SliderTrackOverride: " + rgb(sliderTrackOverride));
+		}
+		writer.println("SliderBorder: " + rgb(sliderBorder));
+		writer.println("SpinnerBackground: " + rgb(spinnerBackground));
+		writer.println("Combo1: " + combo1);
+		if(combo2 != null){
+			writer.println("Combo2: " + combo2);
+		}
+		if(combo3 != null){
+			writer.println("Combo3: " + combo3);
+		}
+		if(combo4 != null){
+			writer.println("Combo4: " + combo4);
+		}
+		if(combo5 != null){
+			writer.println("Combo5: " + combo5);
+		}
+		if(combo6 != null){
+			writer.println("Combo6: " + combo6);
+		}
+		if(combo7 != null){
+			writer.println("Combo7: " + combo7);
+		}
+		if(combo8 != null){
+			writer.println("Combo8: " + combo8);
+		}
 		
 		
 		writer.flush();
