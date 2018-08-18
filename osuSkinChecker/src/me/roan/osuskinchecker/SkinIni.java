@@ -77,15 +77,15 @@ public class SkinIni {
 	
 	protected final class ManiaIni{
 		protected int keys;//non negative
-		protected int columnStart;
-		protected int columnRight;
-		protected int[] columnSpacing;//n-1 numbers
-		protected int[] columnWidth;//n numbers
-		protected int[] columnLineWidth;//n+1 numbers
+		protected double columnStart;
+		protected double columnRight;
+		protected double[] columnSpacing;//n-1 numbers
+		protected double[] columnWidth;//n numbers
+		protected double[] columnLineWidth;//n+1 numbers
 		protected double barlineHeight;
-		protected int[] lightingNWidth;//n numbers
-		protected int[] lightingLWidth;//n numbers
-		protected int widthForNoteHeightScale;
+		protected double[] lightingNWidth;//n numbers
+		protected double[] lightingLWidth;//n numbers
+		protected double widthForNoteHeightScale = 1.0D;
 		protected int hitPosition;
 		protected int lightPosition;
 		protected int scorePosition;
@@ -403,9 +403,26 @@ public class SkinIni {
 		for(ManiaIni ini : mania){
 			if(ini != null){
 				writer.println("[Mania]");
-				
-				
-				
+				writer.println("Keys: " + ini.keys);
+				writer.println("ColumnStart: " + ini.columnStart);
+				writer.println("ColumnRight: " + ini.columnRight);
+				writer.println("ColumnSpacing: " + arrayToList(ini.columnSpacing));
+				writer.println("ColumnWidth: " + arrayToList(ini.columnWidth));
+				writer.println("ColumnLineWidth: " + arrayToList(ini.columnLineWidth));
+				writer.println("BarlineHeight: " + ini.barlineHeight);
+				if(ini.lightingNWidth != null){
+					writer.println("LightingNWidth: " + arrayToList(ini.lightingNWidth));
+				}
+				if(ini.lightingLWidth != null){
+					writer.println("LightingLWidth: " + arrayToList(ini.lightingLWidth));
+				}
+				if(ini.widthForNoteHeightScale != -1.0D){
+					writer.println("WidthForNoteHeightScale: " + ini.widthForNoteHeightScale);
+				}
+				writer.println("HitPosition: " + ini.hitPosition);
+				writer.println("LightPosition: " + ini.lightPosition);
+				writer.println("ScorePosition: " + ini.scorePosition);
+				writer.println("ComboPosition: " + ini.comboPosition);
 				
 				writer.println();
 			}
@@ -422,6 +439,14 @@ public class SkinIni {
 	private static final String rgba(Color color){
 		//TODO
 		return null;
+	}
+	
+	private static final String arrayToList(double[] array){
+		StringJoiner joiner = new StringJoiner(",");
+		for(double d : array){
+			joiner.add(String.valueOf(d));
+		}
+		return joiner.toString();
 	}
 	
 	private static final String arrayToList(int[] array){
