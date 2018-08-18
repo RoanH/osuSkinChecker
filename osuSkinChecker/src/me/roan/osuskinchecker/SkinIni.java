@@ -423,6 +423,9 @@ public class SkinIni {
 				writer.println("LightPosition: " + ini.lightPosition);
 				writer.println("ScorePosition: " + ini.scorePosition);
 				writer.println("ComboPosition: " + ini.comboPosition);
+				writer.println("JudgementLine: " + (ini.judgementLine ? 1 : 0));
+				//TODO continue
+				
 				
 				writer.println();
 			}
