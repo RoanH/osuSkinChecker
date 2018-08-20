@@ -424,8 +424,15 @@ public class SkinIni {
 				writer.println("ScorePosition: " + ini.scorePosition);
 				writer.println("ComboPosition: " + ini.comboPosition);
 				writer.println("JudgementLine: " + (ini.judgementLine ? 1 : 0));
-				//TODO continue
-				
+				writer.println("SpecialStyle: " + ini.specialStyle);
+				writer.println("ComboBurstStyle: " + ini.comboBurstStyle);
+				writer.println("SplitStages: " + ini.splitStages);
+				writer.println("StageSeparation: " + ini.stageSeparation);
+				writer.println("SeparateScore: " + ini.separateScore);
+				writer.println("KeysUnderNotes: " + ini.keysUnderNotes);
+				writer.println("UpsideDown: " + ini.upsideDown);
+				writer.println("KeyFlipWhenUpsideDown: " + ini.keyFlipWhenUpsideDown);
+				writer.println("NoteFlipWhenUpsideDown: " + ini.noteFlipWhenUpsideDown);
 				
 				writer.println();
 			}
