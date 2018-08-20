@@ -178,6 +178,7 @@ public class SkinChecker {
 		foreign.add(new JLabel("This is a list of files that are in the skin folder but serve no purpose."), BorderLayout.PAGE_START);
 		
 		JPanel ini = new JPanel(new BorderLayout());
+		ini.add(new JLabel("Settings with an additional leading checkbox require you to check this check box if you want to use the setting. Otherwise the setting is left as 'undefined'."), BorderLayout.PAGE_START);
 		ini.add(iniTab = new SkinIniTab(), BorderLayout.CENTER);
 				
 		categories.add("Images", imageTabs);
