@@ -187,7 +187,24 @@ public class SkinIniTab extends JTabbedPane{
 			{
 				JPanel panel = new JPanel(new SplitLayout());
 				panel.add(new JLabel(" Animation Framerate (how many frames per second for most animations): "));
-				panel.add(new JLabel("TODO"));
+				JPanel p = new JPanel(new BorderLayout());
+				JSpinner spinner = new JSpinner(new SpinnerNumberModel(ini.animationFramerate <= 1 ? 1 : ini.animationFramerate, 1, Integer.MAX_VALUE, 1));
+				JCheckBox enabled = new JCheckBox("", ini.animationFramerate != -1);
+				p.add(enabled, BorderLayout.LINE_START);
+				p.add(spinner, BorderLayout.CENTER);
+				spinner.addChangeListener((e)->{
+					if(enabled.isSelected()){
+						ini.animationFramerate = (Integer)spinner.getValue();
+					}
+				});
+				enabled.addActionListener((e)->{
+					if(enabled.isSelected()){
+						ini.animationFramerate = (Integer)spinner.getValue();
+					}else{
+						ini.animationFramerate = -1;
+					}
+				});
+				panel.add(p);
 				content.add(panel);
 			}
 			content.add(Box.createVerticalStrut(2));
