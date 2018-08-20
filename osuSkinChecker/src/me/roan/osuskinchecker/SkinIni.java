@@ -434,6 +434,11 @@ public class SkinIni {
 				writer.println("KeyFlipWhenUpsideDown: " + ini.keyFlipWhenUpsideDown);
 				writer.println("NoteFlipWhenUpsideDown: " + ini.noteFlipWhenUpsideDown);
 				
+				
+				for(int i = 0; i < ini.columns.length; i++){
+					//TODO
+				}
+				
 				writer.println();
 			}
 		}
