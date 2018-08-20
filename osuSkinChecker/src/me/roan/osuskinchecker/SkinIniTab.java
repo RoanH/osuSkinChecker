@@ -7,9 +7,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -29,11 +26,9 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import javax.swing.text.PlainDocument;
 import javax.swing.text.Segment;
-import javax.swing.text.DocumentFilter.FilterBypass;
 
 import me.roan.osuskinchecker.SkinIni.ManiaIni;
 import me.roan.osuskinchecker.SkinIni.Version;
-import sun.swing.SwingUtilities2;
 
 public class SkinIniTab extends JTabbedPane{
 	/**
