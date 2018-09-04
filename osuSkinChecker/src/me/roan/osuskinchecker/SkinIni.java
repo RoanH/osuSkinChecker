@@ -467,7 +467,24 @@ public class SkinIni {
 					if(col.colourLight != null){
 						writer.println("ColourLight" + col.key + ": " + rgb(col.colourLight));
 					}
-					
+					if(col.keyImage != null){
+						writer.println("KeyImage" + col.key + ": " + col.keyImage);
+					}
+					if(col.keyImageD != null){
+						writer.println("KeyImage" + col.key + "D: " + col.keyImageD);
+					}
+					if(col.noteImage != null){
+						writer.println("NoteImage" + col.key + ": " + col.noteImage);
+					}
+					if(col.noteImageH != null){
+						writer.println("NoteImage" + col.key + "H: " + col.noteImageH);
+					}
+					if(col.noteImageL != null){
+						writer.println("NoteImage" + col.key + "L: " + col.noteImageL);
+					}
+					if(col.noteImageT != null){
+						writer.println("NoteImage" + col.key + "T: " + col.noteImageT);
+					}
 				}
 				
 				writer.println();
