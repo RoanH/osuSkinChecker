@@ -131,24 +131,24 @@ public class SkinIni {
 		protected final class Column{
 			protected int key;
 			
-			protected Boolean keyFlipWhenUpsideDown;
-			protected Boolean keyFlipWhenUpsideDownD;
-			protected Boolean noteFlipWhenUpsideDown;
-			protected Boolean noteFlipWhenUpsideDownH;
-			protected Boolean noteFlipWhenUpsideDownL;
-			protected Boolean noteFlipWhenUpsideDownT;
+			protected Boolean keyFlipWhenUpsideDown = null;
+			protected Boolean keyFlipWhenUpsideDownD = null;
+			protected Boolean noteFlipWhenUpsideDown = null;
+			protected Boolean noteFlipWhenUpsideDownH = null;
+			protected Boolean noteFlipWhenUpsideDownL = null;
+			protected Boolean noteFlipWhenUpsideDownT = null;
 			
 			protected int noteBodyStyle = -1;//0, 1, 2, -1=undefined
 			
 			protected Color colour;//rgb(a)
 			protected Color colourLight;//rgb
 			
-			protected String keyImage;
-			protected String keyImageD;
-			protected String noteImage;
-			protected String noteImageH;
-			protected String noteImageL;
-			protected String noteImageT;
+			protected String keyImage = null;
+			protected String keyImageD = null;
+			protected String noteImage = null;
+			protected String noteImageH = null;
+			protected String noteImageL = null;
+			protected String noteImageT = null;
 		}
 	}
 	
