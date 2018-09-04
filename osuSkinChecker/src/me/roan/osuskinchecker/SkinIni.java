@@ -461,6 +461,13 @@ public class SkinIni {
 					if(col.noteBodyStyle != -1){
 						writer.println("NoteBodyStyle" + col.key + ": " + col.noteBodyStyle);
 					}
+					if(col.colour != null){
+						writer.println("Colour" + col.key + ": " + rgba(col.colour));
+					}
+					if(col.colourLight != null){
+						writer.println("ColourLight" + col.key + ": " + rgb(col.colourLight));
+					}
+					
 				}
 				
 				writer.println();
