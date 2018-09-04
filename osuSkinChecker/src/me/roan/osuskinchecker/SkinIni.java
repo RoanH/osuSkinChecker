@@ -11,6 +11,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.StringJoiner;
 
+import me.roan.osuskinchecker.SkinIni.ManiaIni.Column;
+
 public class SkinIni {
 	//general
 	protected String name = "-";
@@ -129,14 +131,14 @@ public class SkinIni {
 		protected final class Column{
 			protected int key;
 			
-			protected boolean keyFlipWhenUpsideDown;
-			protected boolean keyFlipWhenUpsideDownD;
-			protected boolean noteFlipWhenUpsideDown;
-			protected boolean noteFlipWhenUpsideDownH;
-			protected boolean noteFlipWhenUpsideDownL;
-			protected boolean noteFlipWhenUpsideDownT;
+			protected Boolean keyFlipWhenUpsideDown;
+			protected Boolean keyFlipWhenUpsideDownD;
+			protected Boolean noteFlipWhenUpsideDown;
+			protected Boolean noteFlipWhenUpsideDownH;
+			protected Boolean noteFlipWhenUpsideDownL;
+			protected Boolean noteFlipWhenUpsideDownT;
 			
-			protected int noteBodyStyle;//0, 1, 2
+			protected int noteBodyStyle = -1;//0, 1, 2, -1=undefined
 			
 			protected Color colour;//rgb(a)
 			protected Color colourLight;//rgb
@@ -357,27 +359,27 @@ public class SkinIni {
 		}
 		writer.println("SliderBorder: " + rgb(sliderBorder));
 		writer.println("SpinnerBackground: " + rgb(spinnerBackground));
-		writer.println("Combo1: " + combo1);
+		writer.println("Combo1: " + rgb(combo1));
 		if(combo2 != null){
-			writer.println("Combo2: " + combo2);
+			writer.println("Combo2: " + rgb(combo2));
 		}
 		if(combo3 != null){
-			writer.println("Combo3: " + combo3);
+			writer.println("Combo3: " + rgb(combo3));
 		}
 		if(combo4 != null){
-			writer.println("Combo4: " + combo4);
+			writer.println("Combo4: " + rgb(combo4));
 		}
 		if(combo5 != null){
-			writer.println("Combo5: " + combo5);
+			writer.println("Combo5: " + rgb(combo5));
 		}
 		if(combo6 != null){
-			writer.println("Combo6: " + combo6);
+			writer.println("Combo6: " + rgb(combo6));
 		}
 		if(combo7 != null){
-			writer.println("Combo7: " + combo7);
+			writer.println("Combo7: " + rgb(combo7));
 		}
 		if(combo8 != null){
-			writer.println("Combo8: " + combo8);
+			writer.println("Combo8: " + rgb(combo8));
 		}
 		writer.println();
 		
@@ -436,7 +438,29 @@ public class SkinIni {
 				writer.println("NoteBodyStyle: " + ini.noteBodyStyle);
 				
 				for(int i = 0; i < ini.columns.length; i++){
-					//TODO
+					Column col = ini.columns[i];
+					
+					if(col.keyFlipWhenUpsideDown != null){
+						writer.println("KeyFlipWhenUpsideDown" + col.key + ": " + (col.keyFlipWhenUpsideDown ? 1 : 0));
+					}
+					if(col.keyFlipWhenUpsideDownD != null){
+						writer.println("KeyFlipWhenUpsideDown" + col.key + "D: " + (col.keyFlipWhenUpsideDownD ? 1 : 0));
+					}
+					if(col.noteFlipWhenUpsideDown != null){
+						writer.println("NoteFlipWhenUpsideDown" + col.key + ": " + (col.noteFlipWhenUpsideDown ? 1 : 0));
+					}
+					if(col.noteFlipWhenUpsideDownH != null){
+						writer.println("NoteFlipWhenUpsideDown" + col.key + "H: " + (col.noteFlipWhenUpsideDownH ? 1 : 0));
+					}
+					if(col.noteFlipWhenUpsideDownL != null){
+						writer.println("NoteFlipWhenUpsideDown" + col.key + "L: " + (col.noteFlipWhenUpsideDownL ? 1 : 0));
+					}
+					if(col.noteFlipWhenUpsideDownT != null){
+						writer.println("NoteFlipWhenUpsideDown" + col.key + "T: " + (col.noteFlipWhenUpsideDownT ? 1 : 0));
+					}
+					if(col.noteBodyStyle != -1){
+						writer.println("NoteBodyStyle" + col.key + ": " + col.noteBodyStyle);
+					}
 				}
 				
 				writer.println();
@@ -452,8 +476,11 @@ public class SkinIni {
 	}
 	
 	private static final String rgba(Color color){
-		//TODO
-		return null;
+		if(color.getAlpha() == 255){
+			return rgb(color);
+		}else{
+			return rgb(color) + "," + color.getAlpha();
+		}
 	}
 	
 	private static final String arrayToList(double[] array){
