@@ -929,7 +929,11 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Column Right (up to which point can columns be drawn): "));
-					panel.add(new JLabel("TODO, non neg double"));
+					JSpinner spinner = new JSpinner(new SpinnerNumberModel(ini.columnRight, 0.0D, Double.MAX_VALUE, 1.0D));
+					spinner.addChangeListener((event)->{
+						ini.columnRight = (double)spinner.getValue();
+					});
+					panel.add(spinner);
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
@@ -965,7 +969,11 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Barline Height (thickness ofthe barline): "));
-					panel.add(new JLabel("TODO, non neg double"));
+					JSpinner spinner = new JSpinner(new SpinnerNumberModel(ini.barlineHeight, 0.0D, Double.MAX_VALUE, 1.0D));
+					spinner.addChangeListener((event)->{
+						ini.barlineHeight = (double)spinner.getValue();
+					});
+					panel.add(spinner);
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
@@ -992,7 +1000,11 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Width For Note Height Scale (height for all notes if columns have individual widths): "));
-					panel.add(new JLabel("TODO, non neg double"));
+					JSpinner spinner = new JSpinner(new SpinnerNumberModel(ini.widthForNoteHeightScale, 0.0D, Double.MAX_VALUE, 1.0D));
+					spinner.addChangeListener((event)->{
+						ini.widthForNoteHeightScale = (double)spinner.getValue();
+					});
+					panel.add(spinner);
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
@@ -1001,7 +1013,11 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Hit Position (at what height should the judgement line be drawn): "));
-					panel.add(new JLabel("TODO, non neg int"));
+					JSpinner spinner = new JSpinner(new SpinnerNumberModel(ini.hitPosition, 0, Integer.MAX_VALUE, 1));
+					spinner.addChangeListener((event)->{
+						ini.hitPosition = (int)spinner.getValue();
+					});
+					panel.add(spinner);
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
@@ -1010,7 +1026,10 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Light Position (at what height should the stage lights be drawn): "));
-					panel.add(new JLabel("TODO, non neg int"));
+					JSpinner spinner = new JSpinner(new SpinnerNumberModel(ini.lightPosition, 0, Integer.MAX_VALUE, 1));
+					spinner.addChangeListener((event)->{
+						ini.lightPosition = (int)spinner.getValue();
+					});
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
@@ -1019,7 +1038,10 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Score Position (at what height should the hitbursts be drawn): "));
-					panel.add(new JLabel("TODO, non neg int"));
+					JSpinner spinner = new JSpinner(new SpinnerNumberModel(ini.scorePosition, 0, Integer.MAX_VALUE, 1));
+					spinner.addChangeListener((event)->{
+						ini.scorePosition = (int)spinner.getValue();
+					});
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
@@ -1028,7 +1050,10 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Combo Position (at what height should the combo be drawn): "));
-					panel.add(new JLabel("TODO, non neg int"));
+					JSpinner spinner = new JSpinner(new SpinnerNumberModel(ini.comboPosition, 0, Integer.MAX_VALUE, 1));
+					spinner.addChangeListener((event)->{
+						ini.comboPosition = (int)spinner.getValue();
+					});
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
