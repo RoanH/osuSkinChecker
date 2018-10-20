@@ -1030,6 +1030,7 @@ public class SkinIniTab extends JTabbedPane{
 					spinner.addChangeListener((event)->{
 						ini.lightPosition = (int)spinner.getValue();
 					});
+					panel.add(spinner);
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
@@ -1042,6 +1043,7 @@ public class SkinIniTab extends JTabbedPane{
 					spinner.addChangeListener((event)->{
 						ini.scorePosition = (int)spinner.getValue();
 					});
+					panel.add(spinner);
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
@@ -1054,6 +1056,7 @@ public class SkinIniTab extends JTabbedPane{
 					spinner.addChangeListener((event)->{
 						ini.comboPosition = (int)spinner.getValue();
 					});
+					panel.add(spinner);
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
