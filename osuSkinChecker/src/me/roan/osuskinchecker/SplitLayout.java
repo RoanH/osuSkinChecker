@@ -5,6 +5,10 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
 import java.awt.LayoutManager2;
+import java.awt.Rectangle;
+
+import javax.swing.JPanel;
+import javax.swing.Scrollable;
 
 public class SplitLayout implements LayoutManager, LayoutManager2{
 	
@@ -67,5 +71,37 @@ public class SplitLayout implements LayoutManager, LayoutManager2{
 
 	@Override
 	public void invalidateLayout(Container target) {		
+	}
+	
+	protected static final class ScrollPane extends JPanel implements Scrollable{
+		/**
+		 * Serial ID
+		 */
+		private static final long serialVersionUID = -5413484937511138066L;
+
+		@Override
+		public Dimension getPreferredScrollableViewportSize(){
+			return new Dimension(this.getParent().getPreferredSize().width, this.getPreferredSize().height);
+		}
+
+		@Override
+		public int getScrollableBlockIncrement(Rectangle arg0, int arg1, int arg2){
+			return getScrollableUnitIncrement(arg0, arg1, arg2);
+		}
+
+		@Override
+		public boolean getScrollableTracksViewportHeight(){
+			return false;
+		}
+
+		@Override
+		public boolean getScrollableTracksViewportWidth(){
+			return true;
+		}
+
+		@Override
+		public int getScrollableUnitIncrement(Rectangle arg0, int arg1, int arg2){
+			return this.getComponentCount() == 0 ? 1 : (this.getHeight() / this.getComponentCount());
+		}
 	}
 }

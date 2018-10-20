@@ -77,6 +77,10 @@ public class SkinIni {
 	
 	protected ManiaIni[] mania = new ManiaIni[10];
 	
+	public final void createManiaConfiguration(int keys) {
+		mania[keys - 1] = new ManiaIni();
+	}
+	
 	protected final class ManiaIni{
 		protected int keys;//non negative
 		protected double columnStart;

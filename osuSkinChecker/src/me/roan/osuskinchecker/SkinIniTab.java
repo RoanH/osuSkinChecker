@@ -10,6 +10,7 @@ import java.awt.event.MouseListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
@@ -29,6 +30,7 @@ import javax.swing.text.Segment;
 
 import me.roan.osuskinchecker.SkinIni.ManiaIni;
 import me.roan.osuskinchecker.SkinIni.Version;
+import me.roan.osuskinchecker.SplitLayout.ScrollPane;
 
 public class SkinIniTab extends JTabbedPane{
 	/**
@@ -53,7 +55,7 @@ public class SkinIniTab extends JTabbedPane{
 		
 		private GeneralTab(SkinIni ini){
 			super(new BorderLayout());
-			JPanel content = new JPanel();
+			JPanel content = new ScrollPane();
 			BoxLayout layout = new BoxLayout(content, BoxLayout.Y_AXIS);
 			content.setLayout(layout);
 			this.add(new JScrollPane(content), BorderLayout.CENTER);
@@ -287,7 +289,7 @@ public class SkinIniTab extends JTabbedPane{
 		
 		private StandardTab(SkinIni ini) {
 			super(new BorderLayout());
-			JPanel content = new JPanel();
+			JPanel content = new ScrollPane();
 			BoxLayout layout = new BoxLayout(content, BoxLayout.Y_AXIS);
 			content.setLayout(layout);
 			this.add(new JScrollPane(content), BorderLayout.CENTER);
@@ -461,7 +463,7 @@ public class SkinIniTab extends JTabbedPane{
 		
 		private GameplayTab(SkinIni ini) {
 			super(new BorderLayout());
-			JPanel content = new JPanel();
+			JPanel content = new ScrollPane();
 			BoxLayout layout = new BoxLayout(content, BoxLayout.Y_AXIS);
 			content.setLayout(layout);
 			this.add(new JScrollPane(content), BorderLayout.CENTER);
@@ -800,7 +802,7 @@ public class SkinIniTab extends JTabbedPane{
 		
 		private CtbTab(SkinIni ini) {
 			super(new BorderLayout());
-			JPanel content = new JPanel();
+			JPanel content = new ScrollPane();
 			BoxLayout layout = new BoxLayout(content, BoxLayout.Y_AXIS);
 			content.setLayout(layout);
 			this.add(new JScrollPane(content), BorderLayout.CENTER);
@@ -878,7 +880,21 @@ public class SkinIniTab extends JTabbedPane{
 		
 		private ManiaTab(SkinIni ini) {
 			for(int i = 1; i <= 10; i++){
-				add(i + (i == 1 ? " Key" : " Keys"), new ManiaKeyTab(ini.mania[i - 1], i));
+				ManiaKeyTab tab = new ManiaKeyTab();
+				if(ini.mania[i - 1] != null) {
+					tab.init(ini.mania[i - 1], i);
+				}else {
+					JButton add = new JButton("Create " + i + "K mania configuration");
+					final int keys = i;
+					add.addActionListener((e)->{
+						ini.createManiaConfiguration(keys);
+						tab.init(ini.mania[keys - 1], keys);
+						tab.revalidate();
+						tab.repaint();
+					});
+					tab.add(add);
+				}
+				add(i + (i == 1 ? " Key" : " Keys"), tab);
 			}
 		}
 		
@@ -888,9 +904,10 @@ public class SkinIniTab extends JTabbedPane{
 			 */
 			private static final long serialVersionUID = -6820855921720231002L;
 
-			private ManiaKeyTab(ManiaIni ini, int keys){
-				super(new BorderLayout());
-				JPanel content = new JPanel();
+			private void init(ManiaIni ini, int keys){
+				removeAll();
+				setLayout(new BorderLayout());
+				JPanel content = new ScrollPane();
 				BoxLayout layout = new BoxLayout(content, BoxLayout.Y_AXIS);
 				content.setLayout(layout);
 				this.add(new JScrollPane(content), BorderLayout.CENTER);
@@ -899,7 +916,11 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Column Start (where does the left column start): "));
-					panel.add(new JLabel("TODO, non neg double"));
+					JSpinner spinner = new JSpinner(new SpinnerNumberModel(ini.columnStart, 0.0D, Double.MAX_VALUE, 1.0D));
+					spinner.addChangeListener((event)->{
+						ini.columnStart = (double)spinner.getValue();
+					});
+					panel.add(spinner);
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
