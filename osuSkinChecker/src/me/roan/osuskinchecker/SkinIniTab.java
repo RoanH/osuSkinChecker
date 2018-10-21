@@ -22,11 +22,6 @@ import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DocumentFilter;
-import javax.swing.text.PlainDocument;
-import javax.swing.text.Segment;
 
 import me.roan.osuskinchecker.SkinIni.ManiaIni;
 import me.roan.osuskinchecker.SkinIni.Version;
@@ -999,12 +994,25 @@ public class SkinIniTab extends JTabbedPane{
 				content.add(Box.createVerticalStrut(2));
 				{
 					JPanel panel = new JPanel(new SplitLayout());
+					JCheckBox enabled = new JCheckBox("", ini.widthForNoteHeightScale != -1.0D);
+					JPanel settings = new JPanel(new BorderLayout());
+					settings.add(enabled, BorderLayout.LINE_START);
 					panel.add(new JLabel(" Width For Note Height Scale (height for all notes if columns have individual widths): "));
-					JSpinner spinner = new JSpinner(new SpinnerNumberModel(ini.widthForNoteHeightScale, 0.0D, Double.MAX_VALUE, 1.0D));
+					JSpinner spinner = new JSpinner(new SpinnerNumberModel(Math.max(ini.widthForNoteHeightScale, 0.0D), 0.0D, Double.MAX_VALUE, 1.0D));
 					spinner.addChangeListener((event)->{
-						ini.widthForNoteHeightScale = (double)spinner.getValue();
+						if(enabled.isSelected()){
+							ini.widthForNoteHeightScale = (double)spinner.getValue();
+						}
 					});
-					panel.add(spinner);
+					settings.add(spinner, BorderLayout.CENTER);
+					enabled.addActionListener((e)->{
+						if(enabled.isSelected()){
+							ini.widthForNoteHeightScale = (double)spinner.getValue();
+						}else{
+							ini.widthForNoteHeightScale = -1.0D;
+						}
+					});
+					panel.add(settings);
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
@@ -1131,68 +1139,40 @@ public class SkinIniTab extends JTabbedPane{
 		}
 	}
 	
-	private static final class ValueArray extends JPanel{	
+	private static final class DoubleArray extends JPanel{	
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = 3145876156701959606L;
-		private JTextField[] values;
 		
-		private ValueArray(boolean allowDecimal, String[] defaults){
-			values = new JTextField[defaults.length];
-			this.setLayout(new GridLayout(1, defaults.length, 2, 0));
-			for(int i = 0; i < defaults.length; i++){
-				values[i] = new JTextField(defaults[i]);
-				PlainDocument document = new PlainDocument();
-				document.setDocumentFilter(new NumberDocumentFilter(allowDecimal));
-				values[i].setDocument(document);
-				this.add(values[i]);
+		private DoubleArray(double[] data){
+			this.setLayout(new GridLayout(1, data.length, 2, 0));
+			for(int i = 0; i < data.length; i++){
+				JSpinner spinner = new JSpinner(new SpinnerNumberModel(data[i], 0.0D, Double.MAX_VALUE, 1.0D));
+				final int field = i;
+				spinner.addChangeListener((e)->{
+					data[field] = (double)spinner.getValue();
+				});
+				this.add(spinner);
 			}
 		}
+	}
+	
+	private static final class IntegerArray extends JPanel{	
+		/**
+		 * Serial ID
+		 */
+		private static final long serialVersionUID = 3145676156701959606L;
 		
-		private final String[] toArray(){
-			String[] array = new String[values.length];
-			for(int i = 0; i < array.length; i++){
-				array[i] = values[i].getText().replaceFirst("^\0", "0.");
-			}
-			return array;
-		}
-		
-		private static final class NumberDocumentFilter extends DocumentFilter{
-			private final boolean allowDecimal;
-			private boolean hasDot = false;
-			
-			private NumberDocumentFilter(boolean allowDecimal) {
-				this.allowDecimal = allowDecimal;
-			}
-
-			@Override
-			public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
-				Segment seg = new Segment();
-				fb.getDocument().getText(offset, length, seg);
-				fb.remove(offset, length);
-				if(seg.toString().contains(".")){
-					hasDot = false;
-				}
-			}
-
-			@Override
-			public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-				string = string.replace(',', '.').replaceAll("[^0-9.]", "");
-				if(!allowDecimal || hasDot){
-					string = string.replace(".", "");
-				}
-				if(string.contains(".")){
-					string = string.substring(0, string.indexOf('.') + 1) + string.substring(string.indexOf('.')).replace(".", "");
-					hasDot = true;
-				}
-				fb.insertString(offset, string, attr);
-			}
-
-			@Override
-			public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-				this.remove(fb, offset, length);
-				this.insertString(fb, offset, text, attrs);
+		private IntegerArray(int[] data){
+			this.setLayout(new GridLayout(1, data.length, 2, 0));
+			for(int i = 0; i < data.length; i++){
+				JSpinner spinner = new JSpinner(new SpinnerNumberModel(data[i], 0, Integer.MAX_VALUE, 1));
+				final int field = i;
+				spinner.addChangeListener((e)->{
+					data[field] = (int)spinner.getValue();
+				});
+				this.add(spinner);
 			}
 		}
 	}

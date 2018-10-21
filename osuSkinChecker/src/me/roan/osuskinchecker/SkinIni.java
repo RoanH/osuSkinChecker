@@ -78,35 +78,35 @@ public class SkinIni {
 	protected ManiaIni[] mania = new ManiaIni[10];
 	
 	public final void createManiaConfiguration(int keys) {
-		mania[keys - 1] = new ManiaIni();
+		mania[keys - 1] = new ManiaIni(keys);
 	}
 	
-	protected final class ManiaIni{
+	protected static final class ManiaIni{
 		protected int keys;//non negative
-		protected double columnStart;
-		protected double columnRight;
+		protected double columnStart = 136.0D;
+		protected double columnRight = 19.0D;
 		protected double[] columnSpacing;//n-1 numbers
 		protected double[] columnWidth;//n numbers
 		protected double[] columnLineWidth;//n+1 numbers
-		protected double barlineHeight;
-		protected double[] lightingNWidth;//n numbers
-		protected double[] lightingLWidth;//n numbers
-		protected double widthForNoteHeightScale = 1.0D;
-		protected int hitPosition;
-		protected int lightPosition;
-		protected int scorePosition;
-		protected int comboPosition;
-		protected boolean judgementLine;
-		protected int specialStyle;//0, 1 or 2
-		protected int comboBurstStyle;//0, 1 or 2
-		protected boolean splitStages;
-		protected int stageSeparation;
-		protected boolean separateScore;
-		protected boolean keysUnderNotes;
-		protected boolean upsideDown;
-		protected boolean keyFlipWhenUpsideDown;
-		protected boolean noteFlipWhenUpsideDown;
-		protected int noteBodyStyle;//0, 1, 2
+		protected double barlineHeight = 1.2D;
+		protected double[] lightingNWidth = null;//n numbers
+		protected double[] lightingLWidth = null;//n numbers
+		protected double widthForNoteHeightScale = -1.0D;
+		protected int hitPosition = 402;
+		protected int lightPosition = 413;
+		protected int scorePosition = 325;
+		protected int comboPosition = 111;
+		protected boolean judgementLine = true;
+		protected int specialStyle = 0;//0, 1 or 2
+		protected int comboBurstStyle = 1;//0, 1 or 2
+		protected Boolean splitStages = null;
+		protected int stageSeparation = 40;
+		protected boolean separateScore = true;
+		protected boolean keysUnderNotes = false;
+		protected boolean upsideDown = false;
+		protected boolean keyFlipWhenUpsideDown = true;
+		protected boolean noteFlipWhenUpsideDown = true;
+		protected int noteBodyStyle = 1;//0, 1, 2
 		protected Color colourColumnLine;//rgb(a)
 		protected Color colourBarline;//rgb(a)
 		protected Color colourJudgementLine;
@@ -132,7 +132,22 @@ public class SkinIni {
 		protected String hit300;
 		protected String hit300g;
 		
-		protected final class Column{
+		private ManiaIni(int keys){
+			this.keys = keys;
+			columnSpacing = fillArray(keys - 1, 0.0D);
+			columnWidth = fillArray(keys, 30.0D);
+			columnLineWidth = fillArray(keys + 1, 2.0D);
+		}
+		
+		private static final double[] fillArray(int len, double value){
+			double[] array = new double[len];
+			for(int i = 0; i < len; i++) {
+				array[i] = value;
+			}
+			return array;
+		}
+		
+		protected static final class Column{
 			protected int key;
 			
 			protected Boolean keyFlipWhenUpsideDown = null;
@@ -432,13 +447,15 @@ public class SkinIni {
 				writer.println("JudgementLine: " + (ini.judgementLine ? 1 : 0));
 				writer.println("SpecialStyle: " + ini.specialStyle);
 				writer.println("ComboBurstStyle: " + ini.comboBurstStyle);
-				writer.println("SplitStages: " + ini.splitStages);
+				if(ini.splitStages != null){
+					writer.println("SplitStages: " + (ini.splitStages ? 1 : 0));
+				}
 				writer.println("StageSeparation: " + ini.stageSeparation);
-				writer.println("SeparateScore: " + ini.separateScore);
-				writer.println("KeysUnderNotes: " + ini.keysUnderNotes);
-				writer.println("UpsideDown: " + ini.upsideDown);
-				writer.println("KeyFlipWhenUpsideDown: " + ini.keyFlipWhenUpsideDown);
-				writer.println("NoteFlipWhenUpsideDown: " + ini.noteFlipWhenUpsideDown);
+				writer.println("SeparateScore: " + (ini.separateScore ? 1 : 0));
+				writer.println("KeysUnderNotes: " + (ini.keysUnderNotes ? 1 : 0));
+				writer.println("UpsideDown: " + (ini.upsideDown ? 1 : 0));
+				writer.println("KeyFlipWhenUpsideDown: " + (ini.keyFlipWhenUpsideDown ? 1 : 0));
+				writer.println("NoteFlipWhenUpsideDown: " + (ini.noteFlipWhenUpsideDown ? 1 : 0));
 				writer.println("NoteBodyStyle: " + ini.noteBodyStyle);
 				
 				for(int i = 0; i < ini.columns.length; i++){
