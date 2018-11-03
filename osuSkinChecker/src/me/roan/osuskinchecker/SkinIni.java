@@ -106,12 +106,12 @@ public class SkinIni{
 		protected boolean keyFlipWhenUpsideDown = true;
 		protected boolean noteFlipWhenUpsideDown = true;
 		protected int noteBodyStyle = 1;//0, 1, 2
-		protected Color colourColumnLine;//rgb(a)
-		protected Color colourBarline;//rgb(a)
-		protected Color colourJudgementLine;
-		protected Color colourKeyWarning;
-		protected Color colourHold;//rgb(a)
-		protected Color colourBreak;
+		protected Color colourColumnLine = new Color(255, 255, 255, 255);//rgb(a)
+		protected Color colourBarline = new Color(255, 255, 255, 255);//rgb(a)
+		protected Color colourJudgementLine = new Color(255, 255, 255);
+		protected Color colourKeyWarning = new Color(0, 0, 0);
+		protected Color colourHold = new Color(255, 191, 51, 255);//rgb(a)
+		protected Color colourBreak = new Color(255, 0, 0);
 
 		protected Column[] columns;
 
@@ -519,7 +519,7 @@ public class SkinIni{
 	}
 
 	private static final String rgba(Color color){
-		if(color.getAlpha() == 255){
+		if(!color.hasAlpha()){
 			return rgb(color);
 		}else{
 			return rgb(color) + "," + color.getAlpha();
