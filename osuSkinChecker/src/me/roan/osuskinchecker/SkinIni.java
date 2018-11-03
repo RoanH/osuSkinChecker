@@ -106,11 +106,11 @@ public class SkinIni{
 		protected boolean keyFlipWhenUpsideDown = true;
 		protected boolean noteFlipWhenUpsideDown = true;
 		protected int noteBodyStyle = 1;//0, 1, 2
-		protected Color colourColumnLine = new Color(255, 255, 255, 255);//rgb(a)
-		protected Color colourBarline = new Color(255, 255, 255, 255);//rgb(a)
+		protected Color colourColumnLine = new Color(255, 255, 255, 255);
+		protected Color colourBarline = new Color(255, 255, 255, 255);
 		protected Color colourJudgementLine = new Color(255, 255, 255);
 		protected Color colourKeyWarning = new Color(0, 0, 0);
-		protected Color colourHold = new Color(255, 191, 51, 255);//rgb(a)
+		protected Color colourHold = new Color(255, 191, 51, 255);
 		protected Color colourBreak = new Color(255, 0, 0);
 
 		protected Column[] columns;
@@ -158,8 +158,8 @@ public class SkinIni{
 
 			protected int noteBodyStyle = -1;//0, 1, 2, -1=undefined
 
-			protected Color colour;//rgb(a)
-			protected Color colourLight;//rgb
+			protected Color colour = new Color(0, 0, 0, 255);
+			protected Color colourLight = new Color(255, 255, 255);
 
 			protected String keyImage = null;
 			protected String keyImageD = null;
