@@ -1,7 +1,6 @@
 package me.roan.osuskinchecker;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -1101,18 +1100,20 @@ public class SkinIniTab extends JTabbedPane{
 		private ColorEvent handler;
 
 		private ColorSelector(Color def, ColorEvent handler){
-			this.setBackground(def == null ? (color = Color.BLACK) : (color = def));
+			color = def == null ? new Color(0, 0, 0) : def;
+			this.setBackground(color.toColor());
 			this.addMouseListener(this);
 			this.handler = handler;
 		}
 
 		@Override
 		public void mouseClicked(MouseEvent arg0){
-			Color c = JColorChooser.showDialog(this, "Color Chooser", color);
+			java.awt.Color c = JColorChooser.showDialog(this, "Color Chooser", color.toColor());
 			if(c != null){
-				this.color = c;
+				Color cl = new Color(c);
+				this.color = cl;
 				this.setBackground(c);
-				handler.colorChanged(c);
+				handler.colorChanged(cl);
 			}
 		}
 

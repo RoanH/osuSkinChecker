@@ -1,6 +1,5 @@
 package me.roan.osuskinchecker;
 
-import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -39,16 +38,16 @@ public class SkinIni{
 	protected boolean spinnerFrequencyModulate = true;
 
 	//colours
-	protected Color songSelectActiveText = Color.BLACK;
-	protected Color songSelectInactiveText = Color.WHITE;
+	protected Color songSelectActiveText = new Color(0, 0, 0);
+	protected Color songSelectInactiveText = new Color(255, 255, 255);
 	protected Color menuGlow = new Color(0, 78, 155);
 
 	protected Color starBreakAdditive = new Color(255, 182, 193);
-	protected Color inputOverlayText = Color.BLACK;
+	protected Color inputOverlayText = new Color(0, 0, 0);
 
 	protected Color sliderBall = new Color(2, 170, 255);
 	protected Color sliderTrackOverride = null;
-	protected Color sliderBorder = Color.BLACK;
+	protected Color sliderBorder = new Color(0, 0, 0);
 	protected Color spinnerBackground = new Color(100, 100, 100);
 
 	protected Color combo1 = new Color(255, 192, 0);
@@ -71,7 +70,7 @@ public class SkinIni{
 	protected int comboOverlap = -2;//negative allowed
 
 	//ctb
-	protected Color hyperDash = Color.RED;
+	protected Color hyperDash = new Color(255, 0, 0);
 	protected Color hyperDashFruit = null;
 	protected Color hyperDashAfterImage = null;
 
