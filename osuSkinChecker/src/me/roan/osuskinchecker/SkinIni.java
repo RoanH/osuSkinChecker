@@ -13,7 +13,7 @@ import java.util.StringJoiner;
 
 import me.roan.osuskinchecker.SkinIni.ManiaIni.Column;
 
-public class SkinIni {
+public class SkinIni{
 	//general
 	protected String name = "-";
 	protected String author = "-";
@@ -23,12 +23,12 @@ public class SkinIni {
 	protected boolean cursorRotate = true;
 	protected boolean cursorTrailRotate = true;
 	protected int animationFramerate = -1;//non negative
-	
+
 	//combo bursts
 	protected boolean layeredHitSounds = true;
 	protected boolean comboBurstRandom = false;
 	protected int[] customComboBurstSounds = null;//list of ints, positive values only
-	
+
 	//standard
 	protected boolean hitCircleOverlayAboveNumber = true;
 	protected int sliderStyle = 2;//1 or 2
@@ -37,20 +37,20 @@ public class SkinIni {
 	protected boolean spinnerNoBlink = false;
 	protected boolean spinnerFadePlayfield = false;
 	protected boolean spinnerFrequencyModulate = true;
-	
+
 	//colours
 	protected Color songSelectActiveText = Color.BLACK;
 	protected Color songSelectInactiveText = Color.WHITE;
 	protected Color menuGlow = new Color(0, 78, 155);
-	
+
 	protected Color starBreakAdditive = new Color(255, 182, 193);
 	protected Color inputOverlayText = Color.BLACK;
-	
+
 	protected Color sliderBall = new Color(2, 170, 255);
 	protected Color sliderTrackOverride = null;
 	protected Color sliderBorder = Color.BLACK;
 	protected Color spinnerBackground = new Color(100, 100, 100);
-	
+
 	protected Color combo1 = new Color(255, 192, 0);
 	protected Color combo2 = null;
 	protected Color combo3 = null;
@@ -59,28 +59,28 @@ public class SkinIni {
 	protected Color combo6 = null;
 	protected Color combo7 = null;
 	protected Color combo8 = null;
-	
+
 	//fonts
 	protected String hitCirclePrefix = "default";
 	protected int hitCircleOverlap = -2;//negative allowed
-	
+
 	protected String scorePrefix = "score";
 	protected int scoreOverlap = -2;//negative allowed
-	
+
 	protected String comboPrefix = "score";
 	protected int comboOverlap = -2;//negative allowed
-	
+
 	//ctb
 	protected Color hyperDash = Color.RED;
 	protected Color hyperDashFruit = null;
 	protected Color hyperDashAfterImage = null;
-	
+
 	protected ManiaIni[] mania = new ManiaIni[10];
-	
-	public final void createManiaConfiguration(int keys) {
+
+	public final void createManiaConfiguration(int keys){
 		mania[keys - 1] = new ManiaIni(keys);
 	}
-	
+
 	protected static final class ManiaIni{
 		protected int keys;//non negative
 		protected double columnStart = 136.0D;
@@ -113,9 +113,9 @@ public class SkinIni {
 		protected Color colourKeyWarning;
 		protected Color colourHold;//rgb(a)
 		protected Color colourBreak;
-		
+
 		protected Column[] columns;
-		
+
 		protected String stageLeft;
 		protected String stageRight;
 		protected String stageBottom;
@@ -124,44 +124,44 @@ public class SkinIni {
 		protected String lightingN;
 		protected String lightingL;
 		protected String warningArrow;
-		
+
 		protected String hit0;
 		protected String hit50;
 		protected String hit100;
 		protected String hit200;
 		protected String hit300;
 		protected String hit300g;
-		
+
 		private ManiaIni(int keys){
 			this.keys = keys;
 			columnSpacing = fillArray(keys - 1, 0.0D);
 			columnWidth = fillArray(keys, 30.0D);
 			columnLineWidth = fillArray(keys + 1, 2.0D);
 		}
-		
+
 		private static final double[] fillArray(int len, double value){
 			double[] array = new double[len];
-			for(int i = 0; i < len; i++) {
+			for(int i = 0; i < len; i++){
 				array[i] = value;
 			}
 			return array;
 		}
-		
+
 		protected static final class Column{
 			protected int key;
-			
+
 			protected Boolean keyFlipWhenUpsideDown = null;
 			protected Boolean keyFlipWhenUpsideDownD = null;
 			protected Boolean noteFlipWhenUpsideDown = null;
 			protected Boolean noteFlipWhenUpsideDownH = null;
 			protected Boolean noteFlipWhenUpsideDownL = null;
 			protected Boolean noteFlipWhenUpsideDownT = null;
-			
+
 			protected int noteBodyStyle = -1;//0, 1, 2, -1=undefined
-			
+
 			protected Color colour;//rgb(a)
 			protected Color colourLight;//rgb
-			
+
 			protected String keyImage = null;
 			protected String keyImageD = null;
 			protected String noteImage = null;
@@ -170,7 +170,7 @@ public class SkinIni {
 			protected String noteImageT = null;
 		}
 	}
-	
+
 	public void readIni(File file) throws IOException{//TODO catch unused fields to check for spelling mistakes
 		String line;
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
@@ -319,15 +319,14 @@ public class SkinIni {
 				break;
 			//[Mania]
 			}
-			
-			
+
 		}
 	}
-	
+
 	private void readMania(BufferedReader reader){
-		
+
 	}
-	
+
 	private Color parseColor(String arg){
 		String[] args = arg.split(",");
 		if(args.length <= 3){
@@ -336,10 +335,10 @@ public class SkinIni {
 			return new Color(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
 		}
 	}
-	
+
 	public void writeIni(File file) throws FileNotFoundException{
 		PrintWriter writer = new PrintWriter(new FileOutputStream(file));
-		
+
 		writer.println("[General]");
 		writer.println("Name: " + name);
 		writer.println("Author: " + author);
@@ -365,7 +364,7 @@ public class SkinIni {
 		writer.println("SpinnerFadePlayfield" + (spinnerFadePlayfield ? 1 : 0));
 		writer.println("SpinnerFrequencyModulate" + (spinnerFrequencyModulate ? 1 : 0));
 		writer.println();
-		
+
 		writer.println("[Colours]");
 		writer.println("SongSelectActiveText: " + rgb(songSelectActiveText));
 		writer.println("SongSelectInactiveText: " + rgb(songSelectInactiveText));
@@ -401,7 +400,7 @@ public class SkinIni {
 			writer.println("Combo8: " + rgb(combo8));
 		}
 		writer.println();
-		
+
 		writer.println("[Fonts]");
 		writer.println("HitCirclePrefix: " + hitCirclePrefix);
 		writer.println("HitCircleOverlap: " + hitCircleOverlap);
@@ -410,7 +409,7 @@ public class SkinIni {
 		writer.println("ComboPrefix: " + comboPrefix);
 		writer.println("ComboOverlap: " + comboOverlap);
 		writer.println();
-		
+
 		writer.println("[CatchTheBeat]");
 		writer.println("HyperDash: " + hyperDash);
 		if(hyperDashFruit != null){
@@ -420,7 +419,7 @@ public class SkinIni {
 			writer.println("HyperDashAfterImage: " + hyperDashAfterImage);
 		}
 		writer.println();
-		
+
 		for(ManiaIni ini : mania){
 			if(ini != null){
 				writer.println("[Mania]");
@@ -457,10 +456,10 @@ public class SkinIni {
 				writer.println("KeyFlipWhenUpsideDown: " + (ini.keyFlipWhenUpsideDown ? 1 : 0));
 				writer.println("NoteFlipWhenUpsideDown: " + (ini.noteFlipWhenUpsideDown ? 1 : 0));
 				writer.println("NoteBodyStyle: " + ini.noteBodyStyle);
-				
+
 				for(int i = 0; i < ini.columns.length; i++){
 					Column col = ini.columns[i];
-					
+
 					if(col.keyFlipWhenUpsideDown != null){
 						writer.println("KeyFlipWhenUpsideDown" + col.key + ": " + (col.keyFlipWhenUpsideDown ? 1 : 0));
 					}
@@ -507,19 +506,19 @@ public class SkinIni {
 						writer.println("NoteImage" + col.key + "T: " + col.noteImageT);
 					}
 				}
-				
+
 				writer.println();
 			}
 		}
-		
+
 		writer.flush();
 		writer.close();
 	}
-	
+
 	private static final String rgb(Color color){
 		return color.getRed() + "," + color.getGreen() + "," + color.getBlue();
 	}
-	
+
 	private static final String rgba(Color color){
 		if(color.getAlpha() == 255){
 			return rgb(color);
@@ -527,7 +526,7 @@ public class SkinIni {
 			return rgb(color) + "," + color.getAlpha();
 		}
 	}
-	
+
 	private static final String arrayToList(double[] array){
 		StringJoiner joiner = new StringJoiner(",");
 		for(double d : array){
@@ -535,7 +534,7 @@ public class SkinIni {
 		}
 		return joiner.toString();
 	}
-	
+
 	private static final String arrayToList(int[] array){
 		StringJoiner joiner = new StringJoiner(",");
 		for(int i : array){
@@ -543,21 +542,18 @@ public class SkinIni {
 		}
 		return joiner.toString();
 	}
-	
+
 	protected enum Version{
-		V1("1", "(old style)"),
-		V2("2", "(basic new style)"),
-		V25("2.5", "(derrived new style)"),
-		LATEST("latest", "(for personal skins)");
-		
+		V1("1", "(old style)"), V2("2", "(basic new style)"), V25("2.5", "(derrived new style)"), LATEST("latest", "(for personal skins)");
+
 		public final String name;
 		public final String extra;
-		
+
 		private Version(String name, String extra){
 			this.name = name;
 			this.extra = extra;
 		}
-		
+
 		private static Version fromString(String str){
 			switch(str){
 			case "1":
@@ -566,15 +562,15 @@ public class SkinIni {
 				return V2;
 			case "latest":
 				return LATEST;
-				default:
-					if(str.startsWith("2.")){
-						return V25;
-					}else{
-						return null;
-					}
+			default:
+				if(str.startsWith("2.")){
+					return V25;
+				}else{
+					return null;
+				}
 			}
 		}
-		
+
 		@Override
 		public String toString(){
 			return name + " " + extra;

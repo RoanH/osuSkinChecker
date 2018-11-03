@@ -49,7 +49,7 @@ import javax.swing.UIManager;
  * images or vice versa.
  * @author Roan
  */
-public class SkinChecker {
+public class SkinChecker{
 	/**
 	 * Layered map with the information
 	 * about all the images
@@ -143,16 +143,16 @@ public class SkinChecker {
 	 * @param args No valid command line options
 	 */
 	public static void main(String[] args){
-		try {
+		try{
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Throwable t) {
+		}catch(Throwable t){
 		}
-		try {
+		try{
 			readDatabase();
-		} catch (IOException e) {
+		}catch(IOException e){
 			e.printStackTrace();
 		}
-		
+
 		chooser = new JFileChooser();
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		chooser.setMultiSelectionEnabled(false);
@@ -166,29 +166,29 @@ public class SkinChecker {
 	 * Builds the GUI
 	 */
 	public static void buildGUI(){
-		try {
+		try{
 			frame.setIconImage(ImageIO.read(ClassLoader.getSystemResource("skinchecker.png")));
-		} catch (IOException e2) {
+		}catch(IOException e2){
 		}
 		JPanel content = new JPanel(new BorderLayout());
 		JTabbedPane categories = new JTabbedPane();
-		
+
 		JPanel foreign = new JPanel(new BorderLayout());
 		foreign.add(new JScrollPane(new JList<String>(foreignFiles)), BorderLayout.CENTER);
 		foreign.add(new JLabel("This is a list of files that are in the skin folder but serve no purpose."), BorderLayout.PAGE_START);
-		
+
 		JPanel ini = new JPanel(new BorderLayout());
 		ini.add(new JLabel("Settings with an additional leading checkbox require you to check this check box if you want to use the setting. Otherwise the setting is left as 'undefined'."), BorderLayout.PAGE_START);
 		ini.add(iniTab = new SkinIniTab(), BorderLayout.CENTER);
-				
+
 		categories.add("Images", imageTabs);
 		categories.add("Sounds", soundTabs);
 		categories.add("Skin configuration", ini);
 		categories.add("Foreign Files", foreign);
-		
+
 		categories.setBorder(BorderFactory.createTitledBorder("Files"));
 		content.add(categories);
-		
+
 		JPanel controls = new JPanel(new GridLayout(6, 1, 0, 0));
 		JCheckBox chd = new JCheckBox("Report images that are missing a HD version.", false);
 		JCheckBox csd = new JCheckBox("Report images that are missing a SD version.", true);
@@ -238,7 +238,7 @@ public class SkinChecker {
 				m.updateView();
 			}
 		});
-		
+
 		JPanel buttons = new JPanel(new GridLayout(4, 1));
 		JButton openSkin = new JButton("Open skin");
 		JButton openFolder = new JButton("Open skin folder for the selected skin");
@@ -249,17 +249,17 @@ public class SkinChecker {
 		buttons.add(recheck);
 		buttons.add(print);
 		openSkin.addActionListener((e)->{
-			try {
+			try{
 				checkSkin(null);
-			} catch (IOException e1) {
+			}catch(IOException e1){
 				e1.printStackTrace();
 			}
 		});
 		openFolder.addActionListener((e)->{
 			if(skinFolder != null){
-				try {
+				try{
 					Desktop.getDesktop().open(skinFolder);
-				} catch (IOException e1) {
+				}catch(IOException e1){
 					e1.printStackTrace();
 				}
 			}else{
@@ -268,9 +268,9 @@ public class SkinChecker {
 		});
 		recheck.addActionListener((e)->{
 			if(skinFolder != null){
-				try {
+				try{
 					checkSkin(skinFolder);
-				} catch (IOException e1) {
+				}catch(IOException e1){
 					e1.printStackTrace();
 				}
 			}else{
@@ -286,7 +286,7 @@ public class SkinChecker {
 					return;
 				}
 				File dest = chooser.getSelectedFile();
-				try {
+				try{
 					final PrintWriter writer = new PrintWriter(new FileOutputStream(dest));
 					writer.println("========== Images ==========");
 					for(Entry<String, Map<String, List<Info>>> m : imagesMap.entrySet()){
@@ -312,32 +312,32 @@ public class SkinChecker {
 					writer.flush();
 					writer.close();
 					JOptionPane.showMessageDialog(frame, "File list succesfully exported", "Skin Checker", JOptionPane.INFORMATION_MESSAGE);
-				} catch (FileNotFoundException e1) {
+				}catch(FileNotFoundException e1){
 					JOptionPane.showMessageDialog(frame, "An error occured: " + e1.getMessage(), "Skin Checker", JOptionPane.ERROR_MESSAGE);
 				}
-				
+
 			}else{
 				JOptionPane.showMessageDialog(frame, "No skin currently selected!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
 			}
 		});
-		
+
 		JPanel flow = new JPanel();
 		flow.setBorder(BorderFactory.createTitledBorder("Controls"));
 		flow.add(buttons);
-		
+
 		JPanel side = new JPanel(new BorderLayout());
 		skin.setBorder(BorderFactory.createTitledBorder("Skin"));
 		skin.setFont(new Font("Dialog", Font.BOLD, 12));
 		skin.setHorizontalAlignment(SwingConstants.CENTER);
 		side.add(flow, BorderLayout.CENTER);
 		side.add(skin, BorderLayout.PAGE_END);
-		
+
 		JPanel controlPanel = new JPanel(new BorderLayout());
 		controlPanel.add(controls, BorderLayout.CENTER);
 		controlPanel.add(side, BorderLayout.LINE_END);
 		controls.setBorder(BorderFactory.createTitledBorder("Filter"));
 		content.add(controlPanel, BorderLayout.PAGE_START);
-		
+
 		JPanel links = new JPanel(new GridLayout(2, 1, 0, 4));
 		links.setBorder(BorderFactory.createTitledBorder("Links"));
 		JLabel forumPost = new JLabel("<html>Forum post: <font color=blue><u><i>https://osu.ppy.sh/community/forums/topics/617168</i></u></font></html>");
@@ -347,59 +347,59 @@ public class SkinChecker {
 		forumPost.addMouseListener(new MouseListener(){
 
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e){
 				if(Desktop.isDesktopSupported()){
-					try {
+					try{
 						Desktop.getDesktop().browse(new URL("https://osu.ppy.sh/community/forums/topics/617168").toURI());
-					} catch (IOException | URISyntaxException e1) {
+					}catch(IOException | URISyntaxException e1){
 						//pity
 					}
 				}
 			}
 
 			@Override
-			public void mousePressed(MouseEvent e) {
+			public void mousePressed(MouseEvent e){
 			}
 
 			@Override
-			public void mouseReleased(MouseEvent e) {
+			public void mouseReleased(MouseEvent e){
 			}
 
 			@Override
-			public void mouseEntered(MouseEvent e) {
+			public void mouseEntered(MouseEvent e){
 			}
 
 			@Override
-			public void mouseExited(MouseEvent e) {
+			public void mouseExited(MouseEvent e){
 			}
 		});
 		sheet.addMouseListener(new MouseListener(){
 
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e){
 				if(Desktop.isDesktopSupported()){
-					try {
+					try{
 						Desktop.getDesktop().browse(new URL("https://docs.google.com/spreadsheets/d/1bhnV-CQRMy3Z0npQd9XSoTdkYxz0ew5e648S00qkJZ8/edit").toURI());
-					} catch (IOException | URISyntaxException e1) {
+					}catch(IOException | URISyntaxException e1){
 						//pity
 					}
 				}
 			}
 
 			@Override
-			public void mousePressed(MouseEvent e) {
+			public void mousePressed(MouseEvent e){
 			}
 
 			@Override
-			public void mouseReleased(MouseEvent e) {
+			public void mouseReleased(MouseEvent e){
 			}
 
 			@Override
-			public void mouseEntered(MouseEvent e) {
+			public void mouseEntered(MouseEvent e){
 			}
 
 			@Override
-			public void mouseExited(MouseEvent e) {
+			public void mouseExited(MouseEvent e){
 			}
 		});
 		JPanel lower = new JPanel(new BorderLayout());
@@ -415,14 +415,14 @@ public class SkinChecker {
 		version.setBorder(BorderFactory.createTitledBorder("Version"));
 		lower.add(version, BorderLayout.LINE_END);
 		content.add(lower, BorderLayout.PAGE_END);
-		
+
 		frame.add(content);
 		frame.setSize(Toolkit.getDefaultToolkit().getScreenSize().width / 2, Toolkit.getDefaultToolkit().getScreenSize().height / 2);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
-	
+
 	/**
 	 * Check the given skin folder and
 	 * displays the results in the GUI
@@ -440,36 +440,36 @@ public class SkinChecker {
 			skinFolder = folder;
 		}
 		skin.setText(skinFolder.getName());
-		
+
 		if(!new File(skinFolder, "skin.ini").exists()){
 			JOptionPane.showMessageDialog(frame, "This folder doesn't have a skin.ini file.\nWithout this file this skin won't even be recognized as a skin!\nAdd a skin.ini and then run this program again.", "Skin Checker", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		
+
 		SkinIni skinIni = new SkinIni();
 		skinIni.readIni(new File(skinFolder, "skin.ini"));
 		iniTab.init(skinIni);
-		
+
 		allFiles.clear();
 		addAllFiles(skinFolder);
 		allFiles.remove(new File(skinFolder, "skin.ini"));
-		
+
 		parseINI();
-		
+
 		for(Info i : info){
 			i.reset();
 		}
-		
+
 		mapToTabs(imageTabs, imagesMap);
 		mapToTabs(soundTabs, soundsMap);
-		
+
 		foreignFiles.clear();
 		int offset = 1 + skinFolder.toString().length();
 		for(File file : allFiles){
 			foreignFiles.addElement(file.toString().substring(offset));
 		}
 	}
-	
+
 	private static void addAllFiles(File dir){
 		for(File f : dir.listFiles()){
 			if(f.isDirectory()){
@@ -479,7 +479,7 @@ public class SkinChecker {
 			}
 		}
 	}
-	
+
 	/**
 	 * This subroutine read the skin.ini file and maps
 	 * custom file paths to a map with a specific ID
@@ -573,7 +573,7 @@ public class SkinChecker {
 			tabs.add(entry.getKey(), inner);
 		}
 	}
-	
+
 	/**
 	 * Creates a JTable with the correct model
 	 * to display the given list of information
@@ -644,21 +644,21 @@ public class SkinChecker {
 		reader.close();
 		return data;
 	}
-	
+
 	/**
 	 * Check the SkinChecker version to see
 	 * if we are running the latest version
 	 * @return The latest version
 	 */
 	private static final String checkVersion(){
-		try{ 			
-			HttpURLConnection con = (HttpURLConnection) new URL("https://api.github.com/repos/RoanH/osuSkinChecker/tags").openConnection(); 			
+		try{
+			HttpURLConnection con = (HttpURLConnection)new URL("https://api.github.com/repos/RoanH/osuSkinChecker/tags").openConnection();
 			con.setRequestMethod("GET");
 			con.addRequestProperty("Accept", "application/vnd.github.v3+json");
-			con.setConnectTimeout(10000); 					   
-			BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream())); 	
-			String line = reader.readLine(); 		
-			reader.close(); 	
+			con.setConnectTimeout(10000);
+			BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			String line = reader.readLine();
+			reader.close();
 			String[] versions = line.split("\"name\":\"v");
 			int max_main = 0;
 			int max_sub = 0;
@@ -677,7 +677,7 @@ public class SkinChecker {
 				}
 			}
 			return "v" + max_main + "." + max_sub;
-		}catch(Exception e){ 	
+		}catch(Exception e){
 			return null;
 			//No Internet access or something else is wrong,
 			//No problem though since this isn't a critical function
