@@ -349,8 +349,23 @@ public class SkinIni{
 			case "ColumnRight":
 				ini.columnRight = Math.max(0.0D, Double.parseDouble(args[1]));
 				break;
+			case "ColumnSpacing":
+				ini.columnSpacing = parseList(args[1], keys - 1);
+				break;
 			}
 		}
+	}
+	
+	private double[] parseList(String data, int expected){
+		String[] args = data.split(",");
+		if(args.length != expected){
+			throw new IllegalArgumentException("Illegal number of arguments on line: " + data);
+		}
+		double[] values = new double[args.length];
+		for(int i = 0; i < values.length; i++){
+			values[i] = Math.max(0.0D, Double.parseDouble(args[i].trim()));
+		}
+		return values;
 	}
 
 	private Color parseColor(String arg){
