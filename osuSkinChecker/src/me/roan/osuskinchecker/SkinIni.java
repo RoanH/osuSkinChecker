@@ -136,7 +136,9 @@ public class SkinIni{
 			columnSpacing = fillArray(keys - 1, 0.0D);
 			columnWidth = fillArray(keys, 30.0D);
 			columnLineWidth = fillArray(keys + 1, 2.0D);
-			
+			for(int i = 0; i < keys; i++){
+				columns[i] = new Column();
+			}
 		}
 
 		private static final double[] fillArray(int len, double value){
@@ -175,6 +177,9 @@ public class SkinIni{
 		String line;
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 		while((line = reader.readLine()) != null){
+			if(line.trim().isEmpty() || line.startsWith("//")){
+				continue;
+			}
 			String[] args = line.split(": ", 2);
 			switch(args[0]){
 			//[Mania]
@@ -321,8 +326,31 @@ public class SkinIni{
 		}
 	}
 
-	private void readMania(BufferedReader reader){
+	private void readMania(BufferedReader reader) throws IOException{
+		String line;
+		do{
+			line = reader.readLine();
+		}while(line.trim().isEmpty() || line.startsWith("//"));
+		int keys = Integer.parseInt(line.trim().substring(5).trim());
 		
+		ManiaIni ini = new ManiaIni(keys);
+		mania[keys - 1] = ini;
+		
+		while((line = reader.readLine()) != null){
+			if(line.trim().isEmpty() || line.startsWith("//")){
+				continue;
+			}
+			String[] args = line.split(":");
+			args[1] = args[1].trim();
+			switch(args[0]){
+			case "ColumnStart":
+				ini.columnStart = Math.max(0.0D, Double.parseDouble(args[1]));
+				break;
+			case "ColumnRight":
+				ini.columnRight = Math.max(0.0D, Double.parseDouble(args[1]));
+				break;
+			}
+		}
 	}
 
 	private Color parseColor(String arg){
@@ -524,7 +552,7 @@ public class SkinIni{
 						writer.println("NoteImage" + col.key + "T: " + col.noteImageT);
 					}
 				}
-
+				
 				writer.println();
 			}
 		}
