@@ -136,6 +136,7 @@ public class SkinIni{
 			columnSpacing = fillArray(keys - 1, 0.0D);
 			columnWidth = fillArray(keys, 30.0D);
 			columnLineWidth = fillArray(keys + 1, 2.0D);
+			
 		}
 
 		private static final double[] fillArray(int len, double value){
@@ -316,14 +317,12 @@ public class SkinIni{
 			case "HyperDashAfterImage":
 				hyperDashAfterImage = parseColor(args[1]);
 				break;
-			//[Mania]
 			}
-
 		}
 	}
 
 	private void readMania(BufferedReader reader){
-
+		
 	}
 
 	private Color parseColor(String arg){
@@ -455,7 +454,27 @@ public class SkinIni{
 				writer.println("KeyFlipWhenUpsideDown: " + (ini.keyFlipWhenUpsideDown ? 1 : 0));
 				writer.println("NoteFlipWhenUpsideDown: " + (ini.noteFlipWhenUpsideDown ? 1 : 0));
 				writer.println("NoteBodyStyle: " + ini.noteBodyStyle);
-
+				writer.println("ColourColumnLine: " + rgba(ini.colourColumnLine));
+				writer.println("ColourBarline: " + rgba(ini.colourBarline));
+				writer.println("ColourJudgementLine: " + rgb(ini.colourJudgementLine));
+				writer.println("ColourKeyWarning: " + rgb(ini.colourKeyWarning));
+				writer.println("ColourHold: " + rgba(ini.colourHold));
+				writer.println("ColourBreak: " + rgb(ini.colourBreak));
+				writer.println("StageLeft: " + ini.stageLeft);
+				writer.println("StageRight: " + ini.stageRight);
+				writer.println("StageBottom: " + ini.stageBottom);
+				writer.println("StageHint: " + ini.stageHint);
+				writer.println("StageLight: " + ini.stageLight);
+				writer.println("LightingN: " + ini.lightingN);
+				writer.println("LightingL: " + ini.lightingL);
+				writer.println("WarningArrow: " + ini.warningArrow);
+				writer.println("Hit0: " + ini.hit0);
+				writer.println("Hit50: " + ini.hit50);
+				writer.println("Hit100: " + ini.hit100);
+				writer.println("Hit200: " + ini.hit200);
+				writer.println("Hit300: " + ini.hit300);
+				writer.println("Hit300g: " + ini.hit300g);
+				
 				for(int i = 0; i < ini.columns.length; i++){
 					Column col = ini.columns[i];
 
