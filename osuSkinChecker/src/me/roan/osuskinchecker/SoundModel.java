@@ -24,7 +24,7 @@ public class SoundModel extends Model{
 	 * @see Model
 	 * @see SoundInfo
 	 */
-	public SoundModel(List<Info> list) {
+	public SoundModel(List<Info> list){
 		super(list);
 	}
 
@@ -32,7 +32,7 @@ public class SoundModel extends Model{
 	public int getColumnCount(){
 		return 2;
 	}
-	
+
 	@Override
 	public String getColumnName(int col){
 		switch(col){
@@ -43,19 +43,19 @@ public class SoundModel extends Model{
 		}
 		return null;
 	}
-	
+
 	@Override
 	public Object getValueAt(int row, int col){
 		try{
 			switch(col){
 			case 0:
 				return view.get(row);
-			case 1: 
+			case 1:
 				return ((SoundInfo)view.get(row)).exists() == true ? "Yes" : "No";
 			}
 		}catch(Exception e){
 			return "Error";
 		}
 		return null;
-	}	
+	}
 }

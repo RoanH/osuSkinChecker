@@ -32,7 +32,7 @@ public class SkinIniTab extends JTabbedPane{
 	 * Serial ID
 	 */
 	private static final long serialVersionUID = -5575803475931849256L;
-		
+
 	public void init(SkinIni ini){
 		removeAll();
 		add("General", new GeneralTab(ini));
@@ -41,20 +41,20 @@ public class SkinIniTab extends JTabbedPane{
 		add("osu! Catch", new CtbTab(ini));
 		add("osu! Mania", new ManiaTab(ini));
 	}
-	
+
 	private static final class GeneralTab extends JPanel{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = -4554355388349363415L;
-		
+
 		private GeneralTab(SkinIni ini){
 			super(new BorderLayout());
 			JPanel content = new ScrollPane();
 			BoxLayout layout = new BoxLayout(content, BoxLayout.Y_AXIS);
 			content.setLayout(layout);
 			this.add(new JScrollPane(content), BorderLayout.CENTER);
-			
+
 			content.add(Box.createVerticalStrut(2));
 			{
 				JPanel panel = new JPanel(new SplitLayout());
@@ -63,15 +63,15 @@ public class SkinIniTab extends JTabbedPane{
 				name.addKeyListener(new KeyListener(){
 
 					@Override
-					public void keyTyped(KeyEvent e) {					
+					public void keyTyped(KeyEvent e){
 					}
 
 					@Override
-					public void keyPressed(KeyEvent e) {					
+					public void keyPressed(KeyEvent e){
 					}
 
 					@Override
-					public void keyReleased(KeyEvent e) {
+					public void keyReleased(KeyEvent e){
 						ini.name = name.getText();
 					}
 				});
@@ -88,15 +88,15 @@ public class SkinIniTab extends JTabbedPane{
 				author.addKeyListener(new KeyListener(){
 
 					@Override
-					public void keyTyped(KeyEvent e) {					
+					public void keyTyped(KeyEvent e){
 					}
 
 					@Override
-					public void keyPressed(KeyEvent e) {					
+					public void keyPressed(KeyEvent e){
 					}
 
 					@Override
-					public void keyReleased(KeyEvent e) {
+					public void keyReleased(KeyEvent e){
 						ini.author = author.getText();
 					}
 				});
@@ -112,7 +112,7 @@ public class SkinIniTab extends JTabbedPane{
 				JComboBox<Version> version = new JComboBox<Version>(Version.values());
 				version.setSelectedItem(ini.version);
 				version.addItemListener((e)->{
-					ini.version = (Version) version.getSelectedItem();
+					ini.version = (Version)version.getSelectedItem();
 				});
 				panel.add(version);
 				content.add(panel);
@@ -242,15 +242,15 @@ public class SkinIniTab extends JTabbedPane{
 				field.addKeyListener(new KeyListener(){
 
 					@Override
-					public void keyTyped(KeyEvent e) {					
+					public void keyTyped(KeyEvent e){
 					}
 
 					@Override
-					public void keyPressed(KeyEvent e) {					
+					public void keyPressed(KeyEvent e){
 					}
 
 					@Override
-					public void keyReleased(KeyEvent e) {
+					public void keyReleased(KeyEvent e){
 						ini.scorePrefix = field.getText();
 					}
 				});
@@ -271,24 +271,24 @@ public class SkinIniTab extends JTabbedPane{
 				content.add(panel);
 			}
 			content.add(Box.createVerticalStrut(2));
-					
+
 			content.add(new JPanel(new BorderLayout()));
 		}
 	}
-	
+
 	private static final class StandardTab extends JPanel{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = -639789728841322306L;
-		
-		private StandardTab(SkinIni ini) {
+
+		private StandardTab(SkinIni ini){
 			super(new BorderLayout());
 			JPanel content = new ScrollPane();
 			BoxLayout layout = new BoxLayout(content, BoxLayout.Y_AXIS);
 			content.setLayout(layout);
 			this.add(new JScrollPane(content), BorderLayout.CENTER);
-			
+
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
 			{
@@ -308,7 +308,7 @@ public class SkinIniTab extends JTabbedPane{
 			{
 				JPanel panel = new JPanel(new SplitLayout());
 				panel.add(new JLabel(" Slider Style (what filling to use for sliders): "));
-				JComboBox<String> sel = new JComboBox<String>(new String[] {"Segments", "Gradient"});
+				JComboBox<String> sel = new JComboBox<String>(new String[]{"Segments", "Gradient"});
 				sel.setSelectedIndex(ini.sliderStyle - 1);
 				sel.addItemListener((e)->{
 					ini.sliderStyle = sel.getSelectedIndex() + 1;
@@ -445,24 +445,24 @@ public class SkinIniTab extends JTabbedPane{
 				content.add(panel);
 			}
 			content.add(Box.createVerticalStrut(2));
-			
+
 			content.add(new JPanel(new BorderLayout()));
 		}
 	}
-	
+
 	private static final class GameplayTab extends JPanel{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = -5006508447206574607L;
-		
-		private GameplayTab(SkinIni ini) {
+
+		private GameplayTab(SkinIni ini){
 			super(new BorderLayout());
 			JPanel content = new ScrollPane();
 			BoxLayout layout = new BoxLayout(content, BoxLayout.Y_AXIS);
 			content.setLayout(layout);
 			this.add(new JScrollPane(content), BorderLayout.CENTER);
-			
+
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
 			{
@@ -717,15 +717,15 @@ public class SkinIniTab extends JTabbedPane{
 				field.addKeyListener(new KeyListener(){
 
 					@Override
-					public void keyTyped(KeyEvent e) {					
+					public void keyTyped(KeyEvent e){
 					}
 
 					@Override
-					public void keyPressed(KeyEvent e) {					
+					public void keyPressed(KeyEvent e){
 					}
 
 					@Override
-					public void keyReleased(KeyEvent e) {
+					public void keyReleased(KeyEvent e){
 						ini.hitCirclePrefix = field.getText();
 					}
 				});
@@ -755,15 +755,15 @@ public class SkinIniTab extends JTabbedPane{
 				field.addKeyListener(new KeyListener(){
 
 					@Override
-					public void keyTyped(KeyEvent e) {					
+					public void keyTyped(KeyEvent e){
 					}
 
 					@Override
-					public void keyPressed(KeyEvent e) {					
+					public void keyPressed(KeyEvent e){
 					}
 
 					@Override
-					public void keyReleased(KeyEvent e) {
+					public void keyReleased(KeyEvent e){
 						ini.comboPrefix = field.getText();
 					}
 				});
@@ -784,18 +784,18 @@ public class SkinIniTab extends JTabbedPane{
 				content.add(panel);
 			}
 			content.add(Box.createVerticalStrut(2));
-			
+
 			content.add(new JPanel(new BorderLayout()));
 		}
 	}
-	
+
 	private static final class CtbTab extends JPanel{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = -5006508447206574607L;
-		
-		private CtbTab(SkinIni ini) {
+
+		private CtbTab(SkinIni ini){
 			super(new BorderLayout());
 			JPanel content = new ScrollPane();
 			BoxLayout layout = new BoxLayout(content, BoxLayout.Y_AXIS);
@@ -862,23 +862,23 @@ public class SkinIniTab extends JTabbedPane{
 				content.add(panel);
 			}
 			content.add(Box.createVerticalStrut(2));
-			
+
 			content.add(new JPanel(new BorderLayout()));
 		}
 	}
-	
+
 	private static final class ManiaTab extends JTabbedPane{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = 337165984317388690L;
-		
-		private ManiaTab(SkinIni ini) {
+
+		private ManiaTab(SkinIni ini){
 			for(int i = 1; i <= 10; i++){
 				ManiaKeyTab tab = new ManiaKeyTab();
-				if(ini.mania[i - 1] != null) {
+				if(ini.mania[i - 1] != null){
 					tab.init(ini.mania[i - 1], i);
-				}else {
+				}else{
 					JButton add = new JButton("Create " + i + "K mania configuration");
 					final int keys = i;
 					add.addActionListener((e)->{
@@ -892,7 +892,7 @@ public class SkinIniTab extends JTabbedPane{
 				add(i + (i == 1 ? " Key" : " Keys"), tab);
 			}
 		}
-		
+
 		private static final class ManiaKeyTab extends JPanel{
 			/**
 			 * Serial ID
@@ -1086,30 +1086,30 @@ public class SkinIniTab extends JTabbedPane{
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
-				
+
 				content.add(new JPanel(new BorderLayout()));
 			}
 		}
 	}
-	
-	private static final class ColorSelector extends JPanel implements MouseListener {
+
+	private static final class ColorSelector extends JPanel implements MouseListener{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = 3286760817738876568L;
 		private Color color;
 		private ColorEvent handler;
-		
-		private ColorSelector(Color def, ColorEvent handler) {
+
+		private ColorSelector(Color def, ColorEvent handler){
 			this.setBackground(def == null ? (color = Color.BLACK) : (color = def));
 			this.addMouseListener(this);
 			this.handler = handler;
 		}
 
 		@Override
-		public void mouseClicked(MouseEvent arg0) {
+		public void mouseClicked(MouseEvent arg0){
 			Color c = JColorChooser.showDialog(this, "Color Chooser", color);
-			if(c != null) {
+			if(c != null){
 				this.color = c;
 				this.setBackground(c);
 				handler.colorChanged(c);
@@ -1117,34 +1117,34 @@ public class SkinIniTab extends JTabbedPane{
 		}
 
 		@Override
-		public void mouseEntered(MouseEvent arg0) {			
+		public void mouseEntered(MouseEvent arg0){
 		}
 
 		@Override
-		public void mouseExited(MouseEvent arg0) {			
+		public void mouseExited(MouseEvent arg0){
 		}
 
 		@Override
-		public void mousePressed(MouseEvent arg0) {			
+		public void mousePressed(MouseEvent arg0){
 		}
 
 		@Override
-		public void mouseReleased(MouseEvent arg0) {			
+		public void mouseReleased(MouseEvent arg0){
 		}
-		
+
 		@FunctionalInterface
 		private static abstract interface ColorEvent{
-			
+
 			public abstract void colorChanged(Color color);
 		}
 	}
-	
-	private static final class DoubleArray extends JPanel{	
+
+	private static final class DoubleArray extends JPanel{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = 3145876156701959606L;
-		
+
 		private DoubleArray(double[] data){
 			this.setLayout(new GridLayout(1, data.length, 2, 0));
 			for(int i = 0; i < data.length; i++){
@@ -1157,13 +1157,13 @@ public class SkinIniTab extends JTabbedPane{
 			}
 		}
 	}
-	
-	private static final class IntegerArray extends JPanel{	
+
+	private static final class IntegerArray extends JPanel{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = 3145676156701959606L;
-		
+
 		private IntegerArray(int[] data){
 			this.setLayout(new GridLayout(1, data.length, 2, 0));
 			for(int i = 0; i < data.length; i++){
