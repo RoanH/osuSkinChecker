@@ -1,11 +1,12 @@
 package me.roan.osuskinchecker;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Locale;
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
 
 /**
  * ImageInfo objects are used to describe an
@@ -265,7 +266,7 @@ public final class ImageInfo implements Info{
 	 * @param hd Whether or not to check for an HD version of
 	 *        the image. The name of the HD variant of an image
 	 *        end with <code>@2x</code>.
-	 * @param extension The extension of the image
+	 * @param ext The extension of the image
 	 * @param variableDash Whether or not multiple versions of the
 	 *        image can exist, where extra files are named by adding
 	 *        <code>-n</code> to the name. Where <code>n</code> is an
@@ -281,18 +282,19 @@ public final class ImageInfo implements Info{
 	 * @return A file that matches all the criteria or <code>null</code>
 	 *         if none were found.
 	 */
-	private File checkForFile(File folder, String name, boolean hd, String extension, boolean variableDash, boolean variableNoDash, boolean custom, boolean customPrefix){
+	private File checkForFile(File folder, String name, boolean hd, final String ext, boolean variableDash, boolean variableNoDash, boolean custom, boolean customPrefix){
+		String extension;
 		File match = null;
 		if(hd){
 			if(hasSD == null || hasSD == true){
-				File sdver = checkForFile(folder, name, false, extension, variableDash, variableNoDash, custom, customPrefix);
+				File sdver = checkForFile(folder, name, false, ext, variableDash, variableNoDash, custom, customPrefix);
 				if(sdver != null && isEmptyImage(sdver)){
 					ignored = true;
 				}
 			}
-			extension = "@2x." + extension;
+			extension = "@2x." + ext;
 		}else{
-			extension = "." + extension;
+			extension = "." + ext;
 		}
 		
 		if(spinner != null){
@@ -315,7 +317,7 @@ public final class ImageInfo implements Info{
 			SkinChecker.allFiles.remove(match);
 			int c = 1;
 			File f;
-			while((f = new File(folder, name + "-" + c + extension)).exists()){
+			while((f = new File(folder, name + "-" + c + "." + ext)).exists() || (f = new File(folder, name + "-" + c + "@2x." + ext)).exists()){
 				SkinChecker.allFiles.remove(f);
 				c++;
 			}
@@ -326,7 +328,7 @@ public final class ImageInfo implements Info{
 			SkinChecker.allFiles.remove(match);
 			int c = 1;
 			File f;
-			while((f = new File(folder, name + c + extension)).exists()){
+			while((f = new File(folder, name + c + "." + ext)).exists() || (f = new File(folder, name + c + "@2x." + ext)).exists()){
 				SkinChecker.allFiles.remove(f);
 				c++;
 			}
@@ -344,12 +346,12 @@ public final class ImageInfo implements Info{
 			
 		if((custom || customPrefix) && this.customID != -1){
 			if(customPrefix){
-				File file = checkForFile(SkinChecker.customPathing.get(this.customID), name, hd, extension, variableDash, variableNoDash, false, false);
+				File file = checkForFile(SkinChecker.customPathing.get(this.customID), name, hd, ext, variableDash, variableNoDash, false, false);
 				SkinChecker.allFiles.remove(file);
 				return file;
 			}else{
 				File f = SkinChecker.customPathing.get(this.customID);
-				File file = (f == null ? null : checkForFile(f.getParentFile(), f.getName(), hd, extension.substring(hd ? 4 : 1), variableDash, variableNoDash, false, false));
+				File file = (f == null ? null : checkForFile(f.getParentFile(), f.getName(), hd, ext, variableDash, variableNoDash, false, false));
 				SkinChecker.allFiles.remove(file);
 				return file;
 			}
@@ -366,12 +368,14 @@ public final class ImageInfo implements Info{
 	 * @return Whether or not the image is empty
 	 */
 	private static boolean isEmptyImage(File img){
-		if(img.length() > 4096){
-			return false;
-		}
 		try {
-			BufferedImage image = ImageIO.read(img);
-			return image.getHeight() + image.getWidth() == 2;
+			Iterator<ImageReader> readers = ImageIO.getImageReadersBySuffix(img.getName().substring(img.getName().lastIndexOf('.') + 1));
+			while(readers.hasNext()){
+				ImageReader reader = readers.next();
+				reader.setInput(ImageIO.createImageInputStream(img));
+				return reader.getWidth(0) == 1 && reader.getHeight(0) == 1;
+			}
+			return false;
 		} catch (IOException e) {
 			return false;
 		}
