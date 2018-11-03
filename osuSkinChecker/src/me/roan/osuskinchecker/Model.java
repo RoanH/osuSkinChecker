@@ -26,7 +26,7 @@ public abstract class Model extends DefaultTableModel{
 	 * The filtered table data for this table model
 	 */
 	protected List<Info> view = new ArrayList<Info>();
-	
+
 	/**
 	 * Creates a new Model with the given
 	 * list of information objects as its
@@ -38,7 +38,7 @@ public abstract class Model extends DefaultTableModel{
 		data = list;
 		updateView();
 	}
-	
+
 	/**
 	 * Updates the view for this model.
 	 * This includes filtering the table
@@ -53,12 +53,12 @@ public abstract class Model extends DefaultTableModel{
 		}
 		this.fireTableDataChanged();
 	}
-	
+
 	@Override
 	public int getRowCount(){
 		return view == null ? 0 : view.size();
-	}	
-	
+	}
+
 	@Override
 	public boolean isCellEditable(int row, int col){
 		return false;

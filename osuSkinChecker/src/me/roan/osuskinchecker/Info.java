@@ -15,6 +15,7 @@ public abstract interface Info{
 	 *         file in the GUI.
 	 */
 	public abstract boolean show();
+
 	/**
 	 * Resets all stored data
 	 * for this information object

@@ -24,7 +24,7 @@ public class ImageModel extends Model{
 	 * @see Model
 	 * @see ImageInfo
 	 */
-	public ImageModel(List<Info> list) {
+	public ImageModel(List<Info> list){
 		super(list);
 	}
 
@@ -32,7 +32,7 @@ public class ImageModel extends Model{
 	public int getColumnCount(){
 		return 4;
 	}
-	
+
 	@Override
 	public String getColumnName(int col){
 		switch(col){
@@ -47,17 +47,16 @@ public class ImageModel extends Model{
 		}
 		return null;
 	}
-	
-	
+
 	@Override
 	public Object getValueAt(int row, int col){
 		try{
 			switch(col){
 			case 0:
 				return view.get(row);
-			case 1: 
+			case 1:
 				return ((ImageInfo)view.get(row)).hasSDVersion();
-			case 2: 
+			case 2:
 				ImageInfo info = ((ImageInfo)view.get(row));
 				return (info.ignored && SkinChecker.ignoreEmpty) ? "Ignored" : info.hasHDVersion();
 			case 3:
@@ -68,5 +67,5 @@ public class ImageModel extends Model{
 			return "Error";
 		}
 		return null;
-	}	
+	}
 }
