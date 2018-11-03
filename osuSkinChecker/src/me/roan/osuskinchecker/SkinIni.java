@@ -544,7 +544,10 @@ public class SkinIni{
 	}
 
 	protected enum Version{
-		V1("1", "(old style)"), V2("2", "(basic new style)"), V25("2.5", "(derrived new style)"), LATEST("latest", "(for personal skins)");
+		V1("1", "(old style)"), 
+		V2("2", "(basic new style)"), 
+		V25("2.5", "(derrived new style)"), 
+		LATEST("latest", "(for personal skins)");
 
 		public final String name;
 		public final String extra;
