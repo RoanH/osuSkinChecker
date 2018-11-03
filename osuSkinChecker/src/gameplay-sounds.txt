@@ -3,7 +3,7 @@
 - wav,mp3,ogg pause-continue-hover
 - wav,mp3,ogg pause-retry-hover
 - wav,mp3,ogg pause-back-hover
-- wav,mp3,ogg pause-continue-hover
+- wav,mp3,ogg pause-continue-click
 - wav,mp3,ogg pause-retry-click
 - wav,mp3,ogg pause-back-click
 - wav,mp3,ogg pause-loop
