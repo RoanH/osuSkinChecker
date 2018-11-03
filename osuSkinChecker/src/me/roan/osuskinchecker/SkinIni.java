@@ -115,21 +115,21 @@ public class SkinIni{
 
 		protected Column[] columns;
 
-		protected String stageLeft;
-		protected String stageRight;
-		protected String stageBottom;
-		protected String stageHint;
-		protected String stageLight;
-		protected String lightingN;
-		protected String lightingL;
-		protected String warningArrow;
+		protected String stageLeft = "mania-stage-left";
+		protected String stageRight = "mania-stage-right";
+		protected String stageBottom = "mania-stage-bottom";
+		protected String stageHint = "mania-stage-hint";
+		protected String stageLight = "mania-stage-light";
+		protected String lightingN = "LightingN";
+		protected String lightingL = "LightingL";
+		protected String warningArrow = "mania-warningarrow";
 
-		protected String hit0;
-		protected String hit50;
-		protected String hit100;
-		protected String hit200;
-		protected String hit300;
-		protected String hit300g;
+		protected String hit0 = "mania-hit0";
+		protected String hit50 = "mania-hit50";
+		protected String hit100 = "mania-hit100";
+		protected String hit200 = "mania-hit200";
+		protected String hit300 = "mania-hit300";
+		protected String hit300g = "mania-hit300g";
 
 		private ManiaIni(int keys){
 			this.keys = keys;
