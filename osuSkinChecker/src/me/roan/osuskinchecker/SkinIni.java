@@ -352,6 +352,66 @@ public class SkinIni{
 			case "ColumnSpacing":
 				ini.columnSpacing = parseList(args[1], keys - 1);
 				break;
+			case "ColumnWidth":
+				ini.columnWidth = parseList(args[1], keys);
+				break;
+			case "ColumnLineWidth":
+				ini.columnLineWidth = parseList(args[1], keys + 1);
+				break;
+			case "BarlineHeight":
+				ini.barlineHeight = Math.max(0.0D, Double.parseDouble(args[1]));
+				break;
+			case "LightingNWidth":
+				ini.lightingNWidth = parseList(args[1], keys);
+				break;
+			case "LightingLWidth":
+				ini.lightingLWidth = parseList(args[1], keys);
+				break;
+			case "WidthForNoteHeightScale":
+				ini.widthForNoteHeightScale = Math.max(0.0D, Double.parseDouble(args[1]));
+				break;
+			case "HitPosition":
+				ini.hitPosition = Math.max(0, Integer.parseInt(args[1]));
+				break;
+			case "LightPosition":
+				ini.lightPosition = Math.max(0, Integer.parseInt(args[1]));
+				break;
+			case "ScorePosition":
+				ini.scorePosition = Math.max(0, Integer.parseInt(args[1]));
+				break;
+			case "ComboPosition":
+				ini.comboPosition = Math.max(0, Integer.parseInt(args[1]));
+				break;
+			case "JudgementLine":
+				ini.judgementLine = args[1].equals("1");
+				break;
+			case "SpecialStyle":
+				ini.specialStyle = Math.max(0, Math.min(2, Integer.parseInt(args[1])));
+				break;
+			case "ComboBurstStyle":
+				ini.comboBurstStyle = Math.max(0, Math.min(2, Integer.parseInt(args[1])));
+				break;
+			case "SplitStages":
+				ini.splitStages = args[1].equals("1");
+				break;
+			case "StageSeparation":
+				ini.stageSeparation = Math.max(0, Integer.parseInt(args[1]));
+				break;
+			case "SeparateScore":
+				ini.separateScore = args[1].equals("1");
+				break;
+			case "KeysUnderNotes":
+				ini.keysUnderNotes = args[1].equals("1");
+				break;
+			case "UpsideDown":
+				ini.upsideDown = args[1].equals("1");
+				break;
+			case "KeyFlipWhenUpsideDown":
+				ini.keyFlipWhenUpsideDown = args[1].equals("1");
+				break;
+			case "NoteFlipWhenUpsideDown":
+				ini.noteFlipWhenUpsideDown = args[1].equals("1");
+				break;
 			}
 		}
 	}
