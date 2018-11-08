@@ -528,7 +528,9 @@ public class SkinIni{
 				writer.println("Keys: " + ini.keys);
 				writer.println("ColumnStart: " + ini.columnStart);
 				writer.println("ColumnRight: " + ini.columnRight);
-				writer.println("ColumnSpacing: " + arrayToList(ini.columnSpacing));
+				if(ini.keys != 1){
+					writer.println("ColumnSpacing: " + arrayToList(ini.columnSpacing));
+				}
 				writer.println("ColumnWidth: " + arrayToList(ini.columnWidth));
 				writer.println("ColumnLineWidth: " + arrayToList(ini.columnLineWidth));
 				writer.println("BarlineHeight: " + ini.barlineHeight);

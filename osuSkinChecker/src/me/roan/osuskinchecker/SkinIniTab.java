@@ -932,15 +932,17 @@ public class SkinIniTab extends JTabbedPane{
 				}
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
-				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Column Spacing (distance between columns): "));
-					panel.add(new JLabel("TODO, list of length keys-1 of double"));
-					content.add(panel);
+				if(ini.keys != 1){
+					content.add(Box.createVerticalStrut(2));
+					{
+						JPanel panel = new JPanel(new SplitLayout());
+						panel.add(new JLabel(" Column Spacing (distance between columns): "));
+						panel.add(new DoubleArray(ini.columnSpacing));
+						content.add(panel);
+					}
+					content.add(Box.createVerticalStrut(2));
+					content.add(new JSeparator());
 				}
-				content.add(Box.createVerticalStrut(2));
-				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
 				{
 					JPanel panel = new JPanel(new SplitLayout());
@@ -1147,6 +1149,7 @@ public class SkinIniTab extends JTabbedPane{
 		private static final long serialVersionUID = 3145876156701959606L;
 
 		private DoubleArray(double[] data){
+			this.setBorder(null);
 			this.setLayout(new GridLayout(1, data.length, 2, 0));
 			for(int i = 0; i < data.length; i++){
 				JSpinner spinner = new JSpinner(new SpinnerNumberModel(data[i], 0.0D, Double.MAX_VALUE, 1.0D));
