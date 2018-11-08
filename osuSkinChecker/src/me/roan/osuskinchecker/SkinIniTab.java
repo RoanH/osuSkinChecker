@@ -977,8 +977,20 @@ public class SkinIniTab extends JTabbedPane{
 				content.add(Box.createVerticalStrut(2));
 				{
 					JPanel panel = new JPanel(new SplitLayout());
+					JCheckBox enabled = new JCheckBox("", ini.lightingNWidth != null);
+					JPanel settings = new JPanel(new BorderLayout());
+					settings.add(enabled, BorderLayout.LINE_START);
 					panel.add(new JLabel(" Lighting N Width (widths of LightingN for the columns): "));
-					panel.add(new JLabel("TODO, list of length keys of double"));
+					final double[] array = new double[ini.keys];
+					settings.add(new DoubleArray(array));
+					enabled.addActionListener((e)->{
+						if(enabled.isSelected()){
+							ini.lightingNWidth = array;
+						}else{
+							ini.lightingNWidth = null;
+						}
+					});
+					panel.add(settings);
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
@@ -986,8 +998,20 @@ public class SkinIniTab extends JTabbedPane{
 				content.add(Box.createVerticalStrut(2));
 				{
 					JPanel panel = new JPanel(new SplitLayout());
+					JCheckBox enabled = new JCheckBox("", ini.lightingLWidth != null);
+					JPanel settings = new JPanel(new BorderLayout());
+					settings.add(enabled, BorderLayout.LINE_START);
 					panel.add(new JLabel(" Lighting L Width (widths of LightingL for the columns): "));
-					panel.add(new JLabel("TODO, list of length keys of double"));
+					final double[] array = new double[ini.keys];
+					settings.add(new DoubleArray(array));
+					enabled.addActionListener((e)->{
+						if(enabled.isSelected()){
+							ini.lightingLWidth = array;
+						}else{
+							ini.lightingLWidth = null;
+						}
+					});
+					panel.add(settings);
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
