@@ -947,7 +947,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Column Width (widths of the columns): "));
-					panel.add(new JLabel("TODO, list of length keys of double"));
+					panel.add(new DoubleArray(ini.columnWidth));
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
@@ -956,7 +956,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Column Line Width (widths of the column separators): "));
-					panel.add(new JLabel("TODO, list of length keys+1 of double"));
+					panel.add(new DoubleArray(ini.columnLineWidth));
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
