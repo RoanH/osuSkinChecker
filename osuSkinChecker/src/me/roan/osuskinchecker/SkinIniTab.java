@@ -1113,9 +1113,9 @@ public class SkinIniTab extends JTabbedPane{
 						JPanel panel = new JPanel(new SplitLayout());
 						panel.add(new JLabel(" Special Style (what special style (if avaible) should be used for this keycount): "));
 						JComboBox<String> box = new JComboBox<String>(new String[]{
-								"none",
-								"left lane SP - outer lanes DP",
-								"right lane SP - outer lanes DP"
+							"None",
+							"Left lane SP - outer lanes DP",
+							"Right lane SP - outer lanes DP"
 						});
 						box.setSelectedIndex(ini.specialStyle);
 						panel.add(box);
@@ -1126,6 +1126,24 @@ public class SkinIniTab extends JTabbedPane{
 					}
 					content.add(Box.createVerticalStrut(2));
 				}
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					panel.add(new JLabel(" Combo Burst Style (on what side should combobursts appear): "));
+					JComboBox<String> box = new JComboBox<String>(new String[]{
+						"Left",
+						"Right",
+						"Both"
+					});
+					box.setSelectedIndex(ini.comboBurstStyle);
+					panel.add(box);
+					box.addActionListener(e->{
+						ini.comboBurstStyle = box.getSelectedIndex();
+					});
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
 
 				content.add(new JPanel(new BorderLayout()));
 			}
