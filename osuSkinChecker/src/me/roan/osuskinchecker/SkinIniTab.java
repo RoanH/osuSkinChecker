@@ -1098,7 +1098,11 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Judgement Line (should a solid line be drawn above the StageHint): "));
-					panel.add(new JLabel("TODO, boolean true/false"));
+					JCheckBox box = new JCheckBox("", ini.judgementLine);
+					panel.add(box);
+					box.addActionListener(e->{
+						ini.judgementLine = box.isSelected();
+					});
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
