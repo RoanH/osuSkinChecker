@@ -136,6 +136,7 @@ public class SkinIni{
 			columnSpacing = fillArray(keys - 1, 0.0D);
 			columnWidth = fillArray(keys, 30.0D);
 			columnLineWidth = fillArray(keys + 1, 2.0D);
+			columns = new Column[keys];
 			for(int i = 0; i < keys; i++){
 				columns[i] = new Column();
 			}
