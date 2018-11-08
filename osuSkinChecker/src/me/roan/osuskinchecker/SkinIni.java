@@ -99,7 +99,7 @@ public class SkinIni{
 		protected int specialStyle = 0;//0, 1 or 2
 		protected int comboBurstStyle = 1;//0, 1 or 2
 		protected Boolean splitStages = null;
-		protected int stageSeparation = 40;
+		protected double stageSeparation = 40.0D;
 		protected boolean separateScore = true;
 		protected boolean keysUnderNotes = false;
 		protected boolean upsideDown = false;

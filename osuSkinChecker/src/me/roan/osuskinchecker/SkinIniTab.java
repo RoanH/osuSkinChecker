@@ -1144,6 +1144,28 @@ public class SkinIniTab extends JTabbedPane{
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					panel.add(new JLabel(" Split Stages (should the stage be split into 2 stages): "));
+					panel.add(new JLabel("0='No Splitting / forced SP', 1='splitting / forced DP', can be undefined = null"));
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					panel.add(new JLabel(" Stage Separation (when splitted what should be the distance between the stages): "));
+					JSpinner spinner = new JSpinner(new SpinnerNumberModel(ini.stageSeparation, 0.0D, Double.MAX_VALUE, 1.0D));
+					spinner.addChangeListener((event)->{
+						ini.stageSeparation = (double)spinner.getValue();
+					});
+					panel.add(spinner);
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
 
 				content.add(new JPanel(new BorderLayout()));
 			}
