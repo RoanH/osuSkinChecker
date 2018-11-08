@@ -1166,6 +1166,71 @@ public class SkinIniTab extends JTabbedPane{
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					panel.add(new JLabel(" Separate Score (should hitburst only be shown on the stage it was scored): "));
+					JCheckBox box = new JCheckBox("", ini.separateScore);
+					panel.add(box);
+					box.addActionListener(e->{
+						ini.separateScore = box.isSelected();
+					});
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					panel.add(new JLabel(" Keys Under Notes (should keys be covered by notes when passed by them): "));
+					JCheckBox box = new JCheckBox("", ini.keysUnderNotes);
+					panel.add(box);
+					box.addActionListener(e->{
+						ini.keysUnderNotes = box.isSelected();
+					});
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					panel.add(new JLabel(" Upside Down (should the stage be flipped): "));
+					JCheckBox box = new JCheckBox("", ini.upsideDown);
+					panel.add(box);
+					box.addActionListener(e->{
+						ini.upsideDown = box.isSelected();
+					});
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					panel.add(new JLabel(" Key Flip When Upside Down (should keys be flipped when the stage is flipped): "));
+					JCheckBox box = new JCheckBox("", ini.keyFlipWhenUpsideDown);
+					panel.add(box);
+					box.addActionListener(e->{
+						ini.keyFlipWhenUpsideDown = box.isSelected();
+					});
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					panel.add(new JLabel(" Note Flip When Upside Down (should notes be flipped when the stage is flipped): "));
+					JCheckBox box = new JCheckBox("", ini.noteFlipWhenUpsideDown);
+					panel.add(box);
+					box.addActionListener(e->{
+						ini.noteFlipWhenUpsideDown = box.isSelected();
+					});
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
 
 				content.add(new JPanel(new BorderLayout()));
 			}
