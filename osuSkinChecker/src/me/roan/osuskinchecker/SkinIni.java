@@ -548,7 +548,9 @@ public class SkinIni{
 				writer.println("ScorePosition: " + ini.scorePosition);
 				writer.println("ComboPosition: " + ini.comboPosition);
 				writer.println("JudgementLine: " + (ini.judgementLine ? 1 : 0));
-				writer.println("SpecialStyle: " + ini.specialStyle);
+				if(ini.keys % 2 == 0 && ini.keys >= 4){
+					writer.println("SpecialStyle: " + ini.specialStyle);
+				}
 				writer.println("ComboBurstStyle: " + ini.comboBurstStyle);
 				if(ini.splitStages != null){
 					writer.println("SplitStages: " + (ini.splitStages ? 1 : 0));

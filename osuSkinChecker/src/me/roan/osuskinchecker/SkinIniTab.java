@@ -1106,15 +1106,26 @@ public class SkinIniTab extends JTabbedPane{
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
-				content.add(new JSeparator());
-				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Special Style (what special style (if avaible) should be used for this keycount): "));
-					panel.add(new JLabel("TODO, chooice, 'none', 'left lane SP - outer lanes DP', 'right lane SP - outer lanes DP'"));
-					content.add(panel);
+				if(ini.keys % 2 == 0 && ini.keys >= 4){
+					content.add(new JSeparator());
+					content.add(Box.createVerticalStrut(2));
+					{
+						JPanel panel = new JPanel(new SplitLayout());
+						panel.add(new JLabel(" Special Style (what special style (if avaible) should be used for this keycount): "));
+						JComboBox<String> box = new JComboBox<String>(new String[]{
+								"none",
+								"left lane SP - outer lanes DP",
+								"right lane SP - outer lanes DP"
+						});
+						box.setSelectedIndex(ini.specialStyle);
+						panel.add(box);
+						box.addActionListener(e->{
+							ini.specialStyle = box.getSelectedIndex();
+						});
+						content.add(panel);
+					}
+					content.add(Box.createVerticalStrut(2));
 				}
-				content.add(Box.createVerticalStrut(2));
 
 				content.add(new JPanel(new BorderLayout()));
 			}
