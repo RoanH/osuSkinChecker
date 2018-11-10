@@ -1548,6 +1548,83 @@ public class SkinIniTab extends JTabbedPane{
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					JCheckBox enabled = new JCheckBox("", ini.colourBarline != null);
+					JPanel settings = new JPanel(new BorderLayout());
+					settings.add(enabled, BorderLayout.LINE_START);
+					panel.add(new JLabel(" Colour Bar Line (what colour should be used for the bar line separator): "));
+					JSpinner alpha = new JSpinner(new SpinnerNumberModel(ini.colourBarline == null ? 100.0D : ini.colourBarline.getAlphaPercentage(), 0.0D, 100.0D, 1.0D));
+					JPanel alphaPanel = new JPanel(new BorderLayout());
+					alphaPanel.add(new JLabel(" Opacity: "), BorderLayout.LINE_START);
+					alphaPanel.add(alpha, BorderLayout.CENTER);
+					alphaPanel.add(new JLabel(" %"), BorderLayout.LINE_END);
+					ColorSelector color = new ColorSelector(ini.colourBarline, (c)->{
+						if(enabled.isSelected()){
+							ini.colourBarline.update(c);
+						}
+					});
+					alpha.addChangeListener((e)->{
+						if(enabled.isSelected()){
+							ini.colourBarline.update((double)alpha.getValue());
+						}
+					});
+					settings.add(color, BorderLayout.CENTER);
+					enabled.addActionListener((e)->{
+						if(enabled.isSelected()){
+							ini.colourBarline = color.color;
+							ini.colourBarline.update((double)alpha.getValue());
+						}else{
+							ini.colourBarline = null;
+						}
+					});
+					settings.add(alphaPanel, BorderLayout.LINE_END);
+					panel.add(settings);
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
+				
+				
+				
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					JCheckBox enabled = new JCheckBox("", ini.colourHold != null);
+					JPanel settings = new JPanel(new BorderLayout());
+					settings.add(enabled, BorderLayout.LINE_START);
+					panel.add(new JLabel(" Colour Hold (what colour should be used for the combo counter during holds): "));
+					JSpinner alpha = new JSpinner(new SpinnerNumberModel(ini.colourHold == null ? 100.0D : ini.colourHold.getAlphaPercentage(), 0.0D, 100.0D, 1.0D));
+					JPanel alphaPanel = new JPanel(new BorderLayout());
+					alphaPanel.add(new JLabel(" Opacity: "), BorderLayout.LINE_START);
+					alphaPanel.add(alpha, BorderLayout.CENTER);
+					alphaPanel.add(new JLabel(" %"), BorderLayout.LINE_END);
+					ColorSelector color = new ColorSelector(ini.colourHold, (c)->{
+						if(enabled.isSelected()){
+							ini.colourHold.update(c);
+						}
+					});
+					alpha.addChangeListener((e)->{
+						if(enabled.isSelected()){
+							ini.colourHold.update((double)alpha.getValue());
+						}
+					});
+					settings.add(color, BorderLayout.CENTER);
+					enabled.addActionListener((e)->{
+						if(enabled.isSelected()){
+							ini.colourHold = color.color;
+							ini.colourHold.update((double)alpha.getValue());
+						}else{
+							ini.colourHold = null;
+						}
+					});
+					settings.add(alphaPanel, BorderLayout.LINE_END);
+					panel.add(settings);
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
 
 				content.add(new JPanel(new BorderLayout()));
 			}
