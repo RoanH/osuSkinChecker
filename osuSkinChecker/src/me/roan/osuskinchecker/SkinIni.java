@@ -337,83 +337,96 @@ public class SkinIni{
 		ManiaIni ini = new ManiaIni(keys);
 		mania[keys - 1] = ini;
 		
-		while((line = reader.readLine()) != null){
-			if(line.trim().isEmpty() || line.startsWith("//")){
-				continue;
+		try{
+			reader.mark(1);
+			int start;
+			while((start = reader.read()) != -1){
+				if(start == '['){
+					reader.reset();
+					return;
+				}else{
+					line = (char)start + reader.readLine();
+				}
+				reader.mark(1);
+				if(line.trim().isEmpty() || line.startsWith("//")){
+					continue;
+				}
+				String[] args = line.split(":");
+				args[1] = args[1].trim();
+				switch(args[0]){
+				case "ColumnStart":
+					ini.columnStart = Math.max(0.0D, Double.parseDouble(args[1]));
+					break;
+				case "ColumnRight":
+					ini.columnRight = Math.max(0.0D, Double.parseDouble(args[1]));
+					break;
+				case "ColumnSpacing":
+					ini.columnSpacing = parseList(args[1], keys - 1);
+					break;
+				case "ColumnWidth":
+					ini.columnWidth = parseList(args[1], keys);
+					break;
+				case "ColumnLineWidth":
+					ini.columnLineWidth = parseList(args[1], keys + 1);
+					break;
+				case "BarlineHeight":
+					ini.barlineHeight = Math.max(0.0D, Double.parseDouble(args[1]));
+					break;
+				case "LightingNWidth":
+					ini.lightingNWidth = parseList(args[1], keys);
+					break;
+				case "LightingLWidth":
+					ini.lightingLWidth = parseList(args[1], keys);
+					break;
+				case "WidthForNoteHeightScale":
+					ini.widthForNoteHeightScale = Math.max(0.0D, Double.parseDouble(args[1]));
+					break;
+				case "HitPosition":
+					ini.hitPosition = Math.max(0, Integer.parseInt(args[1]));
+					break;
+				case "LightPosition":
+					ini.lightPosition = Math.max(0, Integer.parseInt(args[1]));
+					break;
+				case "ScorePosition":
+					ini.scorePosition = Math.max(0, Integer.parseInt(args[1]));
+					break;
+				case "ComboPosition":
+					ini.comboPosition = Math.max(0, Integer.parseInt(args[1]));
+					break;
+				case "JudgementLine":
+					ini.judgementLine = args[1].equals("1");
+					break;
+				case "SpecialStyle":
+					ini.specialStyle = args[1].equalsIgnoreCase("None") ? 0 : Math.max(0, Math.min(2, Integer.parseInt(args[1])));
+					break;
+				case "ComboBurstStyle":
+					ini.comboBurstStyle = Math.max(0, Math.min(2, Integer.parseInt(args[1])));
+					break;
+				case "SplitStages":
+					ini.splitStages = args[1].equals("1");
+					break;
+				case "StageSeparation":
+					ini.stageSeparation = Math.max(0, Integer.parseInt(args[1]));
+					break;
+				case "SeparateScore":
+					ini.separateScore = args[1].equals("1");
+					break;
+				case "KeysUnderNotes":
+					ini.keysUnderNotes = args[1].equals("1");
+					break;
+				case "UpsideDown":
+					ini.upsideDown = args[1].equals("1");
+					break;
+				case "KeyFlipWhenUpsideDown":
+					ini.keyFlipWhenUpsideDown = args[1].equals("1");
+					break;
+				case "NoteFlipWhenUpsideDown":
+					ini.noteFlipWhenUpsideDown = args[1].equals("1");
+					break;
+				}
 			}
-			String[] args = line.split(":");
-			args[1] = args[1].trim();
-			switch(args[0]){
-			case "ColumnStart":
-				ini.columnStart = Math.max(0.0D, Double.parseDouble(args[1]));
-				break;
-			case "ColumnRight":
-				ini.columnRight = Math.max(0.0D, Double.parseDouble(args[1]));
-				break;
-			case "ColumnSpacing":
-				ini.columnSpacing = parseList(args[1], keys - 1);
-				break;
-			case "ColumnWidth":
-				ini.columnWidth = parseList(args[1], keys);
-				break;
-			case "ColumnLineWidth":
-				ini.columnLineWidth = parseList(args[1], keys + 1);
-				break;
-			case "BarlineHeight":
-				ini.barlineHeight = Math.max(0.0D, Double.parseDouble(args[1]));
-				break;
-			case "LightingNWidth":
-				ini.lightingNWidth = parseList(args[1], keys);
-				break;
-			case "LightingLWidth":
-				ini.lightingLWidth = parseList(args[1], keys);
-				break;
-			case "WidthForNoteHeightScale":
-				ini.widthForNoteHeightScale = Math.max(0.0D, Double.parseDouble(args[1]));
-				break;
-			case "HitPosition":
-				ini.hitPosition = Math.max(0, Integer.parseInt(args[1]));
-				break;
-			case "LightPosition":
-				ini.lightPosition = Math.max(0, Integer.parseInt(args[1]));
-				break;
-			case "ScorePosition":
-				ini.scorePosition = Math.max(0, Integer.parseInt(args[1]));
-				break;
-			case "ComboPosition":
-				ini.comboPosition = Math.max(0, Integer.parseInt(args[1]));
-				break;
-			case "JudgementLine":
-				ini.judgementLine = args[1].equals("1");
-				break;
-			case "SpecialStyle":
-				ini.specialStyle = Math.max(0, Math.min(2, Integer.parseInt(args[1])));
-				break;
-			case "ComboBurstStyle":
-				ini.comboBurstStyle = Math.max(0, Math.min(2, Integer.parseInt(args[1])));
-				break;
-			case "SplitStages":
-				ini.splitStages = args[1].equals("1");
-				break;
-			case "StageSeparation":
-				ini.stageSeparation = Math.max(0, Integer.parseInt(args[1]));
-				break;
-			case "SeparateScore":
-				ini.separateScore = args[1].equals("1");
-				break;
-			case "KeysUnderNotes":
-				ini.keysUnderNotes = args[1].equals("1");
-				break;
-			case "UpsideDown":
-				ini.upsideDown = args[1].equals("1");
-				break;
-			case "KeyFlipWhenUpsideDown":
-				ini.keyFlipWhenUpsideDown = args[1].equals("1");
-				break;
-			case "NoteFlipWhenUpsideDown":
-				ini.noteFlipWhenUpsideDown = args[1].equals("1");
-				break;
-			}
+		}catch(Exception e){
+			throw new IllegalArgumentException("Line: " + line, e);
 		}
 	}
 	
