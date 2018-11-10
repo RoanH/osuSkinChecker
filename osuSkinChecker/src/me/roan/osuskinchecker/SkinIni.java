@@ -74,13 +74,14 @@ public class SkinIni{
 	protected Color hyperDashFruit = null;
 	protected Color hyperDashAfterImage = null;
 
-	protected ManiaIni[] mania = new ManiaIni[10];
+	protected ManiaIni[] mania = new ManiaIni[ManiaIni.MAX_KEYS];
 
 	public final void createManiaConfiguration(int keys){
 		mania[keys - 1] = new ManiaIni(keys);
 	}
 
 	protected static final class ManiaIni{
+		protected static final int MAX_KEYS = 10;
 		protected int keys;//non negative
 		protected double columnStart = 136.0D;
 		protected double columnRight = 19.0D;

@@ -1156,6 +1156,7 @@ public class SkinIniTab extends JTabbedPane{
 						"No splitting / forced SP",
 						"Splitting / forced DP"
 					});
+					box.setSelectedIndex(ini.splitStages == null ? 0 : (ini.splitStages ? 1 : 0));
 					box.addActionListener((event)->{
 						if(enabled.isSelected()){
 							ini.splitStages = box.getSelectedIndex() == 1;
@@ -1251,6 +1252,56 @@ public class SkinIniTab extends JTabbedPane{
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					panel.add(new JLabel(" Note Body Style (What style should be used for all the hold note bodies): "));
+					JComboBox<String> box = new JComboBox<String>(new String[]{
+						"Stretched to fit the whole length",
+						"Cascading from tail to head",
+						"Cascading from head to tail"
+					});
+					box.setSelectedIndex(ini.noteBodyStyle);
+					panel.add(box);
+					box.addActionListener(e->{
+						ini.noteBodyStyle = box.getSelectedIndex();
+					});
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
+				for(int i = 0; i < ini.keys; i++){
+					final int col = i;
+					content.add(new JSeparator());
+					content.add(Box.createVerticalStrut(2));
+					JPanel panel = new JPanel(new SplitLayout());
+					JCheckBox enabled = new JCheckBox("", ini.columns[col].noteBodyStyle != -1);
+					JPanel settings = new JPanel(new BorderLayout());
+					settings.add(enabled, BorderLayout.LINE_START);
+					panel.add(new JLabel(" Note Body Style " + col + " (What style should be used for the hold note " + (col + 1) + " body): "));
+					JComboBox<String> box = new JComboBox<String>(new String[]{
+							"Stretched to fit the whole length",
+							"Cascading from tail to head",
+							"Cascading from head to tail"
+						});
+					box.setSelectedIndex(ini.columns[i].noteBodyStyle == -1 ? 1 : ini.columns[col].noteBodyStyle);
+					box.addActionListener((event)->{
+						if(enabled.isSelected()){
+							ini.columns[col].noteBodyStyle = box.getSelectedIndex();
+						}
+					});
+					settings.add(box, BorderLayout.CENTER);
+					enabled.addActionListener((e)->{
+						if(enabled.isSelected()){
+							ini.columns[col].noteBodyStyle = box.getSelectedIndex();
+						}else{
+							ini.columns[col].noteBodyStyle = -1;
+						}
+					});
+					panel.add(settings);
+					content.add(panel);
+					content.add(Box.createVerticalStrut(2));
+				}
 
 				content.add(new JPanel(new BorderLayout()));
 			}
