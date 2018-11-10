@@ -26,7 +26,7 @@ public class SkinIni{
 	//combo bursts
 	protected boolean layeredHitSounds = true;
 	protected boolean comboBurstRandom = false;
-	protected int[] customComboBurstSounds = null;//list of ints, positive values only
+	protected String customComboBurstSounds = null;//list of ints, positive values only
 
 	//standard
 	protected boolean hitCircleOverlayAboveNumber = true;
@@ -220,7 +220,7 @@ public class SkinIni{
 				comboBurstRandom = args[1].equals("1");
 				break;
 			case "CustomComboBurstSounds":
-				//TODO how to parse this one
+				customComboBurstSounds = args[1].replaceAll(" ", "");
 				break;
 			case "HitCircleOverlayAboveNumber":
 				hitCircleOverlayAboveNumber = args[1].equals("1");
@@ -470,7 +470,7 @@ public class SkinIni{
 		writer.println("LayeredHitSounds: " + (layeredHitSounds ? 1 : 0));
 		writer.println("ComboBurstRandom: " + (comboBurstRandom ? 1 : 0));
 		if(customComboBurstSounds != null){
-			writer.println("CustomComboBurstSounds: " + arrayToList(customComboBurstSounds));
+			writer.println("CustomComboBurstSounds: " + customComboBurstSounds);
 		}
 		writer.println("HitCircleOverlayAboveNumber: " + (hitCircleOverlayAboveNumber ? 1 : 0));
 		writer.println("SliderStyle: " + sliderStyle);

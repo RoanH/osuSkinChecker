@@ -499,9 +499,26 @@ public class SkinIniTab extends JTabbedPane{
 			content.add(Box.createVerticalStrut(2));
 			{
 				JPanel panel = new JPanel(new SplitLayout());
+				JCheckBox enabled = new JCheckBox("", ini.customComboBurstSounds != null);
 				panel.add(new JLabel(" Custom Combo Burst Sounds (on which combo marks should comboburst sounds play): "));
-				panel.add(new ListField(""));
-				panel.setBackground(java.awt.Color.RED);
+				JPanel list = new JPanel(new BorderLayout());
+				list.add(enabled, BorderLayout.LINE_START);
+				list.add(new JLabel("(comma separated)"), BorderLayout.LINE_END);
+				ListField field = new ListField(ini.customComboBurstSounds);
+				enabled.addActionListener((e)->{
+					if(enabled.isSelected()){
+						ini.customComboBurstSounds = field.getText();
+					}else{
+						ini.customComboBurstSounds = null;
+					}
+				});
+				field.addActionListener((e)->{
+					if(enabled.isSelected()){
+						ini.customComboBurstSounds = field.getText();
+					}
+				});
+				list.add(field, BorderLayout.CENTER);
+				panel.add(list);
 				content.add(panel);
 			}
 			content.add(Box.createVerticalStrut(2));
@@ -1601,7 +1618,7 @@ public class SkinIniTab extends JTabbedPane{
 		@Override
 		public String getText(){
 			String text = super.getText();
-			if(text.charAt(text.length() - 1) == ','){
+			if(!text.isEmpty() && text.charAt(text.length() - 1) == ','){
 				return text.substring(0, text.length() - 1);
 			}else{
 				return text;
