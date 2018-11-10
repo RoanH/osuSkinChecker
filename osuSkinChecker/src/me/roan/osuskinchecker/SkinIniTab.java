@@ -1585,9 +1585,56 @@ public class SkinIniTab extends JTabbedPane{
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
-				
-				
-				
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					JCheckBox enabled = new JCheckBox("", ini.colourJudgementLine != null);
+					JPanel settings = new JPanel(new BorderLayout());
+					settings.add(enabled, BorderLayout.LINE_START);
+					panel.add(new JLabel(" Colour Judgement Line (what colour should be used for the judgement line): "));
+					ColorSelector selector = new ColorSelector(ini.colourJudgementLine, (color)->{
+						if(enabled.isSelected()){
+							ini.colourJudgementLine = color;
+						}
+					});
+					settings.add(selector, BorderLayout.CENTER);
+					enabled.addActionListener((e)->{
+						if(enabled.isSelected()){
+							ini.colourJudgementLine = selector.color;
+						}else{
+							ini.colourJudgementLine = null;
+						}
+					});
+					panel.add(settings);
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					JCheckBox enabled = new JCheckBox("", ini.colourKeyWarning != null);
+					JPanel settings = new JPanel(new BorderLayout());
+					settings.add(enabled, BorderLayout.LINE_START);
+					panel.add(new JLabel(" Colour Key Warning (what colour is used for the second combo): "));
+					ColorSelector selector = new ColorSelector(ini.colourKeyWarning, (color)->{
+						if(enabled.isSelected()){
+							ini.colourKeyWarning = color;
+						}
+					});
+					settings.add(selector, BorderLayout.CENTER);
+					enabled.addActionListener((e)->{
+						if(enabled.isSelected()){
+							ini.colourKeyWarning = selector.color;
+						}else{
+							ini.colourKeyWarning = null;
+						}
+					});
+					panel.add(settings);
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
 				{
