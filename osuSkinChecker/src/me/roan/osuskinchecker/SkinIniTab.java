@@ -1672,6 +1672,31 @@ public class SkinIniTab extends JTabbedPane{
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					JCheckBox enabled = new JCheckBox("", ini.colourBreak != null);
+					JPanel settings = new JPanel(new BorderLayout());
+					settings.add(enabled, BorderLayout.LINE_START);
+					panel.add(new JLabel(" Colour Break (what colour should be used for the combo counter when it breaks): "));
+					ColorSelector selector = new ColorSelector(ini.colourBreak, (color)->{
+						if(enabled.isSelected()){
+							ini.colourBreak = color;
+						}
+					});
+					settings.add(selector, BorderLayout.CENTER);
+					enabled.addActionListener((e)->{
+						if(enabled.isSelected()){
+							ini.colourBreak = selector.color;
+						}else{
+							ini.colourBreak = null;
+						}
+					});
+					panel.add(settings);
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
 
 				content.add(new JPanel(new BorderLayout()));
 			}
