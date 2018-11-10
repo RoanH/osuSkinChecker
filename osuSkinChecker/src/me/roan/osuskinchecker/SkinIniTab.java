@@ -1148,8 +1148,28 @@ public class SkinIniTab extends JTabbedPane{
 				content.add(Box.createVerticalStrut(2));
 				{
 					JPanel panel = new JPanel(new SplitLayout());
+					JCheckBox enabled = new JCheckBox("", ini.splitStages != null);
+					JPanel settings = new JPanel(new BorderLayout());
+					settings.add(enabled, BorderLayout.LINE_START);
 					panel.add(new JLabel(" Split Stages (should the stage be split into 2 stages): "));
-					panel.add(new JLabel("0='No Splitting / forced SP', 1='splitting / forced DP', can be undefined = null"));
+					JComboBox<String> box = new JComboBox<String>(new String[]{
+						"No splitting / forced SP",
+						"Splitting / forced DP"
+					});
+					box.addActionListener((event)->{
+						if(enabled.isSelected()){
+							ini.splitStages = box.getSelectedIndex() == 1;
+						}
+					});
+					settings.add(box, BorderLayout.CENTER);
+					enabled.addActionListener((e)->{
+						if(enabled.isSelected()){
+							ini.splitStages = box.getSelectedIndex() == 1;
+						}else{
+							ini.splitStages = null;
+						}
+					});
+					panel.add(settings);
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
