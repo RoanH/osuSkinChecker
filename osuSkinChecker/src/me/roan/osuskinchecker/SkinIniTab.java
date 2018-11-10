@@ -21,6 +21,10 @@ import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.PlainDocument;
 
 import me.roan.osuskinchecker.SkinIni.ManiaIni;
 import me.roan.osuskinchecker.SkinIni.Version;
@@ -495,7 +499,8 @@ public class SkinIniTab extends JTabbedPane{
 			{
 				JPanel panel = new JPanel(new SplitLayout());
 				panel.add(new JLabel(" Custom Combo Burst Sounds (on which combo marks should comboburst sounds play): "));
-				panel.add(new JLabel("TODO comma sep"));
+				panel.add(new ListField(""));
+				panel.setBackground(java.awt.Color.RED);
 				content.add(panel);
 			}
 			content.add(Box.createVerticalStrut(2));
@@ -1577,6 +1582,58 @@ public class SkinIniTab extends JTabbedPane{
 					data[field] = (int)spinner.getValue();
 				});
 				this.add(spinner);
+			}
+		}
+	}
+	
+	private static final class ListField extends JTextField{
+				
+		private ListField(String text){
+			super(text);
+			((PlainDocument)this.getDocument()).setDocumentFilter(new ListFilter());
+		}
+		
+		@Override
+		public String getText(){
+			String text = super.getText();
+			if(text.charAt(text.length() - 1) == ','){
+				return text.substring(0, text.length() - 1);
+			}else{
+				return text;
+			}
+		}
+		
+		private static final class ListFilter extends DocumentFilter{
+			
+			private static final Pattern filter = Pattern.compile("^(\\d+,)*\\d*$");
+			
+			@Override
+			public void insertString(FilterBypass fb, int offset, String text, AttributeSet attr) throws BadLocationException{
+				//String newStr = fb.
+			}
+
+			@Override
+			public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException{
+				System.out.println("replace: " + text + " @ " + offset + " len=" + length);
+				
+			}
+			
+			@Override
+			public void remove(FilterBypass fb, int offset, int length) throws BadLocationException{
+				if(offset == 0 || fb.getDocument().getText(offset - 1, 1).equals(",")){
+					if(length < fb.getDocument().getLength()){
+						String end = fb.getDocument().getText(length, 1);
+						if(end.equals(",")){
+							remove(fb, offset, length + 1);
+						}else{
+							fb.remove(offset, length);
+						}
+					}else{
+						fb.remove(offset, length);
+					}
+				}else{
+					fb.remove(offset, length);
+				}
 			}
 		}
 	}
