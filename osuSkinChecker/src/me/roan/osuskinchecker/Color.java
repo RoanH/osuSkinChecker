@@ -20,6 +20,16 @@ public class Color{
 		this.b = b;
 		this.a = a;
 	}
+	
+	public final void update(double alpha){
+		this.a = (int)Math.round(alpha * 2.55D);
+	}
+	
+	public final void update(Color override){
+		this.r = override.r;
+		this.g = override.g;
+		this.b = override.b;
+	}
 
 	public final java.awt.Color toColor(){
 		return new java.awt.Color(r, g, b, a);
@@ -39,6 +49,10 @@ public class Color{
 	
 	public final int getAlpha(){
 		return a;
+	}
+	
+	public final double getAlphaPercentage(){
+		return a / 2.55;
 	}
 	
 	public final boolean hasAlpha(){

@@ -1511,6 +1511,43 @@ public class SkinIniTab extends JTabbedPane{
 					content.add(panel);
 					content.add(Box.createVerticalStrut(2));
 				}
+				content.add(new JSeparator());
+				content.add(Box.createVerticalStrut(2));
+				{
+					JPanel panel = new JPanel(new SplitLayout());
+					JCheckBox enabled = new JCheckBox("", ini.colourColumnLine != null);
+					JPanel settings = new JPanel(new BorderLayout());
+					settings.add(enabled, BorderLayout.LINE_START);
+					panel.add(new JLabel(" Colour Column Line (what colour should be used for the column lines): "));
+					JSpinner alpha = new JSpinner(new SpinnerNumberModel(ini.colourColumnLine == null ? 100.0D : ini.colourColumnLine.getAlphaPercentage(), 0.0D, 100.0D, 1.0D));
+					JPanel alphaPanel = new JPanel(new BorderLayout());
+					alphaPanel.add(new JLabel(" Opacity: "), BorderLayout.LINE_START);
+					alphaPanel.add(alpha, BorderLayout.CENTER);
+					alphaPanel.add(new JLabel(" %"), BorderLayout.LINE_END);
+					ColorSelector color = new ColorSelector(ini.colourColumnLine, (c)->{
+						if(enabled.isSelected()){
+							ini.colourColumnLine.update(c);
+						}
+					});
+					alpha.addChangeListener((e)->{
+						if(enabled.isSelected()){
+							ini.colourColumnLine.update((double)alpha.getValue());
+						}
+					});
+					settings.add(color, BorderLayout.CENTER);
+					enabled.addActionListener((e)->{
+						if(enabled.isSelected()){
+							ini.colourColumnLine = color.color;
+							ini.colourColumnLine.update((double)alpha.getValue());
+						}else{
+							ini.colourColumnLine = null;
+						}
+					});
+					settings.add(alphaPanel, BorderLayout.LINE_END);
+					panel.add(settings);
+					content.add(panel);
+				}
+				content.add(Box.createVerticalStrut(2));
 
 				content.add(new JPanel(new BorderLayout()));
 			}
