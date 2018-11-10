@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.regex.Pattern;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -1586,8 +1587,12 @@ public class SkinIniTab extends JTabbedPane{
 		}
 	}
 	
-	private static final class ListField extends JTextField{
-				
+	private static final class ListField extends JTextField{	
+		/**
+		 * Serial ID
+		 */
+		private static final long serialVersionUID = -4456019117693719163L;
+
 		private ListField(String text){
 			super(text);
 			((PlainDocument)this.getDocument()).setDocumentFilter(new ListFilter());
@@ -1609,29 +1614,19 @@ public class SkinIniTab extends JTabbedPane{
 			
 			@Override
 			public void insertString(FilterBypass fb, int offset, String text, AttributeSet attr) throws BadLocationException{
-				//String newStr = fb.
+				replace(fb, offset, 0, text, attr);
 			}
 
 			@Override
 			public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException{
-				System.out.println("replace: " + text + " @ " + offset + " len=" + length);
-				
+				if(filter.matcher(fb.getDocument().getText(0, offset) + text + fb.getDocument().getText(offset + length, fb.getDocument().getLength() - offset - length)).matches()){
+					fb.replace(offset, length, text, attrs);
+				}
 			}
 			
 			@Override
-			public void remove(FilterBypass fb, int offset, int length) throws BadLocationException{
-				if(offset == 0 || fb.getDocument().getText(offset - 1, 1).equals(",")){
-					if(length < fb.getDocument().getLength()){
-						String end = fb.getDocument().getText(length, 1);
-						if(end.equals(",")){
-							remove(fb, offset, length + 1);
-						}else{
-							fb.remove(offset, length);
-						}
-					}else{
-						fb.remove(offset, length);
-					}
-				}else{
+			public void remove(FilterBypass fb, int offset, int length) throws BadLocationException{				
+				if(filter.matcher(fb.getDocument().getText(0, offset) + fb.getDocument().getText(offset + length, fb.getDocument().getLength() - offset - length)).matches()){
 					fb.remove(offset, length);
 				}
 			}
