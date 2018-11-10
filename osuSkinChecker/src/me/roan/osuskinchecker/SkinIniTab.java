@@ -964,7 +964,7 @@ public class SkinIniTab extends JTabbedPane{
 				content.add(Box.createVerticalStrut(2));
 				{
 					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Barline Height (thickness ofthe barline): "));
+					panel.add(new JLabel(" Barline Height (thickness of the barline): "));
 					JSpinner spinner = new JSpinner(new SpinnerNumberModel(ini.barlineHeight, 0.0D, Double.MAX_VALUE, 1.0D));
 					spinner.addChangeListener((event)->{
 						ini.barlineHeight = (double)spinner.getValue();
