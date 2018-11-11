@@ -2081,25 +2081,6 @@ public class SkinIniTab extends JTabbedPane{
 			}
 		}
 	}
-
-	private static final class IntegerArray extends JPanel{
-		/**
-		 * Serial ID
-		 */
-		private static final long serialVersionUID = 3145676156701959606L;
-
-		private IntegerArray(int[] data){
-			this.setLayout(new GridLayout(1, data.length, 2, 0));
-			for(int i = 0; i < data.length; i++){
-				JSpinner spinner = new JSpinner(new SpinnerNumberModel(data[i], 0, Integer.MAX_VALUE, 1));
-				final int field = i;
-				spinner.addChangeListener((e)->{
-					data[field] = (int)spinner.getValue();
-				});
-				this.add(spinner);
-			}
-		}
-	}
 	
 	private static final class ListField extends JTextField{	
 		/**

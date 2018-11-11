@@ -678,14 +678,6 @@ public class SkinIni{
 		return joiner.toString();
 	}
 
-	private static final String arrayToList(int[] array){
-		StringJoiner joiner = new StringJoiner(",");
-		for(int i : array){
-			joiner.add(String.valueOf(i));
-		}
-		return joiner.toString();
-	}
-
 	protected enum Version{
 		V1("1", "(old style)"), 
 		V2("2", "(basic new style)"), 
