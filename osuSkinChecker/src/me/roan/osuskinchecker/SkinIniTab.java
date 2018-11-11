@@ -1835,6 +1835,168 @@ public class SkinIniTab extends JTabbedPane{
 					content.add(panel);
 				}
 				content.add(Box.createVerticalStrut(2));
+				for(int i = 0; i < ini.keys; i++){
+					final int col = i;
+					content.add(new JSeparator());
+					content.add(Box.createVerticalStrut(2));
+					JPanel panel = new JPanel(new SplitLayout());
+					JCheckBox enabled = new JCheckBox("", ini.columns[col].keyImage != null);
+					JPanel settings = new JPanel(new BorderLayout());
+					settings.add(enabled, BorderLayout.LINE_START);
+					panel.add(new JLabel(" Key Image " + col + " (what is the name for the unpressed key image of column " + (col + 1) + "): "));
+					PathField field = new PathField(ini.columns[col].keyImage);
+					field.addActionListener((e)->{
+						if(enabled.isSelected()){
+							ini.columns[col].keyImage = field.getText();
+						}
+					});
+					settings.add(field, BorderLayout.CENTER);
+					enabled.addActionListener((e)->{
+						if(enabled.isSelected()){
+							ini.columns[col].keyImage = field.getText();
+						}else{
+							ini.columns[col].keyImage = null;
+						}
+					});
+					panel.add(settings);
+					content.add(panel);
+					content.add(Box.createVerticalStrut(2));
+				}
+				for(int i = 0; i < ini.keys; i++){
+					final int col = i;
+					content.add(new JSeparator());
+					content.add(Box.createVerticalStrut(2));
+					JPanel panel = new JPanel(new SplitLayout());
+					JCheckBox enabled = new JCheckBox("", ini.columns[col].keyImageD != null);
+					JPanel settings = new JPanel(new BorderLayout());
+					settings.add(enabled, BorderLayout.LINE_START);
+					panel.add(new JLabel(" Key Image " + col + " D (what is the name for the pressed key image of column " + (col + 1) + "): "));
+					PathField field = new PathField(ini.columns[col].keyImageD);
+					field.addActionListener((e)->{
+						if(enabled.isSelected()){
+							ini.columns[col].keyImageD = field.getText();
+						}
+					});
+					settings.add(field, BorderLayout.CENTER);
+					enabled.addActionListener((e)->{
+						if(enabled.isSelected()){
+							ini.columns[col].keyImageD = field.getText();
+						}else{
+							ini.columns[col].keyImageD = null;
+						}
+					});
+					panel.add(settings);
+					content.add(panel);
+					content.add(Box.createVerticalStrut(2));
+				}
+				for(int i = 0; i < ini.keys; i++){
+					final int col = i;
+					content.add(new JSeparator());
+					content.add(Box.createVerticalStrut(2));
+					JPanel panel = new JPanel(new SplitLayout());
+					JCheckBox enabled = new JCheckBox("", ini.columns[col].noteImage != null);
+					JPanel settings = new JPanel(new BorderLayout());
+					settings.add(enabled, BorderLayout.LINE_START);
+					panel.add(new JLabel(" Note Image " + col + " (what is the name for the note image of column " + (col + 1) + "): "));
+					PathField field = new PathField(ini.columns[col].noteImage);
+					field.addActionListener((e)->{
+						if(enabled.isSelected()){
+							ini.columns[col].noteImage = field.getText();
+						}
+					});
+					settings.add(field, BorderLayout.CENTER);
+					enabled.addActionListener((e)->{
+						if(enabled.isSelected()){
+							ini.columns[col].noteImage = field.getText();
+						}else{
+							ini.columns[col].noteImage = null;
+						}
+					});
+					panel.add(settings);
+					content.add(panel);
+					content.add(Box.createVerticalStrut(2));
+				}
+				for(int i = 0; i < ini.keys; i++){
+					final int col = i;
+					content.add(new JSeparator());
+					content.add(Box.createVerticalStrut(2));
+					JPanel panel = new JPanel(new SplitLayout());
+					JCheckBox enabled = new JCheckBox("", ini.columns[col].noteImageH != null);
+					JPanel settings = new JPanel(new BorderLayout());
+					settings.add(enabled, BorderLayout.LINE_START);
+					panel.add(new JLabel(" Note Image " + col + " H (what is the name for the hold note head image of column " + (col + 1) + "): "));
+					PathField field = new PathField(ini.columns[col].noteImageH);
+					field.addActionListener((e)->{
+						if(enabled.isSelected()){
+							ini.columns[col].noteImageH = field.getText();
+						}
+					});
+					settings.add(field, BorderLayout.CENTER);
+					enabled.addActionListener((e)->{
+						if(enabled.isSelected()){
+							ini.columns[col].noteImageH = field.getText();
+						}else{
+							ini.columns[col].noteImageH = null;
+						}
+					});
+					panel.add(settings);
+					content.add(panel);
+					content.add(Box.createVerticalStrut(2));
+				}
+				for(int i = 0; i < ini.keys; i++){
+					final int col = i;
+					content.add(new JSeparator());
+					content.add(Box.createVerticalStrut(2));
+					JPanel panel = new JPanel(new SplitLayout());
+					JCheckBox enabled = new JCheckBox("", ini.columns[col].noteImageL != null);
+					JPanel settings = new JPanel(new BorderLayout());
+					settings.add(enabled, BorderLayout.LINE_START);
+					panel.add(new JLabel(" Note Image " + col + " L (what is the name for the hold note body image of column " + (col + 1) + "): "));
+					PathField field = new PathField(ini.columns[col].noteImageL);
+					field.addActionListener((e)->{
+						if(enabled.isSelected()){
+							ini.columns[col].noteImageL = field.getText();
+						}
+					});
+					settings.add(field, BorderLayout.CENTER);
+					enabled.addActionListener((e)->{
+						if(enabled.isSelected()){
+							ini.columns[col].noteImageL = field.getText();
+						}else{
+							ini.columns[col].noteImageL = null;
+						}
+					});
+					panel.add(settings);
+					content.add(panel);
+					content.add(Box.createVerticalStrut(2));
+				}
+				for(int i = 0; i < ini.keys; i++){
+					final int col = i;
+					content.add(new JSeparator());
+					content.add(Box.createVerticalStrut(2));
+					JPanel panel = new JPanel(new SplitLayout());
+					JCheckBox enabled = new JCheckBox("", ini.columns[col].noteImageT != null);
+					JPanel settings = new JPanel(new BorderLayout());
+					settings.add(enabled, BorderLayout.LINE_START);
+					panel.add(new JLabel(" Note Image " + col + " T (what is the name for the hold note tail image of column " + (col + 1) + "): "));
+					PathField field = new PathField(ini.columns[col].noteImageT);
+					field.addActionListener((e)->{
+						if(enabled.isSelected()){
+							ini.columns[col].noteImageT = field.getText();
+						}
+					});
+					settings.add(field, BorderLayout.CENTER);
+					enabled.addActionListener((e)->{
+						if(enabled.isSelected()){
+							ini.columns[col].noteImageT = field.getText();
+						}else{
+							ini.columns[col].noteImageT = null;
+						}
+					});
+					panel.add(settings);
+					content.add(panel);
+					content.add(Box.createVerticalStrut(2));
+				}
 
 				content.add(new JPanel(new BorderLayout()));
 			}
