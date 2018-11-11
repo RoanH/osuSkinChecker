@@ -1622,7 +1622,7 @@ public class SkinIniTab extends JTabbedPane{
 					content.add(Box.createVerticalStrut(2));
 					JPanel panel = new JPanel(new SplitLayout());
 					JPanel settings = new JPanel(new BorderLayout());
-					panel.add(new JLabel(" Colour " + col + " (what colour should be used for the lane of column " + (col + 1) + "): "));
+					panel.add(new JLabel(" Colour " + (col + 1) + " (what colour should be used for the lane of column " + (col + 1) + "): "));
 					JSpinner alpha = new JSpinner(new SpinnerNumberModel(ini.colourHold == null ? 100.0D : ini.columns[col].colour.getAlphaPercentage(), 0.0D, 100.0D, 1.0D));
 					JPanel alphaPanel = new JPanel(new BorderLayout());
 					alphaPanel.add(new JLabel(" Opacity: "), BorderLayout.LINE_START);
@@ -1645,7 +1645,7 @@ public class SkinIniTab extends JTabbedPane{
 					content.add(new JSeparator());
 					content.add(Box.createVerticalStrut(2));
 					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Colour Light " + col + " (what colour should be used for the lighting of column " + (col + 1) + "): "));
+					panel.add(new JLabel(" Colour Light " + (col + 1) + " (what colour should be used for the lighting of column " + (col + 1) + "): "));
 					ColorSelector color = new ColorSelector(ini.columns[col].colourLight, (c)->{
 						ini.columns[col].colourLight.update(c);
 					});
