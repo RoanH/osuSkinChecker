@@ -19,7 +19,13 @@ compile:
     - rm -rf ./bin
     - mkdir bin
     - find src -name "*.java" > sources.txt
+    - cd src
+    - find -type f \( -name "*.*" ! -name "*.java" \) > ../resources.txt
+    - cd ..
     - javac -cp . -d ./bin -g -verbose -version -encoding "UTF-8" @sources.txt
+    - cd src
+    - while read res; do cp --parents $res ../bin; done <../resources.txt
+    - cd ..
     - cd bin
     - jar cvfe ${PROJECTNAME}-${CI_PIPELINE_ID}.jar me.roan.osuskinchecker.SkinChecker ./*
     - cd ../../
