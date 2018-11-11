@@ -183,6 +183,9 @@ public class SkinIni{
 				continue;
 			}
 			String[] args = line.split(": ", 2);
+			if(!line.startsWith("[")){
+				args[1] = args[1].trim();
+			}
 			switch(args[0]){
 			//[Mania]
 			case "[Mania]":
@@ -446,9 +449,9 @@ public class SkinIni{
 	private Color parseColor(String arg){
 		String[] args = arg.split(",");
 		if(args.length <= 3){
-			return new Color(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+			return new Color(Integer.parseInt(args[0].trim()), Integer.parseInt(args[1].trim()), Integer.parseInt(args[2].trim()));
 		}else{
-			return new Color(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
+			return new Color(Integer.parseInt(args[0].trim()), Integer.parseInt(args[1].trim()), Integer.parseInt(args[2].trim()), Integer.parseInt(args[3].trim()));
 		}
 	}
 
