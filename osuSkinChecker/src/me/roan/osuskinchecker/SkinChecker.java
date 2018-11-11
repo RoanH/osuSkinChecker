@@ -137,6 +137,7 @@ public class SkinChecker{
 	 */
 	protected static boolean ignoreSD = false;
 	private static SkinIniTab iniTab;
+	private static SkinIni skinIni = null;
 
 	/**
 	 * Main method
@@ -180,6 +181,25 @@ public class SkinChecker{
 		JPanel ini = new JPanel(new BorderLayout());
 		ini.add(new JLabel("Settings with an additional leading checkbox require you to check this check box if you want to use the setting. Otherwise the setting is left as 'undefined'."), BorderLayout.PAGE_START);
 		ini.add(iniTab = new SkinIniTab(), BorderLayout.CENTER);
+		JButton save = new JButton("Save skin.ini debug I guess, can probably break stuff with this button");
+		save.addActionListener((e)->{
+			if(skinIni != null){
+				try{
+					File f = new File("debugWrite.ini");
+					try{
+						f.createNewFile();
+					}catch(IOException e1){
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					skinIni.writeIni(f);
+				}catch(FileNotFoundException e1){
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		ini.add(save, BorderLayout.PAGE_END);
 
 		categories.add("Images", imageTabs);
 		categories.add("Sounds", soundTabs);
@@ -446,7 +466,7 @@ public class SkinChecker{
 			return;
 		}
 
-		SkinIni skinIni = new SkinIni();
+		skinIni = new SkinIni();
 		skinIni.readIni(new File(skinFolder, "skin.ini"));
 		iniTab.init(skinIni);
 
