@@ -18,6 +18,9 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -467,7 +470,19 @@ public class SkinChecker{
 		}
 
 		skinIni = new SkinIni();
-		skinIni.readIni(new File(skinFolder, "skin.ini"));
+		try{
+			skinIni.readIni(new File(skinFolder, "skin.ini"));
+		}catch(Throwable e){
+			String name = System.currentTimeMillis() + ".txt";
+			Path err = new File(name).toPath();
+			List<String> errl = new ArrayList<String>(30);
+			errl.add(e.getMessage() + "\n");
+			for(StackTraceElement elem : e.getStackTrace()){
+				errl.add(elem.toString() + "\n");
+			}
+			Files.write(err, errl, StandardOpenOption.CREATE_NEW);
+			JOptionPane.showMessageDialog(null, "Error saved to: " + name);
+		}
 		iniTab.init(skinIni);
 
 		allFiles.clear();
