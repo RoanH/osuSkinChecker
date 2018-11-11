@@ -476,9 +476,9 @@ public class SkinChecker{
 			String name = System.currentTimeMillis() + ".txt";
 			Path err = new File(name).toPath();
 			List<String> errl = new ArrayList<String>(30);
-			errl.add(e.getMessage() + "\n");
+			errl.add(e.toString());
 			for(StackTraceElement elem : e.getStackTrace()){
-				errl.add(elem.toString() + "\n");
+				errl.add("	" + elem.toString());
 			}
 			Files.write(err, errl, StandardOpenOption.CREATE_NEW);
 			JOptionPane.showMessageDialog(null, "Error saved to: " + name);
