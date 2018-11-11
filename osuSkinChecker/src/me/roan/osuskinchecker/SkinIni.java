@@ -515,6 +515,24 @@ public class SkinIni{
 					ini.columns[Integer.parseInt(args[0].substring(11))].colourLight = parseColor(args[1]);
 				}else if(args[0].startsWith("Colour")){
 					ini.columns[Integer.parseInt(args[0].substring(6))].colour = parseColor(args[1]);
+				}else if(args[0].startsWith("KeyImage")){
+					args[0] = args[0].substring(8);
+					if(args[0].endsWith("D")){
+						ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].keyImage = args[1];
+					}else{
+						ini.columns[Integer.parseInt(args[0])].keyImage = args[1];
+					}
+				}else if(args[0].startsWith("NoteImage")){
+					args[0] = args[0].substring(9);
+					if(args[0].endsWith("H")){
+						ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageH = args[1];
+					}else if(args[0].endsWith("T")){
+						ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageT = args[1];
+					}else if(args[0].endsWith("L")){
+						ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageL = args[1];
+					}else{
+						ini.columns[Integer.parseInt(args[0])].noteImage = args[1];
+					}
 				}
 			}
 		}catch(Exception e){
