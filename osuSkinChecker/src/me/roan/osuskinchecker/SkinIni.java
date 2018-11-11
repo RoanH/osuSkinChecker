@@ -469,6 +469,10 @@ public class SkinIni{
 					}else{
 						ini.columns[Integer.parseInt(args[0])].noteBodyStyle = Math.max(0, Math.min(2, Integer.parseInt(args[1])));
 					}
+				}else if(args[0].startsWith("ColourLight")){
+					ini.columns[Integer.parseInt(args[0].substring(11))].colourLight = parseColor(args[1]);
+				}else if(args[0].startsWith("Colour")){
+					ini.columns[Integer.parseInt(args[0].substring(6))].colour = parseColor(args[1]);
 				}
 			}
 		}catch(Exception e){
