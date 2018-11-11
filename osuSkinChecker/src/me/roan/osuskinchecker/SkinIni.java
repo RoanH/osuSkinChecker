@@ -481,61 +481,64 @@ public class SkinIni{
 				case "Hit300g":
 					ini.hit300g = args[1];
 					break;
-				}
-				if(args[0].startsWith("KeyFlipWhenUpsideDown")){
-					args[0] = args[0].substring(21);
-					if(args[0].isEmpty()){
-						ini.keyFlipWhenUpsideDown = args[1].equals("1");
-					}else if(args[0].endsWith("D")){
-						ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].keyFlipWhenUpsideDownD = args[1].equals("1");
-					}else{
-						ini.columns[Integer.parseInt(args[0])].keyFlipWhenUpsideDown = args[1].equals("1");
+				default:
+					if(args[0].startsWith("KeyFlipWhenUpsideDown")){
+						args[0] = args[0].substring(21);
+						if(args[0].isEmpty()){
+							ini.keyFlipWhenUpsideDown = args[1].equals("1");
+						}else if(args[0].endsWith("D")){
+							ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].keyFlipWhenUpsideDownD = args[1].equals("1");
+						}else{
+							ini.columns[Integer.parseInt(args[0])].keyFlipWhenUpsideDown = args[1].equals("1");
+						}
+					}else if(args[0].startsWith("NoteFlipWhenUpsideDown")){
+						args[0] = args[0].substring(22);
+						if(args[0].isEmpty()){
+							ini.noteFlipWhenUpsideDown = args[1].equals("1");
+						}else if(args[0].endsWith("H")){
+							ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownH = args[1].equals("1");
+						}else if(args[0].endsWith("L")){
+							ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownL = args[1].equals("1");
+						}else if(args[0].endsWith("T")){
+							ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownT = args[1].equals("1");
+						}else{
+							ini.columns[Integer.parseInt(args[0])].noteFlipWhenUpsideDown = args[1].equals("1");
+						}
+					}else if(args[0].startsWith("NoteBodyStyle")){
+						args[0] = args[0].substring(13);
+						if(args[0].isEmpty()){
+							ini.noteBodyStyle = Math.max(0, Math.min(2, Integer.parseInt(args[1])));
+						}else{
+							ini.columns[Integer.parseInt(args[0])].noteBodyStyle = Math.max(0, Math.min(2, Integer.parseInt(args[1])));
+						}
+					}else if(args[0].startsWith("ColourLight")){
+						ini.columns[Integer.parseInt(args[0].substring(11)) - 1].colourLight = parseColor(args[1]);
+					}else if(args[0].startsWith("Colour")){
+						ini.columns[Integer.parseInt(args[0].substring(6)) - 1].colour = parseColor(args[1]);
+					}else if(args[0].startsWith("KeyImage")){
+						args[0] = args[0].substring(8);
+						if(args[0].endsWith("D")){
+							ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].keyImage = args[1];
+						}else{
+							ini.columns[Integer.parseInt(args[0])].keyImage = args[1];
+						}
+					}else if(args[0].startsWith("NoteImage")){
+						args[0] = args[0].substring(9);
+						if(args[0].endsWith("H")){
+							ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageH = args[1];
+						}else if(args[0].endsWith("T")){
+							ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageT = args[1];
+						}else if(args[0].endsWith("L")){
+							ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageL = args[1];
+						}else{
+							ini.columns[Integer.parseInt(args[0])].noteImage = args[1];
+						}
 					}
-				}else if(args[0].startsWith("NoteFlipWhenUpsideDown")){
-					args[0] = args[0].substring(22);
-					if(args[0].isEmpty()){
-						ini.noteFlipWhenUpsideDown = args[1].equals("1");
-					}else if(args[0].endsWith("H")){
-						ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownH = args[1].equals("1");
-					}else if(args[0].endsWith("L")){
-						ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownL = args[1].equals("1");
-					}else if(args[0].endsWith("T")){
-						ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownT = args[1].equals("1");
-					}else{
-						ini.columns[Integer.parseInt(args[0])].noteFlipWhenUpsideDown = args[1].equals("1");
-					}
-				}else if(args[0].startsWith("NoteBodyStyle")){
-					args[0] = args[0].substring(13);
-					if(args[0].isEmpty()){
-						ini.noteBodyStyle = Math.max(0, Math.min(2, Integer.parseInt(args[1])));
-					}else{
-						ini.columns[Integer.parseInt(args[0])].noteBodyStyle = Math.max(0, Math.min(2, Integer.parseInt(args[1])));
-					}
-				}else if(args[0].startsWith("ColourLight")){
-					ini.columns[Integer.parseInt(args[0].substring(11))].colourLight = parseColor(args[1]);
-				}else if(args[0].startsWith("Colour")){
-					ini.columns[Integer.parseInt(args[0].substring(6))].colour = parseColor(args[1]);
-				}else if(args[0].startsWith("KeyImage")){
-					args[0] = args[0].substring(8);
-					if(args[0].endsWith("D")){
-						ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].keyImage = args[1];
-					}else{
-						ini.columns[Integer.parseInt(args[0])].keyImage = args[1];
-					}
-				}else if(args[0].startsWith("NoteImage")){
-					args[0] = args[0].substring(9);
-					if(args[0].endsWith("H")){
-						ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageH = args[1];
-					}else if(args[0].endsWith("T")){
-						ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageT = args[1];
-					}else if(args[0].endsWith("L")){
-						ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageL = args[1];
-					}else{
-						ini.columns[Integer.parseInt(args[0])].noteImage = args[1];
-					}
+					break;
 				}
 			}
 		}catch(Exception e){
+			e.printStackTrace();
 			throw new IllegalArgumentException("Line: " + line, e);
 		}
 	}
