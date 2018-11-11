@@ -439,6 +439,48 @@ public class SkinIni{
 				case "ColourBreak":
 					ini.colourBreak = parseColor(args[1]);
 					break;
+				case "StageLeft":
+					ini.stageLeft = args[1];
+					break;
+				case "StageRight":
+					ini.stageRight = args[1];
+					break;
+				case "StageBottom":
+					ini.stageBottom = args[1];
+					break;
+				case "StageHint":
+					ini.stageHint = args[1];
+					break;
+				case "StageLight":
+					ini.stageLight = args[1];
+					break;
+				case "LightingN":
+					ini.lightingN = args[1];
+					break;
+				case "LightingL":
+					ini.lightingL = args[1];
+					break;
+				case "WarningArrow":
+					ini.warningArrow = args[1];
+					break;
+				case "Hit0":
+					ini.hit0 = args[1];
+					break;
+				case "Hit50":
+					ini.hit50 = args[1];
+					break;
+				case "Hit100":
+					ini.hit100 = args[1];
+					break;
+				case "Hit200":
+					ini.hit200 = args[1];
+					break;
+				case "Hit300":
+					ini.hit300 = args[1];
+					break;
+				case "Hit300g":
+					ini.hit300g = args[1];
+					break;
 				}
 				if(args[0].startsWith("KeyFlipWhenUpsideDown")){
 					args[0] = args[0].substring(21);
