@@ -20,9 +20,9 @@ compile:
     - mkdir bin
     - find src -name "*.java" > sources.txt
     - javac -cp . -d ./bin -g -verbose -version -encoding "UTF-8" @sources.txt
-    - jar cvfe ${PROJECTNAME}.jar me.roan.osuskinchecker.SkinChecker ./*
-    - cd ../../
-    - mv ./${PROJECTNAME}/bin/${PROJECTNAME}.jar ./${PROJECTNAME}.jar
+    - jar cvfe ${PROJECTNAME}-${CI_PIPELINE_ID}.jar me.roan.osuskinchecker.SkinChecker ./*
+    - cd ..
+    - mv ./${PROJECTNAME}/bin/${PROJECTNAME}-${CI_PIPELINE_ID}.jar ./${PROJECTNAME}-${CI_PIPELINE_ID}.jar
   stage: compile
   environment: builds
   artifacts:
