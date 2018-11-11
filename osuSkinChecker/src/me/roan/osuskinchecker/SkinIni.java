@@ -530,12 +530,12 @@ public class SkinIni{
 		writer.println();
 
 		writer.println("[CatchTheBeat]");
-		writer.println("HyperDash: " + hyperDash);
+		writer.println("HyperDash: " + rgb(hyperDash));
 		if(hyperDashFruit != null){
-			writer.println("HyperDashFruit: " + hyperDashFruit);
+			writer.println("HyperDashFruit: " + rgb(hyperDashFruit));
 		}
 		if(hyperDashAfterImage != null){
-			writer.println("HyperDashAfterImage: " + hyperDashAfterImage);
+			writer.println("HyperDashAfterImage: " + rgb(hyperDashAfterImage));
 		}
 		writer.println();
 
