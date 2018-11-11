@@ -428,7 +428,7 @@ public class SkinChecker{
 		JPanel lower = new JPanel(new BorderLayout());
 		lower.add(links, BorderLayout.CENTER);
 		JPanel version = new JPanel(new GridLayout(2, 1, 0, 4));
-		version.add(new JLabel("Running version: v1.9"));//XXX version
+		version.add(new JLabel("Running version: v2.0 pre-release"));//XXX version
 		JLabel latest = new JLabel("Latest version: loading...");
 		new Thread(()->{
 			String ver = checkVersion();
