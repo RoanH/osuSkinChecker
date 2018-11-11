@@ -1658,7 +1658,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Stage Left (what is the name of the left stage image): "));
-					PathField field = new PathField();
+					PathField field = new PathField(ini.stageLeft);
 					panel.add(field);
 					field.addActionListener((e)->{
 						ini.stageLeft = field.getText();
@@ -1671,7 +1671,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Stage Right (what is the name of the right stage image): "));
-					PathField field = new PathField();
+					PathField field = new PathField(ini.stageRight);
 					panel.add(field);
 					field.addActionListener((e)->{
 						ini.stageRight = field.getText();
@@ -1684,7 +1684,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Stage Bottom (what is the name of the bottom stage image): "));
-					PathField field = new PathField();
+					PathField field = new PathField(ini.stageBottom);
 					panel.add(field);
 					field.addActionListener((e)->{
 						ini.stageBottom = field.getText();
@@ -1697,7 +1697,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Stage Hint (what is the name of the stage hint image): "));
-					PathField field = new PathField();
+					PathField field = new PathField(ini.stageHint);
 					panel.add(field);
 					field.addActionListener((e)->{
 						ini.stageHint = field.getText();
@@ -1710,7 +1710,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Stage Light (what is the name of the stage light image): "));
-					PathField field = new PathField();
+					PathField field = new PathField(ini.stageLight);
 					panel.add(field);
 					field.addActionListener((e)->{
 						ini.stageLight = field.getText();
@@ -1723,7 +1723,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Lighting N (what is the name of the note lighting image): "));
-					PathField field = new PathField();
+					PathField field = new PathField(ini.lightingN);
 					panel.add(field);
 					field.addActionListener((e)->{
 						ini.lightingN = field.getText();
@@ -1736,7 +1736,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Lighting L (what is the name of the hold note lighting image): "));
-					PathField field = new PathField();
+					PathField field = new PathField(ini.lightingL);
 					panel.add(field);
 					field.addActionListener((e)->{
 						ini.lightingL = field.getText();
@@ -1749,7 +1749,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Warning Arrow (what is the name of the warning arrow image): "));
-					PathField field = new PathField();
+					PathField field = new PathField(ini.warningArrow);
 					panel.add(field);
 					field.addActionListener((e)->{
 						ini.warningArrow = field.getText();
@@ -1762,7 +1762,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Hit 0 (what is the name of the hit0 image): "));
-					PathField field = new PathField();
+					PathField field = new PathField(ini.hit0);
 					panel.add(field);
 					field.addActionListener((e)->{
 						ini.hit0 = field.getText();
@@ -1775,7 +1775,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Hit 50 (what is the name of the hit50 image): "));
-					PathField field = new PathField();
+					PathField field = new PathField(ini.hit50);
 					panel.add(field);
 					field.addActionListener((e)->{
 						ini.hit50 = field.getText();
@@ -1788,7 +1788,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Hit 100 (what is the name of the hit100 image): "));
-					PathField field = new PathField();
+					PathField field = new PathField(ini.hit100);
 					panel.add(field);
 					field.addActionListener((e)->{
 						ini.hit100 = field.getText();
@@ -1801,7 +1801,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Hit 200 (what is the name of the hit200 image): "));
-					PathField field = new PathField();
+					PathField field = new PathField(ini.hit200);
 					panel.add(field);
 					field.addActionListener((e)->{
 						ini.hit200 = field.getText();
@@ -1814,7 +1814,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Hit 300 (what is the name of the hit300 image): "));
-					PathField field = new PathField();
+					PathField field = new PathField(ini.hit300);
 					panel.add(field);
 					field.addActionListener((e)->{
 						ini.hit300 = field.getText();
@@ -1827,7 +1827,7 @@ public class SkinIniTab extends JTabbedPane{
 				{
 					JPanel panel = new JPanel(new SplitLayout());
 					panel.add(new JLabel(" Hit 300g (what is the name of the hit300g image): "));
-					PathField field = new PathField();
+					PathField field = new PathField(ini.hit300g);
 					panel.add(field);
 					field.addActionListener((e)->{
 						ini.hit300g = field.getText();
@@ -1846,6 +1846,10 @@ public class SkinIniTab extends JTabbedPane{
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = -4519936454813151564L;
+		
+		private PathField(String text){
+			super(text);
+		}
 	}
 
 	private static final class ColorSelector extends JPanel implements MouseListener{
