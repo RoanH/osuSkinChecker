@@ -421,6 +421,24 @@ public class SkinIni{
 				case "UpsideDown":
 					ini.upsideDown = args[1].equals("1");
 					break;
+				case "ColourColumnLine":
+					ini.colourColumnLine = parseColor(args[1]);
+					break;
+				case "ColourBarline":
+					ini.colourBarline = parseColor(args[1]);
+					break;
+				case "ColourJudgementLine":
+					ini.colourJudgementLine = parseColor(args[1]);
+					break;
+				case "ColourKeyWarning":
+					ini.colourKeyWarning = parseColor(args[1]);
+					break;
+				case "ColourHold":
+					ini.colourHold = parseColor(args[1]);
+					break;
+				case "ColourBreak":
+					ini.colourBreak = parseColor(args[1]);
+					break;
 				}
 				if(args[0].startsWith("KeyFlipWhenUpsideDown")){
 					args[0] = args[0].substring(21);
