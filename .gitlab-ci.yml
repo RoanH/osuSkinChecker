@@ -34,6 +34,6 @@ compile:
   environment: builds
   artifacts:
     name: "${NAME}"
-    expire_in: 1 day
+    expire_in: 1 week
     paths:
       - ${PROJECTNAME}-${CI_PIPELINE_ID}.jar
