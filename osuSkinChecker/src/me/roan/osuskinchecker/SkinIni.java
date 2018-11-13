@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.Locale;
 import java.util.StringJoiner;
 
 import me.roan.osuskinchecker.SkinIni.ManiaIni.Column;
@@ -401,10 +402,38 @@ public class SkinIni{
 					ini.judgementLine = args[1].equals("1");
 					break;
 				case "SpecialStyle":
-					ini.specialStyle = args[1].equalsIgnoreCase("None") ? 0 : Math.max(0, Math.min(2, Integer.parseInt(args[1])));
+					try{
+						ini.specialStyle = Math.max(0, Math.min(2, Integer.parseInt(args[1])));
+					}catch(NumberFormatException e){
+						switch(args[1].toLowerCase(Locale.ROOT)){
+						case "none":
+							ini.specialStyle = 0;
+							break;
+						case "left":
+							ini.specialStyle = 1;
+							break;
+						case "right":
+							ini.specialStyle = 2;
+							break;
+						}
+					}
 					break;
 				case "ComboBurstStyle":
-					ini.comboBurstStyle = Math.max(0, Math.min(2, Integer.parseInt(args[1])));
+					try{
+						ini.comboBurstStyle = Math.max(0, Math.min(2, Integer.parseInt(args[1])));
+					}catch(NumberFormatException e){
+						switch(args[1].toLowerCase(Locale.ROOT)){
+						case "left":
+							ini.comboBurstStyle = 0;
+							break;
+						case "right":
+							ini.comboBurstStyle = 1;
+							break;
+						case "both":
+							ini.comboBurstStyle = 2;
+							break;
+						}
+					}
 					break;
 				case "SplitStages":
 					ini.splitStages = args[1].equals("1");
