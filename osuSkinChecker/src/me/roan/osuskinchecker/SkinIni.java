@@ -182,7 +182,7 @@ public class SkinIni{
 			if(line.trim().isEmpty() || line.startsWith("//")){
 				continue;
 			}
-			String[] args = line.split(": ", 2);
+			String[] args = line.split(":", 2);
 			if(!line.startsWith("[")){
 				args[1] = args[1].trim();
 			}
