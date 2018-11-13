@@ -788,9 +788,13 @@ public class SkinIni{
 	}
 
 	protected enum Version{
-		V1("1", "(old style)"), 
-		V2("2", "(basic new style)"), 
-		V25("2.5", "(derrived new style)"), 
+		V1("1", "(Old style)"),
+		V2("2", "(Basic new style)"),
+		V21("2.1", "(Taiko position changes)"),
+		V22("2.2", "(UI changes)"),
+		V23("2.3", "(New Catch catcher style)"),
+		V24("2.4", "(Mania stage scaling reduction)"),
+		V25("2.5", "(Mania upscroll and column improvements)"),
 		LATEST("latest", "(for personal skins)");
 
 		public final String name;
@@ -806,15 +810,22 @@ public class SkinIni{
 			case "1":
 				return V1;
 			case "2":
+			case "2.0":
 				return V2;
+			case "2.1":
+				return V21;
+			case "2.2":
+				return V22;
+			case "2.3":
+				return V23;
+			case "2.4":
+				return V24;
+			case "2.5":
+				return V25;
 			case "latest":
 				return LATEST;
 			default:
-				if(str.startsWith("2.")){
-					return V25;
-				}else{
-					return null;
-				}
+				return null;
 			}
 		}
 
