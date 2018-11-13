@@ -587,10 +587,10 @@ public class SkinIni{
 		writer.println("HitCircleOverlayAboveNumber: " + (hitCircleOverlayAboveNumber ? 1 : 0));
 		writer.println("SliderStyle: " + sliderStyle);
 		writer.println("SliderBallFlip: " + (sliderBallFlip ? 1 : 0));
-		writer.println("AllowSliderBallTint" + (allowSliderBallTint ? 1 : 0));
-		writer.println("SpinnerNoBlink" + (spinnerNoBlink ? 1 : 0));
-		writer.println("SpinnerFadePlayfield" + (spinnerFadePlayfield ? 1 : 0));
-		writer.println("SpinnerFrequencyModulate" + (spinnerFrequencyModulate ? 1 : 0));
+		writer.println("AllowSliderBallTint: " + (allowSliderBallTint ? 1 : 0));
+		writer.println("SpinnerNoBlink: " + (spinnerNoBlink ? 1 : 0));
+		writer.println("SpinnerFadePlayfield: " + (spinnerFadePlayfield ? 1 : 0));
+		writer.println("SpinnerFrequencyModulate: " + (spinnerFrequencyModulate ? 1 : 0));
 		writer.println();
 
 		writer.println("[Colours]");
