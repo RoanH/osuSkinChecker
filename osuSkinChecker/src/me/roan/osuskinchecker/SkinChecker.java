@@ -139,7 +139,13 @@ public class SkinChecker{
 	 * SD image when a HD version exists
 	 */
 	protected static boolean ignoreSD = false;
+	/**
+	 * The tab showing all the skin.ini options and editors
+	 */
 	private static SkinIniTab iniTab;
+	/**
+	 * The skin.ini settings for the skin currently loaded
+	 */
 	private static SkinIni skinIni = null;
 
 	/**
@@ -509,6 +515,11 @@ public class SkinChecker{
 		}
 	}
 
+	/**
+	 * Adds all the files form the given directory
+	 * to the {@link #allFiles} list.
+	 * @param dir The directory to parse
+	 */
 	private static void addAllFiles(File dir){
 		for(File f : dir.listFiles()){
 			if(f.isDirectory()){
@@ -524,6 +535,7 @@ public class SkinChecker{
 	 * custom file paths to a map with a specific ID
 	 * @throws IOException When an IOException occurs
 	 */
+	@Deprecated
 	private static void parseINI() throws IOException{
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(skinFolder, "skin.ini"))));
 		String line;
