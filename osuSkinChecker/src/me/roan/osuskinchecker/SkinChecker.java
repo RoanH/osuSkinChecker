@@ -473,15 +473,19 @@ public class SkinChecker{
 		try{
 			skinIni.readIni(new File(skinFolder, "skin.ini"));
 		}catch(Throwable e){
-			String name = System.currentTimeMillis() + ".txt";
-			Path err = new File(name).toPath();
-			List<String> errl = new ArrayList<String>(30);
-			errl.add(e.toString());
-			for(StackTraceElement elem : e.getStackTrace()){
-				errl.add("	" + elem.toString());
+			try{
+				String name = System.currentTimeMillis() + ".txt";
+				Path err = new File(name).toPath();
+				List<String> errl = new ArrayList<String>(30);
+				errl.add(e.toString());
+				for(StackTraceElement elem : e.getStackTrace()){
+					errl.add("	" + elem.toString());
+				}
+				Files.write(err, errl, StandardOpenOption.CREATE_NEW);
+				JOptionPane.showMessageDialog(frame, "An error occurred while reading the skin.ini\nThe error was saved to: " + name, "Skin Checker", JOptionPane.ERROR_MESSAGE);
+			}catch(Exception e1){
+				JOptionPane.showMessageDialog(frame, "An internal error occurred!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
 			}
-			Files.write(err, errl, StandardOpenOption.CREATE_NEW);
-			JOptionPane.showMessageDialog(null, "Error saved to: " + name);
 		}
 		iniTab.init(skinIni);
 
