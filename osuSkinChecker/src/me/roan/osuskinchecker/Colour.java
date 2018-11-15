@@ -1,20 +1,30 @@
 package me.roan.osuskinchecker;
 
-public class Color{
+import java.awt.Color;
+
+/**
+ * Wrapper around the standard Java
+ * Colour class to work better with
+ * osu!. And to allow more control over
+ * the internal representation of colors.
+ * @author Roan
+ * @see Color
+ */
+public class Colour{
 	private int r;
 	private int g;
 	private int b;
 	private int a;
 	
-	public Color(java.awt.Color color){
+	public Colour(Color color){
 		this(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
 	}
 	
-	public Color(int r, int g, int b){
+	public Colour(int r, int g, int b){
 		this(r, g, b, 255);
 	}
 
-	public Color(int r, int g, int b, int a){
+	public Colour(int r, int g, int b, int a){
 		this.r = r;
 		this.g = g;
 		this.b = b;
@@ -25,14 +35,14 @@ public class Color{
 		this.a = (int)Math.round(alpha * 2.55D);
 	}
 	
-	public final void update(Color override){
+	public final void update(Colour override){
 		this.r = override.r;
 		this.g = override.g;
 		this.b = override.b;
 	}
 
-	public final java.awt.Color toColor(){
-		return new java.awt.Color(r, g, b, a);
+	public final Color toColor(){
+		return new Color(r, g, b, a);
 	}
 	
 	public final int getRed(){

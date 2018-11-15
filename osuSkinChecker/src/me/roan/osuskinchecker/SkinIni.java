@@ -43,26 +43,26 @@ public class SkinIni{
 	protected boolean spinnerFrequencyModulate = true;
 
 	//colours
-	protected Color songSelectActiveText = new Color(0, 0, 0);
-	protected Color songSelectInactiveText = new Color(255, 255, 255);
-	protected Color menuGlow = new Color(0, 78, 155);
+	protected Colour songSelectActiveText = new Colour(0, 0, 0);
+	protected Colour songSelectInactiveText = new Colour(255, 255, 255);
+	protected Colour menuGlow = new Colour(0, 78, 155);
 
-	protected Color starBreakAdditive = new Color(255, 182, 193);
-	protected Color inputOverlayText = new Color(0, 0, 0);
+	protected Colour starBreakAdditive = new Colour(255, 182, 193);
+	protected Colour inputOverlayText = new Colour(0, 0, 0);
 
-	protected Color sliderBall = new Color(2, 170, 255);
-	protected Color sliderTrackOverride = null;
-	protected Color sliderBorder = new Color(0, 0, 0);
-	protected Color spinnerBackground = new Color(100, 100, 100);
+	protected Colour sliderBall = new Colour(2, 170, 255);
+	protected Colour sliderTrackOverride = null;
+	protected Colour sliderBorder = new Colour(0, 0, 0);
+	protected Colour spinnerBackground = new Colour(100, 100, 100);
 
-	protected Color combo1 = new Color(255, 192, 0);
-	protected Color combo2 = null;
-	protected Color combo3 = null;
-	protected Color combo4 = null;
-	protected Color combo5 = null;
-	protected Color combo6 = null;
-	protected Color combo7 = null;
-	protected Color combo8 = null;
+	protected Colour combo1 = new Colour(255, 192, 0);
+	protected Colour combo2 = null;
+	protected Colour combo3 = null;
+	protected Colour combo4 = null;
+	protected Colour combo5 = null;
+	protected Colour combo6 = null;
+	protected Colour combo7 = null;
+	protected Colour combo8 = null;
 
 	//fonts
 	protected String hitCirclePrefix = "default";
@@ -75,9 +75,9 @@ public class SkinIni{
 	protected int comboOverlap = -2;//negative allowed
 
 	//ctb
-	protected Color hyperDash = new Color(255, 0, 0);
-	protected Color hyperDashFruit = null;
-	protected Color hyperDashAfterImage = null;
+	protected Colour hyperDash = new Colour(255, 0, 0);
+	protected Colour hyperDashFruit = null;
+	protected Colour hyperDashAfterImage = null;
 
 	protected ManiaIni[] mania = new ManiaIni[ManiaIni.MAX_KEYS];
 
@@ -112,12 +112,12 @@ public class SkinIni{
 		protected boolean keyFlipWhenUpsideDown = true;
 		protected boolean noteFlipWhenUpsideDown = true;
 		protected int noteBodyStyle = 1;//0, 1, 2
-		protected Color colourColumnLine = new Color(255, 255, 255, 255);
-		protected Color colourBarline = new Color(255, 255, 255, 255);
-		protected Color colourJudgementLine = new Color(255, 255, 255);
-		protected Color colourKeyWarning = new Color(0, 0, 0);
-		protected Color colourHold = new Color(255, 191, 51, 255);
-		protected Color colourBreak = new Color(255, 0, 0);
+		protected Colour colourColumnLine = new Colour(255, 255, 255, 255);
+		protected Colour colourBarline = new Colour(255, 255, 255, 255);
+		protected Colour colourJudgementLine = new Colour(255, 255, 255);
+		protected Colour colourKeyWarning = new Colour(0, 0, 0);
+		protected Colour colourHold = new Colour(255, 191, 51, 255);
+		protected Colour colourBreak = new Colour(255, 0, 0);
 
 		protected Column[] columns;
 
@@ -168,8 +168,8 @@ public class SkinIni{
 
 			protected int noteBodyStyle = -1;//0, 1, 2, -1=undefined
 
-			protected Color colour = new Color(0, 0, 0, 255);
-			protected Color colourLight = new Color(255, 255, 255);
+			protected Colour colour = new Colour(0, 0, 0, 255);
+			protected Colour colourLight = new Colour(255, 255, 255);
 
 			protected String keyImage = null;
 			protected String keyImageD = null;
@@ -325,7 +325,7 @@ public class SkinIni{
 				//[Colours]
 				case "SongSelectActiveText":
 					{
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							songSelectActiveText = color;
 						}
@@ -333,7 +333,7 @@ public class SkinIni{
 					break;
 				case "SongSelectInactiveText":
 					{
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							songSelectInactiveText = color;
 						}
@@ -341,7 +341,7 @@ public class SkinIni{
 					break;
 				case "MenuGlow":
 					{
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							menuGlow = color;
 						}
@@ -349,7 +349,7 @@ public class SkinIni{
 					break;
 				case "StarBreakAdditive":
 					{
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							starBreakAdditive = color;
 						}
@@ -357,7 +357,7 @@ public class SkinIni{
 					break;
 				case "InputOverlayText":
 					{
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							inputOverlayText = color;
 						}
@@ -365,7 +365,7 @@ public class SkinIni{
 					break;
 				case "SliderBall":
 					{
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							sliderBall = color;
 						}
@@ -373,7 +373,7 @@ public class SkinIni{
 					break;
 				case "SliderTrackOverride":
 					{
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							sliderTrackOverride = color;
 						}
@@ -381,7 +381,7 @@ public class SkinIni{
 					break;
 				case "SliderBorder":
 					{
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							sliderBorder = color;
 						}
@@ -389,7 +389,7 @@ public class SkinIni{
 					break;
 				case "SpinnerBackground":
 					{
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							spinnerBackground = color;
 						}
@@ -397,7 +397,7 @@ public class SkinIni{
 					break;
 				case "Combo1":
 					{
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							combo1 = color;
 						}
@@ -405,7 +405,7 @@ public class SkinIni{
 					break;
 				case "Combo2":
 					{
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							combo2 = color;
 						}
@@ -413,7 +413,7 @@ public class SkinIni{
 					break;
 				case "Combo3":
 					{
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							combo3 = color;
 						}
@@ -421,7 +421,7 @@ public class SkinIni{
 					break;
 				case "Combo4":
 					{
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							combo4 = color;
 						}
@@ -429,7 +429,7 @@ public class SkinIni{
 					break;
 				case "Combo5":
 					{
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							combo5 = color;
 						}
@@ -437,7 +437,7 @@ public class SkinIni{
 					break;
 				case "Combo6":
 					{
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							combo6 = color;
 						}
@@ -445,7 +445,7 @@ public class SkinIni{
 					break;
 				case "Combo7":
 					{
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							combo7 = color;
 						}
@@ -453,7 +453,7 @@ public class SkinIni{
 					break;
 				case "Combo8":
 					{
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							combo8 = color;
 						}
@@ -481,7 +481,7 @@ public class SkinIni{
 				//[CatchTheBeat]
 				case "HyperDash":
 					{
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							hyperDash = color;
 						}
@@ -489,7 +489,7 @@ public class SkinIni{
 					break;
 				case "HyperDashFruit":
 					{
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							hyperDashFruit = color;
 						}
@@ -497,7 +497,7 @@ public class SkinIni{
 					break;
 				case "HyperDashAfterImage":
 					{
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							hyperDashAfterImage = color;
 						}
@@ -764,7 +764,7 @@ public class SkinIni{
 					break;
 				case "ColourColumnLine":
 					{
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							ini.colourColumnLine = color;
 						}
@@ -772,7 +772,7 @@ public class SkinIni{
 					break;
 				case "ColourBarline":
 					{
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							ini.colourBarline = color;
 						}
@@ -780,7 +780,7 @@ public class SkinIni{
 					break;
 				case "ColourJudgementLine":
 					{
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							ini.colourJudgementLine = color;
 						}
@@ -788,7 +788,7 @@ public class SkinIni{
 					break;
 				case "ColourKeyWarning":
 					{
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							ini.colourKeyWarning = color;
 						}
@@ -796,7 +796,7 @@ public class SkinIni{
 					break;
 				case "ColourHold":
 					{
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							ini.colourHold = color;
 						}
@@ -804,7 +804,7 @@ public class SkinIni{
 					break;
 				case "ColourBreak":
 					{
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							ini.colourBreak = color;
 						}
@@ -933,12 +933,12 @@ public class SkinIni{
 							}
 						}
 					}else if(args[0].startsWith("ColourLight")){
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							ini.columns[Integer.parseInt(args[0].substring(11)) - 1].colourLight = color;
 						}
 					}else if(args[0].startsWith("Colour")){
-						Color color = parseColor(args[1]);
+						Colour color = parseColor(args[1]);
 						if(color != null){
 							ini.columns[Integer.parseInt(args[0].substring(6)) - 1].colour = color;
 						}
@@ -982,13 +982,13 @@ public class SkinIni{
 		return values;
 	}
 
-	private Color parseColor(String arg){
+	private Colour parseColor(String arg){
 		String[] args = arg.split(",");
 		try{
 			if(args.length == 3){
-				return new Color(Integer.parseInt(args[0].trim()), Integer.parseInt(args[1].trim()), Integer.parseInt(args[2].trim()));
+				return new Colour(Integer.parseInt(args[0].trim()), Integer.parseInt(args[1].trim()), Integer.parseInt(args[2].trim()));
 			}else if(args.length == 4){
-				return new Color(Integer.parseInt(args[0].trim()), Integer.parseInt(args[1].trim()), Integer.parseInt(args[2].trim()), Integer.parseInt(args[3].trim()));
+				return new Colour(Integer.parseInt(args[0].trim()), Integer.parseInt(args[1].trim()), Integer.parseInt(args[2].trim()), Integer.parseInt(args[3].trim()));
 			}else{
 				usedDefault = true;
 				return null;
@@ -1202,11 +1202,11 @@ public class SkinIni{
 		writer.close();
 	}
 
-	private static final String rgb(Color color){
+	private static final String rgb(Colour color){
 		return color.getRed() + "," + color.getGreen() + "," + color.getBlue();
 	}
 
-	private static final String rgba(Color color){
+	private static final String rgba(Colour color){
 		if(!color.hasAlpha()){
 			return rgb(color);
 		}else{

@@ -1,6 +1,7 @@
 package me.roan.osuskinchecker;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -2019,11 +2020,11 @@ public class SkinIniTab extends JTabbedPane{
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = 3286760817738876568L;
-		private Color color;
+		private Colour color;
 		private ColorEvent handler;
 
-		private ColorSelector(Color def, ColorEvent handler){
-			color = def == null ? new Color(0, 0, 0) : def;
+		private ColorSelector(Colour def, ColorEvent handler){
+			color = def == null ? new Colour(0, 0, 0) : def;
 			this.setBackground(color.toColor());
 			this.addMouseListener(this);
 			this.handler = handler;
@@ -2031,9 +2032,9 @@ public class SkinIniTab extends JTabbedPane{
 
 		@Override
 		public void mouseClicked(MouseEvent arg0){
-			java.awt.Color c = JColorChooser.showDialog(this, "Color Chooser", color.toColor());
+			Color c = JColorChooser.showDialog(this, "Colour Chooser", color.toColor());
 			if(c != null){
-				Color cl = new Color(c);
+				Colour cl = new Colour(c);
 				this.color = cl;
 				this.setBackground(c);
 				handler.colorChanged(cl);
@@ -2059,7 +2060,7 @@ public class SkinIniTab extends JTabbedPane{
 		@FunctionalInterface
 		private static abstract interface ColorEvent{
 
-			public abstract void colorChanged(Color color);
+			public abstract void colorChanged(Colour color);
 		}
 	}
 
