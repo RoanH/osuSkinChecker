@@ -177,158 +177,163 @@ public class SkinIni{
 	}
 
 	public void readIni(File file) throws IOException{//TODO catch unused fields to check for spelling mistakes
-		String line;
-		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-		while((line = reader.readLine()) != null){
-			if(line.trim().isEmpty() || line.startsWith("//")){
-				continue;
+		String line = null;
+		try{
+			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+			while((line = reader.readLine()) != null){
+				if(line.trim().isEmpty() || line.startsWith("//")){
+					continue;
+				}
+				String[] args = line.split(":", 2);
+				if(!line.startsWith("[")){
+					args[1] = args[1].trim();
+				}
+				switch(args[0]){
+				//[Mania]
+				case "[Mania]":
+					readMania(reader);
+					break;
+				//[General]
+				case "Name":
+					name = args[1];
+					break;
+				case "Author":
+					author = args[1];
+					break;
+				case "Version":
+					version = Version.fromString(args[1]);
+					break;
+				case "CursorExpand":
+					cursorExpand = args[1].equals("1");
+					break;
+				case "CursorCentre":
+					cursorCentre = args[1].equals("1");
+					break;
+				case "CursorRotate":
+					cursorRotate = args[1].equals("1");
+					break;
+				case "CursorTrailRotate":
+					cursorTrailRotate = args[1].equals("1");
+					break;
+				case "AnimationFramerate":
+					animationFramerate = Math.max(0, Integer.parseInt(args[1]));
+					break;
+				case "LayeredHitSounds":
+					layeredHitSounds = args[1].equals("1");
+					break;
+				case "ComboBurstRandom":
+					comboBurstRandom = args[1].equals("1");
+					break;
+				case "CustomComboBurstSounds":
+					customComboBurstSounds = args[1].replaceAll(" ", "");
+					break;
+				case "HitCircleOverlayAboveNumber":
+					hitCircleOverlayAboveNumber = args[1].equals("1");
+					break;
+				case "SliderStyle":
+					sliderStyle = Math.min(2, Math.max(0, Integer.parseInt(args[1])));
+					break;
+				case "SliderBallFlip":
+					sliderBallFlip = args[1].equals("1");
+					break;
+				case "AllowSliderBallTint":
+					allowSliderBallTint = args[1].equals("1");
+					break;
+				case "SpinnerNoBlink":
+					spinnerNoBlink = args[1].equals("1");
+					break;
+				case "SpinnerFadePlayfield":
+					spinnerFadePlayfield = args[1].equals("1");
+					break;
+				case "SpinnerFrequencyModulate":
+					spinnerFrequencyModulate = args[1].equals("1");
+					break;
+				//[Colours]
+				case "SongSelectActiveText":
+					songSelectActiveText = parseColor(args[1]);
+					break;
+				case "SongSelectInactiveText":
+					songSelectInactiveText = parseColor(args[1]);
+					break;
+				case "MenuGlow":
+					menuGlow = parseColor(args[1]);
+					break;
+				case "StarBreakAdditive":
+					starBreakAdditive = parseColor(args[1]);
+					break;
+				case "InputOverlayText":
+					inputOverlayText = parseColor(args[1]);
+					break;
+				case "SliderBall":
+					sliderBall = parseColor(args[1]);
+					break;
+				case "SliderTrackOverride":
+					sliderTrackOverride = parseColor(args[1]);
+					break;
+				case "SliderBorder":
+					sliderBorder = parseColor(args[1]);
+					break;
+				case "SpinnerBackground":
+					spinnerBackground = parseColor(args[1]);
+					break;
+				case "Combo1":
+					combo1 = parseColor(args[1]);
+					break;
+				case "Combo2":
+					combo2 = parseColor(args[1]);
+					break;
+				case "Combo3":
+					combo3 = parseColor(args[1]);
+					break;
+				case "Combo4":
+					combo4 = parseColor(args[1]);
+					break;
+				case "Combo5":
+					combo5 = parseColor(args[1]);
+					break;
+				case "Combo6":
+					combo6 = parseColor(args[1]);
+					break;
+				case "Combo7":
+					combo7 = parseColor(args[1]);
+					break;
+				case "Combo8":
+					combo8 = parseColor(args[1]);
+					break;
+				//[Fonts]
+				case "HitCirclePrefix":
+					hitCirclePrefix = args[1];
+					break;
+				case "HitCircleOverlap":
+					hitCircleOverlap = Integer.parseInt(args[1]);
+					break;
+				case "ScorePrefix":
+					scorePrefix = args[1];
+					break;
+				case "ScoreOverlap":
+					scoreOverlap = Integer.parseInt(args[1]);
+					break;
+				case "ComboPrefix":
+					comboPrefix = args[1];
+					break;
+				case "ComboOverlap":
+					comboOverlap = Integer.parseInt(args[1]);
+					break;
+				//[CatchTheBeat]
+				case "HyperDash":
+					hyperDash = parseColor(args[1]);
+					break;
+				case "HyperDashFruit":
+					hyperDashFruit = parseColor(args[1]);
+					break;
+				case "HyperDashAfterImage":
+					hyperDashAfterImage = parseColor(args[1]);
+					break;
+				}
 			}
-			String[] args = line.split(":", 2);
-			if(!line.startsWith("[")){
-				args[1] = args[1].trim();
-			}
-			switch(args[0]){
-			//[Mania]
-			case "[Mania]":
-				readMania(reader);
-				break;
-			//[General]
-			case "Name":
-				name = args[1];
-				break;
-			case "Author":
-				author = args[1];
-				break;
-			case "Version":
-				version = Version.fromString(args[1]);
-				break;
-			case "CursorExpand":
-				cursorExpand = args[1].equals("1");
-				break;
-			case "CursorCentre":
-				cursorCentre = args[1].equals("1");
-				break;
-			case "CursorRotate":
-				cursorRotate = args[1].equals("1");
-				break;
-			case "CursorTrailRotate":
-				cursorTrailRotate = args[1].equals("1");
-				break;
-			case "AnimationFramerate":
-				animationFramerate = Math.max(0, Integer.parseInt(args[1]));
-				break;
-			case "LayeredHitSounds":
-				layeredHitSounds = args[1].equals("1");
-				break;
-			case "ComboBurstRandom":
-				comboBurstRandom = args[1].equals("1");
-				break;
-			case "CustomComboBurstSounds":
-				customComboBurstSounds = args[1].replaceAll(" ", "");
-				break;
-			case "HitCircleOverlayAboveNumber":
-				hitCircleOverlayAboveNumber = args[1].equals("1");
-				break;
-			case "SliderStyle":
-				sliderStyle = Math.min(2, Math.max(0, Integer.parseInt(args[1])));
-				break;
-			case "SliderBallFlip":
-				sliderBallFlip = args[1].equals("1");
-				break;
-			case "AllowSliderBallTint":
-				allowSliderBallTint = args[1].equals("1");
-				break;
-			case "SpinnerNoBlink":
-				spinnerNoBlink = args[1].equals("1");
-				break;
-			case "SpinnerFadePlayfield":
-				spinnerFadePlayfield = args[1].equals("1");
-				break;
-			case "SpinnerFrequencyModulate":
-				spinnerFrequencyModulate = args[1].equals("1");
-				break;
-			//[Colours]
-			case "SongSelectActiveText":
-				songSelectActiveText = parseColor(args[1]);
-				break;
-			case "SongSelectInactiveText":
-				songSelectInactiveText = parseColor(args[1]);
-				break;
-			case "MenuGlow":
-				menuGlow = parseColor(args[1]);
-				break;
-			case "StarBreakAdditive":
-				starBreakAdditive = parseColor(args[1]);
-				break;
-			case "InputOverlayText":
-				inputOverlayText = parseColor(args[1]);
-				break;
-			case "SliderBall":
-				sliderBall = parseColor(args[1]);
-				break;
-			case "SliderTrackOverride":
-				sliderTrackOverride = parseColor(args[1]);
-				break;
-			case "SliderBorder":
-				sliderBorder = parseColor(args[1]);
-				break;
-			case "SpinnerBackground":
-				spinnerBackground = parseColor(args[1]);
-				break;
-			case "Combo1":
-				combo1 = parseColor(args[1]);
-				break;
-			case "Combo2":
-				combo2 = parseColor(args[1]);
-				break;
-			case "Combo3":
-				combo3 = parseColor(args[1]);
-				break;
-			case "Combo4":
-				combo4 = parseColor(args[1]);
-				break;
-			case "Combo5":
-				combo5 = parseColor(args[1]);
-				break;
-			case "Combo6":
-				combo6 = parseColor(args[1]);
-				break;
-			case "Combo7":
-				combo7 = parseColor(args[1]);
-				break;
-			case "Combo8":
-				combo8 = parseColor(args[1]);
-				break;
-			//[Fonts]
-			case "HitCirclePrefix":
-				hitCirclePrefix = args[1];
-				break;
-			case "HitCircleOverlap":
-				hitCircleOverlap = Integer.parseInt(args[1]);
-				break;
-			case "ScorePrefix":
-				scorePrefix = args[1];
-				break;
-			case "ScoreOverlap":
-				scoreOverlap = Integer.parseInt(args[1]);
-				break;
-			case "ComboPrefix":
-				comboPrefix = args[1];
-				break;
-			case "ComboOverlap":
-				comboOverlap = Integer.parseInt(args[1]);
-				break;
-			//[CatchTheBeat]
-			case "HyperDash":
-				hyperDash = parseColor(args[1]);
-				break;
-			case "HyperDashFruit":
-				hyperDashFruit = parseColor(args[1]);
-				break;
-			case "HyperDashAfterImage":
-				hyperDashAfterImage = parseColor(args[1]);
-				break;
-			}
+		}catch(Exception e){
+			e.printStackTrace();
+			throw new IllegalArgumentException("Line: " + line, e);
 		}
 	}
 
