@@ -102,7 +102,7 @@ public class SkinChecker{
 	/**
 	 * Main frame
 	 */
-	private static final JFrame frame = new JFrame("Skin Checker for osu!");
+	protected static final JFrame frame = new JFrame("Skin Checker for osu!");
 	/**
 	 * The JLabel that displays the name of the skin
 	 * currently being checked

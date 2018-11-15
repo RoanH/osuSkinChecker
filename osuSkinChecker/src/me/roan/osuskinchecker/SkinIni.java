@@ -11,6 +11,8 @@ import java.io.PrintWriter;
 import java.util.Locale;
 import java.util.StringJoiner;
 
+import javax.swing.JOptionPane;
+
 import me.roan.osuskinchecker.SkinIni.ManiaIni.Column;
 
 public class SkinIni{
@@ -178,7 +180,7 @@ public class SkinIni{
 		}
 	}
 
-	public void readIni(File file) throws IOException{//TODO catch unused fields to check for spelling mistakes
+	public void readIni(File file) throws IOException{
 		String line = null;
 		try{
 			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
@@ -506,6 +508,9 @@ public class SkinIni{
 		}catch(Exception e){
 			e.printStackTrace();
 			throw new IllegalArgumentException("Line: " + line, e);
+		}
+		if(usedDefault){
+			JOptionPane.showMessageDialog(SkinChecker.frame, "Skin.ini fields were found that couldn't be parsed. Default values were used.", "Skin Checker", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
