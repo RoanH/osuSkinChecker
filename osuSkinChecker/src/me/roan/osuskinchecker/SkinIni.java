@@ -14,6 +14,8 @@ import java.util.StringJoiner;
 import me.roan.osuskinchecker.SkinIni.ManiaIni.Column;
 
 public class SkinIni{
+	private boolean usedDefault = false;
+	
 	//general
 	protected String name = "-";
 	protected String author = "-";
@@ -202,51 +204,121 @@ public class SkinIni{
 					break;
 				case "Version":
 					version = Version.fromString(args[1]);
+					if(version == null){
+						usedDefault = true;
+						version = Version.V25;
+					}
 					break;
 				case "CursorExpand":
-					cursorExpand = args[1].equals("1");
+					if(args[1].equals("1") || args[1].equals("0")){
+						cursorExpand = args[1].equals("1");
+					}else{
+						usedDefault = true;
+					}
 					break;
 				case "CursorCentre":
-					cursorCentre = args[1].equals("1");
+					if(args[1].equals("1") || args[1].equals("0")){
+						cursorCentre = args[1].equals("1");
+					}else{
+						usedDefault = true;
+					}
 					break;
 				case "CursorRotate":
-					cursorRotate = args[1].equals("1");
+					if(args[1].equals("1") || args[1].equals("0")){
+						cursorRotate = args[1].equals("1");
+					}else{
+						usedDefault = true;
+					}
 					break;
 				case "CursorTrailRotate":
-					cursorTrailRotate = args[1].equals("1");
+					if(args[1].equals("1") || args[1].equals("0")){
+						cursorTrailRotate = args[1].equals("1");
+					}else{
+						usedDefault = true;
+					}
 					break;
 				case "AnimationFramerate":
-					animationFramerate = Math.max(0, Integer.parseInt(args[1]));
+					try{
+						int val = Integer.parseInt(args[1]);
+						if(val > 0){
+							animationFramerate = val;
+						}else{
+							usedDefault = true;
+						}
+					}catch(NumberFormatException e){
+						usedDefault = true;
+					}
 					break;
 				case "LayeredHitSounds":
-					layeredHitSounds = args[1].equals("1");
+					if(args[1].equals("1") || args[1].equals("0")){
+						layeredHitSounds = args[1].equals("1");
+					}else{
+						usedDefault = true;
+					}
 					break;
 				case "ComboBurstRandom":
-					comboBurstRandom = args[1].equals("1");
+					if(args[1].equals("1") || args[1].equals("0")){
+						comboBurstRandom = args[1].equals("1");
+					}else{
+						usedDefault = true;
+					}
 					break;
 				case "CustomComboBurstSounds":
 					customComboBurstSounds = args[1].replaceAll(" ", "");
 					break;
 				case "HitCircleOverlayAboveNumber":
-					hitCircleOverlayAboveNumber = args[1].equals("1");
+					if(args[1].equals("1") || args[1].equals("0")){
+						hitCircleOverlayAboveNumber = args[1].equals("1");
+					}else{
+						usedDefault = true;
+					}
 					break;
 				case "SliderStyle":
-					sliderStyle = Math.min(2, Math.max(0, Integer.parseInt(args[1])));
+					try{
+						int style = Integer.parseInt(args[1]);
+						if(style >= 0 && style <= 2){
+							sliderStyle = style;
+						}else{
+							usedDefault = true;
+						}
+					}catch(NumberFormatException e){
+						usedDefault = true;
+					}
 					break;
 				case "SliderBallFlip":
-					sliderBallFlip = args[1].equals("1");
+					if(args[1].equals("1") || args[1].equals("0")){
+						sliderBallFlip = args[1].equals("1");
+					}else{
+						usedDefault = true;
+					}
 					break;
 				case "AllowSliderBallTint":
-					allowSliderBallTint = args[1].equals("1");
+					if(args[1].equals("1") || args[1].equals("0")){
+						allowSliderBallTint = args[1].equals("1");
+					}else{
+						usedDefault = true;
+					}
 					break;
 				case "SpinnerNoBlink":
-					spinnerNoBlink = args[1].equals("1");
+					if(args[1].equals("1") || args[1].equals("0")){
+						spinnerNoBlink = args[1].equals("1");
+					}else{
+						usedDefault = true;
+					}
 					break;
 				case "SpinnerFadePlayfield":
-					spinnerFadePlayfield = args[1].equals("1");
+					if(args[1].equals("1") || args[1].equals("0")){
+						spinnerFadePlayfield = args[1].equals("1");
+					}else{
+						usedDefault = true;
+					}
 					break;
 				case "SpinnerFrequencyModulate":
-					spinnerFrequencyModulate = args[1].equals("1");
+					if(args[1].equals("1") || args[1].equals("0")){
+						spinnerFrequencyModulate = args[1].equals("1");
+					}else{
+						usedDefault = true;
+					}
 					break;
 				//[Colours]
 				case "SongSelectActiveText":
