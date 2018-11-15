@@ -322,55 +322,140 @@ public class SkinIni{
 					break;
 				//[Colours]
 				case "SongSelectActiveText":
-					songSelectActiveText = parseColor(args[1]);
+					{
+						Color color = parseColor(args[1]);
+						if(color != null){
+							songSelectActiveText = color;
+						}
+					}
 					break;
 				case "SongSelectInactiveText":
-					songSelectInactiveText = parseColor(args[1]);
+					{
+						Color color = parseColor(args[1]);
+						if(color != null){
+							songSelectInactiveText = color;
+						}
+					}
 					break;
 				case "MenuGlow":
-					menuGlow = parseColor(args[1]);
+					{
+						Color color = parseColor(args[1]);
+						if(color != null){
+							menuGlow = color;
+						}
+					}
 					break;
 				case "StarBreakAdditive":
-					starBreakAdditive = parseColor(args[1]);
+					{
+						Color color = parseColor(args[1]);
+						if(color != null){
+							starBreakAdditive = color;
+						}
+					}
 					break;
 				case "InputOverlayText":
-					inputOverlayText = parseColor(args[1]);
+					{
+						Color color = parseColor(args[1]);
+						if(color != null){
+							inputOverlayText = color;
+						}
+					}
 					break;
 				case "SliderBall":
-					sliderBall = parseColor(args[1]);
+					{
+						Color color = parseColor(args[1]);
+						if(color != null){
+							sliderBall = color;
+						}
+					}
 					break;
 				case "SliderTrackOverride":
-					sliderTrackOverride = parseColor(args[1]);
+					{
+						Color color = parseColor(args[1]);
+						if(color != null){
+							sliderTrackOverride = color;
+						}
+					}
 					break;
 				case "SliderBorder":
-					sliderBorder = parseColor(args[1]);
+					{
+						Color color = parseColor(args[1]);
+						if(color != null){
+							sliderBorder = color;
+						}
+					}
 					break;
 				case "SpinnerBackground":
-					spinnerBackground = parseColor(args[1]);
+					{
+						Color color = parseColor(args[1]);
+						if(color != null){
+							spinnerBackground = color;
+						}
+					}
 					break;
 				case "Combo1":
-					combo1 = parseColor(args[1]);
+					{
+						Color color = parseColor(args[1]);
+						if(color != null){
+							combo1 = color;
+						}
+					}
 					break;
 				case "Combo2":
-					combo2 = parseColor(args[1]);
+					{
+						Color color = parseColor(args[1]);
+						if(color != null){
+							combo2 = color;
+						}
+					}
 					break;
 				case "Combo3":
-					combo3 = parseColor(args[1]);
+					{
+						Color color = parseColor(args[1]);
+						if(color != null){
+							combo3 = color;
+						}
+					}
 					break;
 				case "Combo4":
-					combo4 = parseColor(args[1]);
+					{
+						Color color = parseColor(args[1]);
+						if(color != null){
+							combo4 = color;
+						}
+					}
 					break;
 				case "Combo5":
-					combo5 = parseColor(args[1]);
+					{
+						Color color = parseColor(args[1]);
+						if(color != null){
+							combo5 = color;
+						}
+					}
 					break;
 				case "Combo6":
-					combo6 = parseColor(args[1]);
+					{
+						Color color = parseColor(args[1]);
+						if(color != null){
+							combo6 = color;
+						}
+					}
 					break;
 				case "Combo7":
-					combo7 = parseColor(args[1]);
+					{
+						Color color = parseColor(args[1]);
+						if(color != null){
+							combo7 = color;
+						}
+					}
 					break;
 				case "Combo8":
-					combo8 = parseColor(args[1]);
+					{
+						Color color = parseColor(args[1]);
+						if(color != null){
+							combo8 = color;
+						}
+					}
 					break;
 				//[Fonts]
 				case "HitCirclePrefix":
@@ -393,13 +478,28 @@ public class SkinIni{
 					break;
 				//[CatchTheBeat]
 				case "HyperDash":
-					hyperDash = parseColor(args[1]);
+					{
+						Color color = parseColor(args[1]);
+						if(color != null){
+							hyperDash = color;
+						}
+					}
 					break;
 				case "HyperDashFruit":
-					hyperDashFruit = parseColor(args[1]);
+					{
+						Color color = parseColor(args[1]);
+						if(color != null){
+							hyperDashFruit = color;
+						}
+					}
 					break;
 				case "HyperDashAfterImage":
-					hyperDashAfterImage = parseColor(args[1]);
+					{
+						Color color = parseColor(args[1]);
+						if(color != null){
+							hyperDashAfterImage = color;
+						}
+					}
 					break;
 				}
 			}
@@ -528,22 +628,52 @@ public class SkinIni{
 					ini.upsideDown = args[1].equals("1");
 					break;
 				case "ColourColumnLine":
-					ini.colourColumnLine = parseColor(args[1]);
+					{
+						Color color = parseColor(args[1]);
+						if(color != null){
+							ini.colourColumnLine = color;
+						}
+					}
 					break;
 				case "ColourBarline":
-					ini.colourBarline = parseColor(args[1]);
+					{
+						Color color = parseColor(args[1]);
+						if(color != null){
+							ini.colourBarline = color;
+						}
+					}
 					break;
 				case "ColourJudgementLine":
-					ini.colourJudgementLine = parseColor(args[1]);
+					{
+						Color color = parseColor(args[1]);
+						if(color != null){
+							ini.colourJudgementLine = color;
+						}
+					}
 					break;
 				case "ColourKeyWarning":
-					ini.colourKeyWarning = parseColor(args[1]);
+					{
+						Color color = parseColor(args[1]);
+						if(color != null){
+							ini.colourKeyWarning = color;
+						}
+					}
 					break;
 				case "ColourHold":
-					ini.colourHold = parseColor(args[1]);
+					{
+						Color color = parseColor(args[1]);
+						if(color != null){
+							ini.colourHold = color;
+						}
+					}
 					break;
 				case "ColourBreak":
-					ini.colourBreak = parseColor(args[1]);
+					{
+						Color color = parseColor(args[1]);
+						if(color != null){
+							ini.colourBreak = color;
+						}
+					}
 					break;
 				case "StageLeft":
 					ini.stageLeft = args[1];
@@ -618,9 +748,15 @@ public class SkinIni{
 							ini.columns[Integer.parseInt(args[0])].noteBodyStyle = Math.max(0, Math.min(2, Integer.parseInt(args[1])));
 						}
 					}else if(args[0].startsWith("ColourLight")){
-						ini.columns[Integer.parseInt(args[0].substring(11)) - 1].colourLight = parseColor(args[1]);
+						Color color = parseColor(args[1]);
+						if(color != null){
+							ini.columns[Integer.parseInt(args[0].substring(11)) - 1].colourLight = color;
+						}
 					}else if(args[0].startsWith("Colour")){
-						ini.columns[Integer.parseInt(args[0].substring(6)) - 1].colour = parseColor(args[1]);
+						Color color = parseColor(args[1]);
+						if(color != null){
+							ini.columns[Integer.parseInt(args[0].substring(6)) - 1].colour = color;
+						}
 					}else if(args[0].startsWith("KeyImage")){
 						args[0] = args[0].substring(8);
 						if(args[0].endsWith("D")){
@@ -663,10 +799,18 @@ public class SkinIni{
 
 	private Color parseColor(String arg){
 		String[] args = arg.split(",");
-		if(args.length <= 3){
-			return new Color(Integer.parseInt(args[0].trim()), Integer.parseInt(args[1].trim()), Integer.parseInt(args[2].trim()));
-		}else{
-			return new Color(Integer.parseInt(args[0].trim()), Integer.parseInt(args[1].trim()), Integer.parseInt(args[2].trim()), Integer.parseInt(args[3].trim()));
+		try{
+			if(args.length == 3){
+				return new Color(Integer.parseInt(args[0].trim()), Integer.parseInt(args[1].trim()), Integer.parseInt(args[2].trim()));
+			}else if(args.length == 4){
+				return new Color(Integer.parseInt(args[0].trim()), Integer.parseInt(args[1].trim()), Integer.parseInt(args[2].trim()), Integer.parseInt(args[3].trim()));
+			}else{
+				usedDefault = true;
+				return null;
+			}
+		}catch(NumberFormatException e){
+			usedDefault = true;
+			return null;
 		}
 	}
 
