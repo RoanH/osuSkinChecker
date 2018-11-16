@@ -8,7 +8,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.StringJoiner;
 
 import javax.swing.JOptionPane;
@@ -17,6 +20,8 @@ import me.roan.osuskinchecker.SkinIni.ManiaIni.Column;
 
 public class SkinIni{
 	private boolean usedDefault = false;
+	private Map<String, List<String>> comments = new HashMap<String, List<String>>();
+	private String last = null;
 	
 	//general
 	protected String name = "-";
@@ -177,6 +182,119 @@ public class SkinIni{
 			protected String noteImageH = null;
 			protected String noteImageL = null;
 			protected String noteImageT = null;
+		}
+
+		public void write(PrintWriter writer){
+			writer.println("[Mania]");
+			writer.println("Keys: " + keys);
+			writer.println("ColumnStart: " + columnStart);
+			writer.println("ColumnRight: " + columnRight);
+			if(keys != 1){
+				writer.println("ColumnSpacing: " + arrayToList(columnSpacing));
+			}
+			writer.println("ColumnWidth: " + arrayToList(columnWidth));
+			writer.println("ColumnLineWidth: " + arrayToList(columnLineWidth));
+			writer.println("BarlineHeight: " + barlineHeight);
+			if(lightingNWidth != null){
+				writer.println("LightingNWidth: " + arrayToList(lightingNWidth));
+			}
+			if(lightingLWidth != null){
+				writer.println("LightingLWidth: " + arrayToList(lightingLWidth));
+			}
+			if(widthForNoteHeightScale != -1.0D){
+				writer.println("WidthForNoteHeightScale: " + widthForNoteHeightScale);
+			}
+			writer.println("HitPosition: " + hitPosition);
+			writer.println("LightPosition: " + lightPosition);
+			writer.println("ScorePosition: " + scorePosition);
+			writer.println("ComboPosition: " + comboPosition);
+			writer.println("JudgementLine: " + (judgementLine ? 1 : 0));
+			if(keys % 2 == 0 && keys >= 4){
+				writer.println("SpecialStyle: " + specialStyle);
+			}
+			writer.println("ComboBurstStyle: " + comboBurstStyle);
+			if(splitStages != null){
+				writer.println("SplitStages: " + (splitStages ? 1 : 0));
+			}
+			writer.println("StageSeparation: " + stageSeparation);
+			writer.println("SeparateScore: " + (separateScore ? 1 : 0));
+			writer.println("KeysUnderNotes: " + (keysUnderNotes ? 1 : 0));
+			writer.println("UpsideDown: " + (upsideDown ? 1 : 0));
+			writer.println("KeyFlipWhenUpsideDown: " + (keyFlipWhenUpsideDown ? 1 : 0));
+			writer.println("NoteFlipWhenUpsideDown: " + (noteFlipWhenUpsideDown ? 1 : 0));
+			writer.println("NoteBodyStyle: " + noteBodyStyle);
+			writer.println("ColourColumnLine: " + rgba(colourColumnLine));
+			writer.println("ColourBarline: " + rgba(colourBarline));
+			writer.println("ColourJudgementLine: " + rgb(colourJudgementLine));
+			writer.println("ColourKeyWarning: " + rgb(colourKeyWarning));
+			writer.println("ColourHold: " + rgba(colourHold));
+			writer.println("ColourBreak: " + rgb(colourBreak));
+			writer.println("StageLeft: " + stageLeft);
+			writer.println("StageRight: " + stageRight);
+			writer.println("StageBottom: " + stageBottom);
+			writer.println("StageHint: " + stageHint);
+			writer.println("StageLight: " + stageLight);
+			writer.println("LightingN: " + lightingN);
+			writer.println("LightingL: " + lightingL);
+			writer.println("WarningArrow: " + warningArrow);
+			writer.println("Hit0: " + hit0);
+			writer.println("Hit50: " + hit50);
+			writer.println("Hit100: " + hit100);
+			writer.println("Hit200: " + hit200);
+			writer.println("Hit300: " + hit300);
+			writer.println("Hit300g: " + hit300g);
+			
+			for(int i = 0; i < columns.length; i++){
+				Column col = columns[i];
+
+				if(col.keyFlipWhenUpsideDown != null){
+					writer.println("KeyFlipWhenUpsideDown" + col.key + ": " + (col.keyFlipWhenUpsideDown ? 1 : 0));
+				}
+				if(col.keyFlipWhenUpsideDownD != null){
+					writer.println("KeyFlipWhenUpsideDown" + col.key + "D: " + (col.keyFlipWhenUpsideDownD ? 1 : 0));
+				}
+				if(col.noteFlipWhenUpsideDown != null){
+					writer.println("NoteFlipWhenUpsideDown" + col.key + ": " + (col.noteFlipWhenUpsideDown ? 1 : 0));
+				}
+				if(col.noteFlipWhenUpsideDownH != null){
+					writer.println("NoteFlipWhenUpsideDown" + col.key + "H: " + (col.noteFlipWhenUpsideDownH ? 1 : 0));
+				}
+				if(col.noteFlipWhenUpsideDownL != null){
+					writer.println("NoteFlipWhenUpsideDown" + col.key + "L: " + (col.noteFlipWhenUpsideDownL ? 1 : 0));
+				}
+				if(col.noteFlipWhenUpsideDownT != null){
+					writer.println("NoteFlipWhenUpsideDown" + col.key + "T: " + (col.noteFlipWhenUpsideDownT ? 1 : 0));
+				}
+				if(col.noteBodyStyle != -1){
+					writer.println("NoteBodyStyle" + col.key + ": " + col.noteBodyStyle);
+				}
+				if(col.colour != null){
+					writer.println("Colour" + col.key + ": " + rgba(col.colour));
+				}
+				if(col.colourLight != null){
+					writer.println("ColourLight" + col.key + ": " + rgb(col.colourLight));
+				}
+				if(col.keyImage != null){
+					writer.println("KeyImage" + col.key + ": " + col.keyImage);
+				}
+				if(col.keyImageD != null){
+					writer.println("KeyImage" + col.key + "D: " + col.keyImageD);
+				}
+				if(col.noteImage != null){
+					writer.println("NoteImage" + col.key + ": " + col.noteImage);
+				}
+				if(col.noteImageH != null){
+					writer.println("NoteImage" + col.key + "H: " + col.noteImageH);
+				}
+				if(col.noteImageL != null){
+					writer.println("NoteImage" + col.key + "L: " + col.noteImageL);
+				}
+				if(col.noteImageT != null){
+					writer.println("NoteImage" + col.key + "T: " + col.noteImageT);
+				}
+			}
+			
+			writer.println();
 		}
 	}
 
@@ -1085,121 +1203,20 @@ public class SkinIni{
 
 		for(ManiaIni ini : mania){
 			if(ini != null){
-				writer.println("[Mania]");
-				writer.println("Keys: " + ini.keys);
-				writer.println("ColumnStart: " + ini.columnStart);
-				writer.println("ColumnRight: " + ini.columnRight);
-				if(ini.keys != 1){
-					writer.println("ColumnSpacing: " + arrayToList(ini.columnSpacing));
-				}
-				writer.println("ColumnWidth: " + arrayToList(ini.columnWidth));
-				writer.println("ColumnLineWidth: " + arrayToList(ini.columnLineWidth));
-				writer.println("BarlineHeight: " + ini.barlineHeight);
-				if(ini.lightingNWidth != null){
-					writer.println("LightingNWidth: " + arrayToList(ini.lightingNWidth));
-				}
-				if(ini.lightingLWidth != null){
-					writer.println("LightingLWidth: " + arrayToList(ini.lightingLWidth));
-				}
-				if(ini.widthForNoteHeightScale != -1.0D){
-					writer.println("WidthForNoteHeightScale: " + ini.widthForNoteHeightScale);
-				}
-				writer.println("HitPosition: " + ini.hitPosition);
-				writer.println("LightPosition: " + ini.lightPosition);
-				writer.println("ScorePosition: " + ini.scorePosition);
-				writer.println("ComboPosition: " + ini.comboPosition);
-				writer.println("JudgementLine: " + (ini.judgementLine ? 1 : 0));
-				if(ini.keys % 2 == 0 && ini.keys >= 4){
-					writer.println("SpecialStyle: " + ini.specialStyle);
-				}
-				writer.println("ComboBurstStyle: " + ini.comboBurstStyle);
-				if(ini.splitStages != null){
-					writer.println("SplitStages: " + (ini.splitStages ? 1 : 0));
-				}
-				writer.println("StageSeparation: " + ini.stageSeparation);
-				writer.println("SeparateScore: " + (ini.separateScore ? 1 : 0));
-				writer.println("KeysUnderNotes: " + (ini.keysUnderNotes ? 1 : 0));
-				writer.println("UpsideDown: " + (ini.upsideDown ? 1 : 0));
-				writer.println("KeyFlipWhenUpsideDown: " + (ini.keyFlipWhenUpsideDown ? 1 : 0));
-				writer.println("NoteFlipWhenUpsideDown: " + (ini.noteFlipWhenUpsideDown ? 1 : 0));
-				writer.println("NoteBodyStyle: " + ini.noteBodyStyle);
-				writer.println("ColourColumnLine: " + rgba(ini.colourColumnLine));
-				writer.println("ColourBarline: " + rgba(ini.colourBarline));
-				writer.println("ColourJudgementLine: " + rgb(ini.colourJudgementLine));
-				writer.println("ColourKeyWarning: " + rgb(ini.colourKeyWarning));
-				writer.println("ColourHold: " + rgba(ini.colourHold));
-				writer.println("ColourBreak: " + rgb(ini.colourBreak));
-				writer.println("StageLeft: " + ini.stageLeft);
-				writer.println("StageRight: " + ini.stageRight);
-				writer.println("StageBottom: " + ini.stageBottom);
-				writer.println("StageHint: " + ini.stageHint);
-				writer.println("StageLight: " + ini.stageLight);
-				writer.println("LightingN: " + ini.lightingN);
-				writer.println("LightingL: " + ini.lightingL);
-				writer.println("WarningArrow: " + ini.warningArrow);
-				writer.println("Hit0: " + ini.hit0);
-				writer.println("Hit50: " + ini.hit50);
-				writer.println("Hit100: " + ini.hit100);
-				writer.println("Hit200: " + ini.hit200);
-				writer.println("Hit300: " + ini.hit300);
-				writer.println("Hit300g: " + ini.hit300g);
-				
-				for(int i = 0; i < ini.columns.length; i++){
-					Column col = ini.columns[i];
-
-					if(col.keyFlipWhenUpsideDown != null){
-						writer.println("KeyFlipWhenUpsideDown" + col.key + ": " + (col.keyFlipWhenUpsideDown ? 1 : 0));
-					}
-					if(col.keyFlipWhenUpsideDownD != null){
-						writer.println("KeyFlipWhenUpsideDown" + col.key + "D: " + (col.keyFlipWhenUpsideDownD ? 1 : 0));
-					}
-					if(col.noteFlipWhenUpsideDown != null){
-						writer.println("NoteFlipWhenUpsideDown" + col.key + ": " + (col.noteFlipWhenUpsideDown ? 1 : 0));
-					}
-					if(col.noteFlipWhenUpsideDownH != null){
-						writer.println("NoteFlipWhenUpsideDown" + col.key + "H: " + (col.noteFlipWhenUpsideDownH ? 1 : 0));
-					}
-					if(col.noteFlipWhenUpsideDownL != null){
-						writer.println("NoteFlipWhenUpsideDown" + col.key + "L: " + (col.noteFlipWhenUpsideDownL ? 1 : 0));
-					}
-					if(col.noteFlipWhenUpsideDownT != null){
-						writer.println("NoteFlipWhenUpsideDown" + col.key + "T: " + (col.noteFlipWhenUpsideDownT ? 1 : 0));
-					}
-					if(col.noteBodyStyle != -1){
-						writer.println("NoteBodyStyle" + col.key + ": " + col.noteBodyStyle);
-					}
-					if(col.colour != null){
-						writer.println("Colour" + col.key + ": " + rgba(col.colour));
-					}
-					if(col.colourLight != null){
-						writer.println("ColourLight" + col.key + ": " + rgb(col.colourLight));
-					}
-					if(col.keyImage != null){
-						writer.println("KeyImage" + col.key + ": " + col.keyImage);
-					}
-					if(col.keyImageD != null){
-						writer.println("KeyImage" + col.key + "D: " + col.keyImageD);
-					}
-					if(col.noteImage != null){
-						writer.println("NoteImage" + col.key + ": " + col.noteImage);
-					}
-					if(col.noteImageH != null){
-						writer.println("NoteImage" + col.key + "H: " + col.noteImageH);
-					}
-					if(col.noteImageL != null){
-						writer.println("NoteImage" + col.key + "L: " + col.noteImageL);
-					}
-					if(col.noteImageT != null){
-						writer.println("NoteImage" + col.key + "T: " + col.noteImageT);
-					}
-				}
-				
-				writer.println();
+				ini.write(writer);
 			}
 		}
 
 		writer.flush();
 		writer.close();
+	}
+	
+	private final void write(PrintWriter writer, String key, String value){
+		
+	}
+	
+	private final void writeComments(String key){
+		
 	}
 
 	private static final String rgb(Colour color){
