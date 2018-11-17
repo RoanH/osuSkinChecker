@@ -263,79 +263,19 @@ public class SkinIniTab extends JTabbedPane{
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Hit Circle Prefix (what prefix to use for hitcircle numbers): "));
-				JTextField field = new JTextField(ini.hitCirclePrefix);
-				field.addKeyListener(new KeyListener(){
-
-					@Override
-					public void keyTyped(KeyEvent e){
-					}
-
-					@Override
-					public void keyPressed(KeyEvent e){
-					}
-
-					@Override
-					public void keyReleased(KeyEvent e){
-						ini.hitCirclePrefix = field.getText();
-					}
-				});
-				panel.add(field);
-				content.add(panel);
-			}
+			content.add(new TextEditor("HitCirclePrefix", "what prefix to use for hitcircle numbers", ini.hitCirclePrefix));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Hit Circle Overlap (by how many pixels should the hitcircle numbers overlap): "));
-				JSpinner spinner = new JSpinner(new SpinnerNumberModel(ini.hitCircleOverlap, Integer.MIN_VALUE, Integer.MAX_VALUE, 1));
-				spinner.addChangeListener((e)->{
-					ini.hitCircleOverlap = (Integer)spinner.getValue();
-				});
-				panel.add(spinner);
-				content.add(panel);
-			}
+			content.add(new IntegerSpinnerEditor("HitCircleOverlap", "by how many pixels should the hitcircle numbers overlap", ini.hitCircleOverlap));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Combo Prefix (what prefix to use for combo numbers): "));
-				JTextField field = new JTextField(ini.comboPrefix);
-				field.addKeyListener(new KeyListener(){
-
-					@Override
-					public void keyTyped(KeyEvent e){
-					}
-
-					@Override
-					public void keyPressed(KeyEvent e){
-					}
-
-					@Override
-					public void keyReleased(KeyEvent e){
-						ini.comboPrefix = field.getText();
-					}
-				});
-				panel.add(field);
-				content.add(panel);
-			}
+			content.add(new TextEditor("ComboPrefix", "what prefix to use for combo numbers", ini.comboPrefix));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Combo Overlap (by how many pixels should the combo numbers overlap): "));
-				JSpinner spinner = new JSpinner(new SpinnerNumberModel(ini.comboOverlap, Integer.MIN_VALUE, Integer.MAX_VALUE, 1));
-				spinner.addChangeListener((e)->{
-					ini.comboOverlap = (Integer)spinner.getValue();
-				});
-				panel.add(spinner);
-				content.add(panel);
-			}
+			content.add(new IntegerSpinnerEditor("ComboOverlap", "by how many pixels should the combo numbers overlap", ini.comboOverlap));
 			content.add(Box.createVerticalStrut(2));
 
 			content.add(new JPanel(new BorderLayout()));
@@ -356,64 +296,15 @@ public class SkinIniTab extends JTabbedPane{
 			this.add(new JScrollPane(content), BorderLayout.CENTER);
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Hyper Dash (what colour is used for the dash): "));
-				panel.add(new ColorSelector(ini.hyperDash, (color)->{
-					ini.hyperDash = color;
-				}));
-				content.add(panel);
-			}
+			content.add(new ColorEditor("HyperDash", "what colour is used for the dash", ini.hyperDash));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				JCheckBox enabled = new JCheckBox("", ini.hyperDashFruit != null);
-				JPanel settings = new JPanel(new BorderLayout());
-				settings.add(enabled, BorderLayout.LINE_START);
-				panel.add(new JLabel(" Hyper Dash Fruit (what colour is used for the fruits): "));
-				ColorSelector selector = new ColorSelector(ini.hyperDashFruit, (color)->{
-					if(enabled.isSelected()){
-						ini.hyperDashFruit = color;
-					}
-				});
-				settings.add(selector, BorderLayout.CENTER);
-				enabled.addActionListener((e)->{
-					if(enabled.isSelected()){
-						ini.hyperDashFruit = selector.color;
-					}else{
-						ini.hyperDashFruit = null;
-					}
-				});
-				panel.add(settings);
-				content.add(panel);
-			}
+			content.add(new ColorEditor("HyperDashFruit", "what colour is used for the fruits", ini.hyperDashFruit, true));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				JCheckBox enabled = new JCheckBox("", ini.hyperDashAfterImage != null);
-				JPanel settings = new JPanel(new BorderLayout());
-				settings.add(enabled, BorderLayout.LINE_START);
-				panel.add(new JLabel(" Hyper Dash After Image (what colour is used for the after images): "));
-				ColorSelector selector = new ColorSelector(ini.hyperDashAfterImage, (color)->{
-					if(enabled.isSelected()){
-						ini.hyperDashAfterImage = color;
-					}
-				});
-				settings.add(selector, BorderLayout.CENTER);
-				enabled.addActionListener((e)->{
-					if(enabled.isSelected()){
-						ini.hyperDashAfterImage = selector.color;
-					}else{
-						ini.hyperDashAfterImage = null;
-					}
-				});
-				panel.add(settings);
-				content.add(panel);
-			}
+			content.add(new ColorEditor("HyperDashAfterImage", "what colour is used for the after images", ini.hyperDashAfterImage, true));
 			content.add(Box.createVerticalStrut(2));
 
 			content.add(new JPanel(new BorderLayout()));
