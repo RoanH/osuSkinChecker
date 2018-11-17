@@ -8,11 +8,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.StringJoiner;
+import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
@@ -24,14 +26,14 @@ public class SkinIni{
 	private String last = null;
 	
 	//general
-	protected String name = "-";
-	protected String author = "-";
-	protected Version version = Version.LATEST;
-	protected boolean cursorExpand = true;
-	protected boolean cursorCentre = true;
-	protected boolean cursorRotate = true;
-	protected boolean cursorTrailRotate = true;
-	protected int animationFramerate = -1;//non negative
+	protected final Setting<String> name = new Setting<String>("-");
+	protected final Setting<String> author = new Setting<String>("-");
+	protected final Setting<Version> version = new Setting<Version>(Version.LATEST);
+	protected final Setting<Boolean> cursorExpand = new Setting<Boolean>(true);
+	protected final Setting<Boolean> cursorCentre = new Setting<Boolean>(true);
+	protected final Setting<Boolean> cursorRotate = new Setting<Boolean>(true);
+	protected final Setting<Boolean> cursorTrailRotate = new Setting<Boolean>(true);
+	protected final Setting<Integer> animationFramerate = new Setting<Integer>();//non negative
 
 	//combo bursts
 	protected boolean layeredHitSounds = true;
@@ -297,8 +299,28 @@ public class SkinIni{
 			writer.println();
 		}
 	}
-
+	
 	public void readIni(File file) throws IOException{
+		List<Section> data = new ArrayList<Section>();
+		Section section = new Section(null);
+		data.add(section);
+		Pattern header = Pattern.compile("[.*]");
+		
+		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+		String line;
+		while((line = reader.readLine()) != null){
+			if(header.matcher(line.trim()).matches()){
+				section = new Section(line.trim());
+				data.add(section);
+			}else{
+				
+			}
+		}
+		
+		reader.close();
+	}
+
+	public void parse(File file) throws IOException{
 		String line = null;
 		try{
 			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));

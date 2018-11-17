@@ -61,53 +61,11 @@ public class SkinIniTab extends JTabbedPane{
 			this.add(new JScrollPane(content), BorderLayout.CENTER);
 
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Skin name: "));
-				JTextField name = new JTextField(ini.name);
-				name.addKeyListener(new KeyListener(){
-
-					@Override
-					public void keyTyped(KeyEvent e){
-					}
-
-					@Override
-					public void keyPressed(KeyEvent e){
-					}
-
-					@Override
-					public void keyReleased(KeyEvent e){
-						ini.name = name.getText();
-					}
-				});
-				panel.add(name);
-				content.add(panel);
-			}
+			content.add(new TextEditor("Skin name", ini.name));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Author name: "));
-				JTextField author = new JTextField(ini.author);
-				author.addKeyListener(new KeyListener(){
-
-					@Override
-					public void keyTyped(KeyEvent e){
-					}
-
-					@Override
-					public void keyPressed(KeyEvent e){
-					}
-
-					@Override
-					public void keyReleased(KeyEvent e){
-						ini.author = author.getText();
-					}
-				});
-				panel.add(author);
-				content.add(panel);
-			}
+			content.add(new TextEditor("Author name", ini.author));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
@@ -2001,6 +1959,31 @@ public class SkinIniTab extends JTabbedPane{
 
 				content.add(new JPanel(new BorderLayout()));
 			}
+		}
+	}
+	
+	private static final class TextEditor extends JPanel{
+		
+		private TextEditor(String name, Setting<String> setting){
+			super(new SplitLayout());
+			add(new JLabel(" " + name + ": "));
+			JTextField field = new JTextField(setting.getValue());
+			field.addKeyListener(new KeyListener(){
+
+				@Override
+				public void keyTyped(KeyEvent e){
+				}
+
+				@Override
+				public void keyPressed(KeyEvent e){
+				}
+
+				@Override
+				public void keyReleased(KeyEvent e){
+					setting.update(field.getText());
+				}
+			});
+			add(field);
 		}
 	}
 	
