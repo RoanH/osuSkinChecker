@@ -9,8 +9,9 @@ public class Setting<T>{
 		value = def;
 	}
 	
-	protected Setting(){
-		enabled = false;
+	protected Setting(boolean enabled, T def){
+		this(def);
+		this.enabled = enabled;
 	}
 	
 	protected T getValue(){

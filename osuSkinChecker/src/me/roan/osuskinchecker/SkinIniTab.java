@@ -28,8 +28,10 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import javax.swing.text.PlainDocument;
 
+import me.roan.osuskinchecker.SkinIni.ComboBurstStyle;
 import me.roan.osuskinchecker.SkinIni.ManiaIni;
 import me.roan.osuskinchecker.SkinIni.SliderStyle;
+import me.roan.osuskinchecker.SkinIni.SpecialStyle;
 import me.roan.osuskinchecker.SkinIni.Version;
 import me.roan.osuskinchecker.SplitLayout.ScrollPane;
 
@@ -390,97 +392,33 @@ public class SkinIniTab extends JTabbedPane{
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				content.add(new IntegerSpinnerEditor("HitPosition", "at what height should the judgement line be drawn", ini.hitPosition));
+				content.add(new IntegerSpinnerEditor("HitPosition", "at what height should the judgement line be drawn", ini.hitPosition, 0));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Light Position (at what height should the stage lights be drawn): "));
-					JSpinner spinner = new JSpinner(new SpinnerNumberModel(ini.lightPosition, 0, Integer.MAX_VALUE, 1));
-					spinner.addChangeListener((event)->{
-						ini.lightPosition = (int)spinner.getValue();
-					});
-					panel.add(spinner);
-					content.add(panel);
-				}
+				content.add(new IntegerSpinnerEditor("LightPosition", "at what height should the stage lights be drawn", ini.lightPosition, 0));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Score Position (at what height should the hitbursts be drawn): "));
-					JSpinner spinner = new JSpinner(new SpinnerNumberModel(ini.scorePosition, 0, Integer.MAX_VALUE, 1));
-					spinner.addChangeListener((event)->{
-						ini.scorePosition = (int)spinner.getValue();
-					});
-					panel.add(spinner);
-					content.add(panel);
-				}
+				content.add(new IntegerSpinnerEditor("ScorePosition", "at what height should the hitbursts be drawn", ini.scorePosition, 0));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Combo Position (at what height should the combo be drawn): "));
-					JSpinner spinner = new JSpinner(new SpinnerNumberModel(ini.comboPosition, 0, Integer.MAX_VALUE, 1));
-					spinner.addChangeListener((event)->{
-						ini.comboPosition = (int)spinner.getValue();
-					});
-					panel.add(spinner);
-					content.add(panel);
-				}
+				content.add(new IntegerSpinnerEditor("ComboPosition", "at what height should the combo be drawn", ini.comboPosition, 0));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Judgement Line (should a solid line be drawn above the StageHint): "));
-					JCheckBox box = new JCheckBox("", ini.judgementLine);
-					panel.add(box);
-					box.addActionListener(e->{
-						ini.judgementLine = box.isSelected();
-					});
-					content.add(panel);
-				}
+				content.add(new CheckBoxEditor("JudgementLine", "should a solid line be drawn above the StageHint", ini.judgementLine));
 				content.add(Box.createVerticalStrut(2));
 				if(ini.keys % 2 == 0 && ini.keys >= 4){
 					content.add(new JSeparator());
 					content.add(Box.createVerticalStrut(2));
-					{
-						JPanel panel = new JPanel(new SplitLayout());
-						panel.add(new JLabel(" Special Style (what special style (if avaible) should be used for this keycount): "));
-						JComboBox<String> box = new JComboBox<String>(new String[]{
-							"None",
-							"Left lane SP - outer lanes DP",
-							"Right lane SP - outer lanes DP"
-						});
-						box.setSelectedIndex(ini.specialStyle);
-						panel.add(box);
-						box.addActionListener(e->{
-							ini.specialStyle = box.getSelectedIndex();
-						});
-						content.add(panel);
-					}
+					content.add(new ComboBoxEditor<SpecialStyle>("SpecialStyle", "what special style (if avaible) should be used for this keycount", ini.specialStyle, SpecialStyle.values()));
 					content.add(Box.createVerticalStrut(2));
 				}
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Combo Burst Style (on what side should combobursts appear): "));
-					JComboBox<String> box = new JComboBox<String>(new String[]{
-						"Left",
-						"Right",
-						"Both"
-					});
-					box.setSelectedIndex(ini.comboBurstStyle);
-					panel.add(box);
-					box.addActionListener(e->{
-						ini.comboBurstStyle = box.getSelectedIndex();
-					});
-					content.add(panel);
-				}
+				content.add(new ComboBoxEditor<ComboBurstStyle>("ComboBurstStyle", "on what side should combobursts appear", ini.comboBurstStyle, ComboBurstStyle.values()));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
@@ -494,19 +432,13 @@ public class SkinIniTab extends JTabbedPane{
 						"No splitting / forced SP",
 						"Splitting / forced DP"
 					});
-					box.setSelectedIndex(ini.splitStages == null ? 0 : (ini.splitStages ? 1 : 0));
+					box.setSelectedIndex(ini.splitStages.getValue() ? 1 : 0);
 					box.addActionListener((event)->{
-						if(enabled.isSelected()){
-							ini.splitStages = box.getSelectedIndex() == 1;
-						}
+						ini.splitStages.setEnabled(box.getSelectedIndex() == 1);
 					});
 					settings.add(box, BorderLayout.CENTER);
 					enabled.addActionListener((e)->{
-						if(enabled.isSelected()){
-							ini.splitStages = box.getSelectedIndex() == 1;
-						}else{
-							ini.splitStages = null;
-						}
+						ini.splitStages.setEnabled(enabled.isSelected());
 					});
 					panel.add(settings);
 					content.add(panel);
@@ -514,68 +446,23 @@ public class SkinIniTab extends JTabbedPane{
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Stage Separation (when splitted what should be the distance between the stages): "));
-					JSpinner spinner = new JSpinner(new SpinnerNumberModel(ini.stageSeparation, 0.0D, Double.MAX_VALUE, 1.0D));
-					spinner.addChangeListener((event)->{
-						ini.stageSeparation = (double)spinner.getValue();
-					});
-					panel.add(spinner);
-					content.add(panel);
-				}
+				content.add(new DoubleSpinnerEditor("StageSeparation", "when splitted what should be the distance between the stages", ini.stageSeparation, 0.0D));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Separate Score (should hitburst only be shown on the stage it was scored): "));
-					JCheckBox box = new JCheckBox("", ini.separateScore);
-					panel.add(box);
-					box.addActionListener(e->{
-						ini.separateScore = box.isSelected();
-					});
-					content.add(panel);
-				}
+				content.add(new CheckBoxEditor("SeparateScore", "should hitburst only be shown on the stage it was scored", ini.separateScore));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Keys Under Notes (should keys be covered by notes when passed by them): "));
-					JCheckBox box = new JCheckBox("", ini.keysUnderNotes);
-					panel.add(box);
-					box.addActionListener(e->{
-						ini.keysUnderNotes = box.isSelected();
-					});
-					content.add(panel);
-				}
+				content.add(new CheckBoxEditor("KeysUnderNotes", "should keys be covered by notes when passed by them", ini.keysUnderNotes));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Upside Down (should the stage be flipped): "));
-					JCheckBox box = new JCheckBox("", ini.upsideDown);
-					panel.add(box);
-					box.addActionListener(e->{
-						ini.upsideDown = box.isSelected();
-					});
-					content.add(panel);
-				}
+				content.add(new CheckBoxEditor("UpsideDown", "should the stage be flipped", ini.upsideDown));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Key Flip When Upside Down (should keys be flipped when the stage is flipped): "));
-					JCheckBox box = new JCheckBox("", ini.keyFlipWhenUpsideDown);
-					panel.add(box);
-					box.addActionListener(e->{
-						ini.keyFlipWhenUpsideDown = box.isSelected();
-					});
-					content.add(panel);
-				}
+				content.add(new CheckBoxEditor("KeyFlipWhenUpsideDown", "should keys be flipped when the stage is flipped", ini.keyFlipWhenUpsideDown));
 				content.add(Box.createVerticalStrut(2));
 				for(int i = 0; i < ini.keys; i++){
 					final int col = i;

@@ -1,5 +1,6 @@
 package me.roan.osuskinchecker;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,6 +20,7 @@ import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 import me.roan.osuskinchecker.SkinIni.ManiaIni.Column;
+import me.roan.osuskinchecker.SkinIni.SpecialStyle;
 
 public class SkinIni{
 	private boolean usedDefault = false;
@@ -33,16 +35,16 @@ public class SkinIni{
 	protected final Setting<Boolean> cursorCentre = new Setting<Boolean>(true);
 	protected final Setting<Boolean> cursorRotate = new Setting<Boolean>(true);
 	protected final Setting<Boolean> cursorTrailRotate = new Setting<Boolean>(true);
-	protected final Setting<Integer> animationFramerate = new Setting<Integer>();//non negative
+	protected final Setting<Integer> animationFramerate = new Setting<Integer>(false, 1);//non negative
 
 	//combo bursts
 	protected final Setting<Boolean> layeredHitSounds = new Setting<Boolean>(true);
 	protected final Setting<Boolean> comboBurstRandom = new Setting<Boolean>(false);
-	protected final Setting<String> customComboBurstSounds = new Setting<String>();//list of ints, positive values only
+	protected final Setting<String> customComboBurstSounds = new Setting<String>(false, "");//list of ints, positive values only
 
 	//standard
 	protected final Setting<Boolean> hitCircleOverlayAboveNumber = new Setting<Boolean>(true);
-	protected final Setting<SliderStyle> sliderStyle = new Setting<SliderStyle>(2);//1 or 2
+	protected final Setting<SliderStyle> sliderStyle = new Setting<SliderStyle>(SliderStyle.GRADIENT);//1 or 2
 	protected final Setting<Boolean> sliderBallFlip = new Setting<Boolean>(false);
 	protected final Setting<Boolean> allowSliderBallTint = new Setting<Boolean>(false);
 	protected final Setting<Boolean> spinnerNoBlink = new Setting<Boolean>(false);
@@ -58,18 +60,18 @@ public class SkinIni{
 	protected final Setting<Colour> inputOverlayText = new Setting<Colour>(new Colour(0, 0, 0));
 	
 	protected final Setting<Colour> sliderBall = new Setting<Colour>(new Colour(2, 170, 255));
-	protected final Setting<Colour> sliderTrackOverride = new Setting<Colour>();
+	protected final Setting<Colour> sliderTrackOverride = new Setting<Colour>(new Colour(0, 0, 0));
 	protected final Setting<Colour> sliderBorder = new Setting<Colour>(new Colour(0, 0, 0));
 	protected final Setting<Colour> spinnerBackground = new Setting<Colour>(new Colour(100, 100, 100));
 	
 	protected final Setting<Colour> combo1 = new Setting<Colour>(new Colour(255, 192, 0));
-	protected final Setting<Colour> combo2 = new Setting<Colour>();
-	protected final Setting<Colour> combo3 = new Setting<Colour>();
-	protected final Setting<Colour> combo4 = new Setting<Colour>();
-	protected final Setting<Colour> combo5 = new Setting<Colour>();
-	protected final Setting<Colour> combo6 = new Setting<Colour>();
-	protected final Setting<Colour> combo7 = new Setting<Colour>();
-	protected final Setting<Colour> combo8 = new Setting<Colour>();
+	protected final Setting<Colour> combo2 = new Setting<Colour>(new Colour(0, 0, 0));
+	protected final Setting<Colour> combo3 = new Setting<Colour>(new Colour(0, 0, 0));
+	protected final Setting<Colour> combo4 = new Setting<Colour>(new Colour(0, 0, 0));
+	protected final Setting<Colour> combo5 = new Setting<Colour>(new Colour(0, 0, 0));
+	protected final Setting<Colour> combo6 = new Setting<Colour>(new Colour(0, 0, 0));
+	protected final Setting<Colour> combo7 = new Setting<Colour>(new Colour(0, 0, 0));
+	protected final Setting<Colour> combo8 = new Setting<Colour>(new Colour(0, 0, 0));
 
 	//fonts
 	protected final Setting<String> hitCirclePrefix = new Setting<String>("default");
@@ -83,8 +85,8 @@ public class SkinIni{
 
 	//ctb
 	protected final Setting<Colour> hyperDash = new Setting<Colour>(new Colour(255, 0, 0));
-	protected final Setting<Colour> hyperDashFruit = new Setting<Colour>();
-	protected final Setting<Colour> hyperDashAfterImage = new Setting<Colour>();
+	protected final Setting<Colour> hyperDashFruit = new Setting<Colour>(new Colour(0, 0, 0));
+	protected final Setting<Colour> hyperDashAfterImage = new Setting<Colour>(new Colour(0, 0, 0));
 
 	protected final ManiaIni[] mania = new ManiaIni[ManiaIni.MAX_KEYS];
 
@@ -97,21 +99,21 @@ public class SkinIni{
 		protected int keys;//non negative
 		protected final Setting<Double> columnStart = new Setting<Double>(136.0D);
 		protected final Setting<Double> columnRight = new Setting<Double>(19.0D);
-		protected final Setting<double[]> columnSpacing = new Setting<double[]>();//n-1 numbers
-		protected final Setting<double[]> columnWidth = new Setting<double[]>();//n numbers
-		protected final Setting<double[]> columnLineWidth = new Setting<double[]>();//n+1 numbers
+		protected final Setting<double[]> columnSpacing = new Setting<double[]>(null);//n-1 numbers
+		protected final Setting<double[]> columnWidth = new Setting<double[]>(null);//n numbers
+		protected final Setting<double[]> columnLineWidth = new Setting<double[]>(null);//n+1 numbers
 		protected final Setting<Double> barlineHeight = new Setting<Double>(1.2D);
-		protected final Setting<double[]> lightingNWidth = new Setting<double[]>();//n numbers
-		protected final Setting<double[]> lightingLWidth = new Setting<double[]>();//n numbers
+		protected final Setting<double[]> lightingNWidth = new Setting<double[]>(null);//n numbers
+		protected final Setting<double[]> lightingLWidth = new Setting<double[]>(null);//n numbers
 		protected final Setting<Double> widthForNoteHeightScale = new Setting<Double>(-1.0D);
 		protected final Setting<Integer> hitPosition = new Setting<Integer>(402);
 		protected final Setting<Integer> lightPosition = new Setting<Integer>(413);
 		protected final Setting<Integer> scorePosition = new Setting<Integer>(325);
 		protected final Setting<Integer> comboPosition = new Setting<Integer>(111);
 		protected final Setting<Boolean> judgementLine = new Setting<Boolean>(true);
-		protected final Setting<SpecialStyle> specialStyle = 0;//0, 1 or 2
-		protected final Setting<ComboBurstStyle> comboBurstStyle = 1;//0, 1 or 2
-		protected final Setting<Boolean> splitStages = new Setting<Boolean>();
+		protected final Setting<SpecialStyle> specialStyle = new Setting<SpecialStyle>(SpecialStyle.NONE);//0, 1 or 2
+		protected final Setting<ComboBurstStyle> comboBurstStyle = new Setting<ComboBurstStyle>(ComboBurstStyle.RIGHT);//0, 1 or 2
+		protected final Setting<Boolean> splitStages = new Setting<Boolean>(false, true);
 		protected final Setting<Double> stageSeparation = new Setting<Double>(40.0D);
 		protected final Setting<Boolean> separateScore = new Setting<Boolean>(true);
 		protected final Setting<Boolean> keysUnderNotes = new Setting<Boolean>(false);
@@ -1264,13 +1266,15 @@ public class SkinIni{
 	}
 	
 	protected enum SliderStyle{
-		SEGMENTS("Segments"),
-		GRADIENT("Gradient");
+		SEGMENTS(1, "Segments"),
+		GRADIENT(2, "Gradient");
 		
 		private final String name;
+		private final int id;
 		
-		private SliderStyle(String name){
+		private SliderStyle(int id, String name){
 			this.name = name;
+			this.id = id;
 		}
 	
 		@Override
@@ -1280,11 +1284,41 @@ public class SkinIni{
 	}
 	
 	protected enum SpecialStyle{
+		NONE(0, "None"),
+		LEFT(1, "Left lane SP - outer lanes DP"),
+		RIGHT(2, "Right lane SP - outer lanes DP");
 		
+		private final String name;
+		private final int id;
+		
+		private SpecialStyle(int id, String name){
+			this.name = name;
+			this.id = id;
+		}
+		
+		@Override
+		public String toString(){
+			return name;
+		}
 	}
 	
 	protected enum ComboBurstStyle{
+		LEFT(0, "Left"),
+		RIGHT(1, "Right"),
+		BOTH(2, "Both");
 		
+		private final String name;
+		private final int id;
+		
+		private ComboBurstStyle(int id, String name){
+			this.name = name;
+			this.id = id;
+		}
+		
+		@Override
+		public String toString(){
+			return name;
+		}
 	}
 	
 	protected enum NoteBodyStyle{
