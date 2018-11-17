@@ -468,199 +468,46 @@ public class SkinIniTab extends JTabbedPane{
 					final int col = i;
 					content.add(new JSeparator());
 					content.add(Box.createVerticalStrut(2));
-					JPanel panel = new JPanel(new SplitLayout());
-					JCheckBox enabled = new JCheckBox("", ini.columns[col].keyFlipWhenUpsideDown != null);
-					JPanel settings = new JPanel(new BorderLayout());
-					settings.add(enabled, BorderLayout.LINE_START);
-					panel.add(new JLabel(" Key Flip When Upside Down " + col + " (should the unpressed key in column " + (col + 1) + " be flipped when the stage is flipped): "));
-					JComboBox<String> box = new JComboBox<String>(new String[]{
-						"Don't flip",
-						"Flipped"
-					});
-					box.setSelectedIndex(ini.columns[i].keyFlipWhenUpsideDown == null ? 1 : (ini.columns[col].keyFlipWhenUpsideDown ? 1 : 0));
-					box.addActionListener((event)->{
-						if(enabled.isSelected()){
-							ini.columns[col].keyFlipWhenUpsideDown = box.getSelectedIndex() == 1;
-						}
-					});
-					settings.add(box, BorderLayout.CENTER);
-					enabled.addActionListener((e)->{
-						if(enabled.isSelected()){
-							ini.columns[col].keyFlipWhenUpsideDown = box.getSelectedIndex() == 1;
-						}else{
-							ini.columns[col].keyFlipWhenUpsideDown = null;
-						}
-					});
-					panel.add(settings);
-					content.add(panel);
+					content.add(new FlipEditor("KeyFlipWhenUpsideDown" + col, "should the unpressed key in column " + (col + 1) + " be flipped when the stage is flipped", ini.columns[col].keyFlipWhenUpsideDown));
 					content.add(Box.createVerticalStrut(2));
 				}
 				for(int i = 0; i < ini.keys; i++){
 					final int col = i;
 					content.add(new JSeparator());
 					content.add(Box.createVerticalStrut(2));
-					JPanel panel = new JPanel(new SplitLayout());
-					JCheckBox enabled = new JCheckBox("", ini.columns[col].keyFlipWhenUpsideDownD != null);
-					JPanel settings = new JPanel(new BorderLayout());
-					settings.add(enabled, BorderLayout.LINE_START);
-					panel.add(new JLabel(" Key Flip When Upside Down " + col + "D (should the pressed key in column " + (col + 1) + " be flipped when the stage is flipped): "));
-					JComboBox<String> box = new JComboBox<String>(new String[]{
-						"Don't flip",
-						"Flipped"
-					});
-					box.setSelectedIndex(ini.columns[i].keyFlipWhenUpsideDownD == null ? 1 : (ini.columns[col].keyFlipWhenUpsideDownD ? 1 : 0));
-					box.addActionListener((event)->{
-						if(enabled.isSelected()){
-							ini.columns[col].keyFlipWhenUpsideDownD = box.getSelectedIndex() == 1;
-						}
-					});
-					settings.add(box, BorderLayout.CENTER);
-					enabled.addActionListener((e)->{
-						if(enabled.isSelected()){
-							ini.columns[col].keyFlipWhenUpsideDownD = box.getSelectedIndex() == 1;
-						}else{
-							ini.columns[col].keyFlipWhenUpsideDownD = null;
-						}
-					});
-					panel.add(settings);
-					content.add(panel);
+					content.add(new FlipEditor("KeyFlipWhenUpsideDown" + col + "D", "should the pressed key in column " + (col + 1) + " be flipped when the stage is flipped", ini.columns[col].keyFlipWhenUpsideDownD));
 					content.add(Box.createVerticalStrut(2));
 				}
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Note Flip When Upside Down (should notes be flipped when the stage is flipped): "));
-					JCheckBox box = new JCheckBox("", ini.noteFlipWhenUpsideDown);
-					panel.add(box);
-					box.addActionListener(e->{
-						ini.noteFlipWhenUpsideDown = box.isSelected();
-					});
-					content.add(panel);
-				}
+				content.add(new CheckBoxEditor("NoteFlipWhenUpsideDown", "should notes be flipped when the stage is flipped", ini.noteFlipWhenUpsideDown));
 				content.add(Box.createVerticalStrut(2));
 				for(int i = 0; i < ini.keys; i++){
 					final int col = i;
 					content.add(new JSeparator());
 					content.add(Box.createVerticalStrut(2));
-					JPanel panel = new JPanel(new SplitLayout());
-					JCheckBox enabled = new JCheckBox("", ini.columns[col].noteFlipWhenUpsideDown != null);
-					JPanel settings = new JPanel(new BorderLayout());
-					settings.add(enabled, BorderLayout.LINE_START);
-					panel.add(new JLabel(" Note Flip When Upside Down " + col + " (should the note in column " + (col + 1) + " be flipped when the stage is flipped): "));
-					JComboBox<String> box = new JComboBox<String>(new String[]{
-						"Don't flip",
-						"Flipped"
-					});
-					box.setSelectedIndex(ini.columns[i].noteFlipWhenUpsideDown == null ? 1 : (ini.columns[col].noteFlipWhenUpsideDown ? 1 : 0));
-					box.addActionListener((event)->{
-						if(enabled.isSelected()){
-							ini.columns[col].noteFlipWhenUpsideDown = box.getSelectedIndex() == 1;
-						}
-					});
-					settings.add(box, BorderLayout.CENTER);
-					enabled.addActionListener((e)->{
-						if(enabled.isSelected()){
-							ini.columns[col].noteFlipWhenUpsideDown = box.getSelectedIndex() == 1;
-						}else{
-							ini.columns[col].noteFlipWhenUpsideDown = null;
-						}
-					});
-					panel.add(settings);
-					content.add(panel);
+					content.add(new FlipEditor("NoteFlipWhenUpsideDown" + col, "should the note in column " + (col + 1) + " be flipped when the stage is flipped", ini.columns[col].noteFlipWhenUpsideDown));
 					content.add(Box.createVerticalStrut(2));
 				}
 				for(int i = 0; i < ini.keys; i++){
 					final int col = i;
 					content.add(new JSeparator());
 					content.add(Box.createVerticalStrut(2));
-					JPanel panel = new JPanel(new SplitLayout());
-					JCheckBox enabled = new JCheckBox("", ini.columns[col].noteFlipWhenUpsideDownH != null);
-					JPanel settings = new JPanel(new BorderLayout());
-					settings.add(enabled, BorderLayout.LINE_START);
-					panel.add(new JLabel(" Note Flip When Upside Down " + col + "H (should the head of the note in column " + (col + 1) + " be flipped when the stage is flipped): "));
-					JComboBox<String> box = new JComboBox<String>(new String[]{
-						"Don't flip",
-						"Flipped"
-					});
-					box.setSelectedIndex(ini.columns[i].noteFlipWhenUpsideDownH == null ? 1 : (ini.columns[col].noteFlipWhenUpsideDownH ? 1 : 0));
-					box.addActionListener((event)->{
-						if(enabled.isSelected()){
-							ini.columns[col].noteFlipWhenUpsideDownH = box.getSelectedIndex() == 1;
-						}
-					});
-					settings.add(box, BorderLayout.CENTER);
-					enabled.addActionListener((e)->{
-						if(enabled.isSelected()){
-							ini.columns[col].noteFlipWhenUpsideDownH = box.getSelectedIndex() == 1;
-						}else{
-							ini.columns[col].noteFlipWhenUpsideDownH = null;
-						}
-					});
-					panel.add(settings);
-					content.add(panel);
+					content.add(new FlipEditor("NoteFlipWhenUpsideDown" + col + "H", "should the head of the note in column " + (col + 1) + " be flipped when the stage is flipped", ini.columns[col].noteFlipWhenUpsideDownH));
 					content.add(Box.createVerticalStrut(2));
 				}
 				for(int i = 0; i < ini.keys; i++){
 					final int col = i;
 					content.add(new JSeparator());
 					content.add(Box.createVerticalStrut(2));
-					JPanel panel = new JPanel(new SplitLayout());
-					JCheckBox enabled = new JCheckBox("", ini.columns[col].noteFlipWhenUpsideDownL != null);
-					JPanel settings = new JPanel(new BorderLayout());
-					settings.add(enabled, BorderLayout.LINE_START);
-					panel.add(new JLabel(" Note Flip When Upside Down " + col + "L (should the body of the note in column " + (col + 1) + " be flipped when the stage is flipped): "));
-					JComboBox<String> box = new JComboBox<String>(new String[]{
-						"Don't flip",
-						"Flipped"
-					});
-					box.setSelectedIndex(ini.columns[i].noteFlipWhenUpsideDownL == null ? 1 : (ini.columns[col].noteFlipWhenUpsideDownL ? 1 : 0));
-					box.addActionListener((event)->{
-						if(enabled.isSelected()){
-							ini.columns[col].noteFlipWhenUpsideDownL = box.getSelectedIndex() == 1;
-						}
-					});
-					settings.add(box, BorderLayout.CENTER);
-					enabled.addActionListener((e)->{
-						if(enabled.isSelected()){
-							ini.columns[col].noteFlipWhenUpsideDownL = box.getSelectedIndex() == 1;
-						}else{
-							ini.columns[col].noteFlipWhenUpsideDownL = null;
-						}
-					});
-					panel.add(settings);
-					content.add(panel);
+					content.add(new FlipEditor("NoteFlipWhenUpsideDown" + col + "L", "should the body of the note in column " + (col + 1) + " be flipped when the stage is flipped", ini.columns[col].noteFlipWhenUpsideDownL));
 					content.add(Box.createVerticalStrut(2));
 				}
 				for(int i = 0; i < ini.keys; i++){
 					final int col = i;
 					content.add(new JSeparator());
 					content.add(Box.createVerticalStrut(2));
-					JPanel panel = new JPanel(new SplitLayout());
-					JCheckBox enabled = new JCheckBox("", ini.columns[col].noteFlipWhenUpsideDownT != null);
-					JPanel settings = new JPanel(new BorderLayout());
-					settings.add(enabled, BorderLayout.LINE_START);
-					panel.add(new JLabel(" Note Flip When Upside Down " + col + "T (should the tail of the note in column " + (col + 1) + " be flipped when the stage is flipped): "));
-					JComboBox<String> box = new JComboBox<String>(new String[]{
-						"Don't flip",
-						"Flipped"
-					});
-					box.setSelectedIndex(ini.columns[i].noteFlipWhenUpsideDownT == null ? 1 : (ini.columns[col].noteFlipWhenUpsideDownT ? 1 : 0));
-					box.addActionListener((event)->{
-						if(enabled.isSelected()){
-							ini.columns[col].noteFlipWhenUpsideDownT = box.getSelectedIndex() == 1;
-						}
-					});
-					settings.add(box, BorderLayout.CENTER);
-					enabled.addActionListener((e)->{
-						if(enabled.isSelected()){
-							ini.columns[col].noteFlipWhenUpsideDownT = box.getSelectedIndex() == 1;
-						}else{
-							ini.columns[col].noteFlipWhenUpsideDownT = null;
-						}
-					});
-					panel.add(settings);
-					content.add(panel);
+					content.add(new FlipEditor("NoteFlipWhenUpsideDown" + col + "T", "should the tail of the note in column " + (col + 1) + " be flipped when the stage is flipped", ini.columns[col].noteFlipWhenUpsideDownT));
 					content.add(Box.createVerticalStrut(2));
 				}
 				content.add(new JSeparator());
@@ -1202,6 +1049,30 @@ public class SkinIniTab extends JTabbedPane{
 
 				content.add(new JPanel(new BorderLayout()));
 			}
+		}
+	}
+	
+	private static final class FlipEditor extends JPanel{
+		
+		private FlipEditor(String name, String hint, Setting<Boolean> setting){
+			super(new SplitLayout());
+			JCheckBox enabled = new JCheckBox("", setting.getValue());
+			JPanel settings = new JPanel(new BorderLayout());
+			settings.add(enabled, BorderLayout.LINE_START);
+			add(new JLabel(" " + name + " (" + hint + "): "));
+			JComboBox<String> box = new JComboBox<String>(new String[]{
+				"Don't flip",
+				"Flipped"
+			});
+			box.setSelectedIndex(setting.getValue() ? 1 : 0);
+			box.addActionListener((event)->{
+				setting.update(box.getSelectedIndex() == 1);
+			});
+			settings.add(box, BorderLayout.CENTER);
+			enabled.addActionListener((e)->{
+				setting.setEnabled(enabled.isSelected());
+			});
+			add(settings);
 		}
 	}
 	
