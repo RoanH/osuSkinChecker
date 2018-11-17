@@ -531,7 +531,7 @@ public class SkinIniTab extends JTabbedPane{
 				for(int i = 0; i < ini.keys; i++){
 					final int col = i;
 					content.add(new JSeparator());
-					content.add(Box.createVerticalStrut(2));
+					content.add(Box.createVerticalStrut(2));					
 					JPanel panel = new JPanel(new SplitLayout());
 					JCheckBox enabled = new JCheckBox("", ini.columns[col].noteBodyStyle != -1);
 					JPanel settings = new JPanel(new BorderLayout());
@@ -562,144 +562,40 @@ public class SkinIniTab extends JTabbedPane{
 				}
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					JPanel settings = new JPanel(new BorderLayout());
-					panel.add(new JLabel(" Colour Column Line (what colour should be used for the column lines): "));
-					JSpinner alpha = new JSpinner(new SpinnerNumberModel(ini.colourColumnLine == null ? 100.0D : ini.colourColumnLine.getAlphaPercentage(), 0.0D, 100.0D, 1.0D));
-					JPanel alphaPanel = new JPanel(new BorderLayout());
-					alphaPanel.add(new JLabel(" Opacity: "), BorderLayout.LINE_START);
-					alphaPanel.add(alpha, BorderLayout.CENTER);
-					alphaPanel.add(new JLabel(" %"), BorderLayout.LINE_END);
-					ColorSelector color = new ColorSelector(ini.colourColumnLine, (c)->{
-						ini.colourColumnLine.update(c);
-					});
-					alpha.addChangeListener((e)->{
-						ini.colourColumnLine.update((double)alpha.getValue());
-					});
-					settings.add(color, BorderLayout.CENTER);
-					settings.add(alphaPanel, BorderLayout.LINE_END);
-					panel.add(settings);
-					content.add(panel);
-				}
+				content.add(new AlphaColorEditor("ColourColumnLine", "what colour should be used for the column lines", ini.colourColumnLine))
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					JPanel settings = new JPanel(new BorderLayout());
-					panel.add(new JLabel(" Colour Bar Line (what colour should be used for the bar line separator): "));
-					JSpinner alpha = new JSpinner(new SpinnerNumberModel(ini.colourBarline == null ? 100.0D : ini.colourBarline.getAlphaPercentage(), 0.0D, 100.0D, 1.0D));
-					JPanel alphaPanel = new JPanel(new BorderLayout());
-					alphaPanel.add(new JLabel(" Opacity: "), BorderLayout.LINE_START);
-					alphaPanel.add(alpha, BorderLayout.CENTER);
-					alphaPanel.add(new JLabel(" %"), BorderLayout.LINE_END);
-					ColorSelector color = new ColorSelector(ini.colourBarline, (c)->{
-						ini.colourBarline.update(c);
-					});
-					alpha.addChangeListener((e)->{
-						ini.colourBarline.update((double)alpha.getValue());
-					});
-					settings.add(color, BorderLayout.CENTER);
-					settings.add(alphaPanel, BorderLayout.LINE_END);
-					panel.add(settings);
-					content.add(panel);
-				}
+				content.add(new AlphaColorEditor("ColourBarLine", "what colour should be used for the bar line separator", ini.colourBarline));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Colour Judgement Line (what colour should be used for the judgement line): "));
-					ColorSelector selector = new ColorSelector(ini.colourJudgementLine, (color)->{
-						ini.colourJudgementLine = color;
-					});
-					panel.add(selector);
-					content.add(panel);
-				}
+				content.add(new ColorEditor("ColourJudgementLine", "what colour should be used for the judgement line", ini.colourJudgementLine));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Colour Key Warning (what colour should be used for keybinding reminders): "));
-					ColorSelector selector = new ColorSelector(ini.colourKeyWarning, (color)->{
-						ini.colourKeyWarning = color;
-					});
-					panel.add(selector);
-					content.add(panel);
-				}
+				content.add(new ColorEditor("ColourKeyWarning", "what colour should be used for keybinding reminders", ini.colourKeyWarning));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					JPanel settings = new JPanel(new BorderLayout());
-					panel.add(new JLabel(" Colour Hold (what colour should be used for the combo counter during holds): "));
-					JSpinner alpha = new JSpinner(new SpinnerNumberModel(ini.colourHold == null ? 100.0D : ini.colourHold.getAlphaPercentage(), 0.0D, 100.0D, 1.0D));
-					JPanel alphaPanel = new JPanel(new BorderLayout());
-					alphaPanel.add(new JLabel(" Opacity: "), BorderLayout.LINE_START);
-					alphaPanel.add(alpha, BorderLayout.CENTER);
-					alphaPanel.add(new JLabel(" %"), BorderLayout.LINE_END);
-					ColorSelector color = new ColorSelector(ini.colourHold, (c)->{
-						ini.colourHold.update(c);
-					});
-					alpha.addChangeListener((e)->{
-						ini.colourHold.update((double)alpha.getValue());
-					});
-					settings.add(color, BorderLayout.CENTER);
-					settings.add(alphaPanel, BorderLayout.LINE_END);
-					panel.add(settings);
-					content.add(panel);
-				}
+				content.add(new AlphaColorEditor("ColourHold", "what colour should be used for the combo counter during holds", ini.colourHold));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Colour Break (what colour should be used for the combo counter when it breaks): "));
-					ColorSelector selector = new ColorSelector(ini.colourBreak, (color)->{
-						ini.colourBreak = color;
-					});
-					panel.add(selector);
-					content.add(panel);
-				}
+				content.add(new ColorEditor("ColourBreak", "what colour should be used for the combo counter when it breaks", ini.colourBreak));
 				content.add(Box.createVerticalStrut(2));
 				for(int i = 0; i < ini.keys; i++){
 					final int col = i;
 					content.add(new JSeparator());
 					content.add(Box.createVerticalStrut(2));
-					JPanel panel = new JPanel(new SplitLayout());
-					JPanel settings = new JPanel(new BorderLayout());
-					panel.add(new JLabel(" Colour " + (col + 1) + " (what colour should be used for the lane of column " + (col + 1) + "): "));
-					JSpinner alpha = new JSpinner(new SpinnerNumberModel(ini.colourHold == null ? 100.0D : ini.columns[col].colour.getAlphaPercentage(), 0.0D, 100.0D, 1.0D));
-					JPanel alphaPanel = new JPanel(new BorderLayout());
-					alphaPanel.add(new JLabel(" Opacity: "), BorderLayout.LINE_START);
-					alphaPanel.add(alpha, BorderLayout.CENTER);
-					alphaPanel.add(new JLabel(" %"), BorderLayout.LINE_END);
-					ColorSelector color = new ColorSelector(ini.columns[col].colour, (c)->{
-						ini.columns[col].colour.update(c);
-					});
-					alpha.addChangeListener((e)->{
-						ini.columns[col].colour.update((double)alpha.getValue());
-					});
-					settings.add(color, BorderLayout.CENTER);
-					settings.add(alphaPanel, BorderLayout.LINE_END);
-					panel.add(settings);
-					content.add(panel);	
+					content.add(new AlphaColorEditor("Colour" + (col + 1), "what colour should be used for the lane of column " + (col + 1), ini.columns[col].colour));
 					content.add(Box.createVerticalStrut(2));
 				}
 				for(int i = 0; i < ini.keys; i++){
 					final int col = i;
 					content.add(new JSeparator());
 					content.add(Box.createVerticalStrut(2));
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Colour Light " + (col + 1) + " (what colour should be used for the lighting of column " + (col + 1) + "): "));
-					ColorSelector color = new ColorSelector(ini.columns[col].colourLight, (c)->{
-						ini.columns[col].colourLight.update(c);
-					});
-					panel.add(color);
-					content.add(panel);	
+					content.add(new ColorEditor("ColourLight" + (col + 1), "what colour should be used for the lighting of column " + (col + 1), ini.columns[col].colourLight));
 					content.add(Box.createVerticalStrut(2));
 				}
 				content.add(new JSeparator());
@@ -991,6 +887,27 @@ public class SkinIniTab extends JTabbedPane{
 				setting.update((T)box.getSelectedItem());
 			});
 			add(box);
+		}
+	}
+	
+	private static final class AlphaColorEditor extends JPanel{
+		
+		private AlphaColorEditor(String name, String hint, Setting<Colour> setting){
+			super(new SplitLayout());
+			JPanel settings = new JPanel(new BorderLayout());
+			add(new JLabel(" " + name + " (" + hint + "): "));
+			JSpinner alpha = new JSpinner(new SpinnerNumberModel(setting.getValue().getAlphaPercentage(), 0.0D, 100.0D, 1.0D));
+			JPanel alphaPanel = new JPanel(new BorderLayout());
+			alphaPanel.add(new JLabel(" Opacity: "), BorderLayout.LINE_START);
+			alphaPanel.add(alpha, BorderLayout.CENTER);
+			alphaPanel.add(new JLabel(" %"), BorderLayout.LINE_END);
+			ColorSelector color = new ColorSelector(setting);
+			alpha.addChangeListener((e)->{
+				setting.getValue().update((double)alpha.getValue());
+			});
+			settings.add(color, BorderLayout.CENTER);
+			settings.add(alphaPanel, BorderLayout.LINE_END);
+			add(settings);
 		}
 	}
 	
