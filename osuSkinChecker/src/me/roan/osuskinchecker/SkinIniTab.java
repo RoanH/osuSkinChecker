@@ -352,152 +352,45 @@ public class SkinIniTab extends JTabbedPane{
 				this.add(new JScrollPane(content), BorderLayout.CENTER);
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Column Start (where does the left column start): "));
-					JSpinner spinner = new JSpinner(new SpinnerNumberModel(ini.columnStart, 0.0D, Double.MAX_VALUE, 1.0D));
-					spinner.addChangeListener((event)->{
-						ini.columnStart = (double)spinner.getValue();
-					});
-					panel.add(spinner);
-					content.add(panel);
-				}
+				content.add(new DoubleSpinnerEditor("ColumnStart", "where does the left column start", ini.columnStart));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Column Right (up to which point can columns be drawn): "));
-					JSpinner spinner = new JSpinner(new SpinnerNumberModel(ini.columnRight, 0.0D, Double.MAX_VALUE, 1.0D));
-					spinner.addChangeListener((event)->{
-						ini.columnRight = (double)spinner.getValue();
-					});
-					panel.add(spinner);
-					content.add(panel);
-				}
+				content.add(new DoubleSpinnerEditor("ColumnRight", "up to which point can columns be drawn", ini.columnRight));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				if(ini.keys != 1){
 					content.add(Box.createVerticalStrut(2));
-					{
-						JPanel panel = new JPanel(new SplitLayout());
-						panel.add(new JLabel(" Column Spacing (distance between columns): "));
-						panel.add(new DoubleArray(ini.columnSpacing));
-						content.add(panel);
-					}
+					content.add(new DoubleArrayEditor("ColumnSpacing", "distance between columns", ini.columnSpacing));
 					content.add(Box.createVerticalStrut(2));
 					content.add(new JSeparator());
 				}
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Column Width (widths of the columns): "));
-					panel.add(new DoubleArray(ini.columnWidth));
-					content.add(panel);
-				}
+				content.add(new DoubleArrayEditor("ColumnWidth", "widths of the columns", ini.columnWidth));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Column Line Width (widths of the column separators): "));
-					panel.add(new DoubleArray(ini.columnLineWidth));
-					content.add(panel);
-				}
+				content.add(new DoubleArrayEditor("ColumnLineWidth", "widths of the column separators", ini.columnLineWidth));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Barline Height (thickness of the barline): "));
-					JSpinner spinner = new JSpinner(new SpinnerNumberModel(ini.barlineHeight, 0.0D, Double.MAX_VALUE, 1.0D));
-					spinner.addChangeListener((event)->{
-						ini.barlineHeight = (double)spinner.getValue();
-					});
-					panel.add(spinner);
-					content.add(panel);
-				}
+				content.add(new DoubleSpinnerEditor("BarlineHeight", "thickness of the barline", ini.barlineHeight));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					JCheckBox enabled = new JCheckBox("", ini.lightingNWidth != null);
-					JPanel settings = new JPanel(new BorderLayout());
-					settings.add(enabled, BorderLayout.LINE_START);
-					panel.add(new JLabel(" Lighting N Width (widths of LightingN for the columns): "));
-					final double[] array = new double[ini.keys];
-					settings.add(new DoubleArray(array));
-					enabled.addActionListener((e)->{
-						if(enabled.isSelected()){
-							ini.lightingNWidth = array;
-						}else{
-							ini.lightingNWidth = null;
-						}
-					});
-					panel.add(settings);
-					content.add(panel);
-				}
+				content.add(new DoubleArrayEditor("LightingNWidth", "widths of LightingN for the columns", ini.lightingNWidth));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					JCheckBox enabled = new JCheckBox("", ini.lightingLWidth != null);
-					JPanel settings = new JPanel(new BorderLayout());
-					settings.add(enabled, BorderLayout.LINE_START);
-					panel.add(new JLabel(" Lighting L Width (widths of LightingL for the columns): "));
-					final double[] array = new double[ini.keys];
-					settings.add(new DoubleArray(array));
-					enabled.addActionListener((e)->{
-						if(enabled.isSelected()){
-							ini.lightingLWidth = array;
-						}else{
-							ini.lightingLWidth = null;
-						}
-					});
-					panel.add(settings);
-					content.add(panel);
-				}
+				content.add(new DoubleArrayEditor("LightingLWidth", "widths of LightingL for the column", ini.lightingLWidth));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					JCheckBox enabled = new JCheckBox("", ini.widthForNoteHeightScale != -1.0D);
-					JPanel settings = new JPanel(new BorderLayout());
-					settings.add(enabled, BorderLayout.LINE_START);
-					panel.add(new JLabel(" Width For Note Height Scale (height for all notes if columns have individual widths): "));
-					JSpinner spinner = new JSpinner(new SpinnerNumberModel(Math.max(ini.widthForNoteHeightScale, 0.0D), 0.0D, Double.MAX_VALUE, 1.0D));
-					spinner.addChangeListener((event)->{
-						if(enabled.isSelected()){
-							ini.widthForNoteHeightScale = (double)spinner.getValue();
-						}
-					});
-					settings.add(spinner, BorderLayout.CENTER);
-					enabled.addActionListener((e)->{
-						if(enabled.isSelected()){
-							ini.widthForNoteHeightScale = (double)spinner.getValue();
-						}else{
-							ini.widthForNoteHeightScale = -1.0D;
-						}
-					});
-					panel.add(settings);
-					content.add(panel);
-				}
+				content.add(new DoubleSpinnerEditor("WidthForNoteHeightScale", "height for all notes if columns have individual widths", ini.widthForNoteHeightScale));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Hit Position (at what height should the judgement line be drawn): "));
-					JSpinner spinner = new JSpinner(new SpinnerNumberModel(ini.hitPosition, 0, Integer.MAX_VALUE, 1));
-					spinner.addChangeListener((event)->{
-						ini.hitPosition = (int)spinner.getValue();
-					});
-					panel.add(spinner);
-					content.add(panel);
-				}
+				content.add(new IntegerSpinnerEditor("HitPosition", "at what height should the judgement line be drawn", ini.hitPosition));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
@@ -1459,7 +1352,7 @@ public class SkinIniTab extends JTabbedPane{
 		}
 		
 		private IntegerSpinnerEditor(String name, String hint, Setting<Integer> setting, boolean toggle){
-			this(name, hint, setting, Integer.MIN_VALUE,toggle);
+			this(name, hint, setting, Integer.MIN_VALUE, toggle);
 		}
 		
 		private IntegerSpinnerEditor(String name, String hint, Setting<Integer> setting, int min, boolean toggle){
@@ -1483,6 +1376,44 @@ public class SkinIniTab extends JTabbedPane{
 				});
 			}
 			add(p);
+		}
+	}
+	
+	private static final class DoubleSpinnerEditor extends JPanel{
+		
+		private DoubleSpinnerEditor(String name, String hint, Setting<Double> setting){
+			this(name, hint, setting, -Double.MAX_VALUE, false);
+		}
+		
+		private DoubleSpinnerEditor(String name, String hint, Setting<Double> setting, double min){
+			this(name, hint, setting, min, Double.MAX_VALUE, false);
+		}
+		
+		private DoubleSpinnerEditor(String name, String hint, Setting<Double> setting, boolean toggle){
+			this(name, hint, setting, -Double.MAX_VALUE, Double.MAX_VALUE, toggle);
+		}
+		
+		private DoubleSpinnerEditor(String name, String hint, Setting<Double> setting, double min, boolean toggle){
+			this(name, hint, setting, min, Double.MAX_VALUE, toggle);
+		}
+		
+		private DoubleSpinnerEditor(String name, String hint, Setting<Double> setting, double min, double max, boolean toggle){
+			super(new SplitLayout());
+			JPanel settings = new JPanel(new BorderLayout());
+			add(new JLabel(" " + name + " (" + hint + "): "));
+			JSpinner spinner = new JSpinner(new SpinnerNumberModel((double)setting.getValue(), min, max, 1.0D));
+			spinner.addChangeListener((event)->{
+				setting.update((double)spinner.getValue());
+			});
+			settings.add(spinner, BorderLayout.CENTER);
+			if(toggle){
+				JCheckBox enabled = new JCheckBox("", setting.isEnabled());
+				settings.add(enabled, BorderLayout.LINE_START);
+				enabled.addActionListener((e)->{
+					setting.setEnabled(enabled.isSelected());
+				});
+			}
+			add(settings);
 		}
 	}
 	
@@ -1561,6 +1492,28 @@ public class SkinIniTab extends JTabbedPane{
 		}
 	}
 	
+	private static final class DoubleArrayEditor extends JPanel{
+		
+		private DoubleArrayEditor(String name, String hint, Setting<double[]> setting){
+			this(name, hint, setting, false);
+		}
+		
+		private DoubleArrayEditor(String name, String hint, Setting<double[]> setting, boolean toggle){
+			super(new SplitLayout());
+			JPanel settings = new JPanel(new BorderLayout());
+			add(new JLabel(" " + name + " (" + hint + "): "));
+			settings.add(new DoubleArray(setting.getValue()));
+			if(toggle){
+				JCheckBox enabled = new JCheckBox("", setting.isEnabled());
+				settings.add(enabled, BorderLayout.LINE_START);
+				enabled.addActionListener((e)->{
+					setting.setEnabled(enabled.isSelected());
+				});
+			}
+			add(settings);
+		}
+	}
+	
 	private static final class PathField extends JTextField{
 		/**
 		 * Serial ID
@@ -1617,13 +1570,13 @@ public class SkinIniTab extends JTabbedPane{
 		 */
 		private static final long serialVersionUID = 3145876156701959606L;
 
-		private DoubleArray(double[] data){
-			this.setLayout(new GridLayout(1, data.length, 2, 0));
-			for(int i = 0; i < data.length; i++){
-				JSpinner spinner = new JSpinner(new SpinnerNumberModel(data[i], 0.0D, Double.MAX_VALUE, 1.0D));
+		private DoubleArray(double[] columnSpacing){
+			this.setLayout(new GridLayout(1, columnSpacing.length, 2, 0));
+			for(int i = 0; i < columnSpacing.length; i++){
+				JSpinner spinner = new JSpinner(new SpinnerNumberModel(columnSpacing[i], 0.0D, Double.MAX_VALUE, 1.0D));
 				final int field = i;
 				spinner.addChangeListener((e)->{
-					data[field] = (double)spinner.getValue();
+					columnSpacing[field] = (double)spinner.getValue();
 				});
 				this.add(spinner);
 			}

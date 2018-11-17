@@ -94,61 +94,63 @@ public class SkinIni{
 
 	protected static final class ManiaIni{
 		protected static final int MAX_KEYS = 10;
-		protected Setting<Integer> keys;//non negative
-		protected Setting<Double> columnStart = new Setting<Double>(136.0D);
-		protected Setting<Double> columnRight = new Setting<Double>(19.0D);
-		protected Setting<double[]> columnSpacing;//n-1 numbers
-		protected Setting<double[]> columnWidth;//n numbers
-		protected Setting<double[]> columnLineWidth;//n+1 numbers
-		protected Setting<Double> barlineHeight = new Setting<Double>(1.2D);
-		protected Setting<double[]> lightingNWidth = new Setting<double[]>();//n numbers
-		protected Setting<double[]> lightingLWidth = new Setting<double[]>();//n numbers
-		protected double widthForNoteHeightScale = -1.0D;
-		protected Setting<Integer> hitPosition = new Setting<Integer>(402);
-		protected Setting<Integer> lightPosition = new Setting<Integer>(413);
-		protected Setting<Integer> scorePosition = new Setting<Integer>(325);
-		protected Setting<Integer> comboPosition = new Setting<Integer>(111);
-		protected boolean judgementLine = true;
-		protected Setting<SpecialStyle> specialStyle = 0;//0, 1 or 2
-		protected Setting<ComboBurstStyle> comboBurstStyle = 1;//0, 1 or 2
-		protected Boolean splitStages = null;
-		protected double stageSeparation = 40.0D;
-		protected boolean separateScore = true;
-		protected boolean keysUnderNotes = false;
-		protected boolean upsideDown = false;
-		protected boolean keyFlipWhenUpsideDown = true;
-		protected boolean noteFlipWhenUpsideDown = true;
-		protected Setting<NoteBodyStyle> noteBodyStyle = 1;//0, 1, 2
-		protected Colour colourColumnLine = new Colour(255, 255, 255, 255);
-		protected Colour colourBarline = new Colour(255, 255, 255, 255);
-		protected Colour colourJudgementLine = new Colour(255, 255, 255);
-		protected Colour colourKeyWarning = new Colour(0, 0, 0);
-		protected Colour colourHold = new Colour(255, 191, 51, 255);
-		protected Colour colourBreak = new Colour(255, 0, 0);
+		protected int keys;//non negative
+		protected final Setting<Double> columnStart = new Setting<Double>(136.0D);
+		protected final Setting<Double> columnRight = new Setting<Double>(19.0D);
+		protected final Setting<double[]> columnSpacing = new Setting<double[]>();//n-1 numbers
+		protected final Setting<double[]> columnWidth = new Setting<double[]>();//n numbers
+		protected final Setting<double[]> columnLineWidth = new Setting<double[]>();//n+1 numbers
+		protected final Setting<Double> barlineHeight = new Setting<Double>(1.2D);
+		protected final Setting<double[]> lightingNWidth = new Setting<double[]>();//n numbers
+		protected final Setting<double[]> lightingLWidth = new Setting<double[]>();//n numbers
+		protected final Setting<Double> widthForNoteHeightScale = new Setting<Double>(-1.0D);
+		protected final Setting<Integer> hitPosition = new Setting<Integer>(402);
+		protected final Setting<Integer> lightPosition = new Setting<Integer>(413);
+		protected final Setting<Integer> scorePosition = new Setting<Integer>(325);
+		protected final Setting<Integer> comboPosition = new Setting<Integer>(111);
+		protected final Setting<Boolean> judgementLine = new Setting<Boolean>(true);
+		protected final Setting<SpecialStyle> specialStyle = 0;//0, 1 or 2
+		protected final Setting<ComboBurstStyle> comboBurstStyle = 1;//0, 1 or 2
+		protected final Setting<Boolean> splitStages = new Setting<Boolean>();
+		protected final Setting<Double> stageSeparation = new Setting<Double>(40.0D);
+		protected final Setting<Boolean> separateScore = new Setting<Boolean>(true);
+		protected final Setting<Boolean> keysUnderNotes = new Setting<Boolean>(false);
+		protected final Setting<Boolean> upsideDown = new Setting<Boolean>(false);
+		protected final Setting<Boolean> keyFlipWhenUpsideDown = new Setting<Boolean>(true);
+		protected final Setting<Boolean> noteFlipWhenUpsideDown = new Setting<Boolean>(true);
+		protected final Setting<NoteBodyStyle> noteBodyStyle = 1;//0, 1, 2
+		protected final Setting<Colour> colourColumnLine = new Setting<Colour>(new Colour(255, 255, 255, 255));
+		protected final Setting<Colour> colourBarline = new Setting<Colour>(new Colour(255, 255, 255, 255));
+		protected final Setting<Colour> colourJudgementLine = new Setting<Colour>(new Colour(255, 255, 255));
+		protected final Setting<Colour> colourKeyWarning = new Setting<Colour>(new Colour(0, 0, 0));
+		protected final Setting<Colour> colourHold = new Setting<Colour>(new Colour(255, 191, 51, 255));
+		protected final Setting<Colour> colourBreak = new Setting<Colour>(new Colour(255, 0, 0));
 
 		protected Column[] columns;
 
-		protected String stageLeft = "mania-stage-left";
-		protected String stageRight = "mania-stage-right";
-		protected String stageBottom = "mania-stage-bottom";
-		protected String stageHint = "mania-stage-hint";
-		protected String stageLight = "mania-stage-light";
-		protected String lightingN = "LightingN";
-		protected String lightingL = "LightingL";
-		protected String warningArrow = "mania-warningarrow";
+		protected final Setting<String> stageLeft = new Setting<String>("mania-stage-left");
+		protected final Setting<String> stageRight = new Setting<String>("mania-stage-right");
+		protected final Setting<String> stageBottom = new Setting<String>("mania-stage-bottom");
+		protected final Setting<String> stageHint = new Setting<String>("mania-stage-hint");
+		protected final Setting<String> stageLight = new Setting<String>("mania-stage-light");
+		protected final Setting<String> lightingN = new Setting<String>("LightingN");
+		protected final Setting<String> lightingL = new Setting<String>("LightingL");
+		protected final Setting<String> warningArrow = new Setting<String>("mania-warningarrow");
 
-		protected String hit0 = "mania-hit0";
-		protected String hit50 = "mania-hit50";
-		protected String hit100 = "mania-hit100";
-		protected String hit200 = "mania-hit200";
-		protected String hit300 = "mania-hit300";
-		protected String hit300g = "mania-hit300g";
+		protected final Setting<String> hit0 = new Setting<String>("mania-hit0");
+		protected final Setting<String> hit50 = new Setting<String>("mania-hit50");
+		protected final Setting<String> hit100 = new Setting<String>("mania-hit100");
+		protected final Setting<String> hit200 = new Setting<String>("mania-hit200");
+		protected final Setting<String> hit300 = new Setting<String>("mania-hit300");
+		protected final Setting<String> hit300g = new Setting<String>("mania-hit300g");
 
 		private ManiaIni(int keys){
 			this.keys = keys;
-			columnSpacing = fillArray(keys - 1, 0.0D);
-			columnWidth = fillArray(keys, 30.0D);
-			columnLineWidth = fillArray(keys + 1, 2.0D);
+			columnSpacing.update(fillArray(keys - 1, 0.0D));
+			columnWidth.update(fillArray(keys, 30.0D));
+			columnLineWidth.update(fillArray(keys + 1, 2.0D));
+			lightingNWidth.update(fillArray(keys, 0.0D));
+			lightingLWidth.update(fillArray(keys, 0.0D));
 			columns = new Column[keys];
 			for(int i = 0; i < keys; i++){
 				columns[i] = new Column();
@@ -1275,6 +1277,18 @@ public class SkinIni{
 		public String toString(){
 			return name;
 		}
+	}
+	
+	protected enum SpecialStyle{
+		
+	}
+	
+	protected enum ComboBurstStyle{
+		
+	}
+	
+	protected enum NoteBodyStyle{
+		
 	}
 
 	protected enum Version{
