@@ -194,53 +194,27 @@ public class SkinIniTab extends JTabbedPane{
 
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Layered Hit Sounds (should hitnormal sounds always be played): "));
-				JCheckBox check = new JCheckBox();
-				check.setSelected(ini.layeredHitSounds);
-				check.addItemListener((e)->{
-					ini.layeredHitSounds = check.isSelected();
-				});
-				panel.add(check);
-				content.add(panel);
-			}
+			content.add(new CheckBoxEditor("LayeredHitSounds", "should hitnormal sounds always be played", ini.layeredHitSounds));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Combo Burst Random (should combust be shown in a random order): "));
-				JCheckBox check = new JCheckBox("(false implies that they will appear in order)");
-				check.setSelected(ini.comboBurstRandom);
-				check.addItemListener((e)->{
-					ini.comboBurstRandom = check.isSelected();
-				});
-				panel.add(check);
-				content.add(panel);
-			}
+			content.add(new CheckBoxEditor("ComboBurstRandom", "should combursts be shown in a random order", "false implies that they will appear in order", ini.comboBurstRandom));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
 			{
 				JPanel panel = new JPanel(new SplitLayout());
 				JCheckBox enabled = new JCheckBox("", ini.customComboBurstSounds != null);
-				panel.add(new JLabel(" Custom Combo Burst Sounds (on which combo marks should comboburst sounds play): "));
+				panel.add(new JLabel(" CustomComboBurstSounds (on which combo marks should comboburst sounds play): "));
 				JPanel list = new JPanel(new BorderLayout());
 				list.add(enabled, BorderLayout.LINE_START);
 				list.add(new JLabel("(comma separated)"), BorderLayout.LINE_END);
-				ListField field = new ListField(ini.customComboBurstSounds);
+				ListField field = new ListField(ini.customComboBurstSounds.getValue());
 				enabled.addActionListener((e)->{
-					if(enabled.isSelected()){
-						ini.customComboBurstSounds = field.getText();
-					}else{
-						ini.customComboBurstSounds = null;
-					}
+					ini.customComboBurstSounds.setEnabled(enabled.isSelected());
 				});
 				field.addActionListener((e)->{
-					if(enabled.isSelected()){
-						ini.customComboBurstSounds = field.getText();
-					}
+					ini.customComboBurstSounds.update(field.getText());
 				});
 				list.add(field, BorderLayout.CENTER);
 				panel.add(list);
@@ -249,211 +223,43 @@ public class SkinIniTab extends JTabbedPane{
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Star Break Additive (what colour should be added to star2 during breaks): "));
-				panel.add(new ColorSelector(ini.starBreakAdditive, (color)->{
-					ini.starBreakAdditive = color;
-				}));
-				content.add(panel);
-			}
+			content.add(new ColorEditor("StarBreakAdditive", "what colour should be added to star2 during breaks", ini.starBreakAdditive));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Input Overlay Text (what colour should the input keys be tinted): "));
-				panel.add(new ColorSelector(ini.inputOverlayText, (color)->{
-					ini.inputOverlayText = color;
-				}));
-				content.add(panel);
-			}
+			content.add(new ColorEditor("InputOverlayText", "what colour should the input keys be tinted", ini.inputOverlayText));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Combo 1 (what colour is used for the last combo): "));
-				panel.add(new ColorSelector(ini.combo1, (color)->{
-					ini.combo1 = color;
-				}));
-				content.add(panel);
-			}
+			content.add(new ColorEditor("Combo1", "what colour is used for the last combo", ini.combo1));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				JCheckBox enabled = new JCheckBox("", ini.combo2 != null);
-				JPanel settings = new JPanel(new BorderLayout());
-				settings.add(enabled, BorderLayout.LINE_START);
-				panel.add(new JLabel(" Combo 2 (what colour is used for the first combo): "));
-				ColorSelector selector = new ColorSelector(ini.combo2, (color)->{
-					if(enabled.isSelected()){
-						ini.combo2 = color;
-					}
-				});
-				settings.add(selector, BorderLayout.CENTER);
-				enabled.addActionListener((e)->{
-					if(enabled.isSelected()){
-						ini.combo2 = selector.color;
-					}else{
-						ini.combo2 = null;
-					}
-				});
-				panel.add(settings);
-				content.add(panel);
-			}
+			content.add(new ColorEditor("Combo2", "what colour is used for the first combo", ini.combo2, true));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				JCheckBox enabled = new JCheckBox("", ini.combo3 != null);
-				JPanel settings = new JPanel(new BorderLayout());
-				settings.add(enabled, BorderLayout.LINE_START);
-				panel.add(new JLabel(" Combo 3 (what colour is used for the second combo): "));
-				ColorSelector selector = new ColorSelector(ini.combo3, (color)->{
-					if(enabled.isSelected()){
-						ini.combo3 = color;
-					}
-				});
-				settings.add(selector, BorderLayout.CENTER);
-				enabled.addActionListener((e)->{
-					if(enabled.isSelected()){
-						ini.combo3 = selector.color;
-					}else{
-						ini.combo3 = null;
-					}
-				});
-				panel.add(settings);
-				content.add(panel);
-			}
+			content.add(new ColorEditor("Combo3", "what colour is used for the second combo", ini.combo3, true));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				JCheckBox enabled = new JCheckBox("", ini.combo4 != null);
-				JPanel settings = new JPanel(new BorderLayout());
-				settings.add(enabled, BorderLayout.LINE_START);
-				panel.add(new JLabel(" Combo 4 (what colour is used for the third combo): "));
-				ColorSelector selector = new ColorSelector(ini.combo4, (color)->{
-					if(enabled.isSelected()){
-						ini.combo4 = color;
-					}
-				});
-				settings.add(selector, BorderLayout.CENTER);
-				enabled.addActionListener((e)->{
-					if(enabled.isSelected()){
-						ini.combo4 = selector.color;
-					}else{
-						ini.combo4 = null;
-					}
-				});
-				panel.add(settings);
-				content.add(panel);
-			}
+			content.add(new ColorEditor("Combo4", "what colour is used for the third combo", ini.combo4, true));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				JCheckBox enabled = new JCheckBox("", ini.combo5 != null);
-				JPanel settings = new JPanel(new BorderLayout());
-				settings.add(enabled, BorderLayout.LINE_START);
-				panel.add(new JLabel(" Combo 5 (what colour is used for the fourth combo): "));
-				ColorSelector selector = new ColorSelector(ini.combo5, (color)->{
-					if(enabled.isSelected()){
-						ini.combo5 = color;
-					}
-				});
-				settings.add(selector, BorderLayout.CENTER);
-				enabled.addActionListener((e)->{
-					if(enabled.isSelected()){
-						ini.combo5 = selector.color;
-					}else{
-						ini.combo5 = null;
-					}
-				});
-				panel.add(settings);
-				content.add(panel);
-			}
+			content.add(new ColorEditor("Combo5", "what colour is used for the fourth combo", ini.combo5, true));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				JCheckBox enabled = new JCheckBox("", ini.combo6 != null);
-				JPanel settings = new JPanel(new BorderLayout());
-				settings.add(enabled, BorderLayout.LINE_START);
-				panel.add(new JLabel(" Combo 6 (what colour is used for the fifth combo): "));
-				ColorSelector selector = new ColorSelector(ini.combo6, (color)->{
-					if(enabled.isSelected()){
-						ini.combo6 = color;
-					}
-				});
-				settings.add(selector, BorderLayout.CENTER);
-				enabled.addActionListener((e)->{
-					if(enabled.isSelected()){
-						ini.combo6 = selector.color;
-					}else{
-						ini.combo6 = null;
-					}
-				});
-				panel.add(settings);
-				content.add(panel);
-			}
+			content.add(new ColorEditor("Combo6", "what colour is used for the fifth combo", ini.combo6, true));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				JCheckBox enabled = new JCheckBox("", ini.combo7 != null);
-				JPanel settings = new JPanel(new BorderLayout());
-				settings.add(enabled, BorderLayout.LINE_START);
-				panel.add(new JLabel(" Combo 7 (what colour is used for the sixth combo): "));
-				ColorSelector selector = new ColorSelector(ini.combo7, (color)->{
-					if(enabled.isSelected()){
-						ini.combo7 = color;
-					}
-				});
-				settings.add(selector, BorderLayout.CENTER);
-				enabled.addActionListener((e)->{
-					if(enabled.isSelected()){
-						ini.combo7 = selector.color;
-					}else{
-						ini.combo7 = null;
-					}
-				});
-				panel.add(settings);
-				content.add(panel);
-			}
+			content.add(new ColorEditor("Combo7", "what colour is used for the sixth combo", ini.combo7, true));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				JCheckBox enabled = new JCheckBox("", ini.combo8 != null);
-				JPanel settings = new JPanel(new BorderLayout());
-				settings.add(enabled, BorderLayout.LINE_START);
-				panel.add(new JLabel(" Combo 8 (what colour is used for the seventh combo): "));
-				ColorSelector selector = new ColorSelector(ini.combo8, (color)->{
-					if(enabled.isSelected()){
-						ini.combo8 = color;
-					}
-				});
-				settings.add(selector, BorderLayout.CENTER);
-				enabled.addActionListener((e)->{
-					if(enabled.isSelected()){
-						ini.combo8 = selector.color;
-					}else{
-						ini.combo8 = null;
-					}
-				});
-				panel.add(settings);
-				content.add(panel);
-			}
+			content.add(new ColorEditor("Combo8", "what colour is used for the seventh combo", ini.combo8, true));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
