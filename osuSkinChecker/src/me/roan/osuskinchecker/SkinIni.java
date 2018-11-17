@@ -170,24 +170,24 @@ public class SkinIni{
 		protected static final class Column{
 			protected int key;
 
-			protected Boolean keyFlipWhenUpsideDown = null;
-			protected Boolean keyFlipWhenUpsideDownD = null;
-			protected Boolean noteFlipWhenUpsideDown = null;
-			protected Boolean noteFlipWhenUpsideDownH = null;
-			protected Boolean noteFlipWhenUpsideDownL = null;
-			protected Boolean noteFlipWhenUpsideDownT = null;
+			protected Setting<Boolean> keyFlipWhenUpsideDown = new Setting<Boolean>(false, true);
+			protected Setting<Boolean> keyFlipWhenUpsideDownD = new Setting<Boolean>(false, true);
+			protected Setting<Boolean> noteFlipWhenUpsideDown = new Setting<Boolean>(false, true);
+			protected Setting<Boolean> noteFlipWhenUpsideDownH = new Setting<Boolean>(false, true);
+			protected Setting<Boolean> noteFlipWhenUpsideDownL = new Setting<Boolean>(false, true);
+			protected Setting<Boolean> noteFlipWhenUpsideDownT = new Setting<Boolean>(false, true);
 
-			protected int noteBodyStyle = -1;//0, 1, 2, -1=undefined
+			protected Setting<Integer> noteBodyStyle = new Setting<Integer>(false, 0);//0, 1, 2
 
-			protected Colour colour = new Colour(0, 0, 0, 255);
-			protected Colour colourLight = new Colour(255, 255, 255);
+			protected Setting<Colour> colour = new Setting<Colour>(new Colour(0, 0, 0, 255));
+			protected Setting<Colour> colourLight = new Setting<Colour>(new Colour(255, 255, 255));
 
-			protected String keyImage = null;
-			protected String keyImageD = null;
-			protected String noteImage = null;
-			protected String noteImageH = null;
-			protected String noteImageL = null;
-			protected String noteImageT = null;
+			protected Setting<String> keyImage = new Setting<String>(false, "");
+			protected Setting<String> keyImageD = new Setting<String>(false, "");
+			protected Setting<String> noteImage = new Setting<String>(false, "");
+			protected Setting<String> noteImageH = new Setting<String>(false, "");
+			protected Setting<String> noteImageL = new Setting<String>(false, "");
+			protected Setting<String> noteImageT = new Setting<String>(false, "");
 		}
 
 		public void write(PrintWriter writer){
