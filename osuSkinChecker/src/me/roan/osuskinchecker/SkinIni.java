@@ -36,55 +36,55 @@ public class SkinIni{
 	protected final Setting<Integer> animationFramerate = new Setting<Integer>();//non negative
 
 	//combo bursts
-	protected boolean layeredHitSounds = true;
-	protected boolean comboBurstRandom = false;
-	protected String customComboBurstSounds = null;//list of ints, positive values only
+	protected Setting<Boolean> layeredHitSounds = new Setting<Boolean>(true);
+	protected Setting<Boolean> comboBurstRandom = new Setting<Boolean>(false);
+	protected Setting<String> customComboBurstSounds = new Setting<String>();//list of ints, positive values only
 
 	//standard
-	protected boolean hitCircleOverlayAboveNumber = true;
-	protected int sliderStyle = 2;//1 or 2
-	protected boolean sliderBallFlip = false;
-	protected boolean allowSliderBallTint = false;
-	protected boolean spinnerNoBlink = false;
-	protected boolean spinnerFadePlayfield = false;
-	protected boolean spinnerFrequencyModulate = true;
+	protected Setting<Boolean> hitCircleOverlayAboveNumber = new Setting<Boolean>(true);
+	protected Setting<SliderStyle> sliderStyle = new Setting<SliderStyle>(2);//1 or 2
+	protected Setting<Boolean> sliderBallFlip = new Setting<Boolean>(false);
+	protected Setting<Boolean> allowSliderBallTint = new Setting<Boolean>(false);
+	protected Setting<Boolean> spinnerNoBlink = new Setting<Boolean>(false);
+	protected Setting<Boolean> spinnerFadePlayfield = new Setting<Boolean>(false);
+	protected Setting<Boolean> spinnerFrequencyModulate = new Setting<Boolean>(true);
 
 	//colours
-	protected Colour songSelectActiveText = new Colour(0, 0, 0);
-	protected Colour songSelectInactiveText = new Colour(255, 255, 255);
-	protected Colour menuGlow = new Colour(0, 78, 155);
-
-	protected Colour starBreakAdditive = new Colour(255, 182, 193);
-	protected Colour inputOverlayText = new Colour(0, 0, 0);
-
-	protected Colour sliderBall = new Colour(2, 170, 255);
-	protected Colour sliderTrackOverride = null;
-	protected Colour sliderBorder = new Colour(0, 0, 0);
-	protected Colour spinnerBackground = new Colour(100, 100, 100);
-
-	protected Colour combo1 = new Colour(255, 192, 0);
-	protected Colour combo2 = null;
-	protected Colour combo3 = null;
-	protected Colour combo4 = null;
-	protected Colour combo5 = null;
-	protected Colour combo6 = null;
-	protected Colour combo7 = null;
-	protected Colour combo8 = null;
+	protected Setting<Colour> songSelectActiveText = new Setting<Colour>(new Colour(0, 0, 0));
+	protected Setting<Colour> songSelectInactiveText = new Setting<Colour>(new Colour(255, 255, 255));
+	protected Setting<Colour> menuGlow = new Setting<Colour>(new Colour(0, 78, 155));
+	
+	protected Setting<Colour> starBreakAdditive = new Setting<Colour>(new Colour(255, 182, 193));
+	protected Setting<Colour> inputOverlayText = new Setting<Colour>(new Colour(0, 0, 0));
+	
+	protected Setting<Colour> sliderBall = new Setting<Colour>(new Colour(2, 170, 255));
+	protected Setting<Colour> sliderTrackOverride = new Setting<Colour>();
+	protected Setting<Colour> sliderBorder = new Setting<Colour>(new Colour(0, 0, 0));
+	protected Setting<Colour> spinnerBackground = new Setting<Colour>(new Colour(100, 100, 100));
+	
+	protected Setting<Colour> combo1 = new Setting<Colour>(new Colour(255, 192, 0));
+	protected Setting<Colour> combo2 = new Setting<Colour>();
+	protected Setting<Colour> combo3 = new Setting<Colour>();
+	protected Setting<Colour> combo4 = new Setting<Colour>();
+	protected Setting<Colour> combo5 = new Setting<Colour>();
+	protected Setting<Colour> combo6 = new Setting<Colour>();
+	protected Setting<Colour> combo7 = new Setting<Colour>();
+	protected Setting<Colour> combo8 = new Setting<Colour>();
 
 	//fonts
-	protected String hitCirclePrefix = "default";
-	protected int hitCircleOverlap = -2;//negative allowed
+	protected Setting<String> hitCirclePrefix = new Setting<String>("default");
+	protected Setting<Integer> hitCircleOverlap = new Setting<Integer>(-2);//negative allowed
 
-	protected String scorePrefix = "score";
-	protected int scoreOverlap = -2;//negative allowed
+	protected Setting<String> scorePrefix = new Setting<String>("score");
+	protected Setting<Integer> scoreOverlap = new Setting<Integer>(-2);//negative allowed
 
-	protected String comboPrefix = "score";
-	protected int comboOverlap = -2;//negative allowed
+	protected Setting<String> comboPrefix = new Setting<String>("score");
+	protected Setting<Integer> comboOverlap = new Setting<Integer>(-2);//negative allowed
 
 	//ctb
-	protected Colour hyperDash = new Colour(255, 0, 0);
-	protected Colour hyperDashFruit = null;
-	protected Colour hyperDashAfterImage = null;
+	protected Setting<Colour> hyperDash = new Setting<Colour>(new Colour(255, 0, 0));
+	protected Setting<Colour> hyperDashFruit = new Setting<Colour>();
+	protected Setting<Colour> hyperDashAfterImage = new Setting<Colour>();
 
 	protected ManiaIni[] mania = new ManiaIni[ManiaIni.MAX_KEYS];
 
@@ -1259,6 +1259,22 @@ public class SkinIni{
 			joiner.add(String.valueOf(d));
 		}
 		return joiner.toString();
+	}
+	
+	protected enum SliderStyle{
+		SEGMENTS("Segments"),
+		GRADIENT("Gradient");
+		
+		private final String name;
+		
+		private SliderStyle(String name){
+			this.name = name;
+		}
+	
+		@Override
+		public String toString(){
+			return name;
+		}
 	}
 
 	protected enum Version{

@@ -29,6 +29,7 @@ import javax.swing.text.DocumentFilter;
 import javax.swing.text.PlainDocument;
 
 import me.roan.osuskinchecker.SkinIni.ManiaIni;
+import me.roan.osuskinchecker.SkinIni.SliderStyle;
 import me.roan.osuskinchecker.SkinIni.Version;
 import me.roan.osuskinchecker.SplitLayout.ScrollPane;
 
@@ -69,170 +70,47 @@ public class SkinIniTab extends JTabbedPane{
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Version: "));
-				JComboBox<Version> version = new JComboBox<Version>(Version.values());
-				version.setSelectedItem(ini.version);
-				version.addItemListener((e)->{
-					ini.version = (Version)version.getSelectedItem();
-				});
-				panel.add(version);
-				content.add(panel);
-			}
+			content.add(new ComboBoxEditor<Version>("Version", ini.version, Version.values()));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Cursor Expand (should the cursor expand when clicking): "));
-				JCheckBox check = new JCheckBox();
-				check.setSelected(ini.cursorExpand);
-				check.addItemListener((e)->{
-					ini.cursorExpand = check.isSelected();
-				});
-				panel.add(check);
-				content.add(panel);
-			}
+			content.add(new CheckBoxEditor("CursorExpand", "should the cursor expand when clicking", ini.cursorExpand));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Cursor Centre (should the cursor be centered): "));
-				JCheckBox check = new JCheckBox("(false implies the top left corner)");
-				check.setSelected(ini.cursorCentre);
-				check.addItemListener((e)->{
-					ini.cursorCentre = check.isSelected();
-				});
-				panel.add(check);
-				content.add(panel);
-			}
+			content.add(new CheckBoxEditor("CursorCentre", "should the cursor be centered", "false implies the top left corner", ini.cursorCentre));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Cursor Rotate (should the cursor rotate): "));
-				JCheckBox check = new JCheckBox();
-				check.setSelected(ini.cursorRotate);
-				check.addItemListener((e)->{
-					ini.cursorRotate = check.isSelected();
-				});
-				panel.add(check);
-				content.add(panel);
-			}
+			content.add(new CheckBoxEditor("CursorRotate", "should the cursor rotate", ini.cursorRotate));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Cursor Trail Rotate (should the cursor trail rotate): "));
-				JCheckBox check = new JCheckBox();
-				check.setSelected(ini.cursorTrailRotate);
-				check.addItemListener((e)->{
-					ini.cursorTrailRotate = check.isSelected();
-				});
-				panel.add(check);
-				content.add(panel);
-			}
+			content.add(new CheckBoxEditor("CursorTrailRotate", "should the cursor trail rotate",  ini.cursorTrailRotate));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Animation Framerate (how many frames per second for most animations): "));
-				JPanel p = new JPanel(new BorderLayout());
-				JSpinner spinner = new JSpinner(new SpinnerNumberModel(ini.animationFramerate <= 1 ? 1 : ini.animationFramerate, 1, Integer.MAX_VALUE, 1));
-				JCheckBox enabled = new JCheckBox("", ini.animationFramerate != -1);
-				p.add(enabled, BorderLayout.LINE_START);
-				p.add(spinner, BorderLayout.CENTER);
-				spinner.addChangeListener((e)->{
-					if(enabled.isSelected()){
-						ini.animationFramerate = (Integer)spinner.getValue();
-					}
-				});
-				enabled.addActionListener((e)->{
-					if(enabled.isSelected()){
-						ini.animationFramerate = (Integer)spinner.getValue();
-					}else{
-						ini.animationFramerate = -1;
-					}
-				});
-				panel.add(p);
-				content.add(panel);
-			}
+			content.add(new IntegerSpinnerEditor("AnimationFramerate", "how many frame per second for most animations", ini.animationFramerate, 1));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Song Select Active Text (what colour should the text of active panels be tinted): "));
-				panel.add(new ColorSelector(ini.songSelectActiveText, (color)->{
-					ini.songSelectActiveText = color;
-				}));
-				content.add(panel);
-			}
+			content.add(new ColorEditor("SongSelectActiveText", "what colour should the text of active panels be tinted", ini.songSelectActiveText));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Song Select Inactive Text (what colour should the text of inactive panels be tinted): "));
-				panel.add(new ColorSelector(ini.songSelectInactiveText, (color)->{
-					ini.songSelectInactiveText = color;
-				}));
-				content.add(panel);
-			}
+			content.add(new ColorEditor("SongSelectInactiveText", "what colour should the text of inactive panels be tinted", ini.songSelectInactiveText));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Menu Glow (what colour should the spectrum bars be coloured in): "));
-				panel.add(new ColorSelector(ini.menuGlow, (color)->{
-					ini.menuGlow = color;
-				}));
-				content.add(panel);
-			}
+			content.add(new ColorEditor("MenuGlow", "what colour should the spectrum bars be coloured in",  ini.menuGlow));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Score Prefix (what prefix to use for the score numbers): "));
-				JTextField field = new JTextField(ini.scorePrefix);
-				field.addKeyListener(new KeyListener(){
-
-					@Override
-					public void keyTyped(KeyEvent e){
-					}
-
-					@Override
-					public void keyPressed(KeyEvent e){
-					}
-
-					@Override
-					public void keyReleased(KeyEvent e){
-						ini.scorePrefix = field.getText();
-					}
-				});
-				panel.add(field);
-				content.add(panel);
-			}
+			content.add(new TextEditor("ScorePrefix", "what prefix to use for the score numbers", ini.scorePrefix));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Score Overlap (by how many pixels should the score numbers overlap): "));
-				JSpinner spinner = new JSpinner(new SpinnerNumberModel(ini.scoreOverlap, Integer.MIN_VALUE, Integer.MAX_VALUE, 1));
-				spinner.addChangeListener((e)->{
-					ini.scoreOverlap = (Integer)spinner.getValue();
-				});
-				panel.add(spinner);
-				content.add(panel);
-			}
+			content.add(new IntegerSpinnerEditor("ScoreOverlap", "by how many pixels should the score numbers overlap", ini.scoreOverlap));
 			content.add(Box.createVerticalStrut(2));
 
 			content.add(new JPanel(new BorderLayout()));
@@ -254,48 +132,19 @@ public class SkinIniTab extends JTabbedPane{
 
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Hit Circle Overlay Above Number (should the hitcircleoverlay be drawn above the numbers): "));
-				JCheckBox check = new JCheckBox("(false implies that they will be drawn below the overlay)");
-				check.setSelected(ini.hitCircleOverlayAboveNumber);
-				check.addItemListener((e)->{
-					ini.hitCircleOverlayAboveNumber = check.isSelected();
-				});
-				panel.add(check);
-				content.add(panel);
-			}
+			content.add(new CheckBoxEditor("HitCircleOverlayAboveNumber", "should the hitcircleoverlay be drawn above the numbers", "false implies that they will be drawn below the overlay", ini.hitCircleOverlayAboveNumber));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Slider Style (what filling to use for sliders): "));
-				JComboBox<String> sel = new JComboBox<String>(new String[]{"Segments", "Gradient"});
-				sel.setSelectedIndex(ini.sliderStyle - 1);
-				sel.addItemListener((e)->{
-					ini.sliderStyle = sel.getSelectedIndex() + 1;
-				});
-				panel.add(sel);
-				content.add(panel);
-			}
+			content.add(new ComboBoxEditor<SliderStyle>("SliderStyle", "what filling to use for sliders", ini.sliderStyle, SliderStyle.values()));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Slider Ball Flip (should the sliderball flip at the reverse arrow): "));
-				JCheckBox check = new JCheckBox();
-				check.setSelected(ini.sliderBallFlip);
-				check.addItemListener((e)->{
-					ini.sliderBallFlip = check.isSelected();
-				});
-				panel.add(check);
-				content.add(panel);
-			}
+			content.add(new CheckBoxEditor("SliderBallFlip", "should the sliderball flip at the reverse arrow", ini.sliderBallFlip));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
+			content.add(new CheckBoxEditor("AllowSliderBallTint"), constraints);
 			{
 				JPanel panel = new JPanel(new SplitLayout());
 				panel.add(new JLabel(" Allow Slider Ball Tint (should the sliderball be tinted in combo colours): "));
@@ -1962,28 +1811,139 @@ public class SkinIniTab extends JTabbedPane{
 		}
 	}
 	
+	private static final class ColorEditor extends JPanel{
+		
+		private ColorEditor(String name, String hint, Setting<Colour> setting){
+			this(name, hint, setting, false);
+		}
+		
+		private ColorEditor(String name, String hint, Setting<Colour> setting, boolean toggle){
+			super(new SplitLayout());
+			JPanel settings = new JPanel(new BorderLayout());
+			add(new JLabel(" " + name + " (" + hint + "): "));
+			ColorSelector selector = new ColorSelector(setting);
+			settings.add(selector, BorderLayout.CENTER);
+			if(toggle){
+				JCheckBox enabled = new JCheckBox("", setting.isEnabled());
+				settings.add(enabled, BorderLayout.LINE_START);
+				enabled.addActionListener((e)->{
+					setting.setEnabled(enabled.isSelected());
+				});
+			}
+			add(settings);
+		}
+	}
+	
+	private static final class IntegerSpinnerEditor extends JPanel{
+		
+		private IntegerSpinnerEditor(String name, String hint, Setting<Integer> setting){
+			this(name, hint, setting, Integer.MIN_VALUE, false);
+		}
+		
+		private IntegerSpinnerEditor(String name, String hint, Setting<Integer> setting, int min){
+			this(name, hint, setting, min, Integer.MAX_VALUE, false);
+		}
+		
+		private IntegerSpinnerEditor(String name, String hint, Setting<Integer> setting, boolean toggle){
+			this(name, hint, setting, Integer.MIN_VALUE,toggle);
+		}
+		
+		private IntegerSpinnerEditor(String name, String hint, Setting<Integer> setting, int min, boolean toggle){
+			this(name, hint, setting, min, Integer.MAX_VALUE, toggle);
+		}
+
+		private IntegerSpinnerEditor(String name, String hint, Setting<Integer> setting, int min, int max, boolean toggle){
+			super(new SplitLayout());
+			add(new JLabel(" " + name + " (" + hint + "): "));
+			JPanel p = new JPanel(new BorderLayout());
+			JSpinner spinner = new JSpinner(new SpinnerNumberModel((int)setting.getValue(), min, max, 1));
+			p.add(spinner, BorderLayout.CENTER);
+			spinner.addChangeListener((e)->{
+				setting.update((Integer)spinner.getValue());
+			});
+			if(toggle){
+				JCheckBox enabled = new JCheckBox("", setting.isEnabled());
+				p.add(enabled, BorderLayout.LINE_START);
+				enabled.addActionListener((e)->{
+					setting.setEnabled(enabled.isSelected());
+				});
+			}
+			add(p);
+		}
+	}
+	
+	private static final class CheckBoxEditor extends JPanel{
+		
+		private CheckBoxEditor(String name, String hint, Setting<Boolean> setting){
+			this(name, hint, null, setting);
+		}
+		
+		private CheckBoxEditor(String name, String hint, String extra, Setting<Boolean> setting){
+			super(new SplitLayout());
+			add(new JLabel(" " + name + " (" + hint + "): "));
+			JCheckBox check = extra == null ? new JCheckBox() : new JCheckBox(extra);
+			check.setSelected(setting.getValue());
+			check.addItemListener((e)->{
+				setting.update(check.isSelected());
+			});
+			add(check);
+		}
+	}
+	
+	private static final class ComboBoxEditor<T> extends JPanel{
+		
+		private ComboBoxEditor(String name, Setting<T> setting, T[] values){
+			this(name, null, setting, values);
+		}
+		
+		@SuppressWarnings("unchecked")
+		private ComboBoxEditor(String name, String hint, Setting<T> setting, T[] values){
+			super(new SplitLayout());
+			if(hint == null){
+				add(new JLabel(" " + name + ": "));
+			}else{
+				add(new JLabel(" " + name + " (" + hint + "): "));
+			}
+			JComboBox<T> box = new JComboBox<T>(values);
+			box.setSelectedItem(setting.getValue());
+			box.addItemListener((e)->{
+				setting.update((T)box.getSelectedItem());
+			});
+			add(box);
+		}
+	}
+	
 	private static final class TextEditor extends JPanel{
 		
 		private TextEditor(String name, Setting<String> setting){
+			this(name, null, setting);
+		}
+		
+		private TextEditor(String name, String hint, Setting<String> setting){
+			this(name, hint, setting, false);
+		}
+		
+		private TextEditor(String name, String hint, Setting<String> setting, boolean toggle){
 			super(new SplitLayout());
-			add(new JLabel(" " + name + ": "));
-			JTextField field = new JTextField(setting.getValue());
-			field.addKeyListener(new KeyListener(){
-
-				@Override
-				public void keyTyped(KeyEvent e){
-				}
-
-				@Override
-				public void keyPressed(KeyEvent e){
-				}
-
-				@Override
-				public void keyReleased(KeyEvent e){
-					setting.update(field.getText());
-				}
+			JPanel settings = new JPanel(new BorderLayout());
+			if(hint == null){
+				add(new JLabel(" " + name + ": "));
+			}else{
+				add(new JLabel(" " + name + " (" + hint + "): "));
+			}
+			PathField field = new PathField(setting.getValue());
+			field.addActionListener((e)->{
+				setting.update(field.getText());
 			});
-			add(field);
+			if(toggle){
+				settings.add(field, BorderLayout.CENTER);
+				JCheckBox enabled = new JCheckBox("", setting.isEnabled());
+				settings.add(enabled, BorderLayout.LINE_START);
+				enabled.addActionListener((e)->{
+					setting.setEnabled(enabled.isSelected());
+				});
+			}
+			add(settings);
 		}
 	}
 	
@@ -2003,24 +1963,20 @@ public class SkinIniTab extends JTabbedPane{
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = 3286760817738876568L;
-		private Colour color;
-		private ColorEvent handler;
+		private Setting<Colour> color;
 
-		private ColorSelector(Colour def, ColorEvent handler){
-			color = def == null ? new Colour(0, 0, 0) : def;
-			this.setBackground(color.toColor());
+		private ColorSelector(Setting<Colour> def){
+			color = def;
+			this.setBackground(color.getValue().toColor());
 			this.addMouseListener(this);
-			this.handler = handler;
 		}
 
 		@Override
 		public void mouseClicked(MouseEvent arg0){
-			Color c = JColorChooser.showDialog(this, "Colour Chooser", color.toColor());
+			Color c = JColorChooser.showDialog(this, "Colour Chooser", color.getValue().toColor());
 			if(c != null){
-				Colour cl = new Colour(c);
-				this.color = cl;
 				this.setBackground(c);
-				handler.colorChanged(cl);
+				color.update(new Colour(c));
 			}
 		}
 
@@ -2038,12 +1994,6 @@ public class SkinIniTab extends JTabbedPane{
 
 		@Override
 		public void mouseReleased(MouseEvent arg0){
-		}
-
-		@FunctionalInterface
-		private static abstract interface ColorEvent{
-
-			public abstract void colorChanged(Colour color);
 		}
 	}
 
