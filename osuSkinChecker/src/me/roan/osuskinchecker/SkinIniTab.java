@@ -144,118 +144,35 @@ public class SkinIniTab extends JTabbedPane{
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			content.add(new CheckBoxEditor("AllowSliderBallTint"), constraints);
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Allow Slider Ball Tint (should the sliderball be tinted in combo colours): "));
-				JCheckBox check = new JCheckBox();
-				check.setSelected(ini.allowSliderBallTint);
-				check.addItemListener((e)->{
-					ini.allowSliderBallTint = check.isSelected();
-				});
-				panel.add(check);
-				content.add(panel);
-			}
+			content.add(new CheckBoxEditor("AllowSliderBallTint", "should the sliderball be tinted in combo colours", ini.allowSliderBallTint));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Spinner No Blink (should the highest bar of the metre always be visible): "));
-				JCheckBox check = new JCheckBox();
-				check.setSelected(ini.spinnerNoBlink);
-				check.addItemListener((e)->{
-					ini.spinnerNoBlink = check.isSelected();
-				});
-				panel.add(check);
-				content.add(panel);
-			}
+			content.add(new CheckBoxEditor("SpinnerNoBlink", "should the highest bar of the metre always be visible", ini.spinnerNoBlink));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Spinner Fade Playfield (should the spinner add black bars during spins): "));
-				JCheckBox check = new JCheckBox();
-				check.setSelected(ini.spinnerFadePlayfield);
-				check.addItemListener((e)->{
-					ini.spinnerFadePlayfield = check.isSelected();
-				});
-				panel.add(check);
-				content.add(panel);
-			}
+			content.add(new CheckBoxEditor("SpinnerFadePlayfield", "should the spinner add black bars during spins", ini.spinnerFadePlayfield));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Spinner Frequency Modulate (should the spinnerspin sound pitch go up while spinning): "));
-				JCheckBox check = new JCheckBox();
-				check.setSelected(ini.spinnerFrequencyModulate);
-				check.addItemListener((e)->{
-					ini.spinnerFrequencyModulate = check.isSelected();
-				});
-				panel.add(check);
-				content.add(panel);
-			}
+			content.add(new CheckBoxEditor("SpinnerFrequencyModulate", "should the spinnerspin sound pitch go up while spinning", ini.spinnerFrequencyModulate));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Slider Ball (what colour should the slider ball be coloured): "));
-				panel.add(new ColorSelector(ini.sliderBall, (color)->{
-					ini.sliderBall = color;
-				}));
-				content.add(panel);
-			}
+			content.add(new ColorEditor("SliderBall", "what colour should the slider ball be coloured", ini.sliderBall));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				JCheckBox enabled = new JCheckBox("", ini.sliderTrackOverride != null);
-				JPanel settings = new JPanel(new BorderLayout());
-				settings.add(enabled, BorderLayout.LINE_START);
-				panel.add(new JLabel(" Slider Track Override (what colour should the slider body be coloured): "));
-				ColorSelector selector = new ColorSelector(ini.sliderTrackOverride, (color)->{
-					if(enabled.isSelected()){
-						ini.sliderTrackOverride = color;
-					}
-				});
-				settings.add(selector, BorderLayout.CENTER);
-				enabled.addActionListener((e)->{
-					if(enabled.isSelected()){
-						ini.sliderTrackOverride = selector.color;
-					}else{
-						ini.sliderTrackOverride = null;
-					}
-				});
-				panel.add(settings);
-				content.add(panel);
-			}
+			content.add(new ColorEditor("SliderTrackOverride", "what colour should the slider body be coloured", ini.sliderTrackOverride, true));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Slider Border (what colour should be used for sliderborders): "));
-				panel.add(new ColorSelector(ini.sliderBorder, (color)->{
-					ini.sliderBorder = color;
-				}));
-				content.add(panel);
-			}
+			content.add(new ColorEditor("SliderBorder", "what colour should be used for sliderborders", ini.sliderBorder));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				panel.add(new JLabel(" Spinner Background (what colour should be added to the spinner-background): "));
-				panel.add(new ColorSelector(ini.spinnerBackground, (color)->{
-					ini.spinnerBackground = color;
-				}));
-				content.add(panel);
-			}
+			content.add(new ColorEditor("SpinnerBackground", "what colour should be added to the spinner-background", ini.spinnerBackground));
 			content.add(Box.createVerticalStrut(2));
 
 			content.add(new JPanel(new BorderLayout()));
