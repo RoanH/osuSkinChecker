@@ -1059,13 +1059,13 @@ public class SkinIniTab extends JTabbedPane{
 		 */
 		private static final long serialVersionUID = 3145876156701959606L;
 
-		private DoubleArray(double[] columnSpacing){
-			this.setLayout(new GridLayout(1, columnSpacing.length, 2, 0));
-			for(int i = 0; i < columnSpacing.length; i++){
-				JSpinner spinner = new JSpinner(new SpinnerNumberModel(columnSpacing[i], 0.0D, Double.MAX_VALUE, 1.0D));
+		private DoubleArray(double[] data){
+			this.setLayout(new GridLayout(1, data.length, 2, 0));
+			for(int i = 0; i < data.length; i++){
+				JSpinner spinner = new JSpinner(new SpinnerNumberModel(data[i], 0.0D, Double.MAX_VALUE, 1.0D));
 				final int field = i;
 				spinner.addChangeListener((e)->{
-					columnSpacing[field] = (double)spinner.getValue();
+					data[field] = (double)spinner.getValue();
 				});
 				this.add(spinner);
 			}
