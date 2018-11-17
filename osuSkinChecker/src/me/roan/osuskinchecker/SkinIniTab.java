@@ -704,346 +704,100 @@ public class SkinIniTab extends JTabbedPane{
 				}
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Stage Left (what is the name of the left stage image): "));
-					PathField field = new PathField(ini.stageLeft);
-					panel.add(field);
-					field.addActionListener((e)->{
-						ini.stageLeft = field.getText();
-					});
-					content.add(panel);
-				}
+				content.add(new PathEditor("StageLeft", "what is the name of the left stage image", ini.stageLeft));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Stage Right (what is the name of the right stage image): "));
-					PathField field = new PathField(ini.stageRight);
-					panel.add(field);
-					field.addActionListener((e)->{
-						ini.stageRight = field.getText();
-					});
-					content.add(panel);
-				}
+				content.add(new PathEditor("StageRight", "what is the name of the right stage image", ini.stageRight));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Stage Bottom (what is the name of the bottom stage image): "));
-					PathField field = new PathField(ini.stageBottom);
-					panel.add(field);
-					field.addActionListener((e)->{
-						ini.stageBottom = field.getText();
-					});
-					content.add(panel);
-				}
+				content.add(new PathEditor("StageBottom", "what is the name of the bottom stage image", ini.stageBottom));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Stage Hint (what is the name of the stage hint image): "));
-					PathField field = new PathField(ini.stageHint);
-					panel.add(field);
-					field.addActionListener((e)->{
-						ini.stageHint = field.getText();
-					});
-					content.add(panel);
-				}
+				content.add(new PathEditor("StageHint", "what is the name of the stage hint image", ini.stageHint));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Stage Light (what is the name of the stage light image): "));
-					PathField field = new PathField(ini.stageLight);
-					panel.add(field);
-					field.addActionListener((e)->{
-						ini.stageLight = field.getText();
-					});
-					content.add(panel);
-				}
+				content.add(new PathEditor("StageLight", "what is the name of the stage light image", ini.stageLight));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Lighting N (what is the name of the note lighting image): "));
-					PathField field = new PathField(ini.lightingN);
-					panel.add(field);
-					field.addActionListener((e)->{
-						ini.lightingN = field.getText();
-					});
-					content.add(panel);
-				}
+				content.add(new PathEditor("LightingN", "what is the name of the note lighting image", ini.lightingN));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Lighting L (what is the name of the hold note lighting image): "));
-					PathField field = new PathField(ini.lightingL);
-					panel.add(field);
-					field.addActionListener((e)->{
-						ini.lightingL = field.getText();
-					});
-					content.add(panel);
-				}
+				content.add(new PathEditor("LightingL", "what is the name of the hold note lighting image", ini.lightingL));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Warning Arrow (what is the name of the warning arrow image): "));
-					PathField field = new PathField(ini.warningArrow);
-					panel.add(field);
-					field.addActionListener((e)->{
-						ini.warningArrow = field.getText();
-					});
-					content.add(panel);
-				}
+				content.add(new PathEditor("WarningArrow", "what is the name of the warning arrow image", ini.warningArrow));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Hit 0 (what is the name of the hit0 image): "));
-					PathField field = new PathField(ini.hit0);
-					panel.add(field);
-					field.addActionListener((e)->{
-						ini.hit0 = field.getText();
-					});
-					content.add(panel);
-				}
+				content.add(new PathEditor("Hit0", "what is the name of the hit0 image", ini.hit0));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Hit 50 (what is the name of the hit50 image): "));
-					PathField field = new PathField(ini.hit50);
-					panel.add(field);
-					field.addActionListener((e)->{
-						ini.hit50 = field.getText();
-					});
-					content.add(panel);
-				}
+				content.add(new PathEditor("Hit50", "what is the name of the hit50 image", ini.hit50));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Hit 100 (what is the name of the hit100 image): "));
-					PathField field = new PathField(ini.hit100);
-					panel.add(field);
-					field.addActionListener((e)->{
-						ini.hit100 = field.getText();
-					});
-					content.add(panel);
-				}
+				content.add(new PathEditor("Hit100", "what is the name of the hit100 image", ini.hit100));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Hit 200 (what is the name of the hit200 image): "));
-					PathField field = new PathField(ini.hit200);
-					panel.add(field);
-					field.addActionListener((e)->{
-						ini.hit200 = field.getText();
-					});
-					content.add(panel);
-				}
+				content.add(new PathEditor("Hit200", "what is the name of the hit200 image", ini.hit200));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Hit 300 (what is the name of the hit300 image): "));
-					PathField field = new PathField(ini.hit300);
-					panel.add(field);
-					field.addActionListener((e)->{
-						ini.hit300 = field.getText();
-					});
-					content.add(panel);
-				}
+				content.add(new PathEditor("Hit300", "what is the name of the hit300 image", ini.hit300));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Hit 300g (what is the name of the hit300g image): "));
-					PathField field = new PathField(ini.hit300g);
-					panel.add(field);
-					field.addActionListener((e)->{
-						ini.hit300g = field.getText();
-					});
-					content.add(panel);
-				}
+				content.add(new PathEditor("Hit300g", "what is the name of the hit300g image", ini.hit300g));
 				content.add(Box.createVerticalStrut(2));
 				for(int i = 0; i < ini.keys; i++){
 					final int col = i;
 					content.add(new JSeparator());
 					content.add(Box.createVerticalStrut(2));
-					JPanel panel = new JPanel(new SplitLayout());
-					JCheckBox enabled = new JCheckBox("", ini.columns[col].keyImage != null);
-					JPanel settings = new JPanel(new BorderLayout());
-					settings.add(enabled, BorderLayout.LINE_START);
-					panel.add(new JLabel(" Key Image " + col + " (what is the name for the unpressed key image of column " + (col + 1) + "): "));
-					PathField field = new PathField(ini.columns[col].keyImage);
-					field.addActionListener((e)->{
-						if(enabled.isSelected()){
-							ini.columns[col].keyImage = field.getText();
-						}
-					});
-					settings.add(field, BorderLayout.CENTER);
-					enabled.addActionListener((e)->{
-						if(enabled.isSelected()){
-							ini.columns[col].keyImage = field.getText();
-						}else{
-							ini.columns[col].keyImage = null;
-						}
-					});
-					panel.add(settings);
-					content.add(panel);
+					content.add(new PathEditor("KeyImage " + col, "what is the name for the unpressed key image of column " + (col + 1), ini.columns[col].keyImage, true));
 					content.add(Box.createVerticalStrut(2));
 				}
 				for(int i = 0; i < ini.keys; i++){
 					final int col = i;
 					content.add(new JSeparator());
 					content.add(Box.createVerticalStrut(2));
-					JPanel panel = new JPanel(new SplitLayout());
-					JCheckBox enabled = new JCheckBox("", ini.columns[col].keyImageD != null);
-					JPanel settings = new JPanel(new BorderLayout());
-					settings.add(enabled, BorderLayout.LINE_START);
-					panel.add(new JLabel(" Key Image " + col + " D (what is the name for the pressed key image of column " + (col + 1) + "): "));
-					PathField field = new PathField(ini.columns[col].keyImageD);
-					field.addActionListener((e)->{
-						if(enabled.isSelected()){
-							ini.columns[col].keyImageD = field.getText();
-						}
-					});
-					settings.add(field, BorderLayout.CENTER);
-					enabled.addActionListener((e)->{
-						if(enabled.isSelected()){
-							ini.columns[col].keyImageD = field.getText();
-						}else{
-							ini.columns[col].keyImageD = null;
-						}
-					});
-					panel.add(settings);
-					content.add(panel);
+					content.add(new PathEditor("KeyImage " + col + "D", "what is the name for the pressed key image of column " + (col + 1), ini.columns[col].keyImageD, true));
 					content.add(Box.createVerticalStrut(2));
 				}
 				for(int i = 0; i < ini.keys; i++){
 					final int col = i;
 					content.add(new JSeparator());
 					content.add(Box.createVerticalStrut(2));
-					JPanel panel = new JPanel(new SplitLayout());
-					JCheckBox enabled = new JCheckBox("", ini.columns[col].noteImage != null);
-					JPanel settings = new JPanel(new BorderLayout());
-					settings.add(enabled, BorderLayout.LINE_START);
-					panel.add(new JLabel(" Note Image " + col + " (what is the name for the note image of column " + (col + 1) + "): "));
-					PathField field = new PathField(ini.columns[col].noteImage);
-					field.addActionListener((e)->{
-						if(enabled.isSelected()){
-							ini.columns[col].noteImage = field.getText();
-						}
-					});
-					settings.add(field, BorderLayout.CENTER);
-					enabled.addActionListener((e)->{
-						if(enabled.isSelected()){
-							ini.columns[col].noteImage = field.getText();
-						}else{
-							ini.columns[col].noteImage = null;
-						}
-					});
-					panel.add(settings);
-					content.add(panel);
+					content.add(new PathEditor("NoteImage " + col, "what is the name for the note image of column " + (col + 1), ini.columns[col].noteImage, true));
 					content.add(Box.createVerticalStrut(2));
 				}
 				for(int i = 0; i < ini.keys; i++){
 					final int col = i;
 					content.add(new JSeparator());
 					content.add(Box.createVerticalStrut(2));
-					JPanel panel = new JPanel(new SplitLayout());
-					JCheckBox enabled = new JCheckBox("", ini.columns[col].noteImageH != null);
-					JPanel settings = new JPanel(new BorderLayout());
-					settings.add(enabled, BorderLayout.LINE_START);
-					panel.add(new JLabel(" Note Image " + col + " H (what is the name for the hold note head image of column " + (col + 1) + "): "));
-					PathField field = new PathField(ini.columns[col].noteImageH);
-					field.addActionListener((e)->{
-						if(enabled.isSelected()){
-							ini.columns[col].noteImageH = field.getText();
-						}
-					});
-					settings.add(field, BorderLayout.CENTER);
-					enabled.addActionListener((e)->{
-						if(enabled.isSelected()){
-							ini.columns[col].noteImageH = field.getText();
-						}else{
-							ini.columns[col].noteImageH = null;
-						}
-					});
-					panel.add(settings);
-					content.add(panel);
+					content.add(new PathEditor("NoteImage " + col + "H", "what is the name for the hold note head image of column " + (col + 1), ini.columns[col].noteImageH, true));
 					content.add(Box.createVerticalStrut(2));
 				}
 				for(int i = 0; i < ini.keys; i++){
 					final int col = i;
 					content.add(new JSeparator());
 					content.add(Box.createVerticalStrut(2));
-					JPanel panel = new JPanel(new SplitLayout());
-					JCheckBox enabled = new JCheckBox("", ini.columns[col].noteImageL != null);
-					JPanel settings = new JPanel(new BorderLayout());
-					settings.add(enabled, BorderLayout.LINE_START);
-					panel.add(new JLabel(" Note Image " + col + " L (what is the name for the hold note body image of column " + (col + 1) + "): "));
-					PathField field = new PathField(ini.columns[col].noteImageL);
-					field.addActionListener((e)->{
-						if(enabled.isSelected()){
-							ini.columns[col].noteImageL = field.getText();
-						}
-					});
-					settings.add(field, BorderLayout.CENTER);
-					enabled.addActionListener((e)->{
-						if(enabled.isSelected()){
-							ini.columns[col].noteImageL = field.getText();
-						}else{
-							ini.columns[col].noteImageL = null;
-						}
-					});
-					panel.add(settings);
-					content.add(panel);
+					content.add(new PathEditor("NoteImage " + col + "L", "what is the name for the hold note body image of column " + (col + 1), ini.columns[col].noteImageL, true));
 					content.add(Box.createVerticalStrut(2));
 				}
 				for(int i = 0; i < ini.keys; i++){
 					final int col = i;
 					content.add(new JSeparator());
 					content.add(Box.createVerticalStrut(2));
-					JPanel panel = new JPanel(new SplitLayout());
-					JCheckBox enabled = new JCheckBox("", ini.columns[col].noteImageT != null);
-					JPanel settings = new JPanel(new BorderLayout());
-					settings.add(enabled, BorderLayout.LINE_START);
-					panel.add(new JLabel(" Note Image " + col + " T (what is the name for the hold note tail image of column " + (col + 1) + "): "));
-					PathField field = new PathField(ini.columns[col].noteImageT);
-					field.addActionListener((e)->{
-						if(enabled.isSelected()){
-							ini.columns[col].noteImageT = field.getText();
-						}
-					});
-					settings.add(field, BorderLayout.CENTER);
-					enabled.addActionListener((e)->{
-						if(enabled.isSelected()){
-							ini.columns[col].noteImageT = field.getText();
-						}else{
-							ini.columns[col].noteImageT = null;
-						}
-					});
-					panel.add(settings);
-					content.add(panel);
+					content.add(new PathEditor("NoteImage " + col + "T", "what is the name for the hold note tail image of column " + (col + 1), ini.columns[col].noteImageT, true));
 					content.add(Box.createVerticalStrut(2));
 				}
 
@@ -1053,7 +807,11 @@ public class SkinIniTab extends JTabbedPane{
 	}
 	
 	private static final class FlipEditor extends JPanel{
-		
+		/**
+		 * Serial ID
+		 */
+		private static final long serialVersionUID = -4635968938790424674L;
+
 		private FlipEditor(String name, String hint, Setting<Boolean> setting){
 			super(new SplitLayout());
 			JCheckBox enabled = new JCheckBox("", setting.getValue());
@@ -1077,7 +835,11 @@ public class SkinIniTab extends JTabbedPane{
 	}
 	
 	private static final class ColorEditor extends JPanel{
-		
+		/**
+		 * Serial ID
+		 */
+		private static final long serialVersionUID = -1171023992187065714L;
+
 		private ColorEditor(String name, String hint, Setting<Colour> setting){
 			this(name, hint, setting, false);
 		}
@@ -1100,7 +862,11 @@ public class SkinIniTab extends JTabbedPane{
 	}
 	
 	private static final class IntegerSpinnerEditor extends JPanel{
-		
+		/**
+		 * Serial ID
+		 */
+		private static final long serialVersionUID = -8823113464197619825L;
+
 		private IntegerSpinnerEditor(String name, String hint, Setting<Integer> setting){
 			this(name, hint, setting, Integer.MIN_VALUE, false);
 		}
@@ -1138,7 +904,11 @@ public class SkinIniTab extends JTabbedPane{
 	}
 	
 	private static final class DoubleSpinnerEditor extends JPanel{
-		
+		/**
+		 * Serial ID
+		 */
+		private static final long serialVersionUID = -1377612278897030930L;
+
 		private DoubleSpinnerEditor(String name, String hint, Setting<Double> setting){
 			this(name, hint, setting, -Double.MAX_VALUE, false);
 		}
@@ -1176,7 +946,11 @@ public class SkinIniTab extends JTabbedPane{
 	}
 	
 	private static final class CheckBoxEditor extends JPanel{
-		
+		/**
+		 * Serial ID
+		 */
+		private static final long serialVersionUID = -4819354663525782395L;
+
 		private CheckBoxEditor(String name, String hint, Setting<Boolean> setting){
 			this(name, hint, null, setting);
 		}
@@ -1194,7 +968,11 @@ public class SkinIniTab extends JTabbedPane{
 	}
 	
 	private static final class ComboBoxEditor<T> extends JPanel{
-		
+		/**
+		 * Serial ID
+		 */
+		private static final long serialVersionUID = 8946535893069224896L;
+
 		private ComboBoxEditor(String name, Setting<T> setting, T[] values){
 			this(name, null, setting, values);
 		}
@@ -1217,7 +995,11 @@ public class SkinIniTab extends JTabbedPane{
 	}
 	
 	private static final class TextEditor extends JPanel{
-		
+		/**
+		 * Serial ID
+		 */
+		private static final long serialVersionUID = 3436381071498830198L;
+
 		private TextEditor(String name, Setting<String> setting){
 			this(name, null, setting);
 		}
@@ -1251,7 +1033,11 @@ public class SkinIniTab extends JTabbedPane{
 	}
 	
 	private static final class DoubleArrayEditor extends JPanel{
-		
+		/**
+		 * Serial ID
+		 */
+		private static final long serialVersionUID = 2821189742176611077L;
+
 		private DoubleArrayEditor(String name, String hint, Setting<double[]> setting){
 			this(name, hint, setting, false);
 		}
@@ -1268,6 +1054,34 @@ public class SkinIniTab extends JTabbedPane{
 					setting.setEnabled(enabled.isSelected());
 				});
 			}
+			add(settings);
+		}
+	}
+	
+	private static final class PathEditor extends JPanel{
+		/**
+		 * Serial ID
+		 */
+		private static final long serialVersionUID = -5682762745185860450L;
+
+		private PathEditor(String name, String hint, Setting<String> setting){
+			this(name, hint, setting, false);
+		}
+		
+		private PathEditor(String name, String hint, Setting<String> setting, boolean toggle){
+			super(new SplitLayout());
+			JCheckBox enabled = new JCheckBox("", setting.isEnabled());
+			JPanel settings = new JPanel(new BorderLayout());
+			settings.add(enabled, BorderLayout.LINE_START);
+			add(new JLabel(" " + name + " (" + hint + "): "));
+			PathField field = new PathField(setting.getValue());
+			field.addActionListener((e)->{
+				setting.update(field.getText());
+			});
+			settings.add(field, BorderLayout.CENTER);
+			enabled.addActionListener((e)->{
+				setting.setEnabled(enabled.isSelected());
+			});
 			add(settings);
 		}
 	}
