@@ -230,6 +230,7 @@ public class SkinIni{
 										int keys = Integer.parseInt(line.substring(5).trim());
 										if(keys >= 1 && keys <= ManiaIni.MAX_KEYS){
 											mania[keys - 1] = (maniaIni = new ManiaIni(keys));
+											break;
 										}else{
 											throw new IllegalArgumentException("Unsupported key count: " + keys);
 										}
