@@ -26,8 +26,9 @@ public class Setting<T>{
 		this.enabled = enabled;
 	}
 	
-	protected void update(T newValue){
+	protected Setting<T> update(T newValue){
 		value = newValue;
+		return this;
 	}
 	
 	protected boolean isEnabled(){

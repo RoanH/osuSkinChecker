@@ -24,8 +24,7 @@ import me.roan.osuskinchecker.SkinIni.SpecialStyle;
 
 public class SkinIni{
 	private boolean usedDefault = false;
-	private Map<String, List<String>> comments = new HashMap<String, List<String>>();
-	private String last = null;
+	private List<Section> data;
 	
 	//general
 	protected final Setting<String> name = new Setting<String>("Name", "-");
@@ -189,123 +188,10 @@ public class SkinIni{
 			protected Setting<String> noteImageL = new Setting<String>(false, "");
 			protected Setting<String> noteImageT = new Setting<String>(false, "");
 		}
-
-		public void write(PrintWriter writer){
-			writer.println("[Mania]");
-			writer.println("Keys: " + keys);
-			writer.println("ColumnStart: " + columnStart);
-			writer.println("ColumnRight: " + columnRight);
-			if(keys != 1){
-				writer.println("ColumnSpacing: " + arrayToList(columnSpacing));
-			}
-			writer.println("ColumnWidth: " + arrayToList(columnWidth));
-			writer.println("ColumnLineWidth: " + arrayToList(columnLineWidth));
-			writer.println("BarlineHeight: " + barlineHeight);
-			if(lightingNWidth != null){
-				writer.println("LightingNWidth: " + arrayToList(lightingNWidth));
-			}
-			if(lightingLWidth != null){
-				writer.println("LightingLWidth: " + arrayToList(lightingLWidth));
-			}
-			if(widthForNoteHeightScale != -1.0D){
-				writer.println("WidthForNoteHeightScale: " + widthForNoteHeightScale);
-			}
-			writer.println("HitPosition: " + hitPosition);
-			writer.println("LightPosition: " + lightPosition);
-			writer.println("ScorePosition: " + scorePosition);
-			writer.println("ComboPosition: " + comboPosition);
-			writer.println("JudgementLine: " + (judgementLine ? 1 : 0));
-			if(keys % 2 == 0 && keys >= 4){
-				writer.println("SpecialStyle: " + specialStyle);
-			}
-			writer.println("ComboBurstStyle: " + comboBurstStyle);
-			if(splitStages != null){
-				writer.println("SplitStages: " + (splitStages ? 1 : 0));
-			}
-			writer.println("StageSeparation: " + stageSeparation);
-			writer.println("SeparateScore: " + (separateScore ? 1 : 0));
-			writer.println("KeysUnderNotes: " + (keysUnderNotes ? 1 : 0));
-			writer.println("UpsideDown: " + (upsideDown ? 1 : 0));
-			writer.println("KeyFlipWhenUpsideDown: " + (keyFlipWhenUpsideDown ? 1 : 0));
-			writer.println("NoteFlipWhenUpsideDown: " + (noteFlipWhenUpsideDown ? 1 : 0));
-			writer.println("NoteBodyStyle: " + noteBodyStyle);
-			writer.println("ColourColumnLine: " + rgba(colourColumnLine));
-			writer.println("ColourBarline: " + rgba(colourBarline));
-			writer.println("ColourJudgementLine: " + rgb(colourJudgementLine));
-			writer.println("ColourKeyWarning: " + rgb(colourKeyWarning));
-			writer.println("ColourHold: " + rgba(colourHold));
-			writer.println("ColourBreak: " + rgb(colourBreak));
-			writer.println("StageLeft: " + stageLeft);
-			writer.println("StageRight: " + stageRight);
-			writer.println("StageBottom: " + stageBottom);
-			writer.println("StageHint: " + stageHint);
-			writer.println("StageLight: " + stageLight);
-			writer.println("LightingN: " + lightingN);
-			writer.println("LightingL: " + lightingL);
-			writer.println("WarningArrow: " + warningArrow);
-			writer.println("Hit0: " + hit0);
-			writer.println("Hit50: " + hit50);
-			writer.println("Hit100: " + hit100);
-			writer.println("Hit200: " + hit200);
-			writer.println("Hit300: " + hit300);
-			writer.println("Hit300g: " + hit300g);
-			
-			for(int i = 0; i < columns.length; i++){
-				Column col = columns[i];
-
-				if(col.keyFlipWhenUpsideDown != null){
-					writer.println("KeyFlipWhenUpsideDown" + col.key + ": " + (col.keyFlipWhenUpsideDown ? 1 : 0));
-				}
-				if(col.keyFlipWhenUpsideDownD != null){
-					writer.println("KeyFlipWhenUpsideDown" + col.key + "D: " + (col.keyFlipWhenUpsideDownD ? 1 : 0));
-				}
-				if(col.noteFlipWhenUpsideDown != null){
-					writer.println("NoteFlipWhenUpsideDown" + col.key + ": " + (col.noteFlipWhenUpsideDown ? 1 : 0));
-				}
-				if(col.noteFlipWhenUpsideDownH != null){
-					writer.println("NoteFlipWhenUpsideDown" + col.key + "H: " + (col.noteFlipWhenUpsideDownH ? 1 : 0));
-				}
-				if(col.noteFlipWhenUpsideDownL != null){
-					writer.println("NoteFlipWhenUpsideDown" + col.key + "L: " + (col.noteFlipWhenUpsideDownL ? 1 : 0));
-				}
-				if(col.noteFlipWhenUpsideDownT != null){
-					writer.println("NoteFlipWhenUpsideDown" + col.key + "T: " + (col.noteFlipWhenUpsideDownT ? 1 : 0));
-				}
-				if(col.noteBodyStyle != -1){
-					writer.println("NoteBodyStyle" + col.key + ": " + col.noteBodyStyle);
-				}
-				if(col.colour != null){
-					writer.println("Colour" + col.key + ": " + rgba(col.colour));
-				}
-				if(col.colourLight != null){
-					writer.println("ColourLight" + col.key + ": " + rgb(col.colourLight));
-				}
-				if(col.keyImage != null){
-					writer.println("KeyImage" + col.key + ": " + col.keyImage);
-				}
-				if(col.keyImageD != null){
-					writer.println("KeyImage" + col.key + "D: " + col.keyImageD);
-				}
-				if(col.noteImage != null){
-					writer.println("NoteImage" + col.key + ": " + col.noteImage);
-				}
-				if(col.noteImageH != null){
-					writer.println("NoteImage" + col.key + "H: " + col.noteImageH);
-				}
-				if(col.noteImageL != null){
-					writer.println("NoteImage" + col.key + "L: " + col.noteImageL);
-				}
-				if(col.noteImageT != null){
-					writer.println("NoteImage" + col.key + "T: " + col.noteImageT);
-				}
-			}
-			
-			writer.println();
-		}
 	}
 	
 	public void readIni(File file) throws IOException{
-		List<Section> data = new ArrayList<Section>();
+		data = new ArrayList<Section>();
 		Section section = new Section(null);
 		data.add(section);
 		Pattern header = Pattern.compile("[.*]");
@@ -319,345 +205,342 @@ public class SkinIni{
 			}else if(section.isMania()){
 				parseMania(line);
 			}else{
-				parse(line);
+				section.data.add(parse(line));
 			}
 		}
 		
 		reader.close();
 	}
 
-	public void parse(File file) throws IOException{
-		String line = null;
-		try{
-			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-			while((line = reader.readLine()) != null){
-				if(line.trim().isEmpty() || line.startsWith("//")){
-					continue;
+	public Setting<?> parse(String line) throws IOException{
+		if(line.trim().isEmpty() || line.startsWith("//")){
+			return new Comment(line);
+		}
+		String[] args = line.split(":", 2);
+		if(!line.startsWith("[")){
+			args[1] = args[1].trim();
+		}
+		switch(args[0]){
+		//[General]
+		case "Name":
+			return name.update(args[1]);
+		case "Author":
+			return author.update(args[1]);
+		case "Version":
+			version = Version.fromString(args[1]);
+			if(version == null){
+				usedDefault = true;
+				version = Version.V25;
+			}
+			break;
+		case "CursorExpand":
+			if(args[1].equals("1") || args[1].equals("0")){
+				cursorExpand = args[1].equals("1");
+			}else{
+				usedDefault = true;
+			}
+			break;
+		case "CursorCentre":
+			if(args[1].equals("1") || args[1].equals("0")){
+				cursorCentre = args[1].equals("1");
+			}else{
+				usedDefault = true;
+			}
+			break;
+		case "CursorRotate":
+			if(args[1].equals("1") || args[1].equals("0")){
+				cursorRotate = args[1].equals("1");
+			}else{
+				usedDefault = true;
+			}
+			break;
+		case "CursorTrailRotate":
+			if(args[1].equals("1") || args[1].equals("0")){
+				cursorTrailRotate = args[1].equals("1");
+			}else{
+				usedDefault = true;
+			}
+			break;
+		case "AnimationFramerate":
+			try{
+				int val = Integer.parseInt(args[1]);
+				if(val > 0){
+					animationFramerate = val;
+				}else{
+					usedDefault = true;
 				}
-				String[] args = line.split(":", 2);
-				if(!line.startsWith("[")){
-					args[1] = args[1].trim();
+			}catch(NumberFormatException e){
+				usedDefault = true;
+			}
+			break;
+		case "LayeredHitSounds":
+			if(args[1].equals("1") || args[1].equals("0")){
+				layeredHitSounds = args[1].equals("1");
+			}else{
+				usedDefault = true;
+			}
+			break;
+		case "ComboBurstRandom":
+			if(args[1].equals("1") || args[1].equals("0")){
+				comboBurstRandom = args[1].equals("1");
+			}else{
+				usedDefault = true;
+			}
+			break;
+		case "CustomComboBurstSounds":
+			customComboBurstSounds = args[1].replaceAll(" ", "");
+			break;
+		case "HitCircleOverlayAboveNumber":
+			if(args[1].equals("1") || args[1].equals("0")){
+				hitCircleOverlayAboveNumber = args[1].equals("1");
+			}else{
+				usedDefault = true;
+			}
+			break;
+		case "SliderStyle":
+			try{
+				int style = Integer.parseInt(args[1]);
+				if(style >= 0 && style <= 2){
+					sliderStyle = style;
+				}else{
+					usedDefault = true;
 				}
-				switch(args[0]){
-				//[Mania]
-				case "[Mania]":
-					readMania(reader);
-					break;
-				//[General]
-				case "Name":
-					name = args[1];
-					break;
-				case "Author":
-					author = args[1];
-					break;
-				case "Version":
-					version = Version.fromString(args[1]);
-					if(version == null){
-						usedDefault = true;
-						version = Version.V25;
-					}
-					break;
-				case "CursorExpand":
-					if(args[1].equals("1") || args[1].equals("0")){
-						cursorExpand = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "CursorCentre":
-					if(args[1].equals("1") || args[1].equals("0")){
-						cursorCentre = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "CursorRotate":
-					if(args[1].equals("1") || args[1].equals("0")){
-						cursorRotate = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "CursorTrailRotate":
-					if(args[1].equals("1") || args[1].equals("0")){
-						cursorTrailRotate = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "AnimationFramerate":
-					try{
-						int val = Integer.parseInt(args[1]);
-						if(val > 0){
-							animationFramerate = val;
-						}else{
-							usedDefault = true;
-						}
-					}catch(NumberFormatException e){
-						usedDefault = true;
-					}
-					break;
-				case "LayeredHitSounds":
-					if(args[1].equals("1") || args[1].equals("0")){
-						layeredHitSounds = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "ComboBurstRandom":
-					if(args[1].equals("1") || args[1].equals("0")){
-						comboBurstRandom = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "CustomComboBurstSounds":
-					customComboBurstSounds = args[1].replaceAll(" ", "");
-					break;
-				case "HitCircleOverlayAboveNumber":
-					if(args[1].equals("1") || args[1].equals("0")){
-						hitCircleOverlayAboveNumber = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "SliderStyle":
-					try{
-						int style = Integer.parseInt(args[1]);
-						if(style >= 0 && style <= 2){
-							sliderStyle = style;
-						}else{
-							usedDefault = true;
-						}
-					}catch(NumberFormatException e){
-						usedDefault = true;
-					}
-					break;
-				case "SliderBallFlip":
-					if(args[1].equals("1") || args[1].equals("0")){
-						sliderBallFlip = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "AllowSliderBallTint":
-					if(args[1].equals("1") || args[1].equals("0")){
-						allowSliderBallTint = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "SpinnerNoBlink":
-					if(args[1].equals("1") || args[1].equals("0")){
-						spinnerNoBlink = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "SpinnerFadePlayfield":
-					if(args[1].equals("1") || args[1].equals("0")){
-						spinnerFadePlayfield = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "SpinnerFrequencyModulate":
-					if(args[1].equals("1") || args[1].equals("0")){
-						spinnerFrequencyModulate = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				//[Colours]
-				case "SongSelectActiveText":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							songSelectActiveText = color;
-						}
-					}
-					break;
-				case "SongSelectInactiveText":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							songSelectInactiveText = color;
-						}
-					}
-					break;
-				case "MenuGlow":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							menuGlow = color;
-						}
-					}
-					break;
-				case "StarBreakAdditive":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							starBreakAdditive = color;
-						}
-					}
-					break;
-				case "InputOverlayText":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							inputOverlayText = color;
-						}
-					}
-					break;
-				case "SliderBall":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							sliderBall = color;
-						}
-					}
-					break;
-				case "SliderTrackOverride":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							sliderTrackOverride = color;
-						}
-					}
-					break;
-				case "SliderBorder":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							sliderBorder = color;
-						}
-					}
-					break;
-				case "SpinnerBackground":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							spinnerBackground = color;
-						}
-					}
-					break;
-				case "Combo1":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							combo1 = color;
-						}
-					}
-					break;
-				case "Combo2":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							combo2 = color;
-						}
-					}
-					break;
-				case "Combo3":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							combo3 = color;
-						}
-					}
-					break;
-				case "Combo4":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							combo4 = color;
-						}
-					}
-					break;
-				case "Combo5":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							combo5 = color;
-						}
-					}
-					break;
-				case "Combo6":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							combo6 = color;
-						}
-					}
-					break;
-				case "Combo7":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							combo7 = color;
-						}
-					}
-					break;
-				case "Combo8":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							combo8 = color;
-						}
-					}
-					break;
-				//[Fonts]
-				case "HitCirclePrefix":
-					hitCirclePrefix = args[1];
-					break;
-				case "HitCircleOverlap":
-					hitCircleOverlap = Integer.parseInt(args[1]);
-					break;
-				case "ScorePrefix":
-					scorePrefix = args[1];
-					break;
-				case "ScoreOverlap":
-					scoreOverlap = Integer.parseInt(args[1]);
-					break;
-				case "ComboPrefix":
-					comboPrefix = args[1];
-					break;
-				case "ComboOverlap":
-					comboOverlap = Integer.parseInt(args[1]);
-					break;
-				//[CatchTheBeat]
-				case "HyperDash":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							hyperDash = color;
-						}
-					}
-					break;
-				case "HyperDashFruit":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							hyperDashFruit = color;
-						}
-					}
-					break;
-				case "HyperDashAfterImage":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							hyperDashAfterImage = color;
-						}
-					}
-					break;
+			}catch(NumberFormatException e){
+				usedDefault = true;
+			}
+			break;
+		case "SliderBallFlip":
+			if(args[1].equals("1") || args[1].equals("0")){
+				sliderBallFlip = args[1].equals("1");
+			}else{
+				usedDefault = true;
+			}
+			break;
+		case "AllowSliderBallTint":
+			if(args[1].equals("1") || args[1].equals("0")){
+				allowSliderBallTint = args[1].equals("1");
+			}else{
+				usedDefault = true;
+			}
+			break;
+		case "SpinnerNoBlink":
+			if(args[1].equals("1") || args[1].equals("0")){
+				spinnerNoBlink = args[1].equals("1");
+			}else{
+				usedDefault = true;
+			}
+			break;
+		case "SpinnerFadePlayfield":
+			if(args[1].equals("1") || args[1].equals("0")){
+				spinnerFadePlayfield = args[1].equals("1");
+			}else{
+				usedDefault = true;
+			}
+			break;
+		case "SpinnerFrequencyModulate":
+			if(args[1].equals("1") || args[1].equals("0")){
+				spinnerFrequencyModulate = args[1].equals("1");
+			}else{
+				usedDefault = true;
+			}
+			break;
+		//[Colours]
+		case "SongSelectActiveText":
+			{
+				Colour color = parseColor(args[1]);
+				if(color != null){
+					songSelectActiveText = color;
 				}
 			}
-		}catch(Exception e){
-			e.printStackTrace();
-			throw new IllegalArgumentException("Line: " + line, e);
+			break;
+		case "SongSelectInactiveText":
+			{
+				Colour color = parseColor(args[1]);
+				if(color != null){
+					songSelectInactiveText = color;
+				}
+			}
+			break;
+		case "MenuGlow":
+			{
+				Colour color = parseColor(args[1]);
+				if(color != null){
+					menuGlow = color;
+				}
+			}
+			break;
+		case "StarBreakAdditive":
+			{
+				Colour color = parseColor(args[1]);
+				if(color != null){
+					starBreakAdditive = color;
+				}
+			}
+			break;
+		case "InputOverlayText":
+			{
+				Colour color = parseColor(args[1]);
+				if(color != null){
+					inputOverlayText = color;
+				}
+			}
+			break;
+		case "SliderBall":
+			{
+				Colour color = parseColor(args[1]);
+				if(color != null){
+					sliderBall = color;
+				}
+			}
+			break;
+		case "SliderTrackOverride":
+			{
+				Colour color = parseColor(args[1]);
+				if(color != null){
+					sliderTrackOverride = color;
+				}
+			}
+			break;
+		case "SliderBorder":
+			{
+				Colour color = parseColor(args[1]);
+				if(color != null){
+					sliderBorder = color;
+				}
+			}
+			break;
+		case "SpinnerBackground":
+			{
+				Colour color = parseColor(args[1]);
+				if(color != null){
+					spinnerBackground = color;
+				}
+			}
+			break;
+		case "Combo1":
+			{
+				Colour color = parseColor(args[1]);
+				if(color != null){
+					combo1 = color;
+				}
+			}
+			break;
+		case "Combo2":
+			{
+				Colour color = parseColor(args[1]);
+				if(color != null){
+					combo2 = color;
+				}
+			}
+			break;
+		case "Combo3":
+			{
+				Colour color = parseColor(args[1]);
+				if(color != null){
+					combo3 = color;
+				}
+			}
+			break;
+		case "Combo4":
+			{
+				Colour color = parseColor(args[1]);
+				if(color != null){
+					combo4 = color;
+				}
+			}
+			break;
+		case "Combo5":
+			{
+				Colour color = parseColor(args[1]);
+				if(color != null){
+					combo5 = color;
+				}
+			}
+			break;
+		case "Combo6":
+			{
+				Colour color = parseColor(args[1]);
+				if(color != null){
+					combo6 = color;
+				}
+			}
+			break;
+		case "Combo7":
+			{
+				Colour color = parseColor(args[1]);
+				if(color != null){
+					combo7 = color;
+				}
+			}
+			break;
+		case "Combo8":
+			{
+				Colour color = parseColor(args[1]);
+				if(color != null){
+					combo8 = color;
+				}
+			}
+			break;
+		//[Fonts]
+		case "HitCirclePrefix":
+			hitCirclePrefix = args[1];
+			break;
+		case "HitCircleOverlap":
+			hitCircleOverlap = Integer.parseInt(args[1]);
+			break;
+		case "ScorePrefix":
+			scorePrefix = args[1];
+			break;
+		case "ScoreOverlap":
+			scoreOverlap = Integer.parseInt(args[1]);
+			break;
+		case "ComboPrefix":
+			comboPrefix = args[1];
+			break;
+		case "ComboOverlap":
+			comboOverlap = Integer.parseInt(args[1]);
+			break;
+		//[CatchTheBeat]
+		case "HyperDash":
+			{
+				Colour color = parseColor(args[1]);
+				if(color != null){
+					hyperDash = color;
+				}
+			}
+			break;
+		case "HyperDashFruit":
+			{
+				Colour color = parseColor(args[1]);
+				if(color != null){
+					hyperDashFruit = color;
+				}
+			}
+			break;
+		case "HyperDashAfterImage":
+			{
+				Colour color = parseColor(args[1]);
+				if(color != null){
+					hyperDashAfterImage = color;
+				}
+			}
+			break;
+		default:
+			return new Comment(line);
 		}
-		if(usedDefault){
-			JOptionPane.showMessageDialog(SkinChecker.frame, "Skin.ini fields were found that couldn't be parsed. Default values were used.", "Skin Checker", JOptionPane.WARNING_MESSAGE);
-		}
+
+		//TODO
+//		try{
+//			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+//			while((line = reader.readLine()) != null){
+//				
+//		}catch(Exception e){
+//			e.printStackTrace();
+//			throw new IllegalArgumentException("Line: " + line, e);
+//		}
+//		if(usedDefault){
+//			JOptionPane.showMessageDialog(SkinChecker.frame, "Skin.ini fields were found that couldn't be parsed. Default values were used.", "Skin Checker", JOptionPane.WARNING_MESSAGE);
+//		}
 	}
 
 	private void parseMania(BufferedReader reader) throws IOException{
@@ -1148,90 +1031,14 @@ public class SkinIni{
 	public void writeIni(File file) throws FileNotFoundException{
 		PrintWriter writer = new PrintWriter(new FileOutputStream(file));
 
-		writer.println("[General]");
-		writer.println("Name: " + name);
-		writer.println("Author: " + author);
-		writer.println("Version: " + version.name);
-		writer.println();
-		writer.println("CursorExpand: " + (cursorExpand ? 1 : 0));
-		writer.println("CursorCentre: " + (cursorCentre ? 1 : 0));
-		writer.println("CursorRotate: " + (cursorRotate ? 1 : 0));
-		writer.println("CursorTrailRotate: " + (cursorTrailRotate ? 1 : 0));
-		if(animationFramerate != -1){
-			writer.println("AnimationFramerate: " + animationFramerate);
-		}
-		writer.println("LayeredHitSounds: " + (layeredHitSounds ? 1 : 0));
-		writer.println("ComboBurstRandom: " + (comboBurstRandom ? 1 : 0));
-		if(customComboBurstSounds != null){
-			writer.println("CustomComboBurstSounds: " + customComboBurstSounds);
-		}
-		writer.println("HitCircleOverlayAboveNumber: " + (hitCircleOverlayAboveNumber ? 1 : 0));
-		writer.println("SliderStyle: " + sliderStyle);
-		writer.println("SliderBallFlip: " + (sliderBallFlip ? 1 : 0));
-		writer.println("AllowSliderBallTint: " + (allowSliderBallTint ? 1 : 0));
-		writer.println("SpinnerNoBlink: " + (spinnerNoBlink ? 1 : 0));
-		writer.println("SpinnerFadePlayfield: " + (spinnerFadePlayfield ? 1 : 0));
-		writer.println("SpinnerFrequencyModulate: " + (spinnerFrequencyModulate ? 1 : 0));
-		writer.println();
-
-		writer.println("[Colours]");
-		writer.println("SongSelectActiveText: " + rgb(songSelectActiveText));
-		writer.println("SongSelectInactiveText: " + rgb(songSelectInactiveText));
-		writer.println("MenuGlow: " + rgb(menuGlow));
-		writer.println("StarBreakAdditive: " + rgb(starBreakAdditive));
-		writer.println("InputOverlayText: " + rgb(inputOverlayText));
-		writer.println("SliderBall: " + rgb(sliderBall));
-		if(sliderTrackOverride != null){
-			writer.println("SliderTrackOverride: " + rgb(sliderTrackOverride));
-		}
-		writer.println("SliderBorder: " + rgb(sliderBorder));
-		writer.println("SpinnerBackground: " + rgb(spinnerBackground));
-		writer.println("Combo1: " + rgb(combo1));
-		if(combo2 != null){
-			writer.println("Combo2: " + rgb(combo2));
-		}
-		if(combo3 != null){
-			writer.println("Combo3: " + rgb(combo3));
-		}
-		if(combo4 != null){
-			writer.println("Combo4: " + rgb(combo4));
-		}
-		if(combo5 != null){
-			writer.println("Combo5: " + rgb(combo5));
-		}
-		if(combo6 != null){
-			writer.println("Combo6: " + rgb(combo6));
-		}
-		if(combo7 != null){
-			writer.println("Combo7: " + rgb(combo7));
-		}
-		if(combo8 != null){
-			writer.println("Combo8: " + rgb(combo8));
-		}
-		writer.println();
-
-		writer.println("[Fonts]");
-		writer.println("HitCirclePrefix: " + hitCirclePrefix);
-		writer.println("HitCircleOverlap: " + hitCircleOverlap);
-		writer.println("ScorePrefix: " + scorePrefix);
-		writer.println("ScoreOverlap: " + scoreOverlap);
-		writer.println("ComboPrefix: " + comboPrefix);
-		writer.println("ComboOverlap: " + comboOverlap);
-		writer.println();
-
-		writer.println("[CatchTheBeat]");
-		writer.println("HyperDash: " + rgb(hyperDash));
-		if(hyperDashFruit != null){
-			writer.println("HyperDashFruit: " + rgb(hyperDashFruit));
-		}
-		if(hyperDashAfterImage != null){
-			writer.println("HyperDashAfterImage: " + rgb(hyperDashAfterImage));
-		}
-		writer.println();
-
-		for(ManiaIni ini : mania){
-			if(ini != null){
-				ini.write(writer);
+		for(Section section : data){
+			if(section.name != null){
+				writer.println(section.name);
+			}
+			for(Setting setting : section.data){
+				if(setting.isEnabled()){
+					writer.println(setting);
+				}
 			}
 		}
 
@@ -1373,7 +1180,7 @@ public class SkinIni{
 			case "latest":
 				return LATEST;
 			default:
-				return null;
+				return V1;
 			}
 		}
 
