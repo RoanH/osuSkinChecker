@@ -143,4 +143,13 @@ public class Colour{
 	public final boolean hasAlpha(){
 		return a != 255;
 	}
+	
+	@Override
+	public String toString(){
+		if(hasAlpha()){
+			return r + "," + g + "," + b + "," + a;
+		}else{
+			return r + "," + g + "," + b;
+		}
+	}
 }

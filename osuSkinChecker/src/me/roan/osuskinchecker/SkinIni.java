@@ -28,65 +28,65 @@ public class SkinIni{
 	private String last = null;
 	
 	//general
-	protected final Setting<String> name = new Setting<String>("-");
-	protected final Setting<String> author = new Setting<String>("-");
-	protected final Setting<Version> version = new Setting<Version>(Version.LATEST);
-	protected final Setting<Boolean> cursorExpand = new Setting<Boolean>(true);
-	protected final Setting<Boolean> cursorCentre = new Setting<Boolean>(true);
-	protected final Setting<Boolean> cursorRotate = new Setting<Boolean>(true);
-	protected final Setting<Boolean> cursorTrailRotate = new Setting<Boolean>(true);
-	protected final Setting<Integer> animationFramerate = new Setting<Integer>(false, 1);//non negative
+	protected final Setting<String> name = new Setting<String>("Name", "-");
+	protected final Setting<String> author = new Setting<String>("Author", "-");
+	protected final Setting<Version> version = new Setting<Version>("Version", Version.LATEST);
+	protected final Setting<Boolean> cursorExpand = new Setting<Boolean>("CursorExpand", true);
+	protected final Setting<Boolean> cursorCentre = new Setting<Boolean>("CursorCentre", true);
+	protected final Setting<Boolean> cursorRotate = new Setting<Boolean>("CursorRotate", true);
+	protected final Setting<Boolean> cursorTrailRotate = new Setting<Boolean>("CursorTrailRotate", true);
+	protected final Setting<Integer> animationFramerate = new Setting<Integer>("AnimationFramerate", false, 1);//non negative
 
 	//combo bursts
-	protected final Setting<Boolean> layeredHitSounds = new Setting<Boolean>(true);
-	protected final Setting<Boolean> comboBurstRandom = new Setting<Boolean>(false);
-	protected final Setting<String> customComboBurstSounds = new Setting<String>(false, "");//list of ints, positive values only
+	protected final Setting<Boolean> layeredHitSounds = new Setting<Boolean>("LayeredHitSounds", true);
+	protected final Setting<Boolean> comboBurstRandom = new Setting<Boolean>("ComboBurstRandom", false);
+	protected final Setting<String> customComboBurstSounds = new Setting<String>("CustomComboBurstSounds", false, "");//list of ints, positive values only
 
 	//standard
-	protected final Setting<Boolean> hitCircleOverlayAboveNumber = new Setting<Boolean>(true);
-	protected final Setting<SliderStyle> sliderStyle = new Setting<SliderStyle>(SliderStyle.GRADIENT);//1 or 2
-	protected final Setting<Boolean> sliderBallFlip = new Setting<Boolean>(false);
-	protected final Setting<Boolean> allowSliderBallTint = new Setting<Boolean>(false);
-	protected final Setting<Boolean> spinnerNoBlink = new Setting<Boolean>(false);
-	protected final Setting<Boolean> spinnerFadePlayfield = new Setting<Boolean>(false);
-	protected final Setting<Boolean> spinnerFrequencyModulate = new Setting<Boolean>(true);
+	protected final Setting<Boolean> hitCircleOverlayAboveNumber = new Setting<Boolean>("HitCircleOverlayAboveNumber", true);
+	protected final Setting<SliderStyle> sliderStyle = new Setting<SliderStyle>("SliderStyle", SliderStyle.GRADIENT);//1 or 2
+	protected final Setting<Boolean> sliderBallFlip = new Setting<Boolean>("SliderBallFlip", false);
+	protected final Setting<Boolean> allowSliderBallTint = new Setting<Boolean>("AllowSliderBallTint", false);
+	protected final Setting<Boolean> spinnerNoBlink = new Setting<Boolean>("SpinnerNoBlink", false);
+	protected final Setting<Boolean> spinnerFadePlayfield = new Setting<Boolean>("SpinnerFadePlayfield", false);
+	protected final Setting<Boolean> spinnerFrequencyModulate = new Setting<Boolean>("SpinnerFrequencyModulate", true);
 
 	//colours
-	protected final Setting<Colour> songSelectActiveText = new Setting<Colour>(new Colour(0, 0, 0));
-	protected final Setting<Colour> songSelectInactiveText = new Setting<Colour>(new Colour(255, 255, 255));
-	protected final Setting<Colour> menuGlow = new Setting<Colour>(new Colour(0, 78, 155));
+	protected final Setting<Colour> songSelectActiveText = new Setting<Colour>("SongSelectActiveText", new Colour(0, 0, 0));
+	protected final Setting<Colour> songSelectInactiveText = new Setting<Colour>("SongSelectInactiveText", new Colour(255, 255, 255));
+	protected final Setting<Colour> menuGlow = new Setting<Colour>("MenuGlow", new Colour(0, 78, 155));
 	
-	protected final Setting<Colour> starBreakAdditive = new Setting<Colour>(new Colour(255, 182, 193));
-	protected final Setting<Colour> inputOverlayText = new Setting<Colour>(new Colour(0, 0, 0));
+	protected final Setting<Colour> starBreakAdditive = new Setting<Colour>("StarBreakAdditive", new Colour(255, 182, 193));
+	protected final Setting<Colour> inputOverlayText = new Setting<Colour>("InputOverlayText", new Colour(0, 0, 0));
 	
-	protected final Setting<Colour> sliderBall = new Setting<Colour>(new Colour(2, 170, 255));
-	protected final Setting<Colour> sliderTrackOverride = new Setting<Colour>(new Colour(0, 0, 0));
-	protected final Setting<Colour> sliderBorder = new Setting<Colour>(new Colour(0, 0, 0));
-	protected final Setting<Colour> spinnerBackground = new Setting<Colour>(new Colour(100, 100, 100));
+	protected final Setting<Colour> sliderBall = new Setting<Colour>("SliderBall", new Colour(2, 170, 255));
+	protected final Setting<Colour> sliderTrackOverride = new Setting<Colour>("SliderTrackOverride", new Colour(0, 0, 0));
+	protected final Setting<Colour> sliderBorder = new Setting<Colour>("SliderBorder", new Colour(0, 0, 0));
+	protected final Setting<Colour> spinnerBackground = new Setting<Colour>("SpinnerBackground", new Colour(100, 100, 100));
 	
-	protected final Setting<Colour> combo1 = new Setting<Colour>(new Colour(255, 192, 0));
-	protected final Setting<Colour> combo2 = new Setting<Colour>(new Colour(0, 0, 0));
-	protected final Setting<Colour> combo3 = new Setting<Colour>(new Colour(0, 0, 0));
-	protected final Setting<Colour> combo4 = new Setting<Colour>(new Colour(0, 0, 0));
-	protected final Setting<Colour> combo5 = new Setting<Colour>(new Colour(0, 0, 0));
-	protected final Setting<Colour> combo6 = new Setting<Colour>(new Colour(0, 0, 0));
-	protected final Setting<Colour> combo7 = new Setting<Colour>(new Colour(0, 0, 0));
-	protected final Setting<Colour> combo8 = new Setting<Colour>(new Colour(0, 0, 0));
+	protected final Setting<Colour> combo1 = new Setting<Colour>("Combo1", new Colour(255, 192, 0));
+	protected final Setting<Colour> combo2 = new Setting<Colour>("Combo2", new Colour(0, 0, 0));
+	protected final Setting<Colour> combo3 = new Setting<Colour>("Combo3", new Colour(0, 0, 0));
+	protected final Setting<Colour> combo4 = new Setting<Colour>("Combo4", new Colour(0, 0, 0));
+	protected final Setting<Colour> combo5 = new Setting<Colour>("Combo5", new Colour(0, 0, 0));
+	protected final Setting<Colour> combo6 = new Setting<Colour>("Combo6", new Colour(0, 0, 0));
+	protected final Setting<Colour> combo7 = new Setting<Colour>("Combo7", new Colour(0, 0, 0));
+	protected final Setting<Colour> combo8 = new Setting<Colour>("Combo8", new Colour(0, 0, 0));
 
 	//fonts
-	protected final Setting<String> hitCirclePrefix = new Setting<String>("default");
-	protected final Setting<Integer> hitCircleOverlap = new Setting<Integer>(-2);//negative allowed
+	protected final Setting<String> hitCirclePrefix = new Setting<String>("HitCirclePrefix", "default");
+	protected final Setting<Integer> hitCircleOverlap = new Setting<Integer>("HitCircleOverlap", -2);//negative allowed
 
-	protected final Setting<String> scorePrefix = new Setting<String>("score");
-	protected final Setting<Integer> scoreOverlap = new Setting<Integer>(-2);//negative allowed
+	protected final Setting<String> scorePrefix = new Setting<String>("ScorePrefix", "score");
+	protected final Setting<Integer> scoreOverlap = new Setting<Integer>("ScoreOverlap", -2);//negative allowed
 
-	protected final Setting<String> comboPrefix = new Setting<String>("score");
-	protected final Setting<Integer> comboOverlap = new Setting<Integer>(-2);//negative allowed
+	protected final Setting<String> comboPrefix = new Setting<String>("ComboPrefix", "score");
+	protected final Setting<Integer> comboOverlap = new Setting<Integer>("ComboOverlap", -2);//negative allowed
 
 	//ctb
-	protected final Setting<Colour> hyperDash = new Setting<Colour>(new Colour(255, 0, 0));
-	protected final Setting<Colour> hyperDashFruit = new Setting<Colour>(new Colour(0, 0, 0));
-	protected final Setting<Colour> hyperDashAfterImage = new Setting<Colour>(new Colour(0, 0, 0));
+	protected final Setting<Colour> hyperDash = new Setting<Colour>("HyperDash", new Colour(255, 0, 0));
+	protected final Setting<Colour> hyperDashFruit = new Setting<Colour>("HyperDashFruit", new Colour(0, 0, 0));
+	protected final Setting<Colour> hyperDashAfterImage = new Setting<Colour>("HyperDashAfterImage", new Colour(0, 0, 0));
 
 	protected final ManiaIni[] mania = new ManiaIni[ManiaIni.MAX_KEYS];
 
@@ -97,54 +97,54 @@ public class SkinIni{
 	protected static final class ManiaIni{
 		protected static final int MAX_KEYS = 10;
 		protected int keys;//non negative
-		protected final Setting<Double> columnStart = new Setting<Double>(136.0D);
-		protected final Setting<Double> columnRight = new Setting<Double>(19.0D);
-		protected final Setting<double[]> columnSpacing = new Setting<double[]>(null);//n-1 numbers
-		protected final Setting<double[]> columnWidth = new Setting<double[]>(null);//n numbers
-		protected final Setting<double[]> columnLineWidth = new Setting<double[]>(null);//n+1 numbers
-		protected final Setting<Double> barlineHeight = new Setting<Double>(1.2D);
-		protected final Setting<double[]> lightingNWidth = new Setting<double[]>(null);//n numbers
-		protected final Setting<double[]> lightingLWidth = new Setting<double[]>(null);//n numbers
-		protected final Setting<Double> widthForNoteHeightScale = new Setting<Double>(-1.0D);
-		protected final Setting<Integer> hitPosition = new Setting<Integer>(402);
-		protected final Setting<Integer> lightPosition = new Setting<Integer>(413);
-		protected final Setting<Integer> scorePosition = new Setting<Integer>(325);
-		protected final Setting<Integer> comboPosition = new Setting<Integer>(111);
-		protected final Setting<Boolean> judgementLine = new Setting<Boolean>(true);
-		protected final Setting<SpecialStyle> specialStyle = new Setting<SpecialStyle>(SpecialStyle.NONE);//0, 1 or 2
-		protected final Setting<ComboBurstStyle> comboBurstStyle = new Setting<ComboBurstStyle>(ComboBurstStyle.RIGHT);//0, 1 or 2
-		protected final Setting<Boolean> splitStages = new Setting<Boolean>(false, true);
-		protected final Setting<Double> stageSeparation = new Setting<Double>(40.0D);
-		protected final Setting<Boolean> separateScore = new Setting<Boolean>(true);
-		protected final Setting<Boolean> keysUnderNotes = new Setting<Boolean>(false);
-		protected final Setting<Boolean> upsideDown = new Setting<Boolean>(false);
-		protected final Setting<Boolean> keyFlipWhenUpsideDown = new Setting<Boolean>(true);
-		protected final Setting<Boolean> noteFlipWhenUpsideDown = new Setting<Boolean>(true);
+		protected final Setting<Double> columnStart = new Setting<Double>("ColumnStart", 136.0D);
+		protected final Setting<Double> columnRight = new Setting<Double>("ColumnRight", 19.0D);
+		protected final Setting<double[]> columnSpacing = new Setting<double[]>("ColumnSpacing", null);//n-1 numbers
+		protected final Setting<double[]> columnWidth = new Setting<double[]>("ColumnWidth", null);//n numbers
+		protected final Setting<double[]> columnLineWidth = new Setting<double[]>("ColumnLineWidth", null);//n+1 numbers
+		protected final Setting<Double> barlineHeight = new Setting<Double>("BarlineHeight", 1.2D);
+		protected final Setting<double[]> lightingNWidth = new Setting<double[]>("LightingNWidth", null);//n numbers
+		protected final Setting<double[]> lightingLWidth = new Setting<double[]>("LightingLWidth", null);//n numbers
+		protected final Setting<Double> widthForNoteHeightScale = new Setting<Double>("WidthForNoteHeightScale", -1.0D);
+		protected final Setting<Integer> hitPosition = new Setting<Integer>("HitPosition", 402);
+		protected final Setting<Integer> lightPosition = new Setting<Integer>("LightPosition", 413);
+		protected final Setting<Integer> scorePosition = new Setting<Integer>("ScorePosition", 325);
+		protected final Setting<Integer> comboPosition = new Setting<Integer>("ComboPosition", 111);
+		protected final Setting<Boolean> judgementLine = new Setting<Boolean>("JudgementLine", true);
+		protected final Setting<SpecialStyle> specialStyle = new Setting<SpecialStyle>("SpecialStyle", SpecialStyle.NONE);//0, 1 or 2
+		protected final Setting<ComboBurstStyle> comboBurstStyle = new Setting<ComboBurstStyle>("ComboBurstStyle", ComboBurstStyle.RIGHT);//0, 1 or 2
+		protected final Setting<Boolean> splitStages = new Setting<Boolean>("SplitStages", false, true);
+		protected final Setting<Double> stageSeparation = new Setting<Double>("StageSeparation", 40.0D);
+		protected final Setting<Boolean> separateScore = new Setting<Boolean>("SeparationScore", true);
+		protected final Setting<Boolean> keysUnderNotes = new Setting<Boolean>("KeysUnderNotes", false);
+		protected final Setting<Boolean> upsideDown = new Setting<Boolean>("UpsideDown", false);
+		protected final Setting<Boolean> keyFlipWhenUpsideDown = new Setting<Boolean>("KeyFlipWhenUpsideDown", true);
+		protected final Setting<Boolean> noteFlipWhenUpsideDown = new Setting<Boolean>("NoteFlipWhenUpsideDown", true);
 		protected final Setting<NoteBodyStyle> noteBodyStyle = 1;//0, 1, 2
-		protected final Setting<Colour> colourColumnLine = new Setting<Colour>(new Colour(255, 255, 255, 255));
-		protected final Setting<Colour> colourBarline = new Setting<Colour>(new Colour(255, 255, 255, 255));
-		protected final Setting<Colour> colourJudgementLine = new Setting<Colour>(new Colour(255, 255, 255));
-		protected final Setting<Colour> colourKeyWarning = new Setting<Colour>(new Colour(0, 0, 0));
-		protected final Setting<Colour> colourHold = new Setting<Colour>(new Colour(255, 191, 51, 255));
-		protected final Setting<Colour> colourBreak = new Setting<Colour>(new Colour(255, 0, 0));
+		protected final Setting<Colour> colourColumnLine = new Setting<Colour>("ColourColumnLine", new Colour(255, 255, 255, 255));
+		protected final Setting<Colour> colourBarline = new Setting<Colour>("ColourBarline", new Colour(255, 255, 255, 255));
+		protected final Setting<Colour> colourJudgementLine = new Setting<Colour>("ColourJudgementLine", new Colour(255, 255, 255));
+		protected final Setting<Colour> colourKeyWarning = new Setting<Colour>("ColourKeyWarning", new Colour(0, 0, 0));
+		protected final Setting<Colour> colourHold = new Setting<Colour>("ColourHold", new Colour(255, 191, 51, 255));
+		protected final Setting<Colour> colourBreak = new Setting<Colour>("ColourBreak", new Colour(255, 0, 0));
 
 		protected Column[] columns;
 
-		protected final Setting<String> stageLeft = new Setting<String>("mania-stage-left");
-		protected final Setting<String> stageRight = new Setting<String>("mania-stage-right");
-		protected final Setting<String> stageBottom = new Setting<String>("mania-stage-bottom");
-		protected final Setting<String> stageHint = new Setting<String>("mania-stage-hint");
-		protected final Setting<String> stageLight = new Setting<String>("mania-stage-light");
-		protected final Setting<String> lightingN = new Setting<String>("LightingN");
-		protected final Setting<String> lightingL = new Setting<String>("LightingL");
-		protected final Setting<String> warningArrow = new Setting<String>("mania-warningarrow");
+		protected final Setting<String> stageLeft = new Setting<String>("StageLeft", "mania-stage-left");
+		protected final Setting<String> stageRight = new Setting<String>("StageRight", "mania-stage-right");
+		protected final Setting<String> stageBottom = new Setting<String>("StageBottom", "mania-stage-bottom");
+		protected final Setting<String> stageHint = new Setting<String>("StageHint", "mania-stage-hint");
+		protected final Setting<String> stageLight = new Setting<String>("StageLight", "mania-stage-light");
+		protected final Setting<String> lightingN = new Setting<String>("LightingN", "LightingN");
+		protected final Setting<String> lightingL = new Setting<String>("LightingL", "LightingL");
+		protected final Setting<String> warningArrow = new Setting<String>("WarningArrow", "mania-warningarrow");
 
-		protected final Setting<String> hit0 = new Setting<String>("mania-hit0");
-		protected final Setting<String> hit50 = new Setting<String>("mania-hit50");
-		protected final Setting<String> hit100 = new Setting<String>("mania-hit100");
-		protected final Setting<String> hit200 = new Setting<String>("mania-hit200");
-		protected final Setting<String> hit300 = new Setting<String>("mania-hit300");
-		protected final Setting<String> hit300g = new Setting<String>("mania-hit300g");
+		protected final Setting<String> hit0 = new Setting<String>("Hit0", "mania-hit0");
+		protected final Setting<String> hit50 = new Setting<String>("Hit50", "mania-hit50");
+		protected final Setting<String> hit100 = new Setting<String>("Hit100", "mania-hit100");
+		protected final Setting<String> hit200 = new Setting<String>("Hit200", "mania-hit200");
+		protected final Setting<String> hit300 = new Setting<String>("Hit300", "mania-hit300");
+		protected final Setting<String> hit300g = new Setting<String>("Hit300g", "mania-hit300g");
 
 		private ManiaIni(int keys){
 			this.keys = keys;
@@ -316,8 +316,10 @@ public class SkinIni{
 			if(header.matcher(line.trim()).matches()){
 				section = new Section(line.trim());
 				data.add(section);
+			}else if(section.isMania()){
+				parseMania(line);
 			}else{
-				
+				parse(line);
 			}
 		}
 		
@@ -658,7 +660,7 @@ public class SkinIni{
 		}
 	}
 
-	private void readMania(BufferedReader reader) throws IOException{
+	private void parseMania(BufferedReader reader) throws IOException{
 		String line;
 		do{
 			line = reader.readLine();
@@ -1236,26 +1238,6 @@ public class SkinIni{
 		writer.flush();
 		writer.close();
 	}
-	
-	private final void write(PrintWriter writer, String key, String value){
-		
-	}
-	
-	private final void writeComments(String key){
-		
-	}
-
-	private static final String rgb(Colour color){
-		return color.getRed() + "," + color.getGreen() + "," + color.getBlue();
-	}
-
-	private static final String rgba(Colour color){
-		if(!color.hasAlpha()){
-			return rgb(color);
-		}else{
-			return rgb(color) + "," + color.getAlpha();
-		}
-	}
 
 	private static final String arrayToList(double[] array){
 		StringJoiner joiner = new StringJoiner(",");
@@ -1265,7 +1247,7 @@ public class SkinIni{
 		return joiner.toString();
 	}
 	
-	protected enum SliderStyle{
+	protected enum SliderStyle implements Printable{
 		SEGMENTS(1, "Segments"),
 		GRADIENT(2, "Gradient");
 		
@@ -1281,9 +1263,14 @@ public class SkinIni{
 		public String toString(){
 			return name;
 		}
+
+		@Override
+		public String print(){
+			return String.valueOf(id);
+		}
 	}
 	
-	protected enum SpecialStyle{
+	protected enum SpecialStyle implements Printable{
 		NONE(0, "None"),
 		LEFT(1, "Left lane SP - outer lanes DP"),
 		RIGHT(2, "Right lane SP - outer lanes DP");
@@ -1300,9 +1287,14 @@ public class SkinIni{
 		public String toString(){
 			return name;
 		}
+
+		@Override
+		public String print(){
+			return String.valueOf(id);
+		}
 	}
 	
-	protected enum ComboBurstStyle{
+	protected enum ComboBurstStyle implements Printable{
 		LEFT(0, "Left"),
 		RIGHT(1, "Right"),
 		BOTH(2, "Both");
@@ -1319,13 +1311,31 @@ public class SkinIni{
 		public String toString(){
 			return name;
 		}
+
+		@Override
+		public String print(){
+			return String.valueOf(id);
+		}
 	}
 	
-	protected enum NoteBodyStyle{
+	protected enum NoteBodyStyle implements Printable{
+		;
+
+		private final String name;
+		private final int id;
 		
+		private NoteBodyStyle(int id, String name){
+			this.name = name;
+			this.id = id;
+		}
+		
+		@Override
+		public String print(){
+			return String.valueOf(id);
+		}
 	}
 
-	protected enum Version{
+	protected enum Version implements Printable{
 		V1("1", "(Old style)"),
 		V2("2", "(Basic new style)"),
 		V21("2.1", "(Taiko position changes)"),
@@ -1371,5 +1381,15 @@ public class SkinIni{
 		public String toString(){
 			return name + " " + extra;
 		}
+
+		@Override
+		public String print(){
+			return name;
+		}
+	}
+	
+	protected static abstract interface Printable{
+		
+		public abstract String print();
 	}
 }
