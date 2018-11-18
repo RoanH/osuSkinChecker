@@ -196,21 +196,53 @@ public class SkinIni{
 		Section section = new Section(null);
 		data.add(section);
 		Pattern header = Pattern.compile("[.*]");
+		ManiaIni maniaIni;
 		
-		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 		String line;
-		while((line = reader.readLine()) != null){
-			if(header.matcher(line.trim()).matches()){
-				section = new Section(line.trim());
-				data.add(section);
-			}else if(section.isMania()){
-				section.data.add(parseMania(line));
-			}else{
-				section.data.add(parse(line));
-			}
+		try(BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))){
+			while((line = reader.readLine()) != null){
+				if(header.matcher(line.trim()).matches()){
+					section = new Section(line.trim());
+					data.add(section);
+					if(section.isMania()){
+						while((line = reader.readLine()) != null){
+							if(line.trim().isEmpty() || line.startsWith("//")){
+								section.data.add(new Comment(line));
+							}else{
+								if(line.startsWith("Keys:")){
+									try{
+										int keys = Integer.parseInt(line.substring(5).trim());
+										if(keys >= 1 && keys <= ManiaIni.MAX_KEYS){
+											mania[keys - 1] = (maniaIni = new ManiaIni(keys));
+										}else{
+											throw new IllegalArgumentException("Unsupported key count: " + keys);
+										}
+									}catch(NumberFormatException e){
+										throw new IllegalArgumentException("Mania key count is not a number!");
+									}
+								}else{
+									throw new IllegalArgumentException("First field in a mania section is not the key count!");
+								}
+							}
+						}
+						if(line == null){
+							throw new IllegalArgumentException("Mania config does not define a key count!");
+						}
+					}
+				}else if(section.isMania()){
+					section.data.add(parseMania(maniaIni, line));
+				}else{
+					section.data.add(parse(line));
+				}
+			}	
+		}catch(Exception e){
+			e.printStackTrace();
+			throw new IllegalArgumentException("Line: " + line, e);
 		}
 		
-		reader.close();
+		if(usedDefault){
+			JOptionPane.showMessageDialog(SkinChecker.frame, "Skin.ini fields were found that couldn't be parsed. Default values were used.", "Skin Checker", JOptionPane.WARNING_MESSAGE);
+		}
 	}
 
 	public Setting<?> parse(String line) throws IOException{
@@ -315,475 +347,255 @@ public class SkinIni{
 		default:
 			return new Comment(line);
 		}
-
-		//TODO
-//		try{
-//			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-//			while((line = reader.readLine()) != null){
-//				
-//		}catch(Exception e){
-//			e.printStackTrace();
-//			throw new IllegalArgumentException("Line: " + line, e);
-//		}
-//		if(usedDefault){
-//			JOptionPane.showMessageDialog(SkinChecker.frame, "Skin.ini fields were found that couldn't be parsed. Default values were used.", "Skin Checker", JOptionPane.WARNING_MESSAGE);
-//		}
 	}
 
-	private void parseMania(BufferedReader reader) throws IOException{
-		String line;
-		do{
-			line = reader.readLine();
-		}while(line.trim().isEmpty() || line.startsWith("//"));
-		int keys = Integer.parseInt(line.trim().substring(5).trim());
-		if(keys <= 0 || keys > 10){
-			throw new IllegalArgumentException("Unsupported mania key count: " + keys);
+	private Setting<?> parseMania(ManiaIni ini, String line) throws IOException{
+		if(line.trim().isEmpty() || line.startsWith("//")){
+			return new Comment(line);
 		}
-		
-		ManiaIni ini = new ManiaIni(keys);
-		mania[keys - 1] = ini;
-		
-		try{
-			reader.mark(1);
-			int start;
-			while((start = reader.read()) != -1){
-				if(start == '['){
-					reader.reset();
-					return;
+		String[] args = line.split(":");
+		args[1] = args[1].trim();
+		switch(args[0]){
+		case "ColumnStart":
+			return parseDouble(ini.columnStart, args[1], 0.0D);
+		case "ColumnRight":
+			return parseDouble(ini.columnRight, args[1], 0.0D);
+		case "ColumnSpacing":
+			try{
+				ini.columnSpacing = parseList(args[1], keys - 1);
+			}catch(IllegalArgumentException e){
+				usedDefault = true;
+			}
+			break;
+		case "ColumnWidth":
+			try{
+				ini.columnWidth = parseList(args[1], keys);
+			}catch(IllegalArgumentException e){
+				usedDefault = true;
+			}
+			break;
+		case "ColumnLineWidth":
+			try{
+				ini.columnLineWidth = parseList(args[1], keys + 1);
+			}catch(IllegalArgumentException e){
+				usedDefault = true;
+			}
+			break;
+		case "BarlineHeight":
+			return parseDouble(ini.barlineHeight, args[1], 0.0D);
+		case "LightingNWidth":
+			try{
+				ini.lightingNWidth = parseList(args[1], keys);
+			}catch(IllegalArgumentException e){
+				usedDefault = true;
+			}
+			break;
+		case "LightingLWidth":
+			try{
+				ini.lightingLWidth = parseList(args[1], keys);
+			}catch(IllegalArgumentException e){
+				usedDefault = true;
+			}
+			break;
+		case "WidthForNoteHeightScale":
+			return parseDouble(ini.widthForNoteHeightScale, args[1], 0.0D);
+		case "HitPosition":
+			return parseInt(ini.hitPosition, args[1], 0);
+		case "LightPosition":
+			return parseInt(ini.lightPosition, args[1], 0);
+		case "ScorePosition":
+			return parseInt(ini.scorePosition, args[1], 0);
+		case "ComboPosition":
+			return parseInt(ini.comboPosition, args[1], 0);
+		case "JudgementLine":
+			return parseBoolean(ini.judgementLine, args[1]);
+		case "SpecialStyle":
+			return ini.specialStyle.update(SpecialStyle.fromString(args[1]));
+		case "ComboBurstStyle":
+			return ini.comboBurstStyle.update(ComboBurstStyle.fromString(args[1]));
+		case "SplitStages":
+			return parseBoolean(ini.splitStages, args[1]);
+		case "StageSeparation":
+			return parseDouble(ini.stageSeparation, args[1], 0);
+		case "SeparateScore":
+			return parseBoolean(ini.separateScore, args[1]);
+		case "KeysUnderNotes":
+			return parseBoolean(ini.keysUnderNotes, args[1]);
+		case "UpsideDown":
+			return parseBoolean(ini.upsideDown, args[1]);
+		case "ColourColumnLine":
+			return parseColor(ini.colourColumnLine, args[1]);
+		case "ColourBarline":
+			return parseColor(ini.colourBarline, args[1]);
+		case "ColourJudgementLine":
+			return parseColor(ini.colourJudgementLine, args[1]);
+		case "ColourKeyWarning":
+			return parseColor(ini.colourKeyWarning, args[1]);
+		case "ColourHold":
+			return parseColor(ini.colourHold, args[1]);
+		case "ColourBreak":
+			return parseColor(ini.colourBreak, args[1]);
+		case "StageLeft":
+			return ini.stageLeft.update(args[1]);
+		case "StageRight":
+			return ini.stageRight.update(args[1]);
+		case "StageBottom":
+			return ini.stageBottom.update(args[1]);
+		case "StageHint":
+			return ini.stageHint.update(args[1]);
+		case "StageLight":
+			return ini.stageLight.update(args[1]);
+		case "LightingN":
+			return ini.lightingN.update(args[1]);
+		case "LightingL":
+			return ini.lightingL.update(args[1]);
+		case "WarningArrow":
+			return ini.warningArrow.update(args[1]);
+		case "Hit0":
+			return ini.hit0.update(args[1]);
+		case "Hit50":
+			return ini.hit50.update(args[1]);
+		case "Hit100":
+			return ini.hit100.update(args[1]);
+		case "Hit200":
+			return ini.hit200.update(args[1]);
+		case "Hit300":
+			return ini.hit300.update(args[1]);
+		case "Hit300g":
+			return ini.hit300g.update(args[1]);
+		default:
+			if(args[0].startsWith("KeyFlipWhenUpsideDown")){
+				args[0] = args[0].substring(21);
+				if(args[0].isEmpty()){
+					if(args[1].equals("1") || args[1].equals("0")){
+						ini.keyFlipWhenUpsideDown = args[1].equals("1");
+					}else{
+						usedDefault = true;
+					}
+				}else if(args[0].endsWith("D")){
+					if(args[1].equals("1") || args[1].equals("0")){
+						ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].keyFlipWhenUpsideDownD = args[1].equals("1");
+					}else{
+						usedDefault = true;
+					}
 				}else{
-					line = (char)start + reader.readLine();
-				}
-				reader.mark(1);
-				if(line.trim().isEmpty() || line.startsWith("//")){
-					continue;
-				}
-				String[] args = line.split(":");
-				args[1] = args[1].trim();
-				switch(args[0]){
-				case "ColumnStart":
-					try{
-						double val = Double.parseDouble(args[1]);
-						if(val >= 0.0D){
-							ini.columnStart = val;
-						}else{
-							usedDefault = true;
-						}
-					}catch(NumberFormatException e){
-						usedDefault = true;
-					}
-					break;
-				case "ColumnRight":
-					try{
-						double val = Double.parseDouble(args[1]);
-						if(val >= 0.0D){
-							ini.columnRight = val;
-						}else{
-							usedDefault = true;
-						}
-					}catch(NumberFormatException e){
-						usedDefault = true;
-					}
-					break;
-				case "ColumnSpacing":
-					try{
-						ini.columnSpacing = parseList(args[1], keys - 1);
-					}catch(IllegalArgumentException e){
-						usedDefault = true;
-					}
-					break;
-				case "ColumnWidth":
-					try{
-						ini.columnWidth = parseList(args[1], keys);
-					}catch(IllegalArgumentException e){
-						usedDefault = true;
-					}
-					break;
-				case "ColumnLineWidth":
-					try{
-						ini.columnLineWidth = parseList(args[1], keys + 1);
-					}catch(IllegalArgumentException e){
-						usedDefault = true;
-					}
-					break;
-				case "BarlineHeight":
-					try{
-						double val = Double.parseDouble(args[1]);
-						if(val >= 0.0D){
-							ini.barlineHeight = val;
-						}else{
-							usedDefault = true;
-						}
-					}catch(NumberFormatException e){
-						usedDefault = true;
-					}
-					break;
-				case "LightingNWidth":
-					try{
-						ini.lightingNWidth = parseList(args[1], keys);
-					}catch(IllegalArgumentException e){
-						usedDefault = true;
-					}
-					break;
-				case "LightingLWidth":
-					try{
-						ini.lightingLWidth = parseList(args[1], keys);
-					}catch(IllegalArgumentException e){
-						usedDefault = true;
-					}
-					break;
-				case "WidthForNoteHeightScale":
-					try{
-						double val = Double.parseDouble(args[1]);
-						if(val >= 0.0D){
-							ini.widthForNoteHeightScale = val;
-						}else{
-							usedDefault = true;
-						}
-					}catch(NumberFormatException e){
-						usedDefault = true;
-					}
-					break;
-				case "HitPosition":
-					try{
-						int val = Integer.parseInt(args[1]);
-						if(val >= 0){
-							ini.hitPosition = val;
-						}else{
-							usedDefault = true;
-						}
-					}catch(NumberFormatException e){
-						usedDefault = true;
-					}
-					break;
-				case "LightPosition":
-					try{
-						int val = Integer.parseInt(args[1]);
-						if(val >= 0){
-							ini.lightPosition = val;
-						}else{
-							usedDefault = true;
-						}
-					}catch(NumberFormatException e){
-						usedDefault = true;
-					}
-					break;
-				case "ScorePosition":
-					try{
-						int val = Integer.parseInt(args[1]);
-						if(val >= 0){
-							ini.scorePosition = val;
-						}else{
-							usedDefault = true;
-						}
-					}catch(NumberFormatException e){
-						usedDefault = true;
-					}
-					break;
-				case "ComboPosition":
-					try{
-						int val = Integer.parseInt(args[1]);
-						if(val >= 0){
-							ini.comboPosition = val;
-						}else{
-							usedDefault = true;
-						}
-					}catch(NumberFormatException e){
-						usedDefault = true;
-					}
-					break;
-				case "JudgementLine":
 					if(args[1].equals("1") || args[1].equals("0")){
-						ini.judgementLine = args[1].equals("1");
+						ini.columns[Integer.parseInt(args[0])].keyFlipWhenUpsideDown = args[1].equals("1");
 					}else{
 						usedDefault = true;
 					}
-					break;
-				case "SpecialStyle":
+				}
+			}else if(args[0].startsWith("NoteFlipWhenUpsideDown")){
+				args[0] = args[0].substring(22);
+				if(args[0].isEmpty()){
+					if(args[1].equals("1") || args[1].equals("0")){
+						ini.noteFlipWhenUpsideDown = args[1].equals("1");
+					}else{
+						usedDefault = true;
+					}
+				}else if(args[0].endsWith("H")){
+					if(args[1].equals("1") || args[1].equals("0")){
+						ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownH = args[1].equals("1");
+					}else{
+						usedDefault = true;
+					}
+				}else if(args[0].endsWith("L")){
+					if(args[1].equals("1") || args[1].equals("0")){
+						ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownL = args[1].equals("1");
+					}else{
+						usedDefault = true;
+					}
+				}else if(args[0].endsWith("T")){
+					if(args[1].equals("1") || args[1].equals("0")){
+						ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownT = args[1].equals("1");
+					}else{
+						usedDefault = true;
+					}
+				}else{
+					if(args[1].equals("1") || args[1].equals("0")){
+						ini.columns[Integer.parseInt(args[0])].noteFlipWhenUpsideDown = args[1].equals("1");
+					}else{
+						usedDefault = true;
+					}
+				}
+			}else if(args[0].startsWith("NoteBodyStyle")){
+				args[0] = args[0].substring(13);
+				if(args[0].isEmpty()){
 					try{
 						int val = Integer.parseInt(args[1]);
 						if(val >= 0 && val <= 2){
-							ini.specialStyle = val;
-						}
-					}catch(NumberFormatException e){
-						switch(args[1].toLowerCase(Locale.ROOT)){
-						case "none":
-							ini.specialStyle = 0;
-							break;
-						case "left":
-							ini.specialStyle = 1;
-							break;
-						case "right":
-							ini.specialStyle = 2;
-							break;
-						}
-					}
-					break;
-				case "ComboBurstStyle":
-					try{
-						int val = Integer.parseInt(args[1]);
-						if(val >= 0 && val <= 2){
-							ini.comboBurstStyle = val;
-						}
-					}catch(NumberFormatException e){
-						switch(args[1].toLowerCase(Locale.ROOT)){
-						case "left":
-							ini.comboBurstStyle = 0;
-							break;
-						case "right":
-							ini.comboBurstStyle = 1;
-							break;
-						case "both":
-							ini.comboBurstStyle = 2;
-							break;
-						}
-					}
-					break;
-				case "SplitStages":
-					if(args[1].equals("1") || args[1].equals("0")){
-						ini.splitStages = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "StageSeparation":
-					try{
-						int val = Integer.parseInt(args[1]);
-						if(val >= 0){
-							ini.stageSeparation = val;
+							ini.noteBodyStyle = val;
 						}else{
 							usedDefault = true;
 						}
 					}catch(NumberFormatException e){
 						usedDefault = true;
 					}
-					break;
-				case "SeparateScore":
-					if(args[1].equals("1") || args[1].equals("0")){
-						ini.separateScore = args[1].equals("1");
-					}else{
+				}else{
+					try{
+						int val = Integer.parseInt(args[1]);
+						if(val >= 0 && val <= 2){
+							ini.columns[Integer.parseInt(args[0])].noteBodyStyle = val;
+						}else{
+							usedDefault = true;
+						}
+					}catch(NumberFormatException e){
 						usedDefault = true;
 					}
-					break;
-				case "KeysUnderNotes":
-					if(args[1].equals("1") || args[1].equals("0")){
-						ini.keysUnderNotes = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "UpsideDown":
-					if(args[1].equals("1") || args[1].equals("0")){
-						ini.upsideDown = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "ColourColumnLine":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							ini.colourColumnLine = color;
-						}
-					}
-					break;
-				case "ColourBarline":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							ini.colourBarline = color;
-						}
-					}
-					break;
-				case "ColourJudgementLine":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							ini.colourJudgementLine = color;
-						}
-					}
-					break;
-				case "ColourKeyWarning":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							ini.colourKeyWarning = color;
-						}
-					}
-					break;
-				case "ColourHold":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							ini.colourHold = color;
-						}
-					}
-					break;
-				case "ColourBreak":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							ini.colourBreak = color;
-						}
-					}
-					break;
-				case "StageLeft":
-					ini.stageLeft = args[1];
-					break;
-				case "StageRight":
-					ini.stageRight = args[1];
-					break;
-				case "StageBottom":
-					ini.stageBottom = args[1];
-					break;
-				case "StageHint":
-					ini.stageHint = args[1];
-					break;
-				case "StageLight":
-					ini.stageLight = args[1];
-					break;
-				case "LightingN":
-					ini.lightingN = args[1];
-					break;
-				case "LightingL":
-					ini.lightingL = args[1];
-					break;
-				case "WarningArrow":
-					ini.warningArrow = args[1];
-					break;
-				case "Hit0":
-					ini.hit0 = args[1];
-					break;
-				case "Hit50":
-					ini.hit50 = args[1];
-					break;
-				case "Hit100":
-					ini.hit100 = args[1];
-					break;
-				case "Hit200":
-					ini.hit200 = args[1];
-					break;
-				case "Hit300":
-					ini.hit300 = args[1];
-					break;
-				case "Hit300g":
-					ini.hit300g = args[1];
-					break;
-				default:
-					if(args[0].startsWith("KeyFlipWhenUpsideDown")){
-						args[0] = args[0].substring(21);
-						if(args[0].isEmpty()){
-							if(args[1].equals("1") || args[1].equals("0")){
-								ini.keyFlipWhenUpsideDown = args[1].equals("1");
-							}else{
-								usedDefault = true;
-							}
-						}else if(args[0].endsWith("D")){
-							if(args[1].equals("1") || args[1].equals("0")){
-								ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].keyFlipWhenUpsideDownD = args[1].equals("1");
-							}else{
-								usedDefault = true;
-							}
-						}else{
-							if(args[1].equals("1") || args[1].equals("0")){
-								ini.columns[Integer.parseInt(args[0])].keyFlipWhenUpsideDown = args[1].equals("1");
-							}else{
-								usedDefault = true;
-							}
-						}
-					}else if(args[0].startsWith("NoteFlipWhenUpsideDown")){
-						args[0] = args[0].substring(22);
-						if(args[0].isEmpty()){
-							if(args[1].equals("1") || args[1].equals("0")){
-								ini.noteFlipWhenUpsideDown = args[1].equals("1");
-							}else{
-								usedDefault = true;
-							}
-						}else if(args[0].endsWith("H")){
-							if(args[1].equals("1") || args[1].equals("0")){
-								ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownH = args[1].equals("1");
-							}else{
-								usedDefault = true;
-							}
-						}else if(args[0].endsWith("L")){
-							if(args[1].equals("1") || args[1].equals("0")){
-								ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownL = args[1].equals("1");
-							}else{
-								usedDefault = true;
-							}
-						}else if(args[0].endsWith("T")){
-							if(args[1].equals("1") || args[1].equals("0")){
-								ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownT = args[1].equals("1");
-							}else{
-								usedDefault = true;
-							}
-						}else{
-							if(args[1].equals("1") || args[1].equals("0")){
-								ini.columns[Integer.parseInt(args[0])].noteFlipWhenUpsideDown = args[1].equals("1");
-							}else{
-								usedDefault = true;
-							}
-						}
-					}else if(args[0].startsWith("NoteBodyStyle")){
-						args[0] = args[0].substring(13);
-						if(args[0].isEmpty()){
-							try{
-								int val = Integer.parseInt(args[1]);
-								if(val >= 0 && val <= 2){
-									ini.noteBodyStyle = val;
-								}else{
-									usedDefault = true;
-								}
-							}catch(NumberFormatException e){
-								usedDefault = true;
-							}
-						}else{
-							try{
-								int val = Integer.parseInt(args[1]);
-								if(val >= 0 && val <= 2){
-									ini.columns[Integer.parseInt(args[0])].noteBodyStyle = val;
-								}else{
-									usedDefault = true;
-								}
-							}catch(NumberFormatException e){
-								usedDefault = true;
-							}
-						}
-					}else if(args[0].startsWith("ColourLight")){
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							ini.columns[Integer.parseInt(args[0].substring(11)) - 1].colourLight = color;
-						}
-					}else if(args[0].startsWith("Colour")){
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							ini.columns[Integer.parseInt(args[0].substring(6)) - 1].colour = color;
-						}
-					}else if(args[0].startsWith("KeyImage")){
-						args[0] = args[0].substring(8);
-						if(args[0].endsWith("D")){
-							ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].keyImage = args[1];
-						}else{
-							ini.columns[Integer.parseInt(args[0])].keyImage = args[1];
-						}
-					}else if(args[0].startsWith("NoteImage")){
-						args[0] = args[0].substring(9);
-						if(args[0].endsWith("H")){
-							ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageH = args[1];
-						}else if(args[0].endsWith("T")){
-							ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageT = args[1];
-						}else if(args[0].endsWith("L")){
-							ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageL = args[1];
-						}else{
-							ini.columns[Integer.parseInt(args[0])].noteImage = args[1];
-						}
-					}
-					break;
+				}
+			}else if(args[0].startsWith("ColourLight")){
+				Colour color = parseColor(args[1]);
+				if(color != null){
+					ini.columns[Integer.parseInt(args[0].substring(11)) - 1].colourLight = color;
+				}
+			}else if(args[0].startsWith("Colour")){
+				Colour color = parseColor(args[1]);
+				if(color != null){
+					ini.columns[Integer.parseInt(args[0].substring(6)) - 1].colour = color;
+				}
+			}else if(args[0].startsWith("KeyImage")){
+				args[0] = args[0].substring(8);
+				if(args[0].endsWith("D")){
+					ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].keyImage = args[1];
+				}else{
+					ini.columns[Integer.parseInt(args[0])].keyImage = args[1];
+				}
+			}else if(args[0].startsWith("NoteImage")){
+				args[0] = args[0].substring(9);
+				if(args[0].endsWith("H")){
+					ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageH = args[1];
+				}else if(args[0].endsWith("T")){
+					ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageT = args[1];
+				}else if(args[0].endsWith("L")){
+					ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageL = args[1];
+				}else{
+					ini.columns[Integer.parseInt(args[0])].noteImage = args[1];
 				}
 			}
-		}catch(Exception e){
-			e.printStackTrace();
-			throw new IllegalArgumentException("Line: " + line, e);
+			break;
 		}
+	}
+	
+	private Setting<Double> parseDouble(Setting<Double> setting, String line){
+		return parseDouble(setting, line, -Double.MAX_VALUE);
+	}
+	
+	private Setting<Double> parseDouble(Setting<Double> setting, String line, double min){
+		return parseDouble(setting, line, min, Double.MAX_VALUE);
+	}
+	
+	private Setting<Double> parseDouble(Setting<Double> setting, String line, double min, double max){
+		try{
+			double val = Double.parseDouble(line);
+			if(val >= min && val <= max){
+				return setting.update(val);
+			}else{
+				usedDefault = true;
+			}
+		}catch(NumberFormatException e){
+			usedDefault = true;
+		}
+		return setting;
 	}
 	
 	private Setting<Integer> parseInt(Setting<Integer> setting, String line){
@@ -919,6 +731,23 @@ public class SkinIni{
 			this.id = id;
 		}
 		
+		private static final SpecialStyle fromString(String line){
+			switch(line.toLowerCase(Locale.ROOT)){
+			case "0":
+			case "none":
+				return NONE;
+			case "1":
+			case "left":
+				return LEFT;
+			case "2":
+			case "right":
+				return RIGHT;
+			default:
+				usedDefault = true;
+				return NONE;
+			}
+		}
+		
 		@Override
 		public String toString(){
 			return name;
@@ -941,6 +770,23 @@ public class SkinIni{
 		private ComboBurstStyle(int id, String name){
 			this.name = name;
 			this.id = id;
+		}
+		
+		private static final ComboBurstStyle fromString(String line){
+			switch(line.toLowerCase(Locale.ROOT)){
+			case "0":
+			case "left":
+				return LEFT;
+			case "1":
+			case "right":
+				return RIGHT;
+			case "2":
+			case "both":
+				return BOTH;
+			default:
+				usedDefault = true;
+				return RIGHT;
+			}
 		}
 		
 		@Override
