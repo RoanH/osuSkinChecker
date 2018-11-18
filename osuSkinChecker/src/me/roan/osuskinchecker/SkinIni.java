@@ -1,6 +1,5 @@
 package me.roan.osuskinchecker;
 
-import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,17 +9,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.StringJoiner;
 import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
-
-import me.roan.osuskinchecker.SkinIni.ManiaIni.Column;
-import me.roan.osuskinchecker.SkinIni.SpecialStyle;
 
 public class SkinIni{
 	private static boolean usedDefault = false;
@@ -119,7 +112,7 @@ public class SkinIni{
 		protected final Setting<Boolean> upsideDown = new Setting<Boolean>("UpsideDown", false);
 		protected final Setting<Boolean> keyFlipWhenUpsideDown = new Setting<Boolean>("KeyFlipWhenUpsideDown", true);
 		protected final Setting<Boolean> noteFlipWhenUpsideDown = new Setting<Boolean>("NoteFlipWhenUpsideDown", true);
-		protected final Setting<NoteBodyStyle> noteBodyStyle = 1;//0, 1, 2
+		protected final Setting<NoteBodyStyle> noteBodyStyle = new Setting<NoteBodyStyle>("NoteBodyStyle", NoteBodyStyle.CASCADINGTH);//0, 1, 2
 		protected final Setting<Colour> colourColumnLine = new Setting<Colour>("ColourColumnLine", new Colour(255, 255, 255, 255));
 		protected final Setting<Colour> colourBarline = new Setting<Colour>("ColourBarline", new Colour(255, 255, 255, 255));
 		protected final Setting<Colour> colourJudgementLine = new Setting<Colour>("ColourJudgementLine", new Colour(255, 255, 255));
@@ -154,7 +147,7 @@ public class SkinIni{
 			lightingLWidth.update(fillArray(keys, 0.0D));
 			columns = new Column[keys];
 			for(int i = 0; i < keys; i++){
-				columns[i] = new Column();
+				columns[i] = new Column(keys + 1);
 			}
 		}
 
@@ -167,26 +160,49 @@ public class SkinIni{
 		}
 
 		protected static final class Column{
-			protected int key;
+			protected final int key;
 
-			protected Setting<Boolean> keyFlipWhenUpsideDown = new Setting<Boolean>(false, true);
-			protected Setting<Boolean> keyFlipWhenUpsideDownD = new Setting<Boolean>(false, true);
-			protected Setting<Boolean> noteFlipWhenUpsideDown = new Setting<Boolean>(false, true);
-			protected Setting<Boolean> noteFlipWhenUpsideDownH = new Setting<Boolean>(false, true);
-			protected Setting<Boolean> noteFlipWhenUpsideDownL = new Setting<Boolean>(false, true);
-			protected Setting<Boolean> noteFlipWhenUpsideDownT = new Setting<Boolean>(false, true);
+			protected final Setting<Boolean> keyFlipWhenUpsideDown;
+			protected final Setting<Boolean> keyFlipWhenUpsideDownD;
+			protected final Setting<Boolean> noteFlipWhenUpsideDown;
+			protected final Setting<Boolean> noteFlipWhenUpsideDownH;
+			protected final Setting<Boolean> noteFlipWhenUpsideDownL;
+			protected final Setting<Boolean> noteFlipWhenUpsideDownT;
 
-			protected Setting<Integer> noteBodyStyle = new Setting<Integer>(false, 0);//0, 1, 2
+			protected final Setting<NoteBodyStyle> noteBodyStyle;
 
-			protected Setting<Colour> colour = new Setting<Colour>(new Colour(0, 0, 0, 255));
-			protected Setting<Colour> colourLight = new Setting<Colour>(new Colour(255, 255, 255));
+			protected final Setting<Colour> colour;
+			protected final Setting<Colour> colourLight;
 
-			protected Setting<String> keyImage = new Setting<String>(false, "");
-			protected Setting<String> keyImageD = new Setting<String>(false, "");
-			protected Setting<String> noteImage = new Setting<String>(false, "");
-			protected Setting<String> noteImageH = new Setting<String>(false, "");
-			protected Setting<String> noteImageL = new Setting<String>(false, "");
-			protected Setting<String> noteImageT = new Setting<String>(false, "");
+			protected final Setting<String> keyImage;
+			protected final Setting<String> keyImageD;
+			protected final Setting<String> noteImage;
+			protected final Setting<String> noteImageH;
+			protected final Setting<String> noteImageL;
+			protected final Setting<String> noteImageT;
+			
+			private Column(int key){
+				this.key = key;
+				
+				keyFlipWhenUpsideDown = new Setting<Boolean>("KeyFlipWhenUpsideDown" + key, false, true);
+				keyFlipWhenUpsideDownD = new Setting<Boolean>("KeyFlipWhenUpsideDown" + key + "D", false, true);
+				noteFlipWhenUpsideDown = new Setting<Boolean>("NoteFlipWhenUpsideDown" + key, false, true);
+				noteFlipWhenUpsideDownH = new Setting<Boolean>("NoteFlipWhenUpsideDown" + key + "H", false, true);
+				noteFlipWhenUpsideDownL = new Setting<Boolean>("NoteFlipWhenUpsideDown" + key + "L", false, true);
+				noteFlipWhenUpsideDownT = new Setting<Boolean>("NoteFlipWhenUpsideDown" + key + "T", false, true);
+
+				noteBodyStyle = new Setting<NoteBodyStyle>("NoteBodyStyle" + key, false, NoteBodyStyle.CASCADINGTH);//0, 1, 2
+
+				colour = new Setting<Colour>("Colour" + key, new Colour(0, 0, 0, 255));
+				colourLight = new Setting<Colour>("ColourLight" + key, new Colour(255, 255, 255));
+
+				keyImage = new Setting<String>("KeyImage" + key, false, "");
+				keyImageD = new Setting<String>("KeyImage" + key + "D", false, "");
+				noteImage = new Setting<String>("NoteImage" + key, false, "");
+				noteImageH = new Setting<String>("NoteImage" + key + "H", false, "");
+				noteImageL = new Setting<String>("NoteImage" + key + "L", false, "");
+				noteImageT = new Setting<String>("NoteImage" + key + "T", false, "");
+			}
 		}
 	}
 	
@@ -196,9 +212,9 @@ public class SkinIni{
 		Section section = new Section(null);
 		data.add(section);
 		Pattern header = Pattern.compile("[.*]");
-		ManiaIni maniaIni;
+		ManiaIni maniaIni = null;
 		
-		String line;
+		String line = null;
 		try(BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))){
 			while((line = reader.readLine()) != null){
 				if(header.matcher(line.trim()).matches()){
@@ -361,42 +377,17 @@ public class SkinIni{
 		case "ColumnRight":
 			return parseDouble(ini.columnRight, args[1], 0.0D);
 		case "ColumnSpacing":
-			try{
-				ini.columnSpacing = parseList(args[1], keys - 1);
-			}catch(IllegalArgumentException e){
-				usedDefault = true;
-			}
-			break;
+			return parseList(ini.columnSpacing, args[1], ini.keys - 1);
 		case "ColumnWidth":
-			try{
-				ini.columnWidth = parseList(args[1], keys);
-			}catch(IllegalArgumentException e){
-				usedDefault = true;
-			}
-			break;
+			return parseList(ini.columnWidth, args[1], ini.keys);
 		case "ColumnLineWidth":
-			try{
-				ini.columnLineWidth = parseList(args[1], keys + 1);
-			}catch(IllegalArgumentException e){
-				usedDefault = true;
-			}
-			break;
+			return parseList(ini.columnLineWidth, args[1], ini.keys + 1);
 		case "BarlineHeight":
 			return parseDouble(ini.barlineHeight, args[1], 0.0D);
 		case "LightingNWidth":
-			try{
-				ini.lightingNWidth = parseList(args[1], keys);
-			}catch(IllegalArgumentException e){
-				usedDefault = true;
-			}
-			break;
+			return parseList(ini.lightingNWidth, args[1], ini.keys);
 		case "LightingLWidth":
-			try{
-				ini.lightingLWidth = parseList(args[1], keys);
-			}catch(IllegalArgumentException e){
-				usedDefault = true;
-			}
-			break;
+			return parseList(ini.lightingLWidth, args[1], ini.keys);
 		case "WidthForNoteHeightScale":
 			return parseDouble(ini.widthForNoteHeightScale, args[1], 0.0D);
 		case "HitPosition":
@@ -467,119 +458,59 @@ public class SkinIni{
 			if(args[0].startsWith("KeyFlipWhenUpsideDown")){
 				args[0] = args[0].substring(21);
 				if(args[0].isEmpty()){
-					if(args[1].equals("1") || args[1].equals("0")){
-						ini.keyFlipWhenUpsideDown = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
+					return parseBoolean(ini.keyFlipWhenUpsideDown, args[1]);
 				}else if(args[0].endsWith("D")){
-					if(args[1].equals("1") || args[1].equals("0")){
-						ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].keyFlipWhenUpsideDownD = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
+					return parseBoolean(ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].keyFlipWhenUpsideDownD, args[1]);
 				}else{
-					if(args[1].equals("1") || args[1].equals("0")){
-						ini.columns[Integer.parseInt(args[0])].keyFlipWhenUpsideDown = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
+					return parseBoolean(ini.columns[Integer.parseInt(args[0])].keyFlipWhenUpsideDown, args[1]);
 				}
 			}else if(args[0].startsWith("NoteFlipWhenUpsideDown")){
 				args[0] = args[0].substring(22);
 				if(args[0].isEmpty()){
-					if(args[1].equals("1") || args[1].equals("0")){
-						ini.noteFlipWhenUpsideDown = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
+					return parseBoolean(ini.noteFlipWhenUpsideDown, args[1]);
 				}else if(args[0].endsWith("H")){
-					if(args[1].equals("1") || args[1].equals("0")){
-						ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownH = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
+					return parseBoolean(ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownH, args[1]);
 				}else if(args[0].endsWith("L")){
-					if(args[1].equals("1") || args[1].equals("0")){
-						ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownL = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
+					return parseBoolean(ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownL, args[1]);
 				}else if(args[0].endsWith("T")){
-					if(args[1].equals("1") || args[1].equals("0")){
-						ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownT = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
+					return parseBoolean(ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownT, args[1]);
 				}else{
-					if(args[1].equals("1") || args[1].equals("0")){
-						ini.columns[Integer.parseInt(args[0])].noteFlipWhenUpsideDown = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
+					return parseBoolean(ini.columns[Integer.parseInt(args[0])].noteFlipWhenUpsideDown, args[1]);
 				}
 			}else if(args[0].startsWith("NoteBodyStyle")){
 				args[0] = args[0].substring(13);
 				if(args[0].isEmpty()){
-					try{
-						int val = Integer.parseInt(args[1]);
-						if(val >= 0 && val <= 2){
-							ini.noteBodyStyle = val;
-						}else{
-							usedDefault = true;
-						}
-					}catch(NumberFormatException e){
-						usedDefault = true;
-					}
+					return ini.noteBodyStyle.update(NoteBodyStyle.fromString(args[1]));
 				}else{
-					try{
-						int val = Integer.parseInt(args[1]);
-						if(val >= 0 && val <= 2){
-							ini.columns[Integer.parseInt(args[0])].noteBodyStyle = val;
-						}else{
-							usedDefault = true;
-						}
-					}catch(NumberFormatException e){
-						usedDefault = true;
-					}
+					return ini.columns[Integer.parseInt(args[0])].noteBodyStyle.update(NoteBodyStyle.fromString(args[1]));
 				}
 			}else if(args[0].startsWith("ColourLight")){
-				Colour color = parseColor(args[1]);
-				if(color != null){
-					ini.columns[Integer.parseInt(args[0].substring(11)) - 1].colourLight = color;
-				}
+				return parseColor(ini.columns[Integer.parseInt(args[0].substring(11)) - 1].colourLight, args[1]);
 			}else if(args[0].startsWith("Colour")){
-				Colour color = parseColor(args[1]);
-				if(color != null){
-					ini.columns[Integer.parseInt(args[0].substring(6)) - 1].colour = color;
-				}
+				return parseColor(ini.columns[Integer.parseInt(args[0].substring(6)) - 1].colour, args[1]);
 			}else if(args[0].startsWith("KeyImage")){
 				args[0] = args[0].substring(8);
 				if(args[0].endsWith("D")){
-					ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].keyImage = args[1];
+					return ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].keyImage.update(args[1]);
 				}else{
-					ini.columns[Integer.parseInt(args[0])].keyImage = args[1];
+					return ini.columns[Integer.parseInt(args[0])].keyImage.update(args[1]);
 				}
 			}else if(args[0].startsWith("NoteImage")){
 				args[0] = args[0].substring(9);
 				if(args[0].endsWith("H")){
-					ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageH = args[1];
+					return ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageH.update(args[1]);
 				}else if(args[0].endsWith("T")){
-					ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageT = args[1];
+					return ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageT.update(args[1]);
 				}else if(args[0].endsWith("L")){
-					ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageL = args[1];
+					return ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageL.update(args[1]);
 				}else{
-					ini.columns[Integer.parseInt(args[0])].noteImage = args[1];
+					return ini.columns[Integer.parseInt(args[0])].noteImage.update(args[1]);
 				}
 			}
-			break;
+			return new Comment(line);
 		}
 	}
-	
-	private Setting<Double> parseDouble(Setting<Double> setting, String line){
-		return parseDouble(setting, line, -Double.MAX_VALUE);
-	}
-	
+
 	private Setting<Double> parseDouble(Setting<Double> setting, String line, double min){
 		return parseDouble(setting, line, min, Double.MAX_VALUE);
 	}
@@ -629,16 +560,16 @@ public class SkinIni{
 		}
 	}
 	
-	private double[] parseList(String data, int expected){
+	private Setting<double[]> parseList(Setting<double[]> setting, String data, int expected){
 		String[] args = data.split(",");
 		if(args.length != expected){
-			throw new IllegalArgumentException("Illegal number of arguments on line: " + data);
+			usedDefault = true;
+			return setting;
 		}
-		double[] values = new double[args.length];
-		for(int i = 0; i < values.length; i++){
-			values[i] = Math.max(0.0D, Double.parseDouble(args[i].trim()));
+		for(int i = 0; i < expected; i++){
+			setting.getValue()[i] = Math.max(0.0D, Double.parseDouble(args[i].trim()));
 		}
-		return values;
+		return setting;
 	}
 
 	private Setting<Colour> parseColor(Setting<Colour> setting, String arg){
@@ -664,7 +595,7 @@ public class SkinIni{
 			if(section.name != null){
 				writer.println(section.name);
 			}
-			for(Setting setting : section.data){
+			for(Setting<?> setting : section.data){
 				if(setting.isEnabled()){
 					writer.println(setting);
 				}
@@ -673,14 +604,6 @@ public class SkinIni{
 
 		writer.flush();
 		writer.close();
-	}
-
-	private static final String arrayToList(double[] array){
-		StringJoiner joiner = new StringJoiner(",");
-		for(double d : array){
-			joiner.add(String.valueOf(d));
-		}
-		return joiner.toString();
 	}
 	
 	protected enum SliderStyle implements Printable{
@@ -801,7 +724,9 @@ public class SkinIni{
 	}
 	
 	protected enum NoteBodyStyle implements Printable{
-		;
+		STRETCHED(0, "Stretched to fit the whole length"),
+		CASCADINGTH(1, "Cascading from tail to head"),
+		CASCADINGHT(2, "Cascading from head to tail");
 
 		private final String name;
 		private final int id;
@@ -809,6 +734,24 @@ public class SkinIni{
 		private NoteBodyStyle(int id, String name){
 			this.name = name;
 			this.id = id;
+		}
+		
+		private static NoteBodyStyle fromString(String line){
+			switch(line){
+			case "0":
+				return STRETCHED;
+			case "1":
+				return CASCADINGTH;
+			case "2":
+				return CASCADINGHT;
+			default:
+				return CASCADINGTH;
+			}
+		}
+
+		@Override
+		public String toString(){
+			return name;
 		}
 		
 		@Override
