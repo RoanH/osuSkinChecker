@@ -211,7 +211,7 @@ public class SkinIni{
 		data = new ArrayList<Section>();
 		Section section = new Section(null);
 		data.add(section);
-		Pattern header = Pattern.compile("[.*]");
+		Pattern header = Pattern.compile("\\[.+\\]");
 		ManiaIni maniaIni = null;
 		
 		String line = null;
