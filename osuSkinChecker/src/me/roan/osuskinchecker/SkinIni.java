@@ -29,7 +29,7 @@ public class SkinIni{
 	//general
 	protected final Setting<String> name = new Setting<String>("Name", "-");
 	protected final Setting<String> author = new Setting<String>("Author", "-");
-	protected final Setting<Version> version = new Setting<Version>("Version", Version.LATEST);
+	protected final Setting<Version> version = new Setting<Version>("Version", Version.V1);
 	protected final Setting<Boolean> cursorExpand = new Setting<Boolean>("CursorExpand", true);
 	protected final Setting<Boolean> cursorCentre = new Setting<Boolean>("CursorCentre", true);
 	protected final Setting<Boolean> cursorRotate = new Setting<Boolean>("CursorRotate", true);
@@ -203,7 +203,7 @@ public class SkinIni{
 				section = new Section(line.trim());
 				data.add(section);
 			}else if(section.isMania()){
-				parseMania(line);
+				section.data.add(parseMania(line));
 			}else{
 				section.data.add(parse(line));
 			}
@@ -217,9 +217,7 @@ public class SkinIni{
 			return new Comment(line);
 		}
 		String[] args = line.split(":", 2);
-		if(!line.startsWith("[")){
-			args[1] = args[1].trim();
-		}
+		args[1] = args[1].trim();
 		switch(args[0]){
 		//[General]
 		case "Name":
@@ -227,76 +225,35 @@ public class SkinIni{
 		case "Author":
 			return author.update(args[1]);
 		case "Version":
-			version = Version.fromString(args[1]);
-			if(version == null){
-				usedDefault = true;
-				version = Version.V25;
-			}
-			break;
+			return version.update(Version.fromString(args[1]));
 		case "CursorExpand":
-			if(args[1].equals("1") || args[1].equals("0")){
-				cursorExpand = args[1].equals("1");
-			}else{
-				usedDefault = true;
-			}
-			break;
+			return parseBoolean(cursorExpand, args[1]);
 		case "CursorCentre":
-			if(args[1].equals("1") || args[1].equals("0")){
-				cursorCentre = args[1].equals("1");
-			}else{
-				usedDefault = true;
-			}
-			break;
+			return parseBoolean(cursorCentre, args[1]);
 		case "CursorRotate":
-			if(args[1].equals("1") || args[1].equals("0")){
-				cursorRotate = args[1].equals("1");
-			}else{
-				usedDefault = true;
-			}
-			break;
+			return parseBoolean(cursorRotate, args[1]);
 		case "CursorTrailRotate":
-			if(args[1].equals("1") || args[1].equals("0")){
-				cursorTrailRotate = args[1].equals("1");
-			}else{
-				usedDefault = true;
-			}
-			break;
+			return parseBoolean(cursorTrailRotate, args[1]);
 		case "AnimationFramerate":
 			try{
 				int val = Integer.parseInt(args[1]);
 				if(val > 0){
-					animationFramerate = val;
+					animationFramerate.update(val);
 				}else{
 					usedDefault = true;
 				}
 			}catch(NumberFormatException e){
 				usedDefault = true;
 			}
-			break;
+			return animationFramerate;
 		case "LayeredHitSounds":
-			if(args[1].equals("1") || args[1].equals("0")){
-				layeredHitSounds = args[1].equals("1");
-			}else{
-				usedDefault = true;
-			}
-			break;
+			return parseBoolean(layeredHitSounds, args[1]);
 		case "ComboBurstRandom":
-			if(args[1].equals("1") || args[1].equals("0")){
-				comboBurstRandom = args[1].equals("1");
-			}else{
-				usedDefault = true;
-			}
-			break;
+			return parseBoolean(comboBurstRandom, args[1]);
 		case "CustomComboBurstSounds":
-			customComboBurstSounds = args[1].replaceAll(" ", "");
-			break;
+			return customComboBurstSounds.update(args[1].replaceAll(" ", ""));
 		case "HitCircleOverlayAboveNumber":
-			if(args[1].equals("1") || args[1].equals("0")){
-				hitCircleOverlayAboveNumber = args[1].equals("1");
-			}else{
-				usedDefault = true;
-			}
-			break;
+			return parseBoolean(hitCircleOverlayAboveNumber, args[1]);
 		case "SliderStyle":
 			try{
 				int style = Integer.parseInt(args[1]);
@@ -310,181 +267,53 @@ public class SkinIni{
 			}
 			break;
 		case "SliderBallFlip":
-			if(args[1].equals("1") || args[1].equals("0")){
-				sliderBallFlip = args[1].equals("1");
-			}else{
-				usedDefault = true;
-			}
-			break;
+			return parseBoolean(sliderBallFlip, args[1]);
 		case "AllowSliderBallTint":
-			if(args[1].equals("1") || args[1].equals("0")){
-				allowSliderBallTint = args[1].equals("1");
-			}else{
-				usedDefault = true;
-			}
-			break;
+			return parseBoolean(allowSliderBallTint, args[1]);
 		case "SpinnerNoBlink":
-			if(args[1].equals("1") || args[1].equals("0")){
-				spinnerNoBlink = args[1].equals("1");
-			}else{
-				usedDefault = true;
-			}
-			break;
+			return parseBoolean(spinnerNoBlink, args[1]);
 		case "SpinnerFadePlayfield":
-			if(args[1].equals("1") || args[1].equals("0")){
-				spinnerFadePlayfield = args[1].equals("1");
-			}else{
-				usedDefault = true;
-			}
-			break;
+			return parseBoolean(spinnerFadePlayfield, args[1]);
 		case "SpinnerFrequencyModulate":
-			if(args[1].equals("1") || args[1].equals("0")){
-				spinnerFrequencyModulate = args[1].equals("1");
-			}else{
-				usedDefault = true;
-			}
-			break;
+			return parseBoolean(spinnerFrequencyModulate, args[1]);
 		//[Colours]
 		case "SongSelectActiveText":
-			{
-				Colour color = parseColor(args[1]);
-				if(color != null){
-					songSelectActiveText = color;
-				}
-			}
-			break;
+			return parseColor(songSelectActiveText, args[1]);
 		case "SongSelectInactiveText":
-			{
-				Colour color = parseColor(args[1]);
-				if(color != null){
-					songSelectInactiveText = color;
-				}
-			}
-			break;
+			return parseColor(songSelectInactiveText, args[1]);
 		case "MenuGlow":
-			{
-				Colour color = parseColor(args[1]);
-				if(color != null){
-					menuGlow = color;
-				}
-			}
-			break;
+			return parseColor(menuGlow, args[1]);
 		case "StarBreakAdditive":
-			{
-				Colour color = parseColor(args[1]);
-				if(color != null){
-					starBreakAdditive = color;
-				}
-			}
-			break;
+			return parseColor(starBreakAdditive, args[1]);
 		case "InputOverlayText":
-			{
-				Colour color = parseColor(args[1]);
-				if(color != null){
-					inputOverlayText = color;
-				}
-			}
-			break;
+			return parseColor(inputOverlayText, args[1]);
 		case "SliderBall":
-			{
-				Colour color = parseColor(args[1]);
-				if(color != null){
-					sliderBall = color;
-				}
-			}
-			break;
+			return parseColor(sliderBall, args[1]);
 		case "SliderTrackOverride":
-			{
-				Colour color = parseColor(args[1]);
-				if(color != null){
-					sliderTrackOverride = color;
-				}
-			}
-			break;
+			return parseColor(sliderTrackOverride, args[1]);
 		case "SliderBorder":
-			{
-				Colour color = parseColor(args[1]);
-				if(color != null){
-					sliderBorder = color;
-				}
-			}
-			break;
+			return parseColor(sliderBorder, args[1]);
 		case "SpinnerBackground":
-			{
-				Colour color = parseColor(args[1]);
-				if(color != null){
-					spinnerBackground = color;
-				}
-			}
-			break;
+			return parseColor(spinnerBackground, args[1]);
 		case "Combo1":
-			{
-				Colour color = parseColor(args[1]);
-				if(color != null){
-					combo1 = color;
-				}
-			}
-			break;
+			return parseColor(combo1, args[1]);
 		case "Combo2":
-			{
-				Colour color = parseColor(args[1]);
-				if(color != null){
-					combo2 = color;
-				}
-			}
-			break;
+			return parseColor(combo2, args[1]);
 		case "Combo3":
-			{
-				Colour color = parseColor(args[1]);
-				if(color != null){
-					combo3 = color;
-				}
-			}
-			break;
+			return parseColor(combo3, args[1]);
 		case "Combo4":
-			{
-				Colour color = parseColor(args[1]);
-				if(color != null){
-					combo4 = color;
-				}
-			}
-			break;
+			return parseColor(combo4, args[1]);
 		case "Combo5":
-			{
-				Colour color = parseColor(args[1]);
-				if(color != null){
-					combo5 = color;
-				}
-			}
-			break;
+			return parseColor(combo5, args[1]);
 		case "Combo6":
-			{
-				Colour color = parseColor(args[1]);
-				if(color != null){
-					combo6 = color;
-				}
-			}
-			break;
+			return parseColor(combo6, args[1]);
 		case "Combo7":
-			{
-				Colour color = parseColor(args[1]);
-				if(color != null){
-					combo7 = color;
-				}
-			}
-			break;
+			return parseColor(combo7, args[1]);
 		case "Combo8":
-			{
-				Colour color = parseColor(args[1]);
-				if(color != null){
-					combo8 = color;
-				}
-			}
-			break;
+			return parseColor(combo8, args[1]);
 		//[Fonts]
 		case "HitCirclePrefix":
-			hitCirclePrefix = args[1];
-			break;
+			return hitCirclePrefix.update(args[1]);
 		case "HitCircleOverlap":
 			hitCircleOverlap = Integer.parseInt(args[1]);
 			break;
@@ -999,6 +828,15 @@ public class SkinIni{
 		}
 	}
 	
+	private Setting<Boolean> parseBoolean(Setting<Boolean> setting, String line){
+		if(line.equals("1") || line.equals("0")){
+			return setting.update(line.equals("1"));
+		}else{
+			usedDefault = true;
+			return setting;
+		}
+	}
+	
 	private double[] parseList(String data, int expected){
 		String[] args = data.split(",");
 		if(args.length != expected){
@@ -1011,20 +849,20 @@ public class SkinIni{
 		return values;
 	}
 
-	private Colour parseColor(String arg){
+	private Setting<Colour> parseColor(Setting<Colour> setting, String arg){
 		String[] args = arg.split(",");
 		try{
 			if(args.length == 3){
-				return new Colour(Integer.parseInt(args[0].trim()), Integer.parseInt(args[1].trim()), Integer.parseInt(args[2].trim()));
+				return setting.update(new Colour(Integer.parseInt(args[0].trim()), Integer.parseInt(args[1].trim()), Integer.parseInt(args[2].trim())));
 			}else if(args.length == 4){
-				return new Colour(Integer.parseInt(args[0].trim()), Integer.parseInt(args[1].trim()), Integer.parseInt(args[2].trim()), Integer.parseInt(args[3].trim()));
+				return setting.update(new Colour(Integer.parseInt(args[0].trim()), Integer.parseInt(args[1].trim()), Integer.parseInt(args[2].trim()), Integer.parseInt(args[3].trim())));
 			}else{
 				usedDefault = true;
-				return null;
+				return setting;
 			}
 		}catch(NumberFormatException e){
 			usedDefault = true;
-			return null;
+			return setting;
 		}
 	}
 
