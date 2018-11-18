@@ -492,7 +492,7 @@ public class SkinIni{
 			}else if(args[0].startsWith("KeyImage")){
 				args[0] = args[0].substring(8);
 				if(args[0].endsWith("D")){
-					return ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].keyImage.update(args[1]);
+					return ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].keyImageD.update(args[1]);
 				}else{
 					return ini.columns[Integer.parseInt(args[0])].keyImage.update(args[1]);
 				}
