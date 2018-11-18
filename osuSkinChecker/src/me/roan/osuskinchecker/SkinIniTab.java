@@ -617,42 +617,42 @@ public class SkinIniTab extends JTabbedPane{
 					final int col = i;
 					content.add(new JSeparator());
 					content.add(Box.createVerticalStrut(2));
-					content.add(new PathEditor("KeyImage " + col, "what is the name for the unpressed key image of column " + (col + 1), ini.columns[col].keyImage, true));
+					content.add(new PathEditor("KeyImage" + col, "what is the name for the unpressed key image of column " + (col + 1), ini.columns[col].keyImage, true));
 					content.add(Box.createVerticalStrut(2));
 				}
 				for(int i = 0; i < ini.keys; i++){
 					final int col = i;
 					content.add(new JSeparator());
 					content.add(Box.createVerticalStrut(2));
-					content.add(new PathEditor("KeyImage " + col + "D", "what is the name for the pressed key image of column " + (col + 1), ini.columns[col].keyImageD, true));
+					content.add(new PathEditor("KeyImage" + col + "D", "what is the name for the pressed key image of column " + (col + 1), ini.columns[col].keyImageD, true));
 					content.add(Box.createVerticalStrut(2));
 				}
 				for(int i = 0; i < ini.keys; i++){
 					final int col = i;
 					content.add(new JSeparator());
 					content.add(Box.createVerticalStrut(2));
-					content.add(new PathEditor("NoteImage " + col, "what is the name for the note image of column " + (col + 1), ini.columns[col].noteImage, true));
+					content.add(new PathEditor("NoteImage" + col, "what is the name for the note image of column " + (col + 1), ini.columns[col].noteImage, true));
 					content.add(Box.createVerticalStrut(2));
 				}
 				for(int i = 0; i < ini.keys; i++){
 					final int col = i;
 					content.add(new JSeparator());
 					content.add(Box.createVerticalStrut(2));
-					content.add(new PathEditor("NoteImage " + col + "H", "what is the name for the hold note head image of column " + (col + 1), ini.columns[col].noteImageH, true));
+					content.add(new PathEditor("NoteImage" + col + "H", "what is the name for the hold note head image of column " + (col + 1), ini.columns[col].noteImageH, true));
 					content.add(Box.createVerticalStrut(2));
 				}
 				for(int i = 0; i < ini.keys; i++){
 					final int col = i;
 					content.add(new JSeparator());
 					content.add(Box.createVerticalStrut(2));
-					content.add(new PathEditor("NoteImage " + col + "L", "what is the name for the hold note body image of column " + (col + 1), ini.columns[col].noteImageL, true));
+					content.add(new PathEditor("NoteImage" + col + "L", "what is the name for the hold note body image of column " + (col + 1), ini.columns[col].noteImageL, true));
 					content.add(Box.createVerticalStrut(2));
 				}
 				for(int i = 0; i < ini.keys; i++){
 					final int col = i;
 					content.add(new JSeparator());
 					content.add(Box.createVerticalStrut(2));
-					content.add(new PathEditor("NoteImage " + col + "T", "what is the name for the hold note tail image of column " + (col + 1), ini.columns[col].noteImageT, true));
+					content.add(new PathEditor("NoteImage" + col + "T", "what is the name for the hold note tail image of column " + (col + 1), ini.columns[col].noteImageT, true));
 					content.add(Box.createVerticalStrut(2));
 				}
 
