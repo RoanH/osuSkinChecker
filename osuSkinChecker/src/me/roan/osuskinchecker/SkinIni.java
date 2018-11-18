@@ -23,7 +23,7 @@ import me.roan.osuskinchecker.SkinIni.ManiaIni.Column;
 import me.roan.osuskinchecker.SkinIni.SpecialStyle;
 
 public class SkinIni{
-	private boolean usedDefault = false;
+	private static boolean usedDefault = false;
 	private List<Section> data;
 	
 	//general
@@ -191,6 +191,7 @@ public class SkinIni{
 	}
 	
 	public void readIni(File file) throws IOException{
+		usedDefault = false;
 		data = new ArrayList<Section>();
 		Section section = new Section(null);
 		data.add(section);
@@ -235,17 +236,7 @@ public class SkinIni{
 		case "CursorTrailRotate":
 			return parseBoolean(cursorTrailRotate, args[1]);
 		case "AnimationFramerate":
-			try{
-				int val = Integer.parseInt(args[1]);
-				if(val > 0){
-					animationFramerate.update(val);
-				}else{
-					usedDefault = true;
-				}
-			}catch(NumberFormatException e){
-				usedDefault = true;
-			}
-			return animationFramerate;
+			return parseInt(animationFramerate, args[1], 1);
 		case "LayeredHitSounds":
 			return parseBoolean(layeredHitSounds, args[1]);
 		case "ComboBurstRandom":
@@ -255,17 +246,7 @@ public class SkinIni{
 		case "HitCircleOverlayAboveNumber":
 			return parseBoolean(hitCircleOverlayAboveNumber, args[1]);
 		case "SliderStyle":
-			try{
-				int style = Integer.parseInt(args[1]);
-				if(style >= 0 && style <= 2){
-					sliderStyle = style;
-				}else{
-					usedDefault = true;
-				}
-			}catch(NumberFormatException e){
-				usedDefault = true;
-			}
-			break;
+			return sliderStyle.update(SliderStyle.fromString(args[1]));
 		case "SliderBallFlip":
 			return parseBoolean(sliderBallFlip, args[1]);
 		case "AllowSliderBallTint":
@@ -315,45 +296,22 @@ public class SkinIni{
 		case "HitCirclePrefix":
 			return hitCirclePrefix.update(args[1]);
 		case "HitCircleOverlap":
-			hitCircleOverlap = Integer.parseInt(args[1]);
-			break;
+			return parseInt(hitCircleOverlap, args[1]);
 		case "ScorePrefix":
-			scorePrefix = args[1];
-			break;
+			return scorePrefix.update(args[1]);
 		case "ScoreOverlap":
-			scoreOverlap = Integer.parseInt(args[1]);
-			break;
+			return parseInt(scoreOverlap, args[1]);
 		case "ComboPrefix":
-			comboPrefix = args[1];
-			break;
+			return comboPrefix.update(args[1]);
 		case "ComboOverlap":
-			comboOverlap = Integer.parseInt(args[1]);
-			break;
+			return parseInt(comboOverlap, args[1]);
 		//[CatchTheBeat]
 		case "HyperDash":
-			{
-				Colour color = parseColor(args[1]);
-				if(color != null){
-					hyperDash = color;
-				}
-			}
-			break;
+			return parseColor(hyperDash, args[1]);
 		case "HyperDashFruit":
-			{
-				Colour color = parseColor(args[1]);
-				if(color != null){
-					hyperDashFruit = color;
-				}
-			}
-			break;
+			return parseColor(hyperDashFruit, args[1]);
 		case "HyperDashAfterImage":
-			{
-				Colour color = parseColor(args[1]);
-				if(color != null){
-					hyperDashAfterImage = color;
-				}
-			}
-			break;
+			return parseColor(hyperDashAfterImage, args[1]);
 		default:
 			return new Comment(line);
 		}
@@ -828,6 +786,28 @@ public class SkinIni{
 		}
 	}
 	
+	private Setting<Integer> parseInt(Setting<Integer> setting, String line){
+		return parseInt(setting, line, Integer.MIN_VALUE);
+	}
+	
+	private Setting<Integer> parseInt(Setting<Integer> setting, String line, int min){
+		return parseInt(setting, line, min, Integer.MAX_VALUE);
+	}
+	
+	private Setting<Integer> parseInt(Setting<Integer> setting, String line, int min, int max){
+		try{
+			int val = Integer.parseInt(line);
+			if(val >= min && val <= max){
+				return setting.update(val);
+			}else{
+				usedDefault = true;
+			}
+		}catch(NumberFormatException e){
+			usedDefault = true;
+		}
+		return setting;
+	}
+	
 	private Setting<Boolean> parseBoolean(Setting<Boolean> setting, String line){
 		if(line.equals("1") || line.equals("0")){
 			return setting.update(line.equals("1"));
@@ -858,12 +838,11 @@ public class SkinIni{
 				return setting.update(new Colour(Integer.parseInt(args[0].trim()), Integer.parseInt(args[1].trim()), Integer.parseInt(args[2].trim()), Integer.parseInt(args[3].trim())));
 			}else{
 				usedDefault = true;
-				return setting;
 			}
 		}catch(NumberFormatException e){
 			usedDefault = true;
-			return setting;
 		}
+		return setting;
 	}
 
 	public void writeIni(File file) throws FileNotFoundException{
@@ -902,6 +881,18 @@ public class SkinIni{
 		private SliderStyle(int id, String name){
 			this.name = name;
 			this.id = id;
+		}
+		
+		private static final SliderStyle fromString(String str){
+			switch(str){
+			case "1":
+				return SEGMENTS;
+			case "2":
+				return GRADIENT;
+			default:
+				usedDefault = true;
+				return GRADIENT;
+			}
 		}
 	
 		@Override
@@ -1018,6 +1009,7 @@ public class SkinIni{
 			case "latest":
 				return LATEST;
 			default:
+				usedDefault = true;
 				return V1;
 			}
 		}
