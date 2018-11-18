@@ -3,8 +3,6 @@ package me.roan.osuskinchecker;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.regex.Pattern;
@@ -30,6 +28,7 @@ import javax.swing.text.PlainDocument;
 
 import me.roan.osuskinchecker.SkinIni.ComboBurstStyle;
 import me.roan.osuskinchecker.SkinIni.ManiaIni;
+import me.roan.osuskinchecker.SkinIni.NoteBodyStyle;
 import me.roan.osuskinchecker.SkinIni.SliderStyle;
 import me.roan.osuskinchecker.SkinIni.SpecialStyle;
 import me.roan.osuskinchecker.SkinIni.Version;
@@ -512,57 +511,17 @@ public class SkinIniTab extends JTabbedPane{
 				}
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				{
-					JPanel panel = new JPanel(new SplitLayout());
-					panel.add(new JLabel(" Note Body Style (What style should be used for all the hold note bodies): "));
-					JComboBox<String> box = new JComboBox<String>(new String[]{
-						"Stretched to fit the whole length",
-						"Cascading from tail to head",
-						"Cascading from head to tail"
-					});
-					box.setSelectedIndex(ini.noteBodyStyle);
-					panel.add(box);
-					box.addActionListener(e->{
-						ini.noteBodyStyle = box.getSelectedIndex();
-					});
-					content.add(panel);
-				}
+				content.add(new ComboBoxEditor<NoteBodyStyle>("NoteBodyStyle", "what style should be used for all the hold note bodies", ini.noteBodyStyle, NoteBodyStyle.values()));
 				content.add(Box.createVerticalStrut(2));
 				for(int i = 0; i < ini.keys; i++){
-					final int col = i;
 					content.add(new JSeparator());
-					content.add(Box.createVerticalStrut(2));					
-					JPanel panel = new JPanel(new SplitLayout());
-					JCheckBox enabled = new JCheckBox("", ini.columns[col].noteBodyStyle != -1);
-					JPanel settings = new JPanel(new BorderLayout());
-					settings.add(enabled, BorderLayout.LINE_START);
-					panel.add(new JLabel(" Note Body Style " + col + " (What style should be used for the hold note " + (col + 1) + " body): "));
-					JComboBox<String> box = new JComboBox<String>(new String[]{
-						"Stretched to fit the whole length",
-						"Cascading from tail to head",
-						"Cascading from head to tail"
-					});
-					box.setSelectedIndex(ini.columns[i].noteBodyStyle == -1 ? 1 : ini.columns[col].noteBodyStyle);
-					box.addActionListener((event)->{
-						if(enabled.isSelected()){
-							ini.columns[col].noteBodyStyle = box.getSelectedIndex();
-						}
-					});
-					settings.add(box, BorderLayout.CENTER);
-					enabled.addActionListener((e)->{
-						if(enabled.isSelected()){
-							ini.columns[col].noteBodyStyle = box.getSelectedIndex();
-						}else{
-							ini.columns[col].noteBodyStyle = -1;
-						}
-					});
-					panel.add(settings);
-					content.add(panel);
+					content.add(Box.createVerticalStrut(2));
+					content.add(new ComboBoxEditor<NoteBodyStyle>("NoteBodyStyle" + i, "what style should be used for the hold note " + (i + 1) + " body", ini.columns[i].noteBodyStyle, NoteBodyStyle.values(), true));
 					content.add(Box.createVerticalStrut(2));
 				}
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
-				content.add(new AlphaColorEditor("ColourColumnLine", "what colour should be used for the column lines", ini.colourColumnLine))
+				content.add(new AlphaColorEditor("ColourColumnLine", "what colour should be used for the column lines", ini.colourColumnLine));
 				content.add(Box.createVerticalStrut(2));
 				content.add(new JSeparator());
 				content.add(Box.createVerticalStrut(2));
@@ -873,25 +832,38 @@ public class SkinIniTab extends JTabbedPane{
 			this(name, null, setting, values);
 		}
 		
-		@SuppressWarnings("unchecked")
 		private ComboBoxEditor(String name, String hint, Setting<T> setting, T[] values){
+			this(name, hint, setting, values, false);
+		}
+		
+		@SuppressWarnings("unchecked")
+		private ComboBoxEditor(String name, String hint, Setting<T> setting, T[] values, boolean toggle){
 			super(new SplitLayout());
-			if(hint == null){
-				add(new JLabel(" " + name + ": "));
-			}else{
-				add(new JLabel(" " + name + " (" + hint + "): "));
-			}
+			JPanel settings = new JPanel(new BorderLayout());
+			add(new JLabel(" " + name + " (" + hint + "): "));
 			JComboBox<T> box = new JComboBox<T>(values);
 			box.setSelectedItem(setting.getValue());
-			box.addItemListener((e)->{
+			settings.add(box, BorderLayout.CENTER);
+			box.addActionListener((e)->{
 				setting.update((T)box.getSelectedItem());
 			});
-			add(box);
+			if(toggle){
+				JCheckBox enabled = new JCheckBox("", setting.isEnabled());
+				enabled.addActionListener((event)->{
+					setting.setEnabled(enabled.isSelected());
+				});
+				settings.add(enabled, BorderLayout.LINE_START);
+			}
+			add(settings);
 		}
 	}
 	
 	private static final class AlphaColorEditor extends JPanel{
-		
+		/**
+		 * Serial ID
+		 */
+		private static final long serialVersionUID = -5486062097516828519L;
+
 		private AlphaColorEditor(String name, String hint, Setting<Colour> setting){
 			super(new SplitLayout());
 			JPanel settings = new JPanel(new BorderLayout());
