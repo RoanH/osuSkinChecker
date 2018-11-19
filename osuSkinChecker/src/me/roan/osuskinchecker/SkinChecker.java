@@ -5,6 +5,7 @@ import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.BufferedReader;
@@ -20,7 +21,12 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -190,25 +196,39 @@ public class SkinChecker{
 		JPanel ini = new JPanel(new BorderLayout());
 		ini.add(new JLabel("Settings with an additional leading checkbox require you to check this check box if you want to use the setting. Otherwise the setting is left as 'undefined'."), BorderLayout.PAGE_START);
 		ini.add(iniTab = new SkinIniTab(), BorderLayout.CENTER);
-		JButton save = new JButton("Save skin.ini debug I guess, can probably break stuff with this button");
-		save.addActionListener((e)->{
+		JPanel saveButtons = new JPanel(new GridLayout(1, 2, 5, 0));
+		JButton save = new JButton("Save skin.ini");
+		ActionListener defaultSave = (e)->{
 			if(skinIni != null){
 				try{
-					File f = new File("debugWrite.ini");
 					try{
-						f.createNewFile();
+						skinIni.ini.createNewFile();
 					}catch(IOException e1){
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						JOptionPane.showMessageDialog(frame, "Failed to create the skin.ini file!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+						return;
 					}
-					skinIni.writeIni(f);
+					skinIni.writeIni(skinIni.ini);
 				}catch(FileNotFoundException e1){
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(frame, "An error occurred while writing the new skin.ini!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
 				}
 			}
+		};
+		save.addActionListener(defaultSave);
+		JButton saveBack = new JButton("Save skin.ini and backup the current version");
+		saveBack.addActionListener((e)->{
+			if(skinIni != null){
+				try{
+					Files.move(skinIni.ini.toPath(), new File(skinIni.ini.getParentFile(), "backup-" + getDateTime() + ".ini").toPath(), StandardCopyOption.REPLACE_EXISTING);
+				}catch(IOException e2){
+					JOptionPane.showMessageDialog(frame, "Failed to create a backup!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				defaultSave.actionPerformed(e);
+			}
 		});
-		ini.add(save, BorderLayout.PAGE_END);
+		saveButtons.add(save);
+		saveButtons.add(saveBack);
+		ini.add(saveButtons, BorderLayout.PAGE_END);
 
 		categories.add("Images", imageTabs);
 		categories.add("Sounds", soundTabs);
@@ -486,7 +506,7 @@ public class SkinChecker{
 			skinIni.readIni(iniFile);
 		}catch(Throwable e){
 			try{
-				String name = System.currentTimeMillis() + ".txt";
+				String name = "error-" + getDateTime() + ".txt";
 				Path err = new File(name).toPath();
 				List<String> errl = new ArrayList<String>(30);
 				errl.add(e.toString());
@@ -740,5 +760,9 @@ public class SkinChecker{
 			//No Internet access or something else is wrong,
 			//No problem though since this isn't a critical function
 		}
+	}
+	
+	private static final String getDateTime(){
+		return DateTimeFormatter.ofPattern("yyyy-MM-dd_HH.mm.ss").withZone(ZoneId.systemDefault()).format(Instant.now(Clock.systemDefaultZone()));
 	}
 }

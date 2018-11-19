@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 public class SkinIni{
 	private static boolean usedDefault = false;
 	private List<Section> data;
+	protected File ini;
 	
 	//general
 	protected final Setting<String> name = new Setting<String>("Name", "-");
@@ -279,6 +280,7 @@ public class SkinIni{
 	}
 	
 	public void readIni(File file) throws IOException{
+		ini = file;
 		usedDefault = false;
 		data = new ArrayList<Section>();
 		Section section = new Section(null);
