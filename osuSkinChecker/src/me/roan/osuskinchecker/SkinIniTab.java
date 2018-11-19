@@ -898,12 +898,7 @@ public class SkinIniTab extends JTabbedPane{
 		}
 		
 		private TextEditor(String name, String hint, Setting<String> setting){
-			this(name, hint, setting, false);
-		}
-		
-		private TextEditor(String name, String hint, Setting<String> setting, boolean toggle){
 			super(new SplitLayout());
-			JPanel settings = new JPanel(new BorderLayout());
 			if(hint == null){
 				add(new JLabel(" " + name + ": "));
 			}else{
@@ -913,15 +908,7 @@ public class SkinIniTab extends JTabbedPane{
 			field.addActionListener((e)->{
 				setting.update(field.getText());
 			});
-			if(toggle){
-				settings.add(field, BorderLayout.CENTER);
-				JCheckBox enabled = new JCheckBox("", setting.isEnabled());
-				settings.add(enabled, BorderLayout.LINE_START);
-				enabled.addActionListener((e)->{
-					setting.setEnabled(enabled.isSelected());
-				});
-			}
-			add(settings);
+			add(field);
 		}
 	}
 	
