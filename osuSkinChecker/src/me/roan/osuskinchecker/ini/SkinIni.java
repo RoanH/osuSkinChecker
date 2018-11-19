@@ -639,6 +639,23 @@ public class SkinIni{
 		return setting;
 	}
 	
+	/**
+	 * Parses the given string and updates the
+	 * setting that it represents. If the given
+	 * line is not a valid setting it will be
+	 * returned as a {@link Comment} setting.<br>
+	 * NOTE: This subroutine does not handle
+	 * Mania settings, 
+	 * see {@link ManiaIni#parseMania(String)}
+	 * for that functionality.
+	 * @param line The line to parse
+	 * @return The setting or comment that
+	 *         was updated or created
+	 * @throws IOException When an IOException occurs
+	 * @see Setting
+	 * @see Comment
+	 * @see ManiaIni
+	 */
 	public Setting<?> parse(String line) throws IOException{
 		if(line.trim().isEmpty() || line.startsWith("//")){
 			return new Comment(line);
