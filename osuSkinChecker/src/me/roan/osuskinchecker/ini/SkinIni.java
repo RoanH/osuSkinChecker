@@ -428,6 +428,104 @@ public class SkinIni{
 		}
 	}
 
+	private static Setting<Double> parseDouble(Setting<Double> setting, String line, double min){
+		return parseDouble(setting, line, min, Double.MAX_VALUE);
+	}
+	
+	private static Setting<Double> parseDouble(Setting<Double> setting, String line, double min, double max){
+		try{
+			double val = Double.parseDouble(line);
+			if(val >= min && val <= max){
+				return setting.update(val);
+			}else{
+				usedDefault = true;
+			}
+		}catch(NumberFormatException e){
+			usedDefault = true;
+		}
+		return setting;
+	}
+	
+	private static Setting<Integer> parseInt(Setting<Integer> setting, String line){
+		return parseInt(setting, line, Integer.MIN_VALUE);
+	}
+	
+	private static Setting<Integer> parseInt(Setting<Integer> setting, String line, int min){
+		return parseInt(setting, line, min, Integer.MAX_VALUE);
+	}
+	
+	private static Setting<Integer> parseInt(Setting<Integer> setting, String line, int min, int max){
+		try{
+			int val = Integer.parseInt(line);
+			if(val >= min && val <= max){
+				return setting.update(val);
+			}else{
+				usedDefault = true;
+			}
+		}catch(NumberFormatException e){
+			usedDefault = true;
+		}
+		return setting;
+	}
+	
+	private static Setting<Boolean> parseBoolean(Setting<Boolean> setting, String line){
+		if(line.equals("1") || line.equals("0")){
+			return setting.update(line.equals("1"));
+		}else{
+			usedDefault = true;
+			return setting;
+		}
+	}
+	
+	private static Setting<double[]> parseList(Setting<double[]> setting, String data, int expected){
+		String[] args = data.split(",");
+		if(args.length != expected){
+			usedDefault = true;
+			return setting;
+		}
+		for(int i = 0; i < expected; i++){
+			setting.getValue()[i] = Math.max(0.0D, Double.parseDouble(args[i].trim()));
+		}
+		return setting;
+	}
+
+	private static Setting<Colour> parseColor(Setting<Colour> setting, String arg){
+		String[] args = arg.split(",");
+		try{
+			if(args.length == 3){
+				return setting.update(new Colour(Integer.parseInt(args[0].trim()), Integer.parseInt(args[1].trim()), Integer.parseInt(args[2].trim())));
+			}else if(args.length == 4){
+				return setting.update(new Colour(Integer.parseInt(args[0].trim()), Integer.parseInt(args[1].trim()), Integer.parseInt(args[2].trim()), Integer.parseInt(args[3].trim())));
+			}else{
+				usedDefault = true;
+			}
+		}catch(NumberFormatException e){
+			usedDefault = true;
+		}
+		return setting;
+	}
+
+	public void writeIni(File file) throws FileNotFoundException{
+		PrintWriter writer = new PrintWriter(new FileOutputStream(file));
+
+		for(Section section : data){
+			if(section.name != null){
+				writer.println(section.name);
+				if(section.isMania()){
+					writer.println("Keys: " + section.mania.keys);
+				}
+			}
+			for(Setting<?> setting : section.data){
+				if(setting.isEnabled()){
+					writer.println(setting);
+				}
+			}
+		}
+
+		writer.flush();
+		writer.close();
+	}
+	
 	public Setting<?> parse(String line) throws IOException{
 		if(line.trim().isEmpty() || line.startsWith("//")){
 			return new Comment(line);
@@ -530,104 +628,6 @@ public class SkinIni{
 		default:
 			return new Comment(line);
 		}
-	}
-
-	private static Setting<Double> parseDouble(Setting<Double> setting, String line, double min){
-		return parseDouble(setting, line, min, Double.MAX_VALUE);
-	}
-	
-	private static Setting<Double> parseDouble(Setting<Double> setting, String line, double min, double max){
-		try{
-			double val = Double.parseDouble(line);
-			if(val >= min && val <= max){
-				return setting.update(val);
-			}else{
-				usedDefault = true;
-			}
-		}catch(NumberFormatException e){
-			usedDefault = true;
-		}
-		return setting;
-	}
-	
-	private static Setting<Integer> parseInt(Setting<Integer> setting, String line){
-		return parseInt(setting, line, Integer.MIN_VALUE);
-	}
-	
-	private static Setting<Integer> parseInt(Setting<Integer> setting, String line, int min){
-		return parseInt(setting, line, min, Integer.MAX_VALUE);
-	}
-	
-	private static Setting<Integer> parseInt(Setting<Integer> setting, String line, int min, int max){
-		try{
-			int val = Integer.parseInt(line);
-			if(val >= min && val <= max){
-				return setting.update(val);
-			}else{
-				usedDefault = true;
-			}
-		}catch(NumberFormatException e){
-			usedDefault = true;
-		}
-		return setting;
-	}
-	
-	private static Setting<Boolean> parseBoolean(Setting<Boolean> setting, String line){
-		if(line.equals("1") || line.equals("0")){
-			return setting.update(line.equals("1"));
-		}else{
-			usedDefault = true;
-			return setting;
-		}
-	}
-	
-	private static Setting<double[]> parseList(Setting<double[]> setting, String data, int expected){
-		String[] args = data.split(",");
-		if(args.length != expected){
-			usedDefault = true;
-			return setting;
-		}
-		for(int i = 0; i < expected; i++){
-			setting.getValue()[i] = Math.max(0.0D, Double.parseDouble(args[i].trim()));
-		}
-		return setting;
-	}
-
-	private static Setting<Colour> parseColor(Setting<Colour> setting, String arg){
-		String[] args = arg.split(",");
-		try{
-			if(args.length == 3){
-				return setting.update(new Colour(Integer.parseInt(args[0].trim()), Integer.parseInt(args[1].trim()), Integer.parseInt(args[2].trim())));
-			}else if(args.length == 4){
-				return setting.update(new Colour(Integer.parseInt(args[0].trim()), Integer.parseInt(args[1].trim()), Integer.parseInt(args[2].trim()), Integer.parseInt(args[3].trim())));
-			}else{
-				usedDefault = true;
-			}
-		}catch(NumberFormatException e){
-			usedDefault = true;
-		}
-		return setting;
-	}
-
-	public void writeIni(File file) throws FileNotFoundException{
-		PrintWriter writer = new PrintWriter(new FileOutputStream(file));
-
-		for(Section section : data){
-			if(section.name != null){
-				writer.println(section.name);
-				if(section.isMania()){
-					writer.println("Keys: " + section.mania.keys);
-				}
-			}
-			for(Setting<?> setting : section.data){
-				if(setting.isEnabled()){
-					writer.println(setting);
-				}
-			}
-		}
-
-		writer.flush();
-		writer.close();
 	}
 	
 	protected static final class ManiaIni{
