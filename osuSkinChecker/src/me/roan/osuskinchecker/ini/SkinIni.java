@@ -266,15 +266,13 @@ public class SkinIni{
 	 * All mania configurations from 1 to {@link ManiaIni#MAX_KEYS}
 	 */
 	protected final ManiaIni[] mania = new ManiaIni[ManiaIni.MAX_KEYS];
-
-	public final void createManiaConfiguration(int keys){
-		ManiaIni ini = new ManiaIni(keys);
-		mania[keys - 1] = ini;
-		Section s = new Section("[Mania]");
-		s.mania = ini;
-		data.add(s);
-	}
 	
+	/**
+	 * Reads the given skin.ini file and
+	 * update all the relevant setting fields
+	 * @param file The skin.ini file to read
+	 * @throws IOException When an IOException occurs
+	 */
 	public void readIni(File file) throws IOException{
 		ini = file;
 		usedDefault = false;
@@ -427,11 +425,83 @@ public class SkinIni{
 			JOptionPane.showMessageDialog(SkinChecker.frame, "Skin.ini fields were found that couldn't be parsed. Default values were used.", "Skin Checker", JOptionPane.WARNING_MESSAGE);
 		}
 	}
+	
+	/**
+	 * Writes this skin.ini configuration
+	 * to the given file
+	 * @param file The file to write to
+	 * @throws FileNotFoundException When the given file
+	 *         does not exist
+	 */
+	public void writeIni(File file) throws FileNotFoundException{
+		PrintWriter writer = new PrintWriter(new FileOutputStream(file));
 
+		for(Section section : data){
+			if(section.name != null){
+				writer.println(section.name);
+				if(section.isMania()){
+					writer.println("Keys: " + section.mania.keys);
+				}
+			}
+			for(Setting<?> setting : section.data){
+				if(setting.isEnabled()){
+					writer.println(setting);
+				}
+			}
+		}
+
+		writer.flush();
+		writer.close();
+	}
+	
+	/**
+	 * Creates a mania configuration section
+	 * for the given key count
+	 * @param keys The key count to create
+	 *        a configuration section for
+	 */
+	public final void createManiaConfiguration(int keys){
+		ManiaIni ini = new ManiaIni(keys);
+		mania[keys - 1] = ini;
+		Section s = new Section("[Mania]");
+		s.mania = ini;
+		data.add(s);
+	}
+
+	/**
+	 * Parses a double setting with a
+	 * given minimum constraint if this
+	 * constraint is not met the old
+	 * value for the given setting will
+	 * remain. If the given line data does
+	 * not represent a valid double value
+	 * the old value will remain in place 
+	 * @param setting The setting to update
+	 * @param line The line that contains the double data
+	 * @param min The minimum value required
+	 *        for the new value to be valid
+	 * @return The updated setting
+	 */
 	private static Setting<Double> parseDouble(Setting<Double> setting, String line, double min){
 		return parseDouble(setting, line, min, Double.MAX_VALUE);
 	}
 	
+	/**
+	 * Parses a double setting with a
+	 * given minimum and maximum constraint 
+	 * if these constraints are not met the 
+	 * old value for the given setting will
+	 * remain. If the given line data does
+	 * not represent a valid double value
+	 * the old value will remain in place
+	 * @param setting The setting to update
+	 * @param line The line that contains the double data
+	 * @param min The minimum value required
+	 *        for the new value to be valid
+	 * @param max The maximum value allowed
+	 *        for the new value to be valid
+	 * @return The updated setting
+	 */
 	private static Setting<Double> parseDouble(Setting<Double> setting, String line, double min, double max){
 		try{
 			double val = Double.parseDouble(line);
@@ -446,14 +516,47 @@ public class SkinIni{
 		return setting;
 	}
 	
+	/**
+	 * Parses an integer setting.
+	 * If the given line data does
+	 * not represent a valid integer value
+	 * the old value will remain in place
+	 * @param setting The setting to update
+	 * @param line The line that contains the integer data
+	 * @return The updated setting
+	 */
 	private static Setting<Integer> parseInt(Setting<Integer> setting, String line){
 		return parseInt(setting, line, Integer.MIN_VALUE);
 	}
 	
+	/**
+	 * Parses an integer setting.
+	 * If the given line data does
+	 * not represent a valid integer value
+	 * the old value will remain in place
+	 * @param setting The setting to update
+	 * @param line The line that contains the integer data
+	 * @param min The minimum value required
+	 *        for the new value to be valid
+	 * @return The updated setting
+	 */
 	private static Setting<Integer> parseInt(Setting<Integer> setting, String line, int min){
 		return parseInt(setting, line, min, Integer.MAX_VALUE);
 	}
 	
+	/**
+	 * Parses an integer setting.
+	 * If the given line data does
+	 * not represent a valid integer value
+	 * the old value will remain in place
+	 * @param setting The setting to update
+	 * @param line The line that contains the integer data
+	 * @param min The minimum value required
+	 *        for the new value to be valid
+	 * @param max The maximum value allowed
+	 *        for the new value to be valid
+	 * @return The updated setting
+	 */
 	private static Setting<Integer> parseInt(Setting<Integer> setting, String line, int min, int max){
 		try{
 			int val = Integer.parseInt(line);
@@ -503,27 +606,6 @@ public class SkinIni{
 			usedDefault = true;
 		}
 		return setting;
-	}
-
-	public void writeIni(File file) throws FileNotFoundException{
-		PrintWriter writer = new PrintWriter(new FileOutputStream(file));
-
-		for(Section section : data){
-			if(section.name != null){
-				writer.println(section.name);
-				if(section.isMania()){
-					writer.println("Keys: " + section.mania.keys);
-				}
-			}
-			for(Setting<?> setting : section.data){
-				if(setting.isEnabled()){
-					writer.println(setting);
-				}
-			}
-		}
-
-		writer.flush();
-		writer.close();
 	}
 	
 	public Setting<?> parse(String line) throws IOException{
