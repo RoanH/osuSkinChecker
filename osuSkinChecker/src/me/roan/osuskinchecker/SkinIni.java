@@ -59,13 +59,13 @@ public class SkinIni{
 	protected final Setting<Colour> spinnerBackground = new Setting<Colour>("SpinnerBackground", new Colour(100, 100, 100));
 	
 	protected final Setting<Colour> combo1 = new Setting<Colour>("Combo1", new Colour(255, 192, 0));
-	protected final Setting<Colour> combo2 = new Setting<Colour>("Combo2", new Colour(0, 0, 0));
-	protected final Setting<Colour> combo3 = new Setting<Colour>("Combo3", new Colour(0, 0, 0));
-	protected final Setting<Colour> combo4 = new Setting<Colour>("Combo4", new Colour(0, 0, 0));
-	protected final Setting<Colour> combo5 = new Setting<Colour>("Combo5", new Colour(0, 0, 0));
-	protected final Setting<Colour> combo6 = new Setting<Colour>("Combo6", new Colour(0, 0, 0));
-	protected final Setting<Colour> combo7 = new Setting<Colour>("Combo7", new Colour(0, 0, 0));
-	protected final Setting<Colour> combo8 = new Setting<Colour>("Combo8", new Colour(0, 0, 0));
+	protected final Setting<Colour> combo2 = new Setting<Colour>("Combo2", false, new Colour(0, 0, 0));
+	protected final Setting<Colour> combo3 = new Setting<Colour>("Combo3", false, new Colour(0, 0, 0));
+	protected final Setting<Colour> combo4 = new Setting<Colour>("Combo4", false, new Colour(0, 0, 0));
+	protected final Setting<Colour> combo5 = new Setting<Colour>("Combo5", false, new Colour(0, 0, 0));
+	protected final Setting<Colour> combo6 = new Setting<Colour>("Combo6", false, new Colour(0, 0, 0));
+	protected final Setting<Colour> combo7 = new Setting<Colour>("Combo7", false, new Colour(0, 0, 0));
+	protected final Setting<Colour> combo8 = new Setting<Colour>("Combo8", false, new Colour(0, 0, 0));
 
 	//fonts
 	protected final Setting<String> hitCirclePrefix = new Setting<String>("HitCirclePrefix", "default");
