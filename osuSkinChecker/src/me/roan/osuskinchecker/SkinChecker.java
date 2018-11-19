@@ -762,6 +762,11 @@ public class SkinChecker{
 		}
 	}
 	
+	/**
+	 * Gets the current time and date as a string
+	 * in the <code>yyyy-MM-dd_HH.mm.ss</code> format
+	 * @return The current time and date
+	 */
 	private static final String getDateTime(){
 		return DateTimeFormatter.ofPattern("yyyy-MM-dd_HH.mm.ss").withZone(ZoneId.systemDefault()).format(Instant.now(Clock.systemDefaultZone()));
 	}
