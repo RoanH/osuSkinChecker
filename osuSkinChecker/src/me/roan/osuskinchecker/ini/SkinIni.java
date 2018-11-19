@@ -571,6 +571,15 @@ public class SkinIni{
 		return setting;
 	}
 	
+	/**
+	 * Parses a boolean setting.
+	 * If the provided line data does not
+	 * represent a valid boolean value the
+	 * old value remains in place.
+	 * @param setting The setting to update
+	 * @param line The line that contains the boolean data
+	 * @return The updated setting
+	 */
 	private static Setting<Boolean> parseBoolean(Setting<Boolean> setting, String line){
 		if(line.equals("1") || line.equals("0")){
 			return setting.update(line.equals("1"));
@@ -580,6 +589,18 @@ public class SkinIni{
 		}
 	}
 	
+	/**
+	 * Parses a list setting.
+	 * If the provided line data not
+	 * represent a list with the expected
+	 * number of values the old value
+	 * will remain in place
+	 * @param setting The setting to update
+	 * @param data The line that contains the list data
+	 * @param expected The expected number of
+	 *        arguments in the given list
+	 * @return The updated setting
+	 */
 	private static Setting<double[]> parseList(Setting<double[]> setting, String data, int expected){
 		String[] args = data.split(",");
 		if(args.length != expected){
@@ -592,6 +613,16 @@ public class SkinIni{
 		return setting;
 	}
 
+	/**
+	 * Parses a color setting.
+	 * If the provided argument does
+	 * not represent a valid color the
+	 * old value will remain in place
+	 * @param setting The setting to update
+	 * @param arg The argument that represents
+	 *        the color data
+	 * @return The updated setting
+	 */
 	private static Setting<Colour> parseColor(Setting<Colour> setting, String arg){
 		String[] args = arg.split(",");
 		try{
