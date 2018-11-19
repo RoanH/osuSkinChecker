@@ -10,11 +10,30 @@ import java.awt.Rectangle;
 import javax.swing.JPanel;
 import javax.swing.Scrollable;
 
+/**
+ * Simple layout manager that only accepts
+ * two components and divides the space in
+ * a 2/3 and 1/3 area.
+ * @author Roan
+ */
 public class SplitLayout implements LayoutManager, LayoutManager2{
-
+	/**
+	 * The first component in this layout
+	 * that gets the 2/3 area
+	 */
 	private Component first;
+	/**
+	 * The second component in this layout
+	 * that gets the 1/3 area
+	 */
 	private Component second;
+	/**
+	 * The preferred height for this layout
+	 */
 	private int height;
+	/**
+	 * 1/3 of the preferred width for this layout
+	 */
 	private int pref;
 
 	@Override
@@ -35,7 +54,7 @@ public class SplitLayout implements LayoutManager, LayoutManager2{
 
 	@Override
 	public Dimension preferredLayoutSize(Container parent){
-		return new Dimension(pref, height);
+		return new Dimension(pref * 3, height);
 	}
 
 	@Override
@@ -73,6 +92,12 @@ public class SplitLayout implements LayoutManager, LayoutManager2{
 	public void invalidateLayout(Container target){
 	}
 
+	/**
+	 * Custom Scrollable to set a workable
+	 * scroll speed
+	 * @author Roan
+	 * @see Scrollable
+	 */
 	protected static final class ScrollPane extends JPanel implements Scrollable{
 		/**
 		 * Serial ID
@@ -101,7 +126,7 @@ public class SplitLayout implements LayoutManager, LayoutManager2{
 
 		@Override
 		public int getScrollableUnitIncrement(Rectangle arg0, int arg1, int arg2){
-			return this.getComponentCount() == 0 ? 1 : (this.getHeight() / this.getComponentCount());
+			return this.getComponentCount() == 0 ? 1 : ((this.getHeight() / this.getComponentCount()) * 2);
 		}
 	}
 }
