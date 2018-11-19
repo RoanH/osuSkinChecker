@@ -1,8 +1,8 @@
-package me.roan.osuskinchecker;
+package me.roan.osuskinchecker.ini;
 
 import java.util.StringJoiner;
 
-import me.roan.osuskinchecker.SkinIni.Printable;
+import me.roan.osuskinchecker.ini.SkinIni.Printable;
 
 public class Setting<T>{
 

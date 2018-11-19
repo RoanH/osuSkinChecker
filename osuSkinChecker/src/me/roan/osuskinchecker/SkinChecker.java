@@ -50,6 +50,9 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
+import me.roan.osuskinchecker.ini.SkinIni;
+import me.roan.osuskinchecker.ini.SkinIniTab;
+
 /**
  * This program can be used to see what
  * elements a skin skins and to see what
@@ -108,7 +111,7 @@ public class SkinChecker{
 	/**
 	 * Main frame
 	 */
-	protected static final JFrame frame = new JFrame("Skin Checker for osu!");
+	public static final JFrame frame = new JFrame("Skin Checker for osu!");
 	/**
 	 * The JLabel that displays the name of the skin
 	 * currently being checked

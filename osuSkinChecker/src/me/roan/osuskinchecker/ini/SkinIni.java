@@ -1,4 +1,4 @@
-package me.roan.osuskinchecker;
+package me.roan.osuskinchecker.ini;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -18,10 +18,12 @@ import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
+import me.roan.osuskinchecker.SkinChecker;
+
 public class SkinIni{
 	private static boolean usedDefault = false;
 	private List<Section> data;
-	protected File ini;
+	public File ini;
 	
 	//general
 	protected final Setting<String> name = new Setting<String>("Name", "-");

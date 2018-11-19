@@ -1,4 +1,4 @@
-package me.roan.osuskinchecker;
+package me.roan.osuskinchecker.ini;
 
 import java.awt.Color;
 

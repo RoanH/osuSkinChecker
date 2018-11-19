@@ -1,9 +1,9 @@
-package me.roan.osuskinchecker;
+package me.roan.osuskinchecker.ini;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import me.roan.osuskinchecker.SkinIni.ManiaIni;
+import me.roan.osuskinchecker.ini.SkinIni.ManiaIni;
 
 public class Section{
 

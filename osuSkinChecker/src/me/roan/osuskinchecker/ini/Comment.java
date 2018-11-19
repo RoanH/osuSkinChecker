@@ -1,4 +1,4 @@
-package me.roan.osuskinchecker;
+package me.roan.osuskinchecker.ini;
 
 public class Comment extends Setting<String>{
 

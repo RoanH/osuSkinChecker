@@ -1,4 +1,4 @@
-package me.roan.osuskinchecker;
+package me.roan.osuskinchecker.ini;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -26,13 +26,13 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import javax.swing.text.PlainDocument;
 
-import me.roan.osuskinchecker.SkinIni.ComboBurstStyle;
-import me.roan.osuskinchecker.SkinIni.ManiaIni;
-import me.roan.osuskinchecker.SkinIni.NoteBodyStyle;
-import me.roan.osuskinchecker.SkinIni.SliderStyle;
-import me.roan.osuskinchecker.SkinIni.SpecialStyle;
-import me.roan.osuskinchecker.SkinIni.Version;
-import me.roan.osuskinchecker.SplitLayout.ScrollPane;
+import me.roan.osuskinchecker.ini.SkinIni.ComboBurstStyle;
+import me.roan.osuskinchecker.ini.SkinIni.ManiaIni;
+import me.roan.osuskinchecker.ini.SkinIni.NoteBodyStyle;
+import me.roan.osuskinchecker.ini.SkinIni.SliderStyle;
+import me.roan.osuskinchecker.ini.SkinIni.SpecialStyle;
+import me.roan.osuskinchecker.ini.SkinIni.Version;
+import me.roan.osuskinchecker.ini.SplitLayout.ScrollPane;
 
 public class SkinIniTab extends JTabbedPane{
 	/**
