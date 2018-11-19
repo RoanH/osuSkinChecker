@@ -3,9 +3,12 @@ package me.roan.osuskinchecker;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.roan.osuskinchecker.SkinIni.ManiaIni;
+
 public class Section{
 
 	protected final String name;
+	protected ManiaIni mania;
 	protected final List<Setting<?>> data = new ArrayList<Setting<?>>();
 	
 	protected Section(String name){
@@ -13,6 +16,6 @@ public class Section{
 	}
 	
 	protected boolean isMania(){
-		return name != null && name.contains("Mania");
+		return mania != null;
 	}
 }

@@ -11,6 +11,7 @@ public class Setting<T>{
 	private boolean enabled = true;
 	private boolean wasUpdated = false;
 	protected static boolean singleUpdateMode = false;
+	protected boolean added = false;
 	
 	protected Setting(String name, T def){
 		value = def;

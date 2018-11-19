@@ -231,6 +231,7 @@ public class SkinIni{
 										int keys = Integer.parseInt(line.substring(5).trim());
 										if(keys >= 1 && keys <= ManiaIni.MAX_KEYS){
 											mania[keys - 1] = (maniaIni = new ManiaIni(keys));
+											section.mania = maniaIni;
 											break;
 										}else{
 											throw new IllegalArgumentException("Unsupported key count: " + keys);
@@ -248,9 +249,13 @@ public class SkinIni{
 						}
 					}
 				}else if(section.isMania()){
-					section.data.add(parseMania(maniaIni, line));
+					Setting<?> setting = parseMania(maniaIni, line);
+					setting.added = true;
+					section.data.add(setting);
 				}else{
-					section.data.add(parse(line));
+					Setting<?> setting = parse(line);
+					setting.added = true;
+					section.data.add(setting);
 				}
 			}	
 		}catch(Exception e){
@@ -598,6 +603,9 @@ public class SkinIni{
 		for(Section section : data){
 			if(section.name != null){
 				writer.println(section.name);
+				if(section.isMania()){
+					writer.println("Keys: " + section.mania.keys);
+				}
 			}
 			for(Setting<?> setting : section.data){
 				if(setting.isEnabled()){
