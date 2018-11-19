@@ -840,7 +840,11 @@ public class SkinIniTab extends JTabbedPane{
 		private ComboBoxEditor(String name, String hint, Setting<T> setting, T[] values, boolean toggle){
 			super(new SplitLayout());
 			JPanel settings = new JPanel(new BorderLayout());
-			add(new JLabel(" " + name + " (" + hint + "): "));
+			if(hint == null){
+				add(new JLabel(" " + name + ": "));
+			}else{
+				add(new JLabel(" " + name + " (" + hint + "): "));
+			}
 			JComboBox<T> box = new JComboBox<T>(values);
 			box.setSelectedItem(setting.getValue());
 			settings.add(box, BorderLayout.CENTER);
@@ -905,7 +909,7 @@ public class SkinIniTab extends JTabbedPane{
 			}else{
 				add(new JLabel(" " + name + " (" + hint + "): "));
 			}
-			PathField field = new PathField(setting.getValue());
+			JTextField field = new JTextField(setting.getValue());
 			field.addActionListener((e)->{
 				setting.update(field.getText());
 			});
@@ -959,18 +963,20 @@ public class SkinIniTab extends JTabbedPane{
 		
 		private PathEditor(String name, String hint, Setting<String> setting, boolean toggle){
 			super(new SplitLayout());
-			JCheckBox enabled = new JCheckBox("", setting.isEnabled());
 			JPanel settings = new JPanel(new BorderLayout());
-			settings.add(enabled, BorderLayout.LINE_START);
 			add(new JLabel(" " + name + " (" + hint + "): "));
 			PathField field = new PathField(setting.getValue());
 			field.addActionListener((e)->{
 				setting.update(field.getText());
 			});
 			settings.add(field, BorderLayout.CENTER);
-			enabled.addActionListener((e)->{
-				setting.setEnabled(enabled.isSelected());
-			});
+			if(toggle){
+				JCheckBox enabled = new JCheckBox("", setting.isEnabled());
+				settings.add(enabled, BorderLayout.LINE_START);
+				enabled.addActionListener((e)->{
+					setting.setEnabled(enabled.isSelected());
+				});
+			}
 			add(settings);
 		}
 	}
