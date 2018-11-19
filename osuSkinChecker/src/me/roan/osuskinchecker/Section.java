@@ -16,6 +16,6 @@ public class Section{
 	}
 	
 	protected boolean isMania(){
-		return mania != null;
+		return mania != null || (name != null && name.trim().equals("[Mania]"));
 	}
 }

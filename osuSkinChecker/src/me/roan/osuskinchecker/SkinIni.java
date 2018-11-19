@@ -9,8 +9,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
@@ -83,7 +86,11 @@ public class SkinIni{
 	protected final ManiaIni[] mania = new ManiaIni[ManiaIni.MAX_KEYS];
 
 	public final void createManiaConfiguration(int keys){
-		mania[keys - 1] = new ManiaIni(keys);
+		ManiaIni ini = new ManiaIni(keys);
+		mania[keys - 1] = ini;
+		Section s = new Section("[Mania]");
+		s.mania = ini;
+		data.add(s);
 	}
 
 	protected static final class ManiaIni{
@@ -204,6 +211,72 @@ public class SkinIni{
 				noteImageT = new Setting<String>("NoteImage" + key + "T", false, "");
 			}
 		}
+
+		private List<Setting<?>> getAll(){
+			List<Setting<?>> all = new ArrayList<Setting<?>>();
+			all.add(barlineHeight);
+			all.add(colourBarline);
+			all.add(colourBreak);
+			all.add(colourColumnLine);
+			all.add(colourHold);
+			all.add(colourJudgementLine);
+			all.add(colourKeyWarning);
+			all.add(columnLineWidth);
+			all.add(columnRight);
+			all.add(columnSpacing);
+			all.add(columnStart);
+			all.add(columnWidth);
+			all.add(comboBurstStyle);
+			all.add(comboPosition);
+			all.add(hit0);
+			all.add(hit50);
+			all.add(hit100);
+			all.add(hit200);
+			all.add(hit300);
+			all.add(hit300g);			
+			all.add(hitPosition);
+			all.add(judgementLine);
+			all.add(keyFlipWhenUpsideDown);
+			all.add(keysUnderNotes);
+			all.add(lightingL);
+			all.add(lightingLWidth);
+			all.add(lightingN);
+			all.add(lightingNWidth);
+			all.add(lightPosition);
+			all.add(noteBodyStyle);
+			all.add(noteFlipWhenUpsideDown);
+			all.add(scorePosition);
+			all.add(separateScore);
+			all.add(specialStyle);
+			all.add(splitStages);
+			all.add(stageBottom);
+			all.add(stageHint);
+			all.add(stageLeft);
+			all.add(stageRight);
+			all.add(stageLight);
+			all.add(stageSeparation);
+			all.add(upsideDown);
+			all.add(warningArrow);
+			all.add(widthForNoteHeightScale);
+			for(Column c : columns){
+				all.add(c.colour);
+				all.add(c.colourLight);
+				all.add(c.keyFlipWhenUpsideDown);
+				all.add(c.keyFlipWhenUpsideDownD);
+				all.add(c.keyImage);
+				all.add(c.keyImageD);
+				all.add(c.noteBodyStyle);
+				all.add(c.noteFlipWhenUpsideDown);
+				all.add(c.noteFlipWhenUpsideDownH);
+				all.add(c.noteFlipWhenUpsideDownL);
+				all.add(c.noteFlipWhenUpsideDownT);
+				all.add(c.noteImage);
+				all.add(c.noteImageH);
+				all.add(c.noteImageL);
+				all.add(c.noteImageT);
+			}
+			return all;
+		}
 	}
 	
 	public void readIni(File file) throws IOException{
@@ -215,10 +288,85 @@ public class SkinIni{
 		ManiaIni maniaIni = null;
 		Setting.singleUpdateMode = true;
 		
+		Map<String, Setting<?>[]> all = new HashMap<String, Setting<?>[]>();
+		all.put("[General]", new Setting<?>[]{
+			name,
+			author,
+			version,
+			cursorExpand,
+			cursorCentre,
+			cursorRotate,
+			cursorTrailRotate,
+			animationFramerate,
+			layeredHitSounds,
+			comboBurstRandom,
+			customComboBurstSounds,
+			hitCircleOverlayAboveNumber,
+			sliderStyle,
+			sliderBallFlip,
+			allowSliderBallTint,
+			spinnerNoBlink,
+			spinnerFadePlayfield,
+			spinnerFrequencyModulate
+		});
+		all.put("[Colours]", new Setting<?>[]{
+			songSelectActiveText,
+			songSelectInactiveText,
+			menuGlow,
+			starBreakAdditive,
+			inputOverlayText,
+			sliderBall,
+			sliderTrackOverride,
+			sliderBorder,
+			spinnerBackground,
+			combo1,
+			combo2,
+			combo3,
+			combo4,
+			combo5,
+			combo6,
+			combo7,
+			combo8
+		});
+		all.put("[Fonts]", new Setting<?>[]{
+			hitCirclePrefix,
+			hitCircleOverlap,
+			scorePrefix,
+			scoreOverlap,
+			comboPrefix,
+			comboOverlap
+		});
+		all.put("[CatchTheBeat]", new Setting<?>[]{
+			hyperDash,
+			hyperDashFruit,
+			hyperDashAfterImage
+		});
+		
 		String line = null;
 		try(BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))){
 			while((line = reader.readLine()) != null){
 				if(header.matcher(line.trim()).matches()){
+					int index = section.data.size() - 1;
+					Setting<?> last = index < 0 ? null : section.data.get(index);
+					if(last instanceof Comment && ((Comment)last).getValue().trim().isEmpty()){
+						section.data.remove(index);
+					}
+					if(section.isMania()){
+						for(Setting<?> setting : section.mania.getAll()){
+							if(!setting.added){
+								section.data.add(setting);
+							}
+						}
+					}else{
+						for(Setting<?> setting : all.getOrDefault(section.name, new Setting<?>[0])){
+							if(!setting.added){
+								section.data.add(setting);
+							}
+						}
+					}
+					if(last instanceof Comment && ((Comment)last).getValue().trim().isEmpty()){
+						section.data.add(last);
+					}
 					section = new Section(line.trim());
 					data.add(section);
 					if(section.isMania()){
@@ -230,6 +378,7 @@ public class SkinIni{
 									try{
 										int keys = Integer.parseInt(line.substring(5).trim());
 										if(keys >= 1 && keys <= ManiaIni.MAX_KEYS){
+											System.out.println("Found mania");
 											mania[keys - 1] = (maniaIni = new ManiaIni(keys));
 											section.mania = maniaIni;
 											break;
@@ -264,6 +413,8 @@ public class SkinIni{
 		}
 		
 		Setting.singleUpdateMode = false;
+		
+		System.out.println("Final: " + Arrays.toString(mania));
 		
 		if(usedDefault){
 			JOptionPane.showMessageDialog(SkinChecker.frame, "Skin.ini fields were found that couldn't be parsed. Default values were used.", "Skin Checker", JOptionPane.WARNING_MESSAGE);
