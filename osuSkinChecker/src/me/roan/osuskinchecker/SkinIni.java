@@ -373,7 +373,7 @@ public class SkinIni{
 		if(line.trim().isEmpty() || line.startsWith("//")){
 			return new Comment(line);
 		}
-		String[] args = line.split(":");
+		String[] args = line.split(":", 2);
 		args[1] = args[1].trim();
 		switch(args[0]){
 		case "ColumnStart":
