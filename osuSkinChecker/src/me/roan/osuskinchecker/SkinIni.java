@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -378,7 +377,6 @@ public class SkinIni{
 									try{
 										int keys = Integer.parseInt(line.substring(5).trim());
 										if(keys >= 1 && keys <= ManiaIni.MAX_KEYS){
-											System.out.println("Found mania");
 											mania[keys - 1] = (maniaIni = new ManiaIni(keys));
 											section.mania = maniaIni;
 											break;
@@ -413,9 +411,7 @@ public class SkinIni{
 		}
 		
 		Setting.singleUpdateMode = false;
-		
-		System.out.println("Final: " + Arrays.toString(mania));
-		
+				
 		if(usedDefault){
 			JOptionPane.showMessageDialog(SkinChecker.frame, "Skin.ini fields were found that couldn't be parsed. Default values were used.", "Skin Checker", JOptionPane.WARNING_MESSAGE);
 		}
