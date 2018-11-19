@@ -196,7 +196,7 @@ public class SkinChecker{
 		JPanel ini = new JPanel(new BorderLayout());
 		ini.add(new JLabel("Settings with an additional leading checkbox require you to check this check box if you want to use the setting. Otherwise the setting is left as 'undefined'."), BorderLayout.PAGE_START);
 		ini.add(iniTab = new SkinIniTab(), BorderLayout.CENTER);
-		JPanel saveButtons = new JPanel(new GridLayout(1, 2, 5, 0));
+		JPanel saveButtons = new JPanel(new GridLayout(1, 2));
 		JButton save = new JButton("Save skin.ini");
 		ActionListener defaultSave = (e)->{
 			if(skinIni != null){
