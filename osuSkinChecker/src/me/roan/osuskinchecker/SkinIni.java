@@ -8,143 +8,152 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
-import java.util.StringJoiner;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
-import me.roan.osuskinchecker.SkinIni.ManiaIni.Column;
-
 public class SkinIni{
-	private boolean usedDefault = false;
+	private static boolean usedDefault = false;
+	private List<Section> data;
 	
 	//general
-	protected String name = "-";
-	protected String author = "-";
-	protected Version version = Version.LATEST;
-	protected boolean cursorExpand = true;
-	protected boolean cursorCentre = true;
-	protected boolean cursorRotate = true;
-	protected boolean cursorTrailRotate = true;
-	protected int animationFramerate = -1;//non negative
+	protected final Setting<String> name = new Setting<String>("Name", "-");
+	protected final Setting<String> author = new Setting<String>("Author", "-");
+	protected final Setting<Version> version = new Setting<Version>("Version", Version.V1);
+	protected final Setting<Boolean> cursorExpand = new Setting<Boolean>("CursorExpand", true);
+	protected final Setting<Boolean> cursorCentre = new Setting<Boolean>("CursorCentre", true);
+	protected final Setting<Boolean> cursorRotate = new Setting<Boolean>("CursorRotate", true);
+	protected final Setting<Boolean> cursorTrailRotate = new Setting<Boolean>("CursorTrailRotate", true);
+	protected final Setting<Integer> animationFramerate = new Setting<Integer>("AnimationFramerate", false, 1);//non negative
 
 	//combo bursts
-	protected boolean layeredHitSounds = true;
-	protected boolean comboBurstRandom = false;
-	protected String customComboBurstSounds = null;//list of ints, positive values only
+	protected final Setting<Boolean> layeredHitSounds = new Setting<Boolean>("LayeredHitSounds", true);
+	protected final Setting<Boolean> comboBurstRandom = new Setting<Boolean>("ComboBurstRandom", false);
+	protected final Setting<String> customComboBurstSounds = new Setting<String>("CustomComboBurstSounds", false, "");//list of ints, positive values only
 
 	//standard
-	protected boolean hitCircleOverlayAboveNumber = true;
-	protected int sliderStyle = 2;//1 or 2
-	protected boolean sliderBallFlip = false;
-	protected boolean allowSliderBallTint = false;
-	protected boolean spinnerNoBlink = false;
-	protected boolean spinnerFadePlayfield = false;
-	protected boolean spinnerFrequencyModulate = true;
+	protected final Setting<Boolean> hitCircleOverlayAboveNumber = new Setting<Boolean>("HitCircleOverlayAboveNumber", true);
+	protected final Setting<SliderStyle> sliderStyle = new Setting<SliderStyle>("SliderStyle", SliderStyle.GRADIENT);//1 or 2
+	protected final Setting<Boolean> sliderBallFlip = new Setting<Boolean>("SliderBallFlip", false);
+	protected final Setting<Boolean> allowSliderBallTint = new Setting<Boolean>("AllowSliderBallTint", false);
+	protected final Setting<Boolean> spinnerNoBlink = new Setting<Boolean>("SpinnerNoBlink", false);
+	protected final Setting<Boolean> spinnerFadePlayfield = new Setting<Boolean>("SpinnerFadePlayfield", false);
+	protected final Setting<Boolean> spinnerFrequencyModulate = new Setting<Boolean>("SpinnerFrequencyModulate", true);
 
 	//colours
-	protected Colour songSelectActiveText = new Colour(0, 0, 0);
-	protected Colour songSelectInactiveText = new Colour(255, 255, 255);
-	protected Colour menuGlow = new Colour(0, 78, 155);
-
-	protected Colour starBreakAdditive = new Colour(255, 182, 193);
-	protected Colour inputOverlayText = new Colour(0, 0, 0);
-
-	protected Colour sliderBall = new Colour(2, 170, 255);
-	protected Colour sliderTrackOverride = null;
-	protected Colour sliderBorder = new Colour(0, 0, 0);
-	protected Colour spinnerBackground = new Colour(100, 100, 100);
-
-	protected Colour combo1 = new Colour(255, 192, 0);
-	protected Colour combo2 = null;
-	protected Colour combo3 = null;
-	protected Colour combo4 = null;
-	protected Colour combo5 = null;
-	protected Colour combo6 = null;
-	protected Colour combo7 = null;
-	protected Colour combo8 = null;
+	protected final Setting<Colour> songSelectActiveText = new Setting<Colour>("SongSelectActiveText", new Colour(0, 0, 0));
+	protected final Setting<Colour> songSelectInactiveText = new Setting<Colour>("SongSelectInactiveText", new Colour(255, 255, 255));
+	protected final Setting<Colour> menuGlow = new Setting<Colour>("MenuGlow", new Colour(0, 78, 155));
+	
+	protected final Setting<Colour> starBreakAdditive = new Setting<Colour>("StarBreakAdditive", new Colour(255, 182, 193));
+	protected final Setting<Colour> inputOverlayText = new Setting<Colour>("InputOverlayText", new Colour(0, 0, 0));
+	
+	protected final Setting<Colour> sliderBall = new Setting<Colour>("SliderBall", new Colour(2, 170, 255));
+	protected final Setting<Colour> sliderTrackOverride = new Setting<Colour>("SliderTrackOverride", new Colour(0, 0, 0));
+	protected final Setting<Colour> sliderBorder = new Setting<Colour>("SliderBorder", new Colour(0, 0, 0));
+	protected final Setting<Colour> spinnerBackground = new Setting<Colour>("SpinnerBackground", new Colour(100, 100, 100));
+	
+	protected final Setting<Colour> combo1 = new Setting<Colour>("Combo1", new Colour(255, 192, 0));
+	protected final Setting<Colour> combo2 = new Setting<Colour>("Combo2", false, new Colour(0, 0, 0));
+	protected final Setting<Colour> combo3 = new Setting<Colour>("Combo3", false, new Colour(0, 0, 0));
+	protected final Setting<Colour> combo4 = new Setting<Colour>("Combo4", false, new Colour(0, 0, 0));
+	protected final Setting<Colour> combo5 = new Setting<Colour>("Combo5", false, new Colour(0, 0, 0));
+	protected final Setting<Colour> combo6 = new Setting<Colour>("Combo6", false, new Colour(0, 0, 0));
+	protected final Setting<Colour> combo7 = new Setting<Colour>("Combo7", false, new Colour(0, 0, 0));
+	protected final Setting<Colour> combo8 = new Setting<Colour>("Combo8", false, new Colour(0, 0, 0));
 
 	//fonts
-	protected String hitCirclePrefix = "default";
-	protected int hitCircleOverlap = -2;//negative allowed
+	protected final Setting<String> hitCirclePrefix = new Setting<String>("HitCirclePrefix", "default");
+	protected final Setting<Integer> hitCircleOverlap = new Setting<Integer>("HitCircleOverlap", -2);//negative allowed
 
-	protected String scorePrefix = "score";
-	protected int scoreOverlap = -2;//negative allowed
+	protected final Setting<String> scorePrefix = new Setting<String>("ScorePrefix", "score");
+	protected final Setting<Integer> scoreOverlap = new Setting<Integer>("ScoreOverlap", -2);//negative allowed
 
-	protected String comboPrefix = "score";
-	protected int comboOverlap = -2;//negative allowed
+	protected final Setting<String> comboPrefix = new Setting<String>("ComboPrefix", "score");
+	protected final Setting<Integer> comboOverlap = new Setting<Integer>("ComboOverlap", -2);//negative allowed
 
 	//ctb
-	protected Colour hyperDash = new Colour(255, 0, 0);
-	protected Colour hyperDashFruit = null;
-	protected Colour hyperDashAfterImage = null;
+	protected final Setting<Colour> hyperDash = new Setting<Colour>("HyperDash", new Colour(255, 0, 0));
+	protected final Setting<Colour> hyperDashFruit = new Setting<Colour>("HyperDashFruit", new Colour(0, 0, 0));
+	protected final Setting<Colour> hyperDashAfterImage = new Setting<Colour>("HyperDashAfterImage", new Colour(0, 0, 0));
 
-	protected ManiaIni[] mania = new ManiaIni[ManiaIni.MAX_KEYS];
+	protected final ManiaIni[] mania = new ManiaIni[ManiaIni.MAX_KEYS];
 
 	public final void createManiaConfiguration(int keys){
-		mania[keys - 1] = new ManiaIni(keys);
+		ManiaIni ini = new ManiaIni(keys);
+		mania[keys - 1] = ini;
+		Section s = new Section("[Mania]");
+		s.mania = ini;
+		data.add(s);
 	}
 
 	protected static final class ManiaIni{
 		protected static final int MAX_KEYS = 10;
 		protected int keys;//non negative
-		protected double columnStart = 136.0D;
-		protected double columnRight = 19.0D;
-		protected double[] columnSpacing;//n-1 numbers
-		protected double[] columnWidth;//n numbers
-		protected double[] columnLineWidth;//n+1 numbers
-		protected double barlineHeight = 1.2D;
-		protected double[] lightingNWidth = null;//n numbers
-		protected double[] lightingLWidth = null;//n numbers
-		protected double widthForNoteHeightScale = -1.0D;
-		protected int hitPosition = 402;
-		protected int lightPosition = 413;
-		protected int scorePosition = 325;
-		protected int comboPosition = 111;
-		protected boolean judgementLine = true;
-		protected int specialStyle = 0;//0, 1 or 2
-		protected int comboBurstStyle = 1;//0, 1 or 2
-		protected Boolean splitStages = null;
-		protected double stageSeparation = 40.0D;
-		protected boolean separateScore = true;
-		protected boolean keysUnderNotes = false;
-		protected boolean upsideDown = false;
-		protected boolean keyFlipWhenUpsideDown = true;
-		protected boolean noteFlipWhenUpsideDown = true;
-		protected int noteBodyStyle = 1;//0, 1, 2
-		protected Colour colourColumnLine = new Colour(255, 255, 255, 255);
-		protected Colour colourBarline = new Colour(255, 255, 255, 255);
-		protected Colour colourJudgementLine = new Colour(255, 255, 255);
-		protected Colour colourKeyWarning = new Colour(0, 0, 0);
-		protected Colour colourHold = new Colour(255, 191, 51, 255);
-		protected Colour colourBreak = new Colour(255, 0, 0);
+		protected final Setting<Double> columnStart = new Setting<Double>("ColumnStart", 136.0D);
+		protected final Setting<Double> columnRight = new Setting<Double>("ColumnRight", 19.0D);
+		protected final Setting<double[]> columnSpacing = new Setting<double[]>("ColumnSpacing", null);//n-1 numbers
+		protected final Setting<double[]> columnWidth = new Setting<double[]>("ColumnWidth", null);//n numbers
+		protected final Setting<double[]> columnLineWidth = new Setting<double[]>("ColumnLineWidth", null);//n+1 numbers
+		protected final Setting<Double> barlineHeight = new Setting<Double>("BarlineHeight", 1.2D);
+		protected final Setting<double[]> lightingNWidth = new Setting<double[]>("LightingNWidth", null);//n numbers
+		protected final Setting<double[]> lightingLWidth = new Setting<double[]>("LightingLWidth", null);//n numbers
+		protected final Setting<Double> widthForNoteHeightScale = new Setting<Double>("WidthForNoteHeightScale", -1.0D);
+		protected final Setting<Integer> hitPosition = new Setting<Integer>("HitPosition", 402);
+		protected final Setting<Integer> lightPosition = new Setting<Integer>("LightPosition", 413);
+		protected final Setting<Integer> scorePosition = new Setting<Integer>("ScorePosition", 325);
+		protected final Setting<Integer> comboPosition = new Setting<Integer>("ComboPosition", 111);
+		protected final Setting<Boolean> judgementLine = new Setting<Boolean>("JudgementLine", true);
+		protected final Setting<SpecialStyle> specialStyle = new Setting<SpecialStyle>("SpecialStyle", SpecialStyle.NONE);//0, 1 or 2
+		protected final Setting<ComboBurstStyle> comboBurstStyle = new Setting<ComboBurstStyle>("ComboBurstStyle", ComboBurstStyle.RIGHT);//0, 1 or 2
+		protected final Setting<Boolean> splitStages = new Setting<Boolean>("SplitStages", false, true);
+		protected final Setting<Double> stageSeparation = new Setting<Double>("StageSeparation", 40.0D);
+		protected final Setting<Boolean> separateScore = new Setting<Boolean>("SeparationScore", true);
+		protected final Setting<Boolean> keysUnderNotes = new Setting<Boolean>("KeysUnderNotes", false);
+		protected final Setting<Boolean> upsideDown = new Setting<Boolean>("UpsideDown", false);
+		protected final Setting<Boolean> keyFlipWhenUpsideDown = new Setting<Boolean>("KeyFlipWhenUpsideDown", true);
+		protected final Setting<Boolean> noteFlipWhenUpsideDown = new Setting<Boolean>("NoteFlipWhenUpsideDown", true);
+		protected final Setting<NoteBodyStyle> noteBodyStyle = new Setting<NoteBodyStyle>("NoteBodyStyle", NoteBodyStyle.CASCADINGTH);//0, 1, 2
+		protected final Setting<Colour> colourColumnLine = new Setting<Colour>("ColourColumnLine", new Colour(255, 255, 255, 255));
+		protected final Setting<Colour> colourBarline = new Setting<Colour>("ColourBarline", new Colour(255, 255, 255, 255));
+		protected final Setting<Colour> colourJudgementLine = new Setting<Colour>("ColourJudgementLine", new Colour(255, 255, 255));
+		protected final Setting<Colour> colourKeyWarning = new Setting<Colour>("ColourKeyWarning", new Colour(0, 0, 0));
+		protected final Setting<Colour> colourHold = new Setting<Colour>("ColourHold", new Colour(255, 191, 51, 255));
+		protected final Setting<Colour> colourBreak = new Setting<Colour>("ColourBreak", new Colour(255, 0, 0));
 
 		protected Column[] columns;
 
-		protected String stageLeft = "mania-stage-left";
-		protected String stageRight = "mania-stage-right";
-		protected String stageBottom = "mania-stage-bottom";
-		protected String stageHint = "mania-stage-hint";
-		protected String stageLight = "mania-stage-light";
-		protected String lightingN = "LightingN";
-		protected String lightingL = "LightingL";
-		protected String warningArrow = "mania-warningarrow";
+		protected final Setting<String> stageLeft = new Setting<String>("StageLeft", "mania-stage-left");
+		protected final Setting<String> stageRight = new Setting<String>("StageRight", "mania-stage-right");
+		protected final Setting<String> stageBottom = new Setting<String>("StageBottom", "mania-stage-bottom");
+		protected final Setting<String> stageHint = new Setting<String>("StageHint", "mania-stage-hint");
+		protected final Setting<String> stageLight = new Setting<String>("StageLight", "mania-stage-light");
+		protected final Setting<String> lightingN = new Setting<String>("LightingN", "LightingN");
+		protected final Setting<String> lightingL = new Setting<String>("LightingL", "LightingL");
+		protected final Setting<String> warningArrow = new Setting<String>("WarningArrow", "mania-warningarrow");
 
-		protected String hit0 = "mania-hit0";
-		protected String hit50 = "mania-hit50";
-		protected String hit100 = "mania-hit100";
-		protected String hit200 = "mania-hit200";
-		protected String hit300 = "mania-hit300";
-		protected String hit300g = "mania-hit300g";
+		protected final Setting<String> hit0 = new Setting<String>("Hit0", "mania-hit0");
+		protected final Setting<String> hit50 = new Setting<String>("Hit50", "mania-hit50");
+		protected final Setting<String> hit100 = new Setting<String>("Hit100", "mania-hit100");
+		protected final Setting<String> hit200 = new Setting<String>("Hit200", "mania-hit200");
+		protected final Setting<String> hit300 = new Setting<String>("Hit300", "mania-hit300");
+		protected final Setting<String> hit300g = new Setting<String>("Hit300g", "mania-hit300g");
 
 		private ManiaIni(int keys){
 			this.keys = keys;
-			columnSpacing = fillArray(keys - 1, 0.0D);
-			columnWidth = fillArray(keys, 30.0D);
-			columnLineWidth = fillArray(keys + 1, 2.0D);
+			columnSpacing.update(fillArray(keys - 1, 0.0D));
+			columnWidth.update(fillArray(keys, 30.0D));
+			columnLineWidth.update(fillArray(keys + 1, 2.0D));
+			lightingNWidth.update(fillArray(keys, 0.0D));
+			lightingLWidth.update(fillArray(keys, 0.0D));
 			columns = new Column[keys];
 			for(int i = 0; i < keys; i++){
-				columns[i] = new Column();
+				columns[i] = new Column(keys + 1);
 			}
 		}
 
@@ -157,1072 +166,760 @@ public class SkinIni{
 		}
 
 		protected static final class Column{
-			protected int key;
+			protected final int key;
 
-			protected Boolean keyFlipWhenUpsideDown = null;
-			protected Boolean keyFlipWhenUpsideDownD = null;
-			protected Boolean noteFlipWhenUpsideDown = null;
-			protected Boolean noteFlipWhenUpsideDownH = null;
-			protected Boolean noteFlipWhenUpsideDownL = null;
-			protected Boolean noteFlipWhenUpsideDownT = null;
+			protected final Setting<Boolean> keyFlipWhenUpsideDown;
+			protected final Setting<Boolean> keyFlipWhenUpsideDownD;
+			protected final Setting<Boolean> noteFlipWhenUpsideDown;
+			protected final Setting<Boolean> noteFlipWhenUpsideDownH;
+			protected final Setting<Boolean> noteFlipWhenUpsideDownL;
+			protected final Setting<Boolean> noteFlipWhenUpsideDownT;
 
-			protected int noteBodyStyle = -1;//0, 1, 2, -1=undefined
+			protected final Setting<NoteBodyStyle> noteBodyStyle;
 
-			protected Colour colour = new Colour(0, 0, 0, 255);
-			protected Colour colourLight = new Colour(255, 255, 255);
+			protected final Setting<Colour> colour;
+			protected final Setting<Colour> colourLight;
 
-			protected String keyImage = null;
-			protected String keyImageD = null;
-			protected String noteImage = null;
-			protected String noteImageH = null;
-			protected String noteImageL = null;
-			protected String noteImageT = null;
+			protected final Setting<String> keyImage;
+			protected final Setting<String> keyImageD;
+			protected final Setting<String> noteImage;
+			protected final Setting<String> noteImageH;
+			protected final Setting<String> noteImageL;
+			protected final Setting<String> noteImageT;
+			
+			private Column(int key){
+				this.key = key;
+				
+				keyFlipWhenUpsideDown = new Setting<Boolean>("KeyFlipWhenUpsideDown" + key, false, true);
+				keyFlipWhenUpsideDownD = new Setting<Boolean>("KeyFlipWhenUpsideDown" + key + "D", false, true);
+				noteFlipWhenUpsideDown = new Setting<Boolean>("NoteFlipWhenUpsideDown" + key, false, true);
+				noteFlipWhenUpsideDownH = new Setting<Boolean>("NoteFlipWhenUpsideDown" + key + "H", false, true);
+				noteFlipWhenUpsideDownL = new Setting<Boolean>("NoteFlipWhenUpsideDown" + key + "L", false, true);
+				noteFlipWhenUpsideDownT = new Setting<Boolean>("NoteFlipWhenUpsideDown" + key + "T", false, true);
+
+				noteBodyStyle = new Setting<NoteBodyStyle>("NoteBodyStyle" + key, false, NoteBodyStyle.CASCADINGTH);//0, 1, 2
+
+				colour = new Setting<Colour>("Colour" + key, new Colour(0, 0, 0, 255));
+				colourLight = new Setting<Colour>("ColourLight" + key, new Colour(255, 255, 255));
+
+				keyImage = new Setting<String>("KeyImage" + key, false, "");
+				keyImageD = new Setting<String>("KeyImage" + key + "D", false, "");
+				noteImage = new Setting<String>("NoteImage" + key, false, "");
+				noteImageH = new Setting<String>("NoteImage" + key + "H", false, "");
+				noteImageL = new Setting<String>("NoteImage" + key + "L", false, "");
+				noteImageT = new Setting<String>("NoteImage" + key + "T", false, "");
+			}
+		}
+
+		private List<Setting<?>> getAll(){
+			List<Setting<?>> all = new ArrayList<Setting<?>>();
+			all.add(barlineHeight);
+			all.add(colourBarline);
+			all.add(colourBreak);
+			all.add(colourColumnLine);
+			all.add(colourHold);
+			all.add(colourJudgementLine);
+			all.add(colourKeyWarning);
+			all.add(columnLineWidth);
+			all.add(columnRight);
+			all.add(columnSpacing);
+			all.add(columnStart);
+			all.add(columnWidth);
+			all.add(comboBurstStyle);
+			all.add(comboPosition);
+			all.add(hit0);
+			all.add(hit50);
+			all.add(hit100);
+			all.add(hit200);
+			all.add(hit300);
+			all.add(hit300g);			
+			all.add(hitPosition);
+			all.add(judgementLine);
+			all.add(keyFlipWhenUpsideDown);
+			all.add(keysUnderNotes);
+			all.add(lightingL);
+			all.add(lightingLWidth);
+			all.add(lightingN);
+			all.add(lightingNWidth);
+			all.add(lightPosition);
+			all.add(noteBodyStyle);
+			all.add(noteFlipWhenUpsideDown);
+			all.add(scorePosition);
+			all.add(separateScore);
+			all.add(specialStyle);
+			all.add(splitStages);
+			all.add(stageBottom);
+			all.add(stageHint);
+			all.add(stageLeft);
+			all.add(stageRight);
+			all.add(stageLight);
+			all.add(stageSeparation);
+			all.add(upsideDown);
+			all.add(warningArrow);
+			all.add(widthForNoteHeightScale);
+			for(Column c : columns){
+				all.add(c.colour);
+				all.add(c.colourLight);
+				all.add(c.keyFlipWhenUpsideDown);
+				all.add(c.keyFlipWhenUpsideDownD);
+				all.add(c.keyImage);
+				all.add(c.keyImageD);
+				all.add(c.noteBodyStyle);
+				all.add(c.noteFlipWhenUpsideDown);
+				all.add(c.noteFlipWhenUpsideDownH);
+				all.add(c.noteFlipWhenUpsideDownL);
+				all.add(c.noteFlipWhenUpsideDownT);
+				all.add(c.noteImage);
+				all.add(c.noteImageH);
+				all.add(c.noteImageL);
+				all.add(c.noteImageT);
+			}
+			return all;
 		}
 	}
-
+	
 	public void readIni(File file) throws IOException{
+		usedDefault = false;
+		data = new ArrayList<Section>();
+		Section section = new Section(null);
+		data.add(section);
+		Pattern header = Pattern.compile("\\[.+\\]");
+		ManiaIni maniaIni = null;
+		Setting.singleUpdateMode = true;
+		
+		Map<String, Setting<?>[]> all = new HashMap<String, Setting<?>[]>();
+		all.put("[General]", new Setting<?>[]{
+			name,
+			author,
+			version,
+			cursorExpand,
+			cursorCentre,
+			cursorRotate,
+			cursorTrailRotate,
+			animationFramerate,
+			layeredHitSounds,
+			comboBurstRandom,
+			customComboBurstSounds,
+			hitCircleOverlayAboveNumber,
+			sliderStyle,
+			sliderBallFlip,
+			allowSliderBallTint,
+			spinnerNoBlink,
+			spinnerFadePlayfield,
+			spinnerFrequencyModulate
+		});
+		all.put("[Colours]", new Setting<?>[]{
+			songSelectActiveText,
+			songSelectInactiveText,
+			menuGlow,
+			starBreakAdditive,
+			inputOverlayText,
+			sliderBall,
+			sliderTrackOverride,
+			sliderBorder,
+			spinnerBackground,
+			combo1,
+			combo2,
+			combo3,
+			combo4,
+			combo5,
+			combo6,
+			combo7,
+			combo8
+		});
+		all.put("[Fonts]", new Setting<?>[]{
+			hitCirclePrefix,
+			hitCircleOverlap,
+			scorePrefix,
+			scoreOverlap,
+			comboPrefix,
+			comboOverlap
+		});
+		all.put("[CatchTheBeat]", new Setting<?>[]{
+			hyperDash,
+			hyperDashFruit,
+			hyperDashAfterImage
+		});
+		
 		String line = null;
-		try{
-			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+		try(BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))){
 			while((line = reader.readLine()) != null){
-				if(line.trim().isEmpty() || line.startsWith("//")){
-					continue;
+				if(header.matcher(line.trim()).matches()){
+					int index = section.data.size() - 1;
+					Setting<?> last = index < 0 ? null : section.data.get(index);
+					if(last instanceof Comment && ((Comment)last).getValue().trim().isEmpty()){
+						section.data.remove(index);
+					}
+					if(section.isMania()){
+						for(Setting<?> setting : section.mania.getAll()){
+							if(!setting.added){
+								section.data.add(setting);
+							}
+						}
+					}else{
+						for(Setting<?> setting : all.getOrDefault(section.name, new Setting<?>[0])){
+							if(!setting.added){
+								section.data.add(setting);
+							}
+						}
+					}
+					if(last instanceof Comment && ((Comment)last).getValue().trim().isEmpty()){
+						section.data.add(last);
+					}
+					section = new Section(line.trim());
+					data.add(section);
+					if(section.isMania()){
+						while((line = reader.readLine()) != null){
+							if(line.trim().isEmpty() || line.startsWith("//")){
+								section.data.add(new Comment(line));
+							}else{
+								if(line.startsWith("Keys:")){
+									try{
+										int keys = Integer.parseInt(line.substring(5).trim());
+										if(keys >= 1 && keys <= ManiaIni.MAX_KEYS){
+											mania[keys - 1] = (maniaIni = new ManiaIni(keys));
+											section.mania = maniaIni;
+											break;
+										}else{
+											throw new IllegalArgumentException("Unsupported key count: " + keys);
+										}
+									}catch(NumberFormatException e){
+										throw new IllegalArgumentException("Mania key count is not a number!");
+									}
+								}else{
+									throw new IllegalArgumentException("First field in a mania section is not the key count!");
+								}
+							}
+						}
+						if(line == null){
+							throw new IllegalArgumentException("Mania config does not define a key count!");
+						}
+					}
+				}else if(section.isMania()){
+					Setting<?> setting = parseMania(maniaIni, line);
+					setting.added = true;
+					section.data.add(setting);
+				}else{
+					Setting<?> setting = parse(line);
+					setting.added = true;
+					section.data.add(setting);
 				}
-				String[] args = line.split(":", 2);
-				if(!line.startsWith("[")){
-					args[1] = args[1].trim();
-				}
-				switch(args[0]){
-				//[Mania]
-				case "[Mania]":
-					readMania(reader);
-					break;
-				//[General]
-				case "Name":
-					name = args[1];
-					break;
-				case "Author":
-					author = args[1];
-					break;
-				case "Version":
-					version = Version.fromString(args[1]);
-					if(version == null){
-						usedDefault = true;
-						version = Version.V25;
-					}
-					break;
-				case "CursorExpand":
-					if(args[1].equals("1") || args[1].equals("0")){
-						cursorExpand = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "CursorCentre":
-					if(args[1].equals("1") || args[1].equals("0")){
-						cursorCentre = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "CursorRotate":
-					if(args[1].equals("1") || args[1].equals("0")){
-						cursorRotate = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "CursorTrailRotate":
-					if(args[1].equals("1") || args[1].equals("0")){
-						cursorTrailRotate = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "AnimationFramerate":
-					try{
-						int val = Integer.parseInt(args[1]);
-						if(val > 0){
-							animationFramerate = val;
-						}else{
-							usedDefault = true;
-						}
-					}catch(NumberFormatException e){
-						usedDefault = true;
-					}
-					break;
-				case "LayeredHitSounds":
-					if(args[1].equals("1") || args[1].equals("0")){
-						layeredHitSounds = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "ComboBurstRandom":
-					if(args[1].equals("1") || args[1].equals("0")){
-						comboBurstRandom = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "CustomComboBurstSounds":
-					customComboBurstSounds = args[1].replaceAll(" ", "");
-					break;
-				case "HitCircleOverlayAboveNumber":
-					if(args[1].equals("1") || args[1].equals("0")){
-						hitCircleOverlayAboveNumber = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "SliderStyle":
-					try{
-						int style = Integer.parseInt(args[1]);
-						if(style >= 0 && style <= 2){
-							sliderStyle = style;
-						}else{
-							usedDefault = true;
-						}
-					}catch(NumberFormatException e){
-						usedDefault = true;
-					}
-					break;
-				case "SliderBallFlip":
-					if(args[1].equals("1") || args[1].equals("0")){
-						sliderBallFlip = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "AllowSliderBallTint":
-					if(args[1].equals("1") || args[1].equals("0")){
-						allowSliderBallTint = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "SpinnerNoBlink":
-					if(args[1].equals("1") || args[1].equals("0")){
-						spinnerNoBlink = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "SpinnerFadePlayfield":
-					if(args[1].equals("1") || args[1].equals("0")){
-						spinnerFadePlayfield = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "SpinnerFrequencyModulate":
-					if(args[1].equals("1") || args[1].equals("0")){
-						spinnerFrequencyModulate = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				//[Colours]
-				case "SongSelectActiveText":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							songSelectActiveText = color;
-						}
-					}
-					break;
-				case "SongSelectInactiveText":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							songSelectInactiveText = color;
-						}
-					}
-					break;
-				case "MenuGlow":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							menuGlow = color;
-						}
-					}
-					break;
-				case "StarBreakAdditive":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							starBreakAdditive = color;
-						}
-					}
-					break;
-				case "InputOverlayText":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							inputOverlayText = color;
-						}
-					}
-					break;
-				case "SliderBall":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							sliderBall = color;
-						}
-					}
-					break;
-				case "SliderTrackOverride":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							sliderTrackOverride = color;
-						}
-					}
-					break;
-				case "SliderBorder":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							sliderBorder = color;
-						}
-					}
-					break;
-				case "SpinnerBackground":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							spinnerBackground = color;
-						}
-					}
-					break;
-				case "Combo1":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							combo1 = color;
-						}
-					}
-					break;
-				case "Combo2":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							combo2 = color;
-						}
-					}
-					break;
-				case "Combo3":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							combo3 = color;
-						}
-					}
-					break;
-				case "Combo4":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							combo4 = color;
-						}
-					}
-					break;
-				case "Combo5":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							combo5 = color;
-						}
-					}
-					break;
-				case "Combo6":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							combo6 = color;
-						}
-					}
-					break;
-				case "Combo7":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							combo7 = color;
-						}
-					}
-					break;
-				case "Combo8":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							combo8 = color;
-						}
-					}
-					break;
-				//[Fonts]
-				case "HitCirclePrefix":
-					hitCirclePrefix = args[1];
-					break;
-				case "HitCircleOverlap":
-					hitCircleOverlap = Integer.parseInt(args[1]);
-					break;
-				case "ScorePrefix":
-					scorePrefix = args[1];
-					break;
-				case "ScoreOverlap":
-					scoreOverlap = Integer.parseInt(args[1]);
-					break;
-				case "ComboPrefix":
-					comboPrefix = args[1];
-					break;
-				case "ComboOverlap":
-					comboOverlap = Integer.parseInt(args[1]);
-					break;
-				//[CatchTheBeat]
-				case "HyperDash":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							hyperDash = color;
-						}
-					}
-					break;
-				case "HyperDashFruit":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							hyperDashFruit = color;
-						}
-					}
-					break;
-				case "HyperDashAfterImage":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							hyperDashAfterImage = color;
-						}
-					}
-					break;
-				}
-			}
+			}	
 		}catch(Exception e){
 			e.printStackTrace();
 			throw new IllegalArgumentException("Line: " + line, e);
 		}
+		
+		Setting.singleUpdateMode = false;
+				
 		if(usedDefault){
 			JOptionPane.showMessageDialog(SkinChecker.frame, "Skin.ini fields were found that couldn't be parsed. Default values were used.", "Skin Checker", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
-	private void readMania(BufferedReader reader) throws IOException{
-		String line;
-		do{
-			line = reader.readLine();
-		}while(line.trim().isEmpty() || line.startsWith("//"));
-		int keys = Integer.parseInt(line.trim().substring(5).trim());
-		if(keys <= 0 || keys > 10){
-			throw new IllegalArgumentException("Unsupported mania key count: " + keys);
+	public Setting<?> parse(String line) throws IOException{
+		if(line.trim().isEmpty() || line.startsWith("//")){
+			return new Comment(line);
 		}
-		
-		ManiaIni ini = new ManiaIni(keys);
-		mania[keys - 1] = ini;
-		
-		try{
-			reader.mark(1);
-			int start;
-			while((start = reader.read()) != -1){
-				if(start == '['){
-					reader.reset();
-					return;
-				}else{
-					line = (char)start + reader.readLine();
-				}
-				reader.mark(1);
-				if(line.trim().isEmpty() || line.startsWith("//")){
-					continue;
-				}
-				String[] args = line.split(":");
-				args[1] = args[1].trim();
-				switch(args[0]){
-				case "ColumnStart":
-					try{
-						double val = Double.parseDouble(args[1]);
-						if(val >= 0.0D){
-							ini.columnStart = val;
-						}else{
-							usedDefault = true;
-						}
-					}catch(NumberFormatException e){
-						usedDefault = true;
-					}
-					break;
-				case "ColumnRight":
-					try{
-						double val = Double.parseDouble(args[1]);
-						if(val >= 0.0D){
-							ini.columnRight = val;
-						}else{
-							usedDefault = true;
-						}
-					}catch(NumberFormatException e){
-						usedDefault = true;
-					}
-					break;
-				case "ColumnSpacing":
-					try{
-						ini.columnSpacing = parseList(args[1], keys - 1);
-					}catch(IllegalArgumentException e){
-						usedDefault = true;
-					}
-					break;
-				case "ColumnWidth":
-					try{
-						ini.columnWidth = parseList(args[1], keys);
-					}catch(IllegalArgumentException e){
-						usedDefault = true;
-					}
-					break;
-				case "ColumnLineWidth":
-					try{
-						ini.columnLineWidth = parseList(args[1], keys + 1);
-					}catch(IllegalArgumentException e){
-						usedDefault = true;
-					}
-					break;
-				case "BarlineHeight":
-					try{
-						double val = Double.parseDouble(args[1]);
-						if(val >= 0.0D){
-							ini.barlineHeight = val;
-						}else{
-							usedDefault = true;
-						}
-					}catch(NumberFormatException e){
-						usedDefault = true;
-					}
-					break;
-				case "LightingNWidth":
-					try{
-						ini.lightingNWidth = parseList(args[1], keys);
-					}catch(IllegalArgumentException e){
-						usedDefault = true;
-					}
-					break;
-				case "LightingLWidth":
-					try{
-						ini.lightingLWidth = parseList(args[1], keys);
-					}catch(IllegalArgumentException e){
-						usedDefault = true;
-					}
-					break;
-				case "WidthForNoteHeightScale":
-					try{
-						double val = Double.parseDouble(args[1]);
-						if(val >= 0.0D){
-							ini.widthForNoteHeightScale = val;
-						}else{
-							usedDefault = true;
-						}
-					}catch(NumberFormatException e){
-						usedDefault = true;
-					}
-					break;
-				case "HitPosition":
-					try{
-						int val = Integer.parseInt(args[1]);
-						if(val >= 0){
-							ini.hitPosition = val;
-						}else{
-							usedDefault = true;
-						}
-					}catch(NumberFormatException e){
-						usedDefault = true;
-					}
-					break;
-				case "LightPosition":
-					try{
-						int val = Integer.parseInt(args[1]);
-						if(val >= 0){
-							ini.lightPosition = val;
-						}else{
-							usedDefault = true;
-						}
-					}catch(NumberFormatException e){
-						usedDefault = true;
-					}
-					break;
-				case "ScorePosition":
-					try{
-						int val = Integer.parseInt(args[1]);
-						if(val >= 0){
-							ini.scorePosition = val;
-						}else{
-							usedDefault = true;
-						}
-					}catch(NumberFormatException e){
-						usedDefault = true;
-					}
-					break;
-				case "ComboPosition":
-					try{
-						int val = Integer.parseInt(args[1]);
-						if(val >= 0){
-							ini.comboPosition = val;
-						}else{
-							usedDefault = true;
-						}
-					}catch(NumberFormatException e){
-						usedDefault = true;
-					}
-					break;
-				case "JudgementLine":
-					if(args[1].equals("1") || args[1].equals("0")){
-						ini.judgementLine = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "SpecialStyle":
-					try{
-						int val = Integer.parseInt(args[1]);
-						if(val >= 0 && val <= 2){
-							ini.specialStyle = val;
-						}
-					}catch(NumberFormatException e){
-						switch(args[1].toLowerCase(Locale.ROOT)){
-						case "none":
-							ini.specialStyle = 0;
-							break;
-						case "left":
-							ini.specialStyle = 1;
-							break;
-						case "right":
-							ini.specialStyle = 2;
-							break;
-						}
-					}
-					break;
-				case "ComboBurstStyle":
-					try{
-						int val = Integer.parseInt(args[1]);
-						if(val >= 0 && val <= 2){
-							ini.comboBurstStyle = val;
-						}
-					}catch(NumberFormatException e){
-						switch(args[1].toLowerCase(Locale.ROOT)){
-						case "left":
-							ini.comboBurstStyle = 0;
-							break;
-						case "right":
-							ini.comboBurstStyle = 1;
-							break;
-						case "both":
-							ini.comboBurstStyle = 2;
-							break;
-						}
-					}
-					break;
-				case "SplitStages":
-					if(args[1].equals("1") || args[1].equals("0")){
-						ini.splitStages = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "StageSeparation":
-					try{
-						int val = Integer.parseInt(args[1]);
-						if(val >= 0){
-							ini.stageSeparation = val;
-						}else{
-							usedDefault = true;
-						}
-					}catch(NumberFormatException e){
-						usedDefault = true;
-					}
-					break;
-				case "SeparateScore":
-					if(args[1].equals("1") || args[1].equals("0")){
-						ini.separateScore = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "KeysUnderNotes":
-					if(args[1].equals("1") || args[1].equals("0")){
-						ini.keysUnderNotes = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "UpsideDown":
-					if(args[1].equals("1") || args[1].equals("0")){
-						ini.upsideDown = args[1].equals("1");
-					}else{
-						usedDefault = true;
-					}
-					break;
-				case "ColourColumnLine":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							ini.colourColumnLine = color;
-						}
-					}
-					break;
-				case "ColourBarline":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							ini.colourBarline = color;
-						}
-					}
-					break;
-				case "ColourJudgementLine":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							ini.colourJudgementLine = color;
-						}
-					}
-					break;
-				case "ColourKeyWarning":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							ini.colourKeyWarning = color;
-						}
-					}
-					break;
-				case "ColourHold":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							ini.colourHold = color;
-						}
-					}
-					break;
-				case "ColourBreak":
-					{
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							ini.colourBreak = color;
-						}
-					}
-					break;
-				case "StageLeft":
-					ini.stageLeft = args[1];
-					break;
-				case "StageRight":
-					ini.stageRight = args[1];
-					break;
-				case "StageBottom":
-					ini.stageBottom = args[1];
-					break;
-				case "StageHint":
-					ini.stageHint = args[1];
-					break;
-				case "StageLight":
-					ini.stageLight = args[1];
-					break;
-				case "LightingN":
-					ini.lightingN = args[1];
-					break;
-				case "LightingL":
-					ini.lightingL = args[1];
-					break;
-				case "WarningArrow":
-					ini.warningArrow = args[1];
-					break;
-				case "Hit0":
-					ini.hit0 = args[1];
-					break;
-				case "Hit50":
-					ini.hit50 = args[1];
-					break;
-				case "Hit100":
-					ini.hit100 = args[1];
-					break;
-				case "Hit200":
-					ini.hit200 = args[1];
-					break;
-				case "Hit300":
-					ini.hit300 = args[1];
-					break;
-				case "Hit300g":
-					ini.hit300g = args[1];
-					break;
-				default:
-					if(args[0].startsWith("KeyFlipWhenUpsideDown")){
-						args[0] = args[0].substring(21);
-						if(args[0].isEmpty()){
-							if(args[1].equals("1") || args[1].equals("0")){
-								ini.keyFlipWhenUpsideDown = args[1].equals("1");
-							}else{
-								usedDefault = true;
-							}
-						}else if(args[0].endsWith("D")){
-							if(args[1].equals("1") || args[1].equals("0")){
-								ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].keyFlipWhenUpsideDownD = args[1].equals("1");
-							}else{
-								usedDefault = true;
-							}
-						}else{
-							if(args[1].equals("1") || args[1].equals("0")){
-								ini.columns[Integer.parseInt(args[0])].keyFlipWhenUpsideDown = args[1].equals("1");
-							}else{
-								usedDefault = true;
-							}
-						}
-					}else if(args[0].startsWith("NoteFlipWhenUpsideDown")){
-						args[0] = args[0].substring(22);
-						if(args[0].isEmpty()){
-							if(args[1].equals("1") || args[1].equals("0")){
-								ini.noteFlipWhenUpsideDown = args[1].equals("1");
-							}else{
-								usedDefault = true;
-							}
-						}else if(args[0].endsWith("H")){
-							if(args[1].equals("1") || args[1].equals("0")){
-								ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownH = args[1].equals("1");
-							}else{
-								usedDefault = true;
-							}
-						}else if(args[0].endsWith("L")){
-							if(args[1].equals("1") || args[1].equals("0")){
-								ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownL = args[1].equals("1");
-							}else{
-								usedDefault = true;
-							}
-						}else if(args[0].endsWith("T")){
-							if(args[1].equals("1") || args[1].equals("0")){
-								ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownT = args[1].equals("1");
-							}else{
-								usedDefault = true;
-							}
-						}else{
-							if(args[1].equals("1") || args[1].equals("0")){
-								ini.columns[Integer.parseInt(args[0])].noteFlipWhenUpsideDown = args[1].equals("1");
-							}else{
-								usedDefault = true;
-							}
-						}
-					}else if(args[0].startsWith("NoteBodyStyle")){
-						args[0] = args[0].substring(13);
-						if(args[0].isEmpty()){
-							try{
-								int val = Integer.parseInt(args[1]);
-								if(val >= 0 && val <= 2){
-									ini.noteBodyStyle = val;
-								}else{
-									usedDefault = true;
-								}
-							}catch(NumberFormatException e){
-								usedDefault = true;
-							}
-						}else{
-							try{
-								int val = Integer.parseInt(args[1]);
-								if(val >= 0 && val <= 2){
-									ini.columns[Integer.parseInt(args[0])].noteBodyStyle = val;
-								}else{
-									usedDefault = true;
-								}
-							}catch(NumberFormatException e){
-								usedDefault = true;
-							}
-						}
-					}else if(args[0].startsWith("ColourLight")){
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							ini.columns[Integer.parseInt(args[0].substring(11)) - 1].colourLight = color;
-						}
-					}else if(args[0].startsWith("Colour")){
-						Colour color = parseColor(args[1]);
-						if(color != null){
-							ini.columns[Integer.parseInt(args[0].substring(6)) - 1].colour = color;
-						}
-					}else if(args[0].startsWith("KeyImage")){
-						args[0] = args[0].substring(8);
-						if(args[0].endsWith("D")){
-							ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].keyImage = args[1];
-						}else{
-							ini.columns[Integer.parseInt(args[0])].keyImage = args[1];
-						}
-					}else if(args[0].startsWith("NoteImage")){
-						args[0] = args[0].substring(9);
-						if(args[0].endsWith("H")){
-							ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageH = args[1];
-						}else if(args[0].endsWith("T")){
-							ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageT = args[1];
-						}else if(args[0].endsWith("L")){
-							ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageL = args[1];
-						}else{
-							ini.columns[Integer.parseInt(args[0])].noteImage = args[1];
-						}
-					}
-					break;
-				}
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-			throw new IllegalArgumentException("Line: " + line, e);
+		String[] args = line.split(":", 2);
+		args[1] = args[1].trim();
+		switch(args[0]){
+		//[General]
+		case "Name":
+			return name.update(args[1]);
+		case "Author":
+			return author.update(args[1]);
+		case "Version":
+			return version.update(Version.fromString(args[1]));
+		case "CursorExpand":
+			return parseBoolean(cursorExpand, args[1]);
+		case "CursorCentre":
+			return parseBoolean(cursorCentre, args[1]);
+		case "CursorRotate":
+			return parseBoolean(cursorRotate, args[1]);
+		case "CursorTrailRotate":
+			return parseBoolean(cursorTrailRotate, args[1]);
+		case "AnimationFramerate":
+			return parseInt(animationFramerate, args[1], 1);
+		case "LayeredHitSounds":
+			return parseBoolean(layeredHitSounds, args[1]);
+		case "ComboBurstRandom":
+			return parseBoolean(comboBurstRandom, args[1]);
+		case "CustomComboBurstSounds":
+			return customComboBurstSounds.update(args[1].replaceAll(" ", ""));
+		case "HitCircleOverlayAboveNumber":
+			return parseBoolean(hitCircleOverlayAboveNumber, args[1]);
+		case "SliderStyle":
+			return sliderStyle.update(SliderStyle.fromString(args[1]));
+		case "SliderBallFlip":
+			return parseBoolean(sliderBallFlip, args[1]);
+		case "AllowSliderBallTint":
+			return parseBoolean(allowSliderBallTint, args[1]);
+		case "SpinnerNoBlink":
+			return parseBoolean(spinnerNoBlink, args[1]);
+		case "SpinnerFadePlayfield":
+			return parseBoolean(spinnerFadePlayfield, args[1]);
+		case "SpinnerFrequencyModulate":
+			return parseBoolean(spinnerFrequencyModulate, args[1]);
+		//[Colours]
+		case "SongSelectActiveText":
+			return parseColor(songSelectActiveText, args[1]);
+		case "SongSelectInactiveText":
+			return parseColor(songSelectInactiveText, args[1]);
+		case "MenuGlow":
+			return parseColor(menuGlow, args[1]);
+		case "StarBreakAdditive":
+			return parseColor(starBreakAdditive, args[1]);
+		case "InputOverlayText":
+			return parseColor(inputOverlayText, args[1]);
+		case "SliderBall":
+			return parseColor(sliderBall, args[1]);
+		case "SliderTrackOverride":
+			return parseColor(sliderTrackOverride, args[1]);
+		case "SliderBorder":
+			return parseColor(sliderBorder, args[1]);
+		case "SpinnerBackground":
+			return parseColor(spinnerBackground, args[1]);
+		case "Combo1":
+			return parseColor(combo1, args[1]);
+		case "Combo2":
+			return parseColor(combo2, args[1]);
+		case "Combo3":
+			return parseColor(combo3, args[1]);
+		case "Combo4":
+			return parseColor(combo4, args[1]);
+		case "Combo5":
+			return parseColor(combo5, args[1]);
+		case "Combo6":
+			return parseColor(combo6, args[1]);
+		case "Combo7":
+			return parseColor(combo7, args[1]);
+		case "Combo8":
+			return parseColor(combo8, args[1]);
+		//[Fonts]
+		case "HitCirclePrefix":
+			return hitCirclePrefix.update(args[1]);
+		case "HitCircleOverlap":
+			return parseInt(hitCircleOverlap, args[1]);
+		case "ScorePrefix":
+			return scorePrefix.update(args[1]);
+		case "ScoreOverlap":
+			return parseInt(scoreOverlap, args[1]);
+		case "ComboPrefix":
+			return comboPrefix.update(args[1]);
+		case "ComboOverlap":
+			return parseInt(comboOverlap, args[1]);
+		//[CatchTheBeat]
+		case "HyperDash":
+			return parseColor(hyperDash, args[1]);
+		case "HyperDashFruit":
+			return parseColor(hyperDashFruit, args[1]);
+		case "HyperDashAfterImage":
+			return parseColor(hyperDashAfterImage, args[1]);
+		default:
+			return new Comment(line);
 		}
-	}
-	
-	private double[] parseList(String data, int expected){
-		String[] args = data.split(",");
-		if(args.length != expected){
-			throw new IllegalArgumentException("Illegal number of arguments on line: " + data);
-		}
-		double[] values = new double[args.length];
-		for(int i = 0; i < values.length; i++){
-			values[i] = Math.max(0.0D, Double.parseDouble(args[i].trim()));
-		}
-		return values;
 	}
 
-	private Colour parseColor(String arg){
-		String[] args = arg.split(",");
+	private Setting<?> parseMania(ManiaIni ini, String line) throws IOException{
+		if(line.trim().isEmpty() || line.startsWith("//")){
+			return new Comment(line);
+		}
+		String[] args = line.split(":", 2);
+		args[1] = args[1].trim();
+		switch(args[0]){
+		case "ColumnStart":
+			return parseDouble(ini.columnStart, args[1], 0.0D);
+		case "ColumnRight":
+			return parseDouble(ini.columnRight, args[1], 0.0D);
+		case "ColumnSpacing":
+			return parseList(ini.columnSpacing, args[1], ini.keys - 1);
+		case "ColumnWidth":
+			return parseList(ini.columnWidth, args[1], ini.keys);
+		case "ColumnLineWidth":
+			return parseList(ini.columnLineWidth, args[1], ini.keys + 1);
+		case "BarlineHeight":
+			return parseDouble(ini.barlineHeight, args[1], 0.0D);
+		case "LightingNWidth":
+			return parseList(ini.lightingNWidth, args[1], ini.keys);
+		case "LightingLWidth":
+			return parseList(ini.lightingLWidth, args[1], ini.keys);
+		case "WidthForNoteHeightScale":
+			return parseDouble(ini.widthForNoteHeightScale, args[1], 0.0D);
+		case "HitPosition":
+			return parseInt(ini.hitPosition, args[1], 0);
+		case "LightPosition":
+			return parseInt(ini.lightPosition, args[1], 0);
+		case "ScorePosition":
+			return parseInt(ini.scorePosition, args[1], 0);
+		case "ComboPosition":
+			return parseInt(ini.comboPosition, args[1], 0);
+		case "JudgementLine":
+			return parseBoolean(ini.judgementLine, args[1]);
+		case "SpecialStyle":
+			return ini.specialStyle.update(SpecialStyle.fromString(args[1]));
+		case "ComboBurstStyle":
+			return ini.comboBurstStyle.update(ComboBurstStyle.fromString(args[1]));
+		case "SplitStages":
+			return parseBoolean(ini.splitStages, args[1]);
+		case "StageSeparation":
+			return parseDouble(ini.stageSeparation, args[1], 0);
+		case "SeparateScore":
+			return parseBoolean(ini.separateScore, args[1]);
+		case "KeysUnderNotes":
+			return parseBoolean(ini.keysUnderNotes, args[1]);
+		case "UpsideDown":
+			return parseBoolean(ini.upsideDown, args[1]);
+		case "ColourColumnLine":
+			return parseColor(ini.colourColumnLine, args[1]);
+		case "ColourBarline":
+			return parseColor(ini.colourBarline, args[1]);
+		case "ColourJudgementLine":
+			return parseColor(ini.colourJudgementLine, args[1]);
+		case "ColourKeyWarning":
+			return parseColor(ini.colourKeyWarning, args[1]);
+		case "ColourHold":
+			return parseColor(ini.colourHold, args[1]);
+		case "ColourBreak":
+			return parseColor(ini.colourBreak, args[1]);
+		case "StageLeft":
+			return ini.stageLeft.update(args[1]);
+		case "StageRight":
+			return ini.stageRight.update(args[1]);
+		case "StageBottom":
+			return ini.stageBottom.update(args[1]);
+		case "StageHint":
+			return ini.stageHint.update(args[1]);
+		case "StageLight":
+			return ini.stageLight.update(args[1]);
+		case "LightingN":
+			return ini.lightingN.update(args[1]);
+		case "LightingL":
+			return ini.lightingL.update(args[1]);
+		case "WarningArrow":
+			return ini.warningArrow.update(args[1]);
+		case "Hit0":
+			return ini.hit0.update(args[1]);
+		case "Hit50":
+			return ini.hit50.update(args[1]);
+		case "Hit100":
+			return ini.hit100.update(args[1]);
+		case "Hit200":
+			return ini.hit200.update(args[1]);
+		case "Hit300":
+			return ini.hit300.update(args[1]);
+		case "Hit300g":
+			return ini.hit300g.update(args[1]);
+		default:
+			if(args[0].startsWith("KeyFlipWhenUpsideDown")){
+				args[0] = args[0].substring(21);
+				if(args[0].isEmpty()){
+					return parseBoolean(ini.keyFlipWhenUpsideDown, args[1]);
+				}else if(args[0].endsWith("D")){
+					return parseBoolean(ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].keyFlipWhenUpsideDownD, args[1]);
+				}else{
+					return parseBoolean(ini.columns[Integer.parseInt(args[0])].keyFlipWhenUpsideDown, args[1]);
+				}
+			}else if(args[0].startsWith("NoteFlipWhenUpsideDown")){
+				args[0] = args[0].substring(22);
+				if(args[0].isEmpty()){
+					return parseBoolean(ini.noteFlipWhenUpsideDown, args[1]);
+				}else if(args[0].endsWith("H")){
+					return parseBoolean(ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownH, args[1]);
+				}else if(args[0].endsWith("L")){
+					return parseBoolean(ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownL, args[1]);
+				}else if(args[0].endsWith("T")){
+					return parseBoolean(ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownT, args[1]);
+				}else{
+					return parseBoolean(ini.columns[Integer.parseInt(args[0])].noteFlipWhenUpsideDown, args[1]);
+				}
+			}else if(args[0].startsWith("NoteBodyStyle")){
+				args[0] = args[0].substring(13);
+				if(args[0].isEmpty()){
+					return ini.noteBodyStyle.update(NoteBodyStyle.fromString(args[1]));
+				}else{
+					return ini.columns[Integer.parseInt(args[0])].noteBodyStyle.update(NoteBodyStyle.fromString(args[1]));
+				}
+			}else if(args[0].startsWith("ColourLight")){
+				return parseColor(ini.columns[Integer.parseInt(args[0].substring(11)) - 1].colourLight, args[1]);
+			}else if(args[0].startsWith("Colour")){
+				return parseColor(ini.columns[Integer.parseInt(args[0].substring(6)) - 1].colour, args[1]);
+			}else if(args[0].startsWith("KeyImage")){
+				args[0] = args[0].substring(8);
+				if(args[0].endsWith("D")){
+					return ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].keyImageD.update(args[1]);
+				}else{
+					return ini.columns[Integer.parseInt(args[0])].keyImage.update(args[1]);
+				}
+			}else if(args[0].startsWith("NoteImage")){
+				args[0] = args[0].substring(9);
+				if(args[0].endsWith("H")){
+					return ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageH.update(args[1]);
+				}else if(args[0].endsWith("T")){
+					return ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageT.update(args[1]);
+				}else if(args[0].endsWith("L")){
+					return ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageL.update(args[1]);
+				}else{
+					return ini.columns[Integer.parseInt(args[0])].noteImage.update(args[1]);
+				}
+			}
+			return new Comment(line);
+		}
+	}
+
+	private Setting<Double> parseDouble(Setting<Double> setting, String line, double min){
+		return parseDouble(setting, line, min, Double.MAX_VALUE);
+	}
+	
+	private Setting<Double> parseDouble(Setting<Double> setting, String line, double min, double max){
 		try{
-			if(args.length == 3){
-				return new Colour(Integer.parseInt(args[0].trim()), Integer.parseInt(args[1].trim()), Integer.parseInt(args[2].trim()));
-			}else if(args.length == 4){
-				return new Colour(Integer.parseInt(args[0].trim()), Integer.parseInt(args[1].trim()), Integer.parseInt(args[2].trim()), Integer.parseInt(args[3].trim()));
+			double val = Double.parseDouble(line);
+			if(val >= min && val <= max){
+				return setting.update(val);
 			}else{
 				usedDefault = true;
-				return null;
 			}
 		}catch(NumberFormatException e){
 			usedDefault = true;
-			return null;
 		}
+		return setting;
+	}
+	
+	private Setting<Integer> parseInt(Setting<Integer> setting, String line){
+		return parseInt(setting, line, Integer.MIN_VALUE);
+	}
+	
+	private Setting<Integer> parseInt(Setting<Integer> setting, String line, int min){
+		return parseInt(setting, line, min, Integer.MAX_VALUE);
+	}
+	
+	private Setting<Integer> parseInt(Setting<Integer> setting, String line, int min, int max){
+		try{
+			int val = Integer.parseInt(line);
+			if(val >= min && val <= max){
+				return setting.update(val);
+			}else{
+				usedDefault = true;
+			}
+		}catch(NumberFormatException e){
+			usedDefault = true;
+		}
+		return setting;
+	}
+	
+	private Setting<Boolean> parseBoolean(Setting<Boolean> setting, String line){
+		if(line.equals("1") || line.equals("0")){
+			return setting.update(line.equals("1"));
+		}else{
+			usedDefault = true;
+			return setting;
+		}
+	}
+	
+	private Setting<double[]> parseList(Setting<double[]> setting, String data, int expected){
+		String[] args = data.split(",");
+		if(args.length != expected){
+			usedDefault = true;
+			return setting;
+		}
+		for(int i = 0; i < expected; i++){
+			setting.getValue()[i] = Math.max(0.0D, Double.parseDouble(args[i].trim()));
+		}
+		return setting;
+	}
+
+	private Setting<Colour> parseColor(Setting<Colour> setting, String arg){
+		String[] args = arg.split(",");
+		try{
+			if(args.length == 3){
+				return setting.update(new Colour(Integer.parseInt(args[0].trim()), Integer.parseInt(args[1].trim()), Integer.parseInt(args[2].trim())));
+			}else if(args.length == 4){
+				return setting.update(new Colour(Integer.parseInt(args[0].trim()), Integer.parseInt(args[1].trim()), Integer.parseInt(args[2].trim()), Integer.parseInt(args[3].trim())));
+			}else{
+				usedDefault = true;
+			}
+		}catch(NumberFormatException e){
+			usedDefault = true;
+		}
+		return setting;
 	}
 
 	public void writeIni(File file) throws FileNotFoundException{
 		PrintWriter writer = new PrintWriter(new FileOutputStream(file));
 
-		writer.println("[General]");
-		writer.println("Name: " + name);
-		writer.println("Author: " + author);
-		writer.println("Version: " + version.name);
-		writer.println();
-		writer.println("CursorExpand: " + (cursorExpand ? 1 : 0));
-		writer.println("CursorCentre: " + (cursorCentre ? 1 : 0));
-		writer.println("CursorRotate: " + (cursorRotate ? 1 : 0));
-		writer.println("CursorTrailRotate: " + (cursorTrailRotate ? 1 : 0));
-		if(animationFramerate != -1){
-			writer.println("AnimationFramerate: " + animationFramerate);
-		}
-		writer.println("LayeredHitSounds: " + (layeredHitSounds ? 1 : 0));
-		writer.println("ComboBurstRandom: " + (comboBurstRandom ? 1 : 0));
-		if(customComboBurstSounds != null){
-			writer.println("CustomComboBurstSounds: " + customComboBurstSounds);
-		}
-		writer.println("HitCircleOverlayAboveNumber: " + (hitCircleOverlayAboveNumber ? 1 : 0));
-		writer.println("SliderStyle: " + sliderStyle);
-		writer.println("SliderBallFlip: " + (sliderBallFlip ? 1 : 0));
-		writer.println("AllowSliderBallTint: " + (allowSliderBallTint ? 1 : 0));
-		writer.println("SpinnerNoBlink: " + (spinnerNoBlink ? 1 : 0));
-		writer.println("SpinnerFadePlayfield: " + (spinnerFadePlayfield ? 1 : 0));
-		writer.println("SpinnerFrequencyModulate: " + (spinnerFrequencyModulate ? 1 : 0));
-		writer.println();
-
-		writer.println("[Colours]");
-		writer.println("SongSelectActiveText: " + rgb(songSelectActiveText));
-		writer.println("SongSelectInactiveText: " + rgb(songSelectInactiveText));
-		writer.println("MenuGlow: " + rgb(menuGlow));
-		writer.println("StarBreakAdditive: " + rgb(starBreakAdditive));
-		writer.println("InputOverlayText: " + rgb(inputOverlayText));
-		writer.println("SliderBall: " + rgb(sliderBall));
-		if(sliderTrackOverride != null){
-			writer.println("SliderTrackOverride: " + rgb(sliderTrackOverride));
-		}
-		writer.println("SliderBorder: " + rgb(sliderBorder));
-		writer.println("SpinnerBackground: " + rgb(spinnerBackground));
-		writer.println("Combo1: " + rgb(combo1));
-		if(combo2 != null){
-			writer.println("Combo2: " + rgb(combo2));
-		}
-		if(combo3 != null){
-			writer.println("Combo3: " + rgb(combo3));
-		}
-		if(combo4 != null){
-			writer.println("Combo4: " + rgb(combo4));
-		}
-		if(combo5 != null){
-			writer.println("Combo5: " + rgb(combo5));
-		}
-		if(combo6 != null){
-			writer.println("Combo6: " + rgb(combo6));
-		}
-		if(combo7 != null){
-			writer.println("Combo7: " + rgb(combo7));
-		}
-		if(combo8 != null){
-			writer.println("Combo8: " + rgb(combo8));
-		}
-		writer.println();
-
-		writer.println("[Fonts]");
-		writer.println("HitCirclePrefix: " + hitCirclePrefix);
-		writer.println("HitCircleOverlap: " + hitCircleOverlap);
-		writer.println("ScorePrefix: " + scorePrefix);
-		writer.println("ScoreOverlap: " + scoreOverlap);
-		writer.println("ComboPrefix: " + comboPrefix);
-		writer.println("ComboOverlap: " + comboOverlap);
-		writer.println();
-
-		writer.println("[CatchTheBeat]");
-		writer.println("HyperDash: " + rgb(hyperDash));
-		if(hyperDashFruit != null){
-			writer.println("HyperDashFruit: " + rgb(hyperDashFruit));
-		}
-		if(hyperDashAfterImage != null){
-			writer.println("HyperDashAfterImage: " + rgb(hyperDashAfterImage));
-		}
-		writer.println();
-
-		for(ManiaIni ini : mania){
-			if(ini != null){
-				writer.println("[Mania]");
-				writer.println("Keys: " + ini.keys);
-				writer.println("ColumnStart: " + ini.columnStart);
-				writer.println("ColumnRight: " + ini.columnRight);
-				if(ini.keys != 1){
-					writer.println("ColumnSpacing: " + arrayToList(ini.columnSpacing));
+		for(Section section : data){
+			if(section.name != null){
+				writer.println(section.name);
+				if(section.isMania()){
+					writer.println("Keys: " + section.mania.keys);
 				}
-				writer.println("ColumnWidth: " + arrayToList(ini.columnWidth));
-				writer.println("ColumnLineWidth: " + arrayToList(ini.columnLineWidth));
-				writer.println("BarlineHeight: " + ini.barlineHeight);
-				if(ini.lightingNWidth != null){
-					writer.println("LightingNWidth: " + arrayToList(ini.lightingNWidth));
+			}
+			for(Setting<?> setting : section.data){
+				if(setting.isEnabled()){
+					writer.println(setting);
 				}
-				if(ini.lightingLWidth != null){
-					writer.println("LightingLWidth: " + arrayToList(ini.lightingLWidth));
-				}
-				if(ini.widthForNoteHeightScale != -1.0D){
-					writer.println("WidthForNoteHeightScale: " + ini.widthForNoteHeightScale);
-				}
-				writer.println("HitPosition: " + ini.hitPosition);
-				writer.println("LightPosition: " + ini.lightPosition);
-				writer.println("ScorePosition: " + ini.scorePosition);
-				writer.println("ComboPosition: " + ini.comboPosition);
-				writer.println("JudgementLine: " + (ini.judgementLine ? 1 : 0));
-				if(ini.keys % 2 == 0 && ini.keys >= 4){
-					writer.println("SpecialStyle: " + ini.specialStyle);
-				}
-				writer.println("ComboBurstStyle: " + ini.comboBurstStyle);
-				if(ini.splitStages != null){
-					writer.println("SplitStages: " + (ini.splitStages ? 1 : 0));
-				}
-				writer.println("StageSeparation: " + ini.stageSeparation);
-				writer.println("SeparateScore: " + (ini.separateScore ? 1 : 0));
-				writer.println("KeysUnderNotes: " + (ini.keysUnderNotes ? 1 : 0));
-				writer.println("UpsideDown: " + (ini.upsideDown ? 1 : 0));
-				writer.println("KeyFlipWhenUpsideDown: " + (ini.keyFlipWhenUpsideDown ? 1 : 0));
-				writer.println("NoteFlipWhenUpsideDown: " + (ini.noteFlipWhenUpsideDown ? 1 : 0));
-				writer.println("NoteBodyStyle: " + ini.noteBodyStyle);
-				writer.println("ColourColumnLine: " + rgba(ini.colourColumnLine));
-				writer.println("ColourBarline: " + rgba(ini.colourBarline));
-				writer.println("ColourJudgementLine: " + rgb(ini.colourJudgementLine));
-				writer.println("ColourKeyWarning: " + rgb(ini.colourKeyWarning));
-				writer.println("ColourHold: " + rgba(ini.colourHold));
-				writer.println("ColourBreak: " + rgb(ini.colourBreak));
-				writer.println("StageLeft: " + ini.stageLeft);
-				writer.println("StageRight: " + ini.stageRight);
-				writer.println("StageBottom: " + ini.stageBottom);
-				writer.println("StageHint: " + ini.stageHint);
-				writer.println("StageLight: " + ini.stageLight);
-				writer.println("LightingN: " + ini.lightingN);
-				writer.println("LightingL: " + ini.lightingL);
-				writer.println("WarningArrow: " + ini.warningArrow);
-				writer.println("Hit0: " + ini.hit0);
-				writer.println("Hit50: " + ini.hit50);
-				writer.println("Hit100: " + ini.hit100);
-				writer.println("Hit200: " + ini.hit200);
-				writer.println("Hit300: " + ini.hit300);
-				writer.println("Hit300g: " + ini.hit300g);
-				
-				for(int i = 0; i < ini.columns.length; i++){
-					Column col = ini.columns[i];
-
-					if(col.keyFlipWhenUpsideDown != null){
-						writer.println("KeyFlipWhenUpsideDown" + col.key + ": " + (col.keyFlipWhenUpsideDown ? 1 : 0));
-					}
-					if(col.keyFlipWhenUpsideDownD != null){
-						writer.println("KeyFlipWhenUpsideDown" + col.key + "D: " + (col.keyFlipWhenUpsideDownD ? 1 : 0));
-					}
-					if(col.noteFlipWhenUpsideDown != null){
-						writer.println("NoteFlipWhenUpsideDown" + col.key + ": " + (col.noteFlipWhenUpsideDown ? 1 : 0));
-					}
-					if(col.noteFlipWhenUpsideDownH != null){
-						writer.println("NoteFlipWhenUpsideDown" + col.key + "H: " + (col.noteFlipWhenUpsideDownH ? 1 : 0));
-					}
-					if(col.noteFlipWhenUpsideDownL != null){
-						writer.println("NoteFlipWhenUpsideDown" + col.key + "L: " + (col.noteFlipWhenUpsideDownL ? 1 : 0));
-					}
-					if(col.noteFlipWhenUpsideDownT != null){
-						writer.println("NoteFlipWhenUpsideDown" + col.key + "T: " + (col.noteFlipWhenUpsideDownT ? 1 : 0));
-					}
-					if(col.noteBodyStyle != -1){
-						writer.println("NoteBodyStyle" + col.key + ": " + col.noteBodyStyle);
-					}
-					if(col.colour != null){
-						writer.println("Colour" + col.key + ": " + rgba(col.colour));
-					}
-					if(col.colourLight != null){
-						writer.println("ColourLight" + col.key + ": " + rgb(col.colourLight));
-					}
-					if(col.keyImage != null){
-						writer.println("KeyImage" + col.key + ": " + col.keyImage);
-					}
-					if(col.keyImageD != null){
-						writer.println("KeyImage" + col.key + "D: " + col.keyImageD);
-					}
-					if(col.noteImage != null){
-						writer.println("NoteImage" + col.key + ": " + col.noteImage);
-					}
-					if(col.noteImageH != null){
-						writer.println("NoteImage" + col.key + "H: " + col.noteImageH);
-					}
-					if(col.noteImageL != null){
-						writer.println("NoteImage" + col.key + "L: " + col.noteImageL);
-					}
-					if(col.noteImageT != null){
-						writer.println("NoteImage" + col.key + "T: " + col.noteImageT);
-					}
-				}
-				
-				writer.println();
 			}
 		}
 
 		writer.flush();
 		writer.close();
 	}
+	
+	protected enum SliderStyle implements Printable{
+		SEGMENTS(1, "Segments"),
+		GRADIENT(2, "Gradient");
+		
+		private final String name;
+		private final int id;
+		
+		private SliderStyle(int id, String name){
+			this.name = name;
+			this.id = id;
+		}
+		
+		private static final SliderStyle fromString(String str){
+			switch(str){
+			case "1":
+				return SEGMENTS;
+			case "2":
+				return GRADIENT;
+			default:
+				usedDefault = true;
+				return GRADIENT;
+			}
+		}
+	
+		@Override
+		public String toString(){
+			return name;
+		}
 
-	private static final String rgb(Colour color){
-		return color.getRed() + "," + color.getGreen() + "," + color.getBlue();
+		@Override
+		public String print(){
+			return String.valueOf(id);
+		}
 	}
+	
+	protected enum SpecialStyle implements Printable{
+		NONE(0, "None"),
+		LEFT(1, "Left lane SP - outer lanes DP"),
+		RIGHT(2, "Right lane SP - outer lanes DP");
+		
+		private final String name;
+		private final int id;
+		
+		private SpecialStyle(int id, String name){
+			this.name = name;
+			this.id = id;
+		}
+		
+		private static final SpecialStyle fromString(String line){
+			switch(line.toLowerCase(Locale.ROOT)){
+			case "0":
+			case "none":
+				return NONE;
+			case "1":
+			case "left":
+				return LEFT;
+			case "2":
+			case "right":
+				return RIGHT;
+			default:
+				usedDefault = true;
+				return NONE;
+			}
+		}
+		
+		@Override
+		public String toString(){
+			return name;
+		}
 
-	private static final String rgba(Colour color){
-		if(!color.hasAlpha()){
-			return rgb(color);
-		}else{
-			return rgb(color) + "," + color.getAlpha();
+		@Override
+		public String print(){
+			return String.valueOf(id);
+		}
+	}
+	
+	protected enum ComboBurstStyle implements Printable{
+		LEFT(0, "Left"),
+		RIGHT(1, "Right"),
+		BOTH(2, "Both");
+		
+		private final String name;
+		private final int id;
+		
+		private ComboBurstStyle(int id, String name){
+			this.name = name;
+			this.id = id;
+		}
+		
+		private static final ComboBurstStyle fromString(String line){
+			switch(line.toLowerCase(Locale.ROOT)){
+			case "0":
+			case "left":
+				return LEFT;
+			case "1":
+			case "right":
+				return RIGHT;
+			case "2":
+			case "both":
+				return BOTH;
+			default:
+				usedDefault = true;
+				return RIGHT;
+			}
+		}
+		
+		@Override
+		public String toString(){
+			return name;
+		}
+
+		@Override
+		public String print(){
+			return String.valueOf(id);
+		}
+	}
+	
+	protected enum NoteBodyStyle implements Printable{
+		STRETCHED(0, "Stretched to fit the whole length"),
+		CASCADINGTH(1, "Cascading from tail to head"),
+		CASCADINGHT(2, "Cascading from head to tail");
+
+		private final String name;
+		private final int id;
+		
+		private NoteBodyStyle(int id, String name){
+			this.name = name;
+			this.id = id;
+		}
+		
+		private static NoteBodyStyle fromString(String line){
+			switch(line){
+			case "0":
+				return STRETCHED;
+			case "1":
+				return CASCADINGTH;
+			case "2":
+				return CASCADINGHT;
+			default:
+				return CASCADINGTH;
+			}
+		}
+
+		@Override
+		public String toString(){
+			return name;
+		}
+		
+		@Override
+		public String print(){
+			return String.valueOf(id);
 		}
 	}
 
-	private static final String arrayToList(double[] array){
-		StringJoiner joiner = new StringJoiner(",");
-		for(double d : array){
-			joiner.add(String.valueOf(d));
-		}
-		return joiner.toString();
-	}
-
-	protected enum Version{
+	protected enum Version implements Printable{
 		V1("1", "(Old style)"),
 		V2("2", "(Basic new style)"),
 		V21("2.1", "(Taiko position changes)"),
@@ -1260,7 +957,8 @@ public class SkinIni{
 			case "latest":
 				return LATEST;
 			default:
-				return null;
+				usedDefault = true;
+				return V1;
 			}
 		}
 
@@ -1268,5 +966,15 @@ public class SkinIni{
 		public String toString(){
 			return name + " " + extra;
 		}
+
+		@Override
+		public String print(){
+			return name;
+		}
+	}
+	
+	protected static abstract interface Printable{
+		
+		public abstract String print();
 	}
 }
