@@ -504,7 +504,7 @@ public class SkinChecker{
 
 		allFiles.clear();
 		addAllFiles(skinFolder);
-		allFiles.remove(new File(skinFolder, "skin.ini"));
+		allFiles.remove(iniFile);
 
 		parseINI();
 
