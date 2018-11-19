@@ -394,7 +394,7 @@ public class SkinIni{
 						}
 					}
 				}else if(section.isMania()){
-					Setting<?> setting = parseMania(maniaIni, line);
+					Setting<?> setting = maniaIni.parseMania(line);
 					setting.added = true;
 					section.data.add(setting);
 				}else{
@@ -532,157 +532,11 @@ public class SkinIni{
 		}
 	}
 
-	private Setting<?> parseMania(ManiaIni ini, String line) throws IOException{
-		if(line.trim().isEmpty() || line.startsWith("//")){
-			return new Comment(line);
-		}
-		String[] args = line.split(":", 2);
-		args[1] = args[1].trim();
-		switch(args[0]){
-		case "ColumnStart":
-			return parseDouble(ini.columnStart, args[1], 0.0D);
-		case "ColumnRight":
-			return parseDouble(ini.columnRight, args[1], 0.0D);
-		case "ColumnSpacing":
-			return parseList(ini.columnSpacing, args[1], ini.keys - 1);
-		case "ColumnWidth":
-			return parseList(ini.columnWidth, args[1], ini.keys);
-		case "ColumnLineWidth":
-			return parseList(ini.columnLineWidth, args[1], ini.keys + 1);
-		case "BarlineHeight":
-			return parseDouble(ini.barlineHeight, args[1], 0.0D);
-		case "LightingNWidth":
-			return parseList(ini.lightingNWidth, args[1], ini.keys);
-		case "LightingLWidth":
-			return parseList(ini.lightingLWidth, args[1], ini.keys);
-		case "WidthForNoteHeightScale":
-			return parseDouble(ini.widthForNoteHeightScale, args[1], 0.0D);
-		case "HitPosition":
-			return parseInt(ini.hitPosition, args[1], 0);
-		case "LightPosition":
-			return parseInt(ini.lightPosition, args[1], 0);
-		case "ScorePosition":
-			return parseInt(ini.scorePosition, args[1], 0);
-		case "ComboPosition":
-			return parseInt(ini.comboPosition, args[1], 0);
-		case "JudgementLine":
-			return parseBoolean(ini.judgementLine, args[1]);
-		case "SpecialStyle":
-			return ini.specialStyle.update(SpecialStyle.fromString(args[1]));
-		case "ComboBurstStyle":
-			return ini.comboBurstStyle.update(ComboBurstStyle.fromString(args[1]));
-		case "SplitStages":
-			return parseBoolean(ini.splitStages, args[1]);
-		case "StageSeparation":
-			return parseDouble(ini.stageSeparation, args[1], 0);
-		case "SeparateScore":
-			return parseBoolean(ini.separateScore, args[1]);
-		case "KeysUnderNotes":
-			return parseBoolean(ini.keysUnderNotes, args[1]);
-		case "UpsideDown":
-			return parseBoolean(ini.upsideDown, args[1]);
-		case "ColourColumnLine":
-			return parseColor(ini.colourColumnLine, args[1]);
-		case "ColourBarline":
-			return parseColor(ini.colourBarline, args[1]);
-		case "ColourJudgementLine":
-			return parseColor(ini.colourJudgementLine, args[1]);
-		case "ColourKeyWarning":
-			return parseColor(ini.colourKeyWarning, args[1]);
-		case "ColourHold":
-			return parseColor(ini.colourHold, args[1]);
-		case "ColourBreak":
-			return parseColor(ini.colourBreak, args[1]);
-		case "StageLeft":
-			return ini.stageLeft.update(args[1]);
-		case "StageRight":
-			return ini.stageRight.update(args[1]);
-		case "StageBottom":
-			return ini.stageBottom.update(args[1]);
-		case "StageHint":
-			return ini.stageHint.update(args[1]);
-		case "StageLight":
-			return ini.stageLight.update(args[1]);
-		case "LightingN":
-			return ini.lightingN.update(args[1]);
-		case "LightingL":
-			return ini.lightingL.update(args[1]);
-		case "WarningArrow":
-			return ini.warningArrow.update(args[1]);
-		case "Hit0":
-			return ini.hit0.update(args[1]);
-		case "Hit50":
-			return ini.hit50.update(args[1]);
-		case "Hit100":
-			return ini.hit100.update(args[1]);
-		case "Hit200":
-			return ini.hit200.update(args[1]);
-		case "Hit300":
-			return ini.hit300.update(args[1]);
-		case "Hit300g":
-			return ini.hit300g.update(args[1]);
-		default:
-			if(args[0].startsWith("KeyFlipWhenUpsideDown")){
-				args[0] = args[0].substring(21);
-				if(args[0].isEmpty()){
-					return parseBoolean(ini.keyFlipWhenUpsideDown, args[1]);
-				}else if(args[0].endsWith("D")){
-					return parseBoolean(ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].keyFlipWhenUpsideDownD, args[1]);
-				}else{
-					return parseBoolean(ini.columns[Integer.parseInt(args[0])].keyFlipWhenUpsideDown, args[1]);
-				}
-			}else if(args[0].startsWith("NoteFlipWhenUpsideDown")){
-				args[0] = args[0].substring(22);
-				if(args[0].isEmpty()){
-					return parseBoolean(ini.noteFlipWhenUpsideDown, args[1]);
-				}else if(args[0].endsWith("H")){
-					return parseBoolean(ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownH, args[1]);
-				}else if(args[0].endsWith("L")){
-					return parseBoolean(ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownL, args[1]);
-				}else if(args[0].endsWith("T")){
-					return parseBoolean(ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownT, args[1]);
-				}else{
-					return parseBoolean(ini.columns[Integer.parseInt(args[0])].noteFlipWhenUpsideDown, args[1]);
-				}
-			}else if(args[0].startsWith("NoteBodyStyle")){
-				args[0] = args[0].substring(13);
-				if(args[0].isEmpty()){
-					return ini.noteBodyStyle.update(NoteBodyStyle.fromString(args[1]));
-				}else{
-					return ini.columns[Integer.parseInt(args[0])].noteBodyStyle.update(NoteBodyStyle.fromString(args[1]));
-				}
-			}else if(args[0].startsWith("ColourLight")){
-				return parseColor(ini.columns[Integer.parseInt(args[0].substring(11)) - 1].colourLight, args[1]);
-			}else if(args[0].startsWith("Colour")){
-				return parseColor(ini.columns[Integer.parseInt(args[0].substring(6)) - 1].colour, args[1]);
-			}else if(args[0].startsWith("KeyImage")){
-				args[0] = args[0].substring(8);
-				if(args[0].endsWith("D")){
-					return ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].keyImageD.update(args[1]);
-				}else{
-					return ini.columns[Integer.parseInt(args[0])].keyImage.update(args[1]);
-				}
-			}else if(args[0].startsWith("NoteImage")){
-				args[0] = args[0].substring(9);
-				if(args[0].endsWith("H")){
-					return ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageH.update(args[1]);
-				}else if(args[0].endsWith("T")){
-					return ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageT.update(args[1]);
-				}else if(args[0].endsWith("L")){
-					return ini.columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageL.update(args[1]);
-				}else{
-					return ini.columns[Integer.parseInt(args[0])].noteImage.update(args[1]);
-				}
-			}
-			return new Comment(line);
-		}
-	}
-
-	private Setting<Double> parseDouble(Setting<Double> setting, String line, double min){
+	private static Setting<Double> parseDouble(Setting<Double> setting, String line, double min){
 		return parseDouble(setting, line, min, Double.MAX_VALUE);
 	}
 	
-	private Setting<Double> parseDouble(Setting<Double> setting, String line, double min, double max){
+	private static Setting<Double> parseDouble(Setting<Double> setting, String line, double min, double max){
 		try{
 			double val = Double.parseDouble(line);
 			if(val >= min && val <= max){
@@ -696,15 +550,15 @@ public class SkinIni{
 		return setting;
 	}
 	
-	private Setting<Integer> parseInt(Setting<Integer> setting, String line){
+	private static Setting<Integer> parseInt(Setting<Integer> setting, String line){
 		return parseInt(setting, line, Integer.MIN_VALUE);
 	}
 	
-	private Setting<Integer> parseInt(Setting<Integer> setting, String line, int min){
+	private static Setting<Integer> parseInt(Setting<Integer> setting, String line, int min){
 		return parseInt(setting, line, min, Integer.MAX_VALUE);
 	}
 	
-	private Setting<Integer> parseInt(Setting<Integer> setting, String line, int min, int max){
+	private static Setting<Integer> parseInt(Setting<Integer> setting, String line, int min, int max){
 		try{
 			int val = Integer.parseInt(line);
 			if(val >= min && val <= max){
@@ -718,7 +572,7 @@ public class SkinIni{
 		return setting;
 	}
 	
-	private Setting<Boolean> parseBoolean(Setting<Boolean> setting, String line){
+	private static Setting<Boolean> parseBoolean(Setting<Boolean> setting, String line){
 		if(line.equals("1") || line.equals("0")){
 			return setting.update(line.equals("1"));
 		}else{
@@ -727,7 +581,7 @@ public class SkinIni{
 		}
 	}
 	
-	private Setting<double[]> parseList(Setting<double[]> setting, String data, int expected){
+	private static Setting<double[]> parseList(Setting<double[]> setting, String data, int expected){
 		String[] args = data.split(",");
 		if(args.length != expected){
 			usedDefault = true;
@@ -739,7 +593,7 @@ public class SkinIni{
 		return setting;
 	}
 
-	private Setting<Colour> parseColor(Setting<Colour> setting, String arg){
+	private static Setting<Colour> parseColor(Setting<Colour> setting, String arg){
 		String[] args = arg.split(",");
 		try{
 			if(args.length == 3){
@@ -847,6 +701,152 @@ public class SkinIni{
 				array[i] = value;
 			}
 			return array;
+		}
+		
+		private Setting<?> parseMania(String line) throws IOException{
+			if(line.trim().isEmpty() || line.startsWith("//")){
+				return new Comment(line);
+			}
+			String[] args = line.split(":", 2);
+			args[1] = args[1].trim();
+			switch(args[0]){
+			case "ColumnStart":
+				return parseDouble(columnStart, args[1], 0.0D);
+			case "ColumnRight":
+				return parseDouble(columnRight, args[1], 0.0D);
+			case "ColumnSpacing":
+				return parseList(columnSpacing, args[1], keys - 1);
+			case "ColumnWidth":
+				return parseList(columnWidth, args[1], keys);
+			case "ColumnLineWidth":
+				return parseList(columnLineWidth, args[1], keys + 1);
+			case "BarlineHeight":
+				return parseDouble(barlineHeight, args[1], 0.0D);
+			case "LightingNWidth":
+				return parseList(lightingNWidth, args[1], keys);
+			case "LightingLWidth":
+				return parseList(lightingLWidth, args[1], keys);
+			case "WidthForNoteHeightScale":
+				return parseDouble(widthForNoteHeightScale, args[1], 0.0D);
+			case "HitPosition":
+				return parseInt(hitPosition, args[1], 0);
+			case "LightPosition":
+				return parseInt(lightPosition, args[1], 0);
+			case "ScorePosition":
+				return parseInt(scorePosition, args[1], 0);
+			case "ComboPosition":
+				return parseInt(comboPosition, args[1], 0);
+			case "JudgementLine":
+				return parseBoolean(judgementLine, args[1]);
+			case "SpecialStyle":
+				return specialStyle.update(SpecialStyle.fromString(args[1]));
+			case "ComboBurstStyle":
+				return comboBurstStyle.update(ComboBurstStyle.fromString(args[1]));
+			case "SplitStages":
+				return parseBoolean(splitStages, args[1]);
+			case "StageSeparation":
+				return parseDouble(stageSeparation, args[1], 0);
+			case "SeparateScore":
+				return parseBoolean(separateScore, args[1]);
+			case "KeysUnderNotes":
+				return parseBoolean(keysUnderNotes, args[1]);
+			case "UpsideDown":
+				return parseBoolean(upsideDown, args[1]);
+			case "ColourColumnLine":
+				return parseColor(colourColumnLine, args[1]);
+			case "ColourBarline":
+				return parseColor(colourBarline, args[1]);
+			case "ColourJudgementLine":
+				return parseColor(colourJudgementLine, args[1]);
+			case "ColourKeyWarning":
+				return parseColor(colourKeyWarning, args[1]);
+			case "ColourHold":
+				return parseColor(colourHold, args[1]);
+			case "ColourBreak":
+				return parseColor(colourBreak, args[1]);
+			case "StageLeft":
+				return stageLeft.update(args[1]);
+			case "StageRight":
+				return stageRight.update(args[1]);
+			case "StageBottom":
+				return stageBottom.update(args[1]);
+			case "StageHint":
+				return stageHint.update(args[1]);
+			case "StageLight":
+				return stageLight.update(args[1]);
+			case "LightingN":
+				return lightingN.update(args[1]);
+			case "LightingL":
+				return lightingL.update(args[1]);
+			case "WarningArrow":
+				return warningArrow.update(args[1]);
+			case "Hit0":
+				return hit0.update(args[1]);
+			case "Hit50":
+				return hit50.update(args[1]);
+			case "Hit100":
+				return hit100.update(args[1]);
+			case "Hit200":
+				return hit200.update(args[1]);
+			case "Hit300":
+				return hit300.update(args[1]);
+			case "Hit300g":
+				return hit300g.update(args[1]);
+			default:
+				if(args[0].startsWith("KeyFlipWhenUpsideDown")){
+					args[0] = args[0].substring(21);
+					if(args[0].isEmpty()){
+						return parseBoolean(keyFlipWhenUpsideDown, args[1]);
+					}else if(args[0].endsWith("D")){
+						return parseBoolean(columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].keyFlipWhenUpsideDownD, args[1]);
+					}else{
+						return parseBoolean(columns[Integer.parseInt(args[0])].keyFlipWhenUpsideDown, args[1]);
+					}
+				}else if(args[0].startsWith("NoteFlipWhenUpsideDown")){
+					args[0] = args[0].substring(22);
+					if(args[0].isEmpty()){
+						return parseBoolean(noteFlipWhenUpsideDown, args[1]);
+					}else if(args[0].endsWith("H")){
+						return parseBoolean(columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownH, args[1]);
+					}else if(args[0].endsWith("L")){
+						return parseBoolean(columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownL, args[1]);
+					}else if(args[0].endsWith("T")){
+						return parseBoolean(columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteFlipWhenUpsideDownT, args[1]);
+					}else{
+						return parseBoolean(columns[Integer.parseInt(args[0])].noteFlipWhenUpsideDown, args[1]);
+					}
+				}else if(args[0].startsWith("NoteBodyStyle")){
+					args[0] = args[0].substring(13);
+					if(args[0].isEmpty()){
+						return noteBodyStyle.update(NoteBodyStyle.fromString(args[1]));
+					}else{
+						return columns[Integer.parseInt(args[0])].noteBodyStyle.update(NoteBodyStyle.fromString(args[1]));
+					}
+				}else if(args[0].startsWith("ColourLight")){
+					return parseColor(columns[Integer.parseInt(args[0].substring(11)) - 1].colourLight, args[1]);
+				}else if(args[0].startsWith("Colour")){
+					return parseColor(columns[Integer.parseInt(args[0].substring(6)) - 1].colour, args[1]);
+				}else if(args[0].startsWith("KeyImage")){
+					args[0] = args[0].substring(8);
+					if(args[0].endsWith("D")){
+						return columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].keyImageD.update(args[1]);
+					}else{
+						return columns[Integer.parseInt(args[0])].keyImage.update(args[1]);
+					}
+				}else if(args[0].startsWith("NoteImage")){
+					args[0] = args[0].substring(9);
+					if(args[0].endsWith("H")){
+						return columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageH.update(args[1]);
+					}else if(args[0].endsWith("T")){
+						return columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageT.update(args[1]);
+					}else if(args[0].endsWith("L")){
+						return columns[Integer.parseInt(args[0].substring(0, args[0].length() - 1))].noteImageL.update(args[1]);
+					}else{
+						return columns[Integer.parseInt(args[0])].noteImage.update(args[1]);
+					}
+				}
+				return new Comment(line);
+			}
 		}
 
 		protected static final class Column{
