@@ -29,16 +29,16 @@ public class SkinIni{
 	protected final Setting<Boolean> cursorCentre = new Setting<Boolean>("CursorCentre", true);
 	protected final Setting<Boolean> cursorRotate = new Setting<Boolean>("CursorRotate", true);
 	protected final Setting<Boolean> cursorTrailRotate = new Setting<Boolean>("CursorTrailRotate", true);
-	protected final Setting<Integer> animationFramerate = new Setting<Integer>("AnimationFramerate", false, 1);//non negative
+	protected final Setting<Integer> animationFramerate = new Setting<Integer>("AnimationFramerate", false, 1);
 
 	//combo bursts
 	protected final Setting<Boolean> layeredHitSounds = new Setting<Boolean>("LayeredHitSounds", true);
 	protected final Setting<Boolean> comboBurstRandom = new Setting<Boolean>("ComboBurstRandom", false);
-	protected final Setting<String> customComboBurstSounds = new Setting<String>("CustomComboBurstSounds", false, "");//list of ints, positive values only
+	protected final Setting<String> customComboBurstSounds = new Setting<String>("CustomComboBurstSounds", false, "");
 
 	//standard
 	protected final Setting<Boolean> hitCircleOverlayAboveNumber = new Setting<Boolean>("HitCircleOverlayAboveNumber", true);
-	protected final Setting<SliderStyle> sliderStyle = new Setting<SliderStyle>("SliderStyle", SliderStyle.GRADIENT);//1 or 2
+	protected final Setting<SliderStyle> sliderStyle = new Setting<SliderStyle>("SliderStyle", SliderStyle.GRADIENT);
 	protected final Setting<Boolean> sliderBallFlip = new Setting<Boolean>("SliderBallFlip", false);
 	protected final Setting<Boolean> allowSliderBallTint = new Setting<Boolean>("AllowSliderBallTint", false);
 	protected final Setting<Boolean> spinnerNoBlink = new Setting<Boolean>("SpinnerNoBlink", false);
@@ -109,8 +109,8 @@ public class SkinIni{
 		protected final Setting<Integer> scorePosition = new Setting<Integer>("ScorePosition", 325);
 		protected final Setting<Integer> comboPosition = new Setting<Integer>("ComboPosition", 111);
 		protected final Setting<Boolean> judgementLine = new Setting<Boolean>("JudgementLine", true);
-		protected final Setting<SpecialStyle> specialStyle = new Setting<SpecialStyle>("SpecialStyle", SpecialStyle.NONE);//0, 1 or 2
-		protected final Setting<ComboBurstStyle> comboBurstStyle = new Setting<ComboBurstStyle>("ComboBurstStyle", ComboBurstStyle.RIGHT);//0, 1 or 2
+		protected final Setting<SpecialStyle> specialStyle = new Setting<SpecialStyle>("SpecialStyle", SpecialStyle.NONE);
+		protected final Setting<ComboBurstStyle> comboBurstStyle = new Setting<ComboBurstStyle>("ComboBurstStyle", ComboBurstStyle.RIGHT);
 		protected final Setting<Boolean> splitStages = new Setting<Boolean>("SplitStages", false, true);
 		protected final Setting<Double> stageSeparation = new Setting<Double>("StageSeparation", 40.0D);
 		protected final Setting<Boolean> separateScore = new Setting<Boolean>("SeparationScore", true);
@@ -118,7 +118,7 @@ public class SkinIni{
 		protected final Setting<Boolean> upsideDown = new Setting<Boolean>("UpsideDown", false);
 		protected final Setting<Boolean> keyFlipWhenUpsideDown = new Setting<Boolean>("KeyFlipWhenUpsideDown", true);
 		protected final Setting<Boolean> noteFlipWhenUpsideDown = new Setting<Boolean>("NoteFlipWhenUpsideDown", true);
-		protected final Setting<NoteBodyStyle> noteBodyStyle = new Setting<NoteBodyStyle>("NoteBodyStyle", NoteBodyStyle.CASCADINGTH);//0, 1, 2
+		protected final Setting<NoteBodyStyle> noteBodyStyle = new Setting<NoteBodyStyle>("NoteBodyStyle", NoteBodyStyle.CASCADINGTH);
 		protected final Setting<Colour> colourColumnLine = new Setting<Colour>("ColourColumnLine", new Colour(255, 255, 255, 255));
 		protected final Setting<Colour> colourBarline = new Setting<Colour>("ColourBarline", new Colour(255, 255, 255, 255));
 		protected final Setting<Colour> colourJudgementLine = new Setting<Colour>("ColourJudgementLine", new Colour(255, 255, 255));
@@ -197,7 +197,7 @@ public class SkinIni{
 				noteFlipWhenUpsideDownL = new Setting<Boolean>("NoteFlipWhenUpsideDown" + key + "L", false, true);
 				noteFlipWhenUpsideDownT = new Setting<Boolean>("NoteFlipWhenUpsideDown" + key + "T", false, true);
 
-				noteBodyStyle = new Setting<NoteBodyStyle>("NoteBodyStyle" + key, false, NoteBodyStyle.CASCADINGTH);//0, 1, 2
+				noteBodyStyle = new Setting<NoteBodyStyle>("NoteBodyStyle" + key, false, NoteBodyStyle.CASCADINGTH);
 
 				colour = new Setting<Colour>("Colour" + key, new Colour(0, 0, 0, 255));
 				colourLight = new Setting<Colour>("ColourLight" + key, new Colour(255, 255, 255));
