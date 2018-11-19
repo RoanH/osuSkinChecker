@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
@@ -410,6 +411,19 @@ public class SkinIni{
 		}catch(Exception e){
 			e.printStackTrace();
 			throw new IllegalArgumentException("Line: " + line, e);
+		}
+		
+		outer: for(Entry<String, Setting<?>[]> cat : all.entrySet()){
+			for(Section s : data){
+				if(cat.getKey().equals(s.name)){
+					continue outer;
+				}
+			}
+			Section missed = new Section(cat.getKey());
+			data.add(missed);
+			for(Setting<?> setting : cat.getValue()){
+				missed.data.add(setting);
+			}
 		}
 		
 		Setting.singleUpdateMode = false;
