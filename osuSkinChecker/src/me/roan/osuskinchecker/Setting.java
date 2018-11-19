@@ -9,6 +9,8 @@ public class Setting<T>{
 	private String name;
 	private T value;
 	private boolean enabled = true;
+	private boolean wasUpdated = false;
+	protected static boolean singleUpdateMode = false;
 	
 	protected Setting(String name, T def){
 		value = def;
@@ -32,8 +34,14 @@ public class Setting<T>{
 		this.enabled = enabled;
 	}
 	
-	protected Setting<T> update(T newValue){
-		value = newValue;
+	protected Setting<T> update(T newValue){		
+		if(!(wasUpdated && singleUpdateMode)){
+			if(singleUpdateMode){
+				enabled = true;
+				wasUpdated = true;
+			}
+			value = newValue;
+		}
 		return this;
 	}
 	
@@ -52,7 +60,7 @@ public class Setting<T>{
 			for(double d : (double[])value){
 				joiner.add(String.valueOf(d));
 			}
-			return joiner.toString();
+			return name + ": " + joiner.toString();
 		}else{
 			return name + ": " + value.toString();
 		}

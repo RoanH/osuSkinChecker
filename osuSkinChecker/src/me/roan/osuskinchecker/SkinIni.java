@@ -213,6 +213,7 @@ public class SkinIni{
 		data.add(section);
 		Pattern header = Pattern.compile("\\[.+\\]");
 		ManiaIni maniaIni = null;
+		Setting.singleUpdateMode = true;
 		
 		String line = null;
 		try(BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))){
@@ -256,6 +257,8 @@ public class SkinIni{
 			e.printStackTrace();
 			throw new IllegalArgumentException("Line: " + line, e);
 		}
+		
+		Setting.singleUpdateMode = false;
 		
 		if(usedDefault){
 			JOptionPane.showMessageDialog(SkinChecker.frame, "Skin.ini fields were found that couldn't be parsed. Default values were used.", "Skin Checker", JOptionPane.WARNING_MESSAGE);
