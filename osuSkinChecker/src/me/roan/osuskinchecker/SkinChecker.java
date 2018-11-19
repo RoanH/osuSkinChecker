@@ -492,6 +492,7 @@ public class SkinChecker{
 			}catch(Exception e1){
 				JOptionPane.showMessageDialog(frame, "An internal error occurred!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
 			}
+			return;
 		}
 		iniTab.init(skinIni);
 
