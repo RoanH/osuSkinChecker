@@ -470,14 +470,20 @@ public class SkinChecker{
 		}
 		skin.setText(skinFolder.getName());
 
-		if(!new File(skinFolder, "skin.ini").exists()){
-			JOptionPane.showMessageDialog(frame, "This folder doesn't have a skin.ini file.\nWithout this file this skin won't even be recognized as a skin!\nAdd a skin.ini and then run this program again.", "Skin Checker", JOptionPane.ERROR_MESSAGE);
-			return;
+		File iniFile = new File(skinFolder, "skin.ini");
+		
+		if(!iniFile.exists()){
+			int option = JOptionPane.showOptionDialog(frame, "This folder doesn't have a skin.ini file.\nWithout this file this skin won't even be recognized as a skin!", "Skin Checker", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[]{"OK", "Add empty skin.ini"}, null);
+			if(option == 1){
+				iniFile.createNewFile();
+			}else{
+				return;
+			}
 		}
 
 		skinIni = new SkinIni();
 		try{
-			skinIni.readIni(new File(skinFolder, "skin.ini"));
+			skinIni.readIni(iniFile);
 		}catch(Throwable e){
 			try{
 				String name = System.currentTimeMillis() + ".txt";
@@ -488,7 +494,7 @@ public class SkinChecker{
 					errl.add("	" + elem.toString());
 				}
 				Files.write(err, errl, StandardOpenOption.CREATE_NEW);
-				JOptionPane.showMessageDialog(frame, "An error occurred while reading the skin.ini\nThe error was saved to: " + name, "Skin Checker", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(frame, "An error occurred while reading the skin.ini\nThe error was saved to: " + err.toAbsolutePath().toString(), "Skin Checker", JOptionPane.ERROR_MESSAGE);
 			}catch(Exception e1){
 				JOptionPane.showMessageDialog(frame, "An internal error occurred!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
 			}
