@@ -968,26 +968,52 @@ public class SkinIniTab extends JTabbedPane{
 		}
 	}
 	
+	/**
+	 * Specialised text field for file path
+	 * input, currently no different from a
+	 * regular text field and only exists 
+	 * because is localises future changes
+	 * @author Roan
+	 */
 	private static final class PathField extends JTextField{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = -4519936454813151564L;
 		
+		/**
+		 * Constructs a new PathField
+		 * with the given text
+		 * @param text The current text to display
+		 */
 		private PathField(String text){
 			super(text);
 		}
 	}
 
+	/**
+	 * Editor for a Colour Setting
+	 * @author Roan
+	 * @see Setting
+	 */
 	private static final class ColorSelector extends JPanel implements MouseListener{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = 3286760817738876568L;
+		/**
+		 * The Setting that is modified by this editor
+		 */
 		private Setting<Colour> color;
 
-		private ColorSelector(Setting<Colour> def){
-			color = def;
+		/**
+		 * Constructs a new ColorSelector for
+		 * the given Setting
+		 * @param setting The setting to make an editor for
+		 * @see Setting
+		 */
+		private ColorSelector(Setting<Colour> setting){
+			color = setting;
 			this.setBackground(color.getValue().toColor());
 			this.addMouseListener(this);
 		}
@@ -1018,12 +1044,21 @@ public class SkinIniTab extends JTabbedPane{
 		}
 	}
 
+	/**
+	 * Helpers class for editing the values in a double array
+	 * @author Roan
+	 */
 	private static final class DoubleArray extends JPanel{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = 3145876156701959606L;
 
+		/**
+		 * Constructs a new DoubleArray
+		 * with the given data
+		 * @param data The current array data
+		 */
 		private DoubleArray(double[] data){
 			this.setLayout(new GridLayout(1, data.length, 2, 0));
 			for(int i = 0; i < data.length; i++){
@@ -1037,12 +1072,22 @@ public class SkinIniTab extends JTabbedPane{
 		}
 	}
 	
+	/**
+	 * Specialized text field that only allows
+	 * a comma separated list of positive integers as input
+	 * @author Roan
+	 */
 	private static final class ListField extends JTextField{	
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = -4456019117693719163L;
 
+		/**
+		 * Constructs a new ListField
+		 * with the given text
+		 * @param text The current field text
+		 */
 		private ListField(String text){
 			super(text);
 			((PlainDocument)this.getDocument()).setDocumentFilter(new ListFilter());
@@ -1058,8 +1103,16 @@ public class SkinIniTab extends JTabbedPane{
 			}
 		}
 		
+		/**
+		 * Filter that only allows a comma separed list
+		 * of positive integers as the field content
+		 * @author Roan
+		 * @see ListField
+		 */
 		private static final class ListFilter extends DocumentFilter{
-			
+			/**
+			 * Regex that only allows a comma separated list of positive integers
+			 */
 			private static final Pattern filter = Pattern.compile("^(\\d+,)*\\d*$");
 			
 			@Override
