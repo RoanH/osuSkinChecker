@@ -862,38 +862,153 @@ public class SkinIni{
 		 * <code>SplitStages: < 0:1 ></code>
 		 */
 		protected final Setting<Boolean> splitStages = new Setting<Boolean>("SplitStages", false, true);
+		/**
+		 * [Mania]<br>
+		 * <code>StageSeparation: < space ></code>
+		 */
 		protected final Setting<Double> stageSeparation = new Setting<Double>("StageSeparation", 40.0D);
+		/**
+		 * [Mania]<br>
+		 * <code>SeparateScore: < 0:1 ></code>
+		 */
 		protected final Setting<Boolean> separateScore = new Setting<Boolean>("SeparationScore", true);
+		/**
+		 * [Mania]<br>
+		 * <code>KeysUnderNotes: < 0:1 ></code>
+		 */
 		protected final Setting<Boolean> keysUnderNotes = new Setting<Boolean>("KeysUnderNotes", false);
+		/**
+		 * [Mania]<br>
+		 * <code>UpsideDown: < 0:1 ></code>
+		 */
 		protected final Setting<Boolean> upsideDown = new Setting<Boolean>("UpsideDown", false);
+		/**
+		 * [Mania]<br>
+		 * <code>KeyFlipWhenUpsideDown: < 0:1 ></code>
+		 */
 		protected final Setting<Boolean> keyFlipWhenUpsideDown = new Setting<Boolean>("KeyFlipWhenUpsideDown", true);
+		/**
+		 * [Mania]<br>
+		 * <code>NoteFlipWhenUpsideDown: < 0:1 ></code>
+		 */
 		protected final Setting<Boolean> noteFlipWhenUpsideDown = new Setting<Boolean>("NoteFlipWhenUpsideDown", true);
+		/**
+		 * [Mania]<br>
+		 * <code>NoteBodyStyle: < style ></code>
+		 * @see NoteBodyStyle
+		 */
 		protected final Setting<NoteBodyStyle> noteBodyStyle = new Setting<NoteBodyStyle>("NoteBodyStyle", NoteBodyStyle.CASCADINGTH);
+		/**
+		 * [Mania]<br>
+		 * <code>ColourColumnLine: < rgba color ></code>
+		 */
 		protected final Setting<Colour> colourColumnLine = new Setting<Colour>("ColourColumnLine", new Colour(255, 255, 255, 255));
+		/**
+		 * [Mania]<br>
+		 * <code>ColourBarline: < rgba color ></code>
+		 */
 		protected final Setting<Colour> colourBarline = new Setting<Colour>("ColourBarline", new Colour(255, 255, 255, 255));
+		/**
+		 * [Mania]<br>
+		 * <code>ColourJudgementLine: < rgb color ></code>
+		 */
 		protected final Setting<Colour> colourJudgementLine = new Setting<Colour>("ColourJudgementLine", new Colour(255, 255, 255));
+		/**
+		 * [Mania]<br>
+		 * <code>ColourKeyWarning: < rgb color ></code>
+		 */
 		protected final Setting<Colour> colourKeyWarning = new Setting<Colour>("ColourKeyWarning", new Colour(0, 0, 0));
+		/**
+		 * [Mania]<br>
+		 * <code>ColourHold: < rgba color ></code>
+		 */
 		protected final Setting<Colour> colourHold = new Setting<Colour>("ColourHold", new Colour(255, 191, 51, 255));
+		/**
+		 * [Mania]<br>
+		 * <code>ColourBreak: < rgb color ></code>
+		 */
 		protected final Setting<Colour> colourBreak = new Setting<Colour>("ColourBreak", new Colour(255, 0, 0));
-		
+		/**
+		 * [Mania]<br>
+		 * <code>StageLeft: < image path ></code>
+		 */
 		protected final Setting<String> stageLeft = new Setting<String>("StageLeft", "mania-stage-left");
+		/**
+		 * [Mania]<br>
+		 * <code>StageRight: < image path ></code>
+		 */
 		protected final Setting<String> stageRight = new Setting<String>("StageRight", "mania-stage-right");
+		/**
+		 * [Mania]<br>
+		 * <code>StageBottom: < image path ></code>
+		 */
 		protected final Setting<String> stageBottom = new Setting<String>("StageBottom", "mania-stage-bottom");
+		/**
+		 * [Mania]<br>
+		 * <code>StageHint: < image path ></code>
+		 */
 		protected final Setting<String> stageHint = new Setting<String>("StageHint", "mania-stage-hint");
+		/**
+		 * [Mania]<br>
+		 * <code>StageLight: < image path ></code>
+		 */
 		protected final Setting<String> stageLight = new Setting<String>("StageLight", "mania-stage-light");
+		/**
+		 * [Mania]<br>
+		 * <code>LightingN: < image path ></code>
+		 */
 		protected final Setting<String> lightingN = new Setting<String>("LightingN", "LightingN");
+		/**
+		 * [Mania]<br>
+		 * <code>LightingL: < image path ></code>
+		 */
 		protected final Setting<String> lightingL = new Setting<String>("LightingL", "LightingL");
+		/**
+		 * [Mania]<br>
+		 * <code>WarningArrow: < image path ></code>
+		 */
 		protected final Setting<String> warningArrow = new Setting<String>("WarningArrow", "mania-warningarrow");
-
+		/**
+		 * [Mania]<br>
+		 * <code>Hit0: < image path ></code>
+		 */
 		protected final Setting<String> hit0 = new Setting<String>("Hit0", "mania-hit0");
+		/**
+		 * [Mania]<br>
+		 * <code>Hit50: < image path ></code>
+		 */
 		protected final Setting<String> hit50 = new Setting<String>("Hit50", "mania-hit50");
+		/**
+		 * [Mania]<br>
+		 * <code>Hit100: < image path ></code>
+		 */
 		protected final Setting<String> hit100 = new Setting<String>("Hit100", "mania-hit100");
+		/**
+		 * [Mania]<br>
+		 * <code>Hit200: < image path ></code>
+		 */
 		protected final Setting<String> hit200 = new Setting<String>("Hit200", "mania-hit200");
+		/**
+		 * [Mania]<br>
+		 * <code>Hit300: < image path ></code>
+		 */
 		protected final Setting<String> hit300 = new Setting<String>("Hit300", "mania-hit300");
+		/**
+		 * [Mania]<br>
+		 * <code>Hit300g: < image path ></code>
+		 */
 		protected final Setting<String> hit300g = new Setting<String>("Hit300g", "mania-hit300g");
-		
+		/**
+		 * Columns specific mania configurations
+		 */
 		protected Column[] columns;
 
+		/**
+		 * Constructs a new ManiaIni for the
+		 * given key count
+		 * @param keys The key count for this
+		 *        Mania configuration
+		 */
 		private ManiaIni(int keys){
 			this.keys = keys;
 			columnSpacing.update(fillArray(keys - 1, 0.0D));
@@ -907,6 +1022,14 @@ public class SkinIni{
 			}
 		}
 
+		/**
+		 * Creates an array of size <code>
+		 * len</code> and fills it with
+		 * <code>value</code>
+		 * @param len The length of the array to create
+		 * @param value The value to fill the array with
+		 * @return The newly created array
+		 */
 		private static final double[] fillArray(int len, double value){
 			double[] array = new double[len];
 			for(int i = 0; i < len; i++){
