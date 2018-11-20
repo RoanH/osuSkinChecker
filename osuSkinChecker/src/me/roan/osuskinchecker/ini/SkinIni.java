@@ -1018,7 +1018,7 @@ public class SkinIni{
 			lightingLWidth.update(fillArray(keys, 0.0D));
 			columns = new Column[keys];
 			for(int i = 0; i < keys; i++){
-				columns[i] = new Column(keys + 1);
+				columns[i] = new Column(i + 1);
 			}
 		}
 
@@ -1369,6 +1369,11 @@ public class SkinIni{
 			private Column(int key){
 				this.key = key;
 				
+				colour = new Setting<Colour>("Colour" + key, new Colour(0, 0, 0, 255));
+				colourLight = new Setting<Colour>("ColourLight" + key, new Colour(255, 255, 255));
+				
+				key--;
+				
 				keyFlipWhenUpsideDown = new Setting<Boolean>("KeyFlipWhenUpsideDown" + key, false, true);
 				keyFlipWhenUpsideDownD = new Setting<Boolean>("KeyFlipWhenUpsideDown" + key + "D", false, true);
 				noteFlipWhenUpsideDown = new Setting<Boolean>("NoteFlipWhenUpsideDown" + key, false, true);
@@ -1377,9 +1382,6 @@ public class SkinIni{
 				noteFlipWhenUpsideDownT = new Setting<Boolean>("NoteFlipWhenUpsideDown" + key + "T", false, true);
 
 				noteBodyStyle = new Setting<NoteBodyStyle>("NoteBodyStyle" + key, false, NoteBodyStyle.CASCADINGTH);
-
-				colour = new Setting<Colour>("Colour" + key, new Colour(0, 0, 0, 255));
-				colourLight = new Setting<Colour>("ColourLight" + key, new Colour(255, 255, 255));
 
 				keyImage = new Setting<String>("KeyImage" + key, false, "");
 				keyImageD = new Setting<String>("KeyImage" + key + "D", false, "");
