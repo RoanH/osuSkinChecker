@@ -857,6 +857,10 @@ public class SkinIni{
 		 * @see ComboBurstStyle
 		 */
 		protected final Setting<ComboBurstStyle> comboBurstStyle = new Setting<ComboBurstStyle>("ComboBurstStyle", ComboBurstStyle.RIGHT);
+		/**
+		 * [Mania]<br>
+		 * <code>SplitStages: < 0:1 ></code>
+		 */
 		protected final Setting<Boolean> splitStages = new Setting<Boolean>("SplitStages", false, true);
 		protected final Setting<Double> stageSeparation = new Setting<Double>("StageSeparation", 40.0D);
 		protected final Setting<Boolean> separateScore = new Setting<Boolean>("SeparationScore", true);
