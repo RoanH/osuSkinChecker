@@ -1271,28 +1271,101 @@ public class SkinIni{
 			return all;
 		}
 		
+		/**
+		 * Class that reflects all the
+		 * mania setting for a specific
+		 * key count and column
+		 * @author Roan
+		 */
 		protected static final class Column{
+			/**
+			 * The key number these column setting are for
+			 */
 			protected final int key;
-
+			/**
+			 * [Mania]<br>
+			 * <code>KeyFlipWhenUpsideDown#: < 0:1 ></code>
+			 */
 			protected final Setting<Boolean> keyFlipWhenUpsideDown;
+			/**
+			 * [Mania]<br>
+			 * <code>KeyFlipWhenUpsideDown#D: < 0:1 ></code>
+			 */
 			protected final Setting<Boolean> keyFlipWhenUpsideDownD;
+			/**
+			 * [Mania]<br>
+			 * <code>NoteFlipWhenUpsideDown#: < 0:1 ></code>
+			 */
 			protected final Setting<Boolean> noteFlipWhenUpsideDown;
+			/**
+			 * [Mania]<br>
+			 * <code>NoteFlipWhenUpsideDown#H: < 0:1 ></code>
+			 */
 			protected final Setting<Boolean> noteFlipWhenUpsideDownH;
+			/**
+			 * [Mania]<br>
+			 * <code>NoteFlipWhenUpsideDown#L: < 0:1 ></code>
+			 */
 			protected final Setting<Boolean> noteFlipWhenUpsideDownL;
+			/**
+			 * [Mania]<br>
+			 * <code>NoteFlipWhenUpsideDown#T: < 0:1 ></code>
+			 */
 			protected final Setting<Boolean> noteFlipWhenUpsideDownT;
-
+			/**
+			 * [Mania]<br>
+			 * <code>NoteBodyStyle#: < style ></code>
+			 * @see NoteBodyStyle
+			 */
 			protected final Setting<NoteBodyStyle> noteBodyStyle;
-
+			/**
+			 * [Mania]<br>
+			 * <code>Colour#: < rgba color ></code>
+			 */
 			protected final Setting<Colour> colour;
+			/**
+			 * [Mania]<br>
+			 * <code>ColourLight#: < rgb color ></code>
+			 */
 			protected final Setting<Colour> colourLight;
-
+			/**
+			 * [Mania]<br>
+			 * <code>KeyImage#: < path ></code>
+			 */
 			protected final Setting<String> keyImage;
+			/**
+			 * [Mania]<br>
+			 * <code>KeyImage#D: < path ></code>
+			 */
 			protected final Setting<String> keyImageD;
+			/**
+			 * [Mania]<br>
+			 * <code>NoteImage#: < path ></code>
+			 */
 			protected final Setting<String> noteImage;
+			/**
+			 * [Mania]<br>
+			 * <code>NoteImage#H: < path ></code>
+			 */
 			protected final Setting<String> noteImageH;
+			/**
+			 * [Mania]<br>
+			 * <code>NoteImage#L: < path ></code>
+			 */
 			protected final Setting<String> noteImageL;
+			/**
+			 * [Mania]<br>
+			 * <code>NoteImage#T: < path ></code>
+			 */
 			protected final Setting<String> noteImageT;
 			
+			/**
+			 * Constructs a new column
+			 * setting object for the
+			 * given key number
+			 * @param key The column
+			 *        these setting are for
+			 */
 			private Column(int key){
 				this.key = key;
 				
