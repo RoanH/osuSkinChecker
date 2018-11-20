@@ -760,10 +760,30 @@ public class SkinIni{
 		}
 	}
 	
+	/**
+	 * Class that reflects all the setting
+	 * in a mania section of the skin.ini
+	 * @author Roan
+	 */
 	protected static final class ManiaIni{
+		/**
+		 * The maximum key count that will be parsed
+		 * by this program
+		 */
 		protected static final int MAX_KEYS = 10;
-		protected int keys;//non negative
+		/**
+		 * The key count this mania configuration is for
+		 */
+		protected final int keys;//non negative
+		/**
+		 * [Mania]<br>
+		 * <code>ColumnStart: < offset ></code>
+		 */
 		protected final Setting<Double> columnStart = new Setting<Double>("ColumnStart", 136.0D);
+		/**
+		 * [Mania]<br>
+		 * <code>ColumnRight: < offset ></code>
+		 */
 		protected final Setting<Double> columnRight = new Setting<Double>("ColumnRight", 19.0D);
 		protected final Setting<double[]> columnSpacing = new Setting<double[]>("ColumnSpacing", null);//n-1 numbers
 		protected final Setting<double[]> columnWidth = new Setting<double[]>("ColumnWidth", null);//n numbers
