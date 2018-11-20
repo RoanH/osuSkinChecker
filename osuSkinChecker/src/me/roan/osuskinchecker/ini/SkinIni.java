@@ -785,19 +785,77 @@ public class SkinIni{
 		 * <code>ColumnRight: < offset ></code>
 		 */
 		protected final Setting<Double> columnRight = new Setting<Double>("ColumnRight", 19.0D);
+		/**
+		 * [Mania]<br>
+		 * <code>ColumnSpacing: < list of {@link #keys} - 1 numbers ></code>
+		 */
 		protected final Setting<double[]> columnSpacing = new Setting<double[]>("ColumnSpacing", null);//n-1 numbers
+		/**
+		 * [Mania]<br>
+		 * <code>ColumnWidth: < list of {@link #keys} numbers ></code>
+		 */
 		protected final Setting<double[]> columnWidth = new Setting<double[]>("ColumnWidth", null);//n numbers
+		/**
+		 * [Mania]<br>
+		 * <code>ColumnLineWidth: < list of {@link #keys} + 1 numbers ></code>
+		 */
 		protected final Setting<double[]> columnLineWidth = new Setting<double[]>("ColumnLineWidth", null);//n+1 numbers
+		/**
+		 * [Mania]<br>
+		 * <code>BarlineHeight: < height ></code>
+		 */
 		protected final Setting<Double> barlineHeight = new Setting<Double>("BarlineHeight", 1.2D);
+		/**
+		 * [Mania]<br>
+		 * <code>LightingNWidth: < list of {@link #keys} numbers ></code>
+		 */
 		protected final Setting<double[]> lightingNWidth = new Setting<double[]>("LightingNWidth", null);//n numbers
+		/**
+		 * [Mania]<br>
+		 * <code>LightingLWidth: < list of {@link #keys} numbers ></code>
+		 */
 		protected final Setting<double[]> lightingLWidth = new Setting<double[]>("LightingLWidth", null);//n numbers
+		/**
+		 * [Mania]<br>
+		 * <code>WidthForNoteHeightScale: < width ></code>
+		 */
 		protected final Setting<Double> widthForNoteHeightScale = new Setting<Double>("WidthForNoteHeightScale", -1.0D);
+		/**
+		 * [Mania]<br>
+		 * <code>HitPosition: < height ></code>
+		 */
 		protected final Setting<Integer> hitPosition = new Setting<Integer>("HitPosition", 402);
+		/**
+		 * [Mania]<br>
+		 * <code>LightPosition: < height ></code>
+		 */
 		protected final Setting<Integer> lightPosition = new Setting<Integer>("LightPosition", 413);
+		/**
+		 * [Mania]<br>
+		 * <code>ScorePosition: < height ></code>
+		 */
 		protected final Setting<Integer> scorePosition = new Setting<Integer>("ScorePosition", 325);
+		/**
+		 * [Mania]<br>
+		 * <code>ComboPosition: < height ></code>
+		 */
 		protected final Setting<Integer> comboPosition = new Setting<Integer>("ComboPosition", 111);
+		/**
+		 * [Mania]<br>
+		 * <code>JudgementLine: < 0:1 ></code>
+		 */
 		protected final Setting<Boolean> judgementLine = new Setting<Boolean>("JudgementLine", true);
+		/**
+		 * [Mania]<br>
+		 * <code>SpecialStyle: < style ></code>
+		 * @see SpecialStyle
+		 */
 		protected final Setting<SpecialStyle> specialStyle = new Setting<SpecialStyle>("SpecialStyle", SpecialStyle.NONE);
+		/**
+		 * [Mania]<br>
+		 * <code>ComboBurstStyle: < style ></code>
+		 * @see ComboBurstStyle
+		 */
 		protected final Setting<ComboBurstStyle> comboBurstStyle = new Setting<ComboBurstStyle>("ComboBurstStyle", ComboBurstStyle.RIGHT);
 		protected final Setting<Boolean> splitStages = new Setting<Boolean>("SplitStages", false, true);
 		protected final Setting<Double> stageSeparation = new Setting<Double>("StageSeparation", 40.0D);
@@ -813,9 +871,7 @@ public class SkinIni{
 		protected final Setting<Colour> colourKeyWarning = new Setting<Colour>("ColourKeyWarning", new Colour(0, 0, 0));
 		protected final Setting<Colour> colourHold = new Setting<Colour>("ColourHold", new Colour(255, 191, 51, 255));
 		protected final Setting<Colour> colourBreak = new Setting<Colour>("ColourBreak", new Colour(255, 0, 0));
-
-		protected Column[] columns;
-
+		
 		protected final Setting<String> stageLeft = new Setting<String>("StageLeft", "mania-stage-left");
 		protected final Setting<String> stageRight = new Setting<String>("StageRight", "mania-stage-right");
 		protected final Setting<String> stageBottom = new Setting<String>("StageBottom", "mania-stage-bottom");
@@ -831,6 +887,8 @@ public class SkinIni{
 		protected final Setting<String> hit200 = new Setting<String>("Hit200", "mania-hit200");
 		protected final Setting<String> hit300 = new Setting<String>("Hit300", "mania-hit300");
 		protected final Setting<String> hit300g = new Setting<String>("Hit300g", "mania-hit300g");
+		
+		protected Column[] columns;
 
 		private ManiaIni(int keys){
 			this.keys = keys;
