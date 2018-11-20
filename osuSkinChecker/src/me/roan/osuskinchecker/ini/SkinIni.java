@@ -1038,6 +1038,20 @@ public class SkinIni{
 			return array;
 		}
 		
+		/**
+		 * Parses the given string and updates the
+		 * setting that it represents. If the given
+		 * line is not a valid setting it will be
+		 * returned as a {@link Comment} setting.<br>
+		 * NOTE: This subroutine only handles
+		 * Mania settings.
+		 * @param line The line to parse
+		 * @return The setting or comment that
+		 *         was updated or created
+		 * @throws IOException When an IOException occurs
+		 * @see Setting
+		 * @see Comment
+		 */
 		private Setting<?> parseMania(String line) throws IOException{
 			if(line.trim().isEmpty() || line.startsWith("//")){
 				return new Comment(line);
@@ -1184,52 +1198,13 @@ public class SkinIni{
 			}
 		}
 
-		protected static final class Column{
-			protected final int key;
-
-			protected final Setting<Boolean> keyFlipWhenUpsideDown;
-			protected final Setting<Boolean> keyFlipWhenUpsideDownD;
-			protected final Setting<Boolean> noteFlipWhenUpsideDown;
-			protected final Setting<Boolean> noteFlipWhenUpsideDownH;
-			protected final Setting<Boolean> noteFlipWhenUpsideDownL;
-			protected final Setting<Boolean> noteFlipWhenUpsideDownT;
-
-			protected final Setting<NoteBodyStyle> noteBodyStyle;
-
-			protected final Setting<Colour> colour;
-			protected final Setting<Colour> colourLight;
-
-			protected final Setting<String> keyImage;
-			protected final Setting<String> keyImageD;
-			protected final Setting<String> noteImage;
-			protected final Setting<String> noteImageH;
-			protected final Setting<String> noteImageL;
-			protected final Setting<String> noteImageT;
-			
-			private Column(int key){
-				this.key = key;
-				
-				keyFlipWhenUpsideDown = new Setting<Boolean>("KeyFlipWhenUpsideDown" + key, false, true);
-				keyFlipWhenUpsideDownD = new Setting<Boolean>("KeyFlipWhenUpsideDown" + key + "D", false, true);
-				noteFlipWhenUpsideDown = new Setting<Boolean>("NoteFlipWhenUpsideDown" + key, false, true);
-				noteFlipWhenUpsideDownH = new Setting<Boolean>("NoteFlipWhenUpsideDown" + key + "H", false, true);
-				noteFlipWhenUpsideDownL = new Setting<Boolean>("NoteFlipWhenUpsideDown" + key + "L", false, true);
-				noteFlipWhenUpsideDownT = new Setting<Boolean>("NoteFlipWhenUpsideDown" + key + "T", false, true);
-
-				noteBodyStyle = new Setting<NoteBodyStyle>("NoteBodyStyle" + key, false, NoteBodyStyle.CASCADINGTH);
-
-				colour = new Setting<Colour>("Colour" + key, new Colour(0, 0, 0, 255));
-				colourLight = new Setting<Colour>("ColourLight" + key, new Colour(255, 255, 255));
-
-				keyImage = new Setting<String>("KeyImage" + key, false, "");
-				keyImageD = new Setting<String>("KeyImage" + key + "D", false, "");
-				noteImage = new Setting<String>("NoteImage" + key, false, "");
-				noteImageH = new Setting<String>("NoteImage" + key + "H", false, "");
-				noteImageL = new Setting<String>("NoteImage" + key + "L", false, "");
-				noteImageT = new Setting<String>("NoteImage" + key + "T", false, "");
-			}
-		}
-
+		/**
+		 * Gets a list of all the setting both
+		 * enabled and disabled that are allowed
+		 * for this Mania configuration.
+		 * @return A list of all the
+		 *         Mania configuration settings
+		 */
 		private List<Setting<?>> getAll(){
 			List<Setting<?>> all = new ArrayList<Setting<?>>();
 			all.add(barlineHeight);
@@ -1294,6 +1269,52 @@ public class SkinIni{
 				all.add(c.noteImageT);
 			}
 			return all;
+		}
+		
+		protected static final class Column{
+			protected final int key;
+
+			protected final Setting<Boolean> keyFlipWhenUpsideDown;
+			protected final Setting<Boolean> keyFlipWhenUpsideDownD;
+			protected final Setting<Boolean> noteFlipWhenUpsideDown;
+			protected final Setting<Boolean> noteFlipWhenUpsideDownH;
+			protected final Setting<Boolean> noteFlipWhenUpsideDownL;
+			protected final Setting<Boolean> noteFlipWhenUpsideDownT;
+
+			protected final Setting<NoteBodyStyle> noteBodyStyle;
+
+			protected final Setting<Colour> colour;
+			protected final Setting<Colour> colourLight;
+
+			protected final Setting<String> keyImage;
+			protected final Setting<String> keyImageD;
+			protected final Setting<String> noteImage;
+			protected final Setting<String> noteImageH;
+			protected final Setting<String> noteImageL;
+			protected final Setting<String> noteImageT;
+			
+			private Column(int key){
+				this.key = key;
+				
+				keyFlipWhenUpsideDown = new Setting<Boolean>("KeyFlipWhenUpsideDown" + key, false, true);
+				keyFlipWhenUpsideDownD = new Setting<Boolean>("KeyFlipWhenUpsideDown" + key + "D", false, true);
+				noteFlipWhenUpsideDown = new Setting<Boolean>("NoteFlipWhenUpsideDown" + key, false, true);
+				noteFlipWhenUpsideDownH = new Setting<Boolean>("NoteFlipWhenUpsideDown" + key + "H", false, true);
+				noteFlipWhenUpsideDownL = new Setting<Boolean>("NoteFlipWhenUpsideDown" + key + "L", false, true);
+				noteFlipWhenUpsideDownT = new Setting<Boolean>("NoteFlipWhenUpsideDown" + key + "T", false, true);
+
+				noteBodyStyle = new Setting<NoteBodyStyle>("NoteBodyStyle" + key, false, NoteBodyStyle.CASCADINGTH);
+
+				colour = new Setting<Colour>("Colour" + key, new Colour(0, 0, 0, 255));
+				colourLight = new Setting<Colour>("ColourLight" + key, new Colour(255, 255, 255));
+
+				keyImage = new Setting<String>("KeyImage" + key, false, "");
+				keyImageD = new Setting<String>("KeyImage" + key + "D", false, "");
+				noteImage = new Setting<String>("NoteImage" + key, false, "");
+				noteImageH = new Setting<String>("NoteImage" + key + "H", false, "");
+				noteImageL = new Setting<String>("NoteImage" + key + "L", false, "");
+				noteImageT = new Setting<String>("NoteImage" + key + "T", false, "");
+			}
 		}
 	}
 	
