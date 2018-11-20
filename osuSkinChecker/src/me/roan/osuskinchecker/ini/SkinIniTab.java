@@ -800,16 +800,36 @@ public class SkinIniTab extends JTabbedPane{
 		}
 	}
 	
+	/**
+	 * Editor for boolean type settings
+	 * @author Roan
+	 */
 	private static final class CheckBoxEditor extends JPanel{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = -4819354663525782395L;
 
+		/**
+		 * Constructs a new CheckBoxEditor for the given setting
+		 * and with the given hint. If toggle is true the
+		 * editor will allow the user to disable or enable the setting
+		 * @param hint The hint for this setting
+		 * @param setting The setting to modify
+		 */
 		private CheckBoxEditor(String hint, Setting<Boolean> setting){
 			this(hint, null, setting);
 		}
 		
+		/**
+		 * Constructs a new CheckBoxEditor for the given setting
+		 * and with the given hint. The given extra value is displayed
+		 * to the right of the check box itself. If toggle is true the
+		 * editor will allow the user to disable or enable the setting
+		 * @param hint The hint for this setting
+		 * @param extra The text to display to the right of the check box
+		 * @param setting The setting to modify
+		 */
 		private CheckBoxEditor(String hint, String extra, Setting<Boolean> setting){
 			super(new SplitLayout());
 			add(new JLabel(" " + setting.getName() + " (" + hint + "): "));
@@ -822,20 +842,46 @@ public class SkinIniTab extends JTabbedPane{
 		}
 	}
 	
+	/**
+	 * Editor for option list based settings
+	 * @author Roan
+	 * @param <T> The type of the list options
+	 */
 	private static final class ComboBoxEditor<T> extends JPanel{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = 8946535893069224896L;
 
+		/**
+		 * Constructs a new ComboBoxEditor for the given setting
+		 * @param setting The setting to modify
+		 * @param values The list of values to allow the user to choose from
+		 */
 		private ComboBoxEditor(Setting<T> setting, T[] values){
 			this(null, setting, values);
 		}
 		
+		/**
+		 * Constructs a new ComboBoxEditor for the given setting
+		 * and with the given hint and value list.
+		 * @param hint The hint for this setting
+		 * @param setting The setting to modify
+		 * @param values The list of values to allow the user to choose from
+		 */
 		private ComboBoxEditor(String hint, Setting<T> setting, T[] values){
 			this(hint, setting, values, false);
 		}
 		
+		/**
+		 * Constructs a new ComboBoxEditor for the given setting
+		 * and with the given hint and value list. If toggle is true the
+		 * editor will allow the user to disable or enable the setting
+		 * @param hint The hint for this setting
+		 * @param setting The setting to modify
+		 * @param values The list of values to allow the user to choose from
+		 * @param toggle Whether or not this editor should have an enabled/disable toggle
+		 */
 		@SuppressWarnings("unchecked")
 		private ComboBoxEditor(String hint, Setting<T> setting, T[] values, boolean toggle){
 			super(new SplitLayout());
@@ -862,12 +908,22 @@ public class SkinIniTab extends JTabbedPane{
 		}
 	}
 	
+	/**
+	 * Editor for rgba color type settings
+	 * @author Roan
+	 */
 	private static final class AlphaColorEditor extends JPanel{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = -5486062097516828519L;
 
+		/**
+		 * Constructs a new AlphaColorEditor for the given setting
+		 * and with the given hint.
+		 * @param hint The hint for this setting
+		 * @param setting The setting to modify
+		 */
 		private AlphaColorEditor(String hint, Setting<Colour> setting){
 			super(new SplitLayout());
 			JPanel settings = new JPanel(new BorderLayout());
@@ -887,16 +943,30 @@ public class SkinIniTab extends JTabbedPane{
 		}
 	}
 	
+	/**
+	 * Editor for text type settings
+	 * @author Roan
+	 */
 	private static final class TextEditor extends JPanel{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = 3436381071498830198L;
-
+		
+		/**
+		 * Constructs a new TextEditor for the given setting.
+		 * @param setting The setting to modify
+		 */
 		private TextEditor(Setting<String> setting){
 			this(null, setting);
 		}
 		
+		/**
+		 * Constructs a new TextEditor for the given setting
+		 * and with the given hint.
+		 * @param hint The hint for this setting
+		 * @param setting The setting to modify
+		 */
 		private TextEditor(String hint, Setting<String> setting){
 			super(new SplitLayout());
 			if(hint == null){
@@ -912,16 +982,34 @@ public class SkinIniTab extends JTabbedPane{
 		}
 	}
 	
+	/**
+	 * Editor for double array type settings
+	 * @author Roan
+	 */
 	private static final class DoubleArrayEditor extends JPanel{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = 2821189742176611077L;
 
+		/**
+		 * Constructs a new DoubleArrayEditor for the given setting
+		 * and with the given hint.
+		 * @param hint The hint for this setting
+		 * @param setting The setting to modify
+		 */
 		private DoubleArrayEditor(String hint, Setting<double[]> setting){
 			this(hint, setting, false);
 		}
 		
+		/**
+		 * Constructs a new DoubleArrayEditor for the given setting
+		 * and with the given hint. If toggle is true the
+		 * editor will allow the user to disable or enable the setting
+		 * @param hint The hint for this setting
+		 * @param setting The setting to modify
+		 * @param toggle Whether or not this editor should have an enabled/disable toggle
+		 */
 		private DoubleArrayEditor(String hint, Setting<double[]> setting, boolean toggle){
 			super(new SplitLayout());
 			JPanel settings = new JPanel(new BorderLayout());
@@ -938,19 +1026,30 @@ public class SkinIniTab extends JTabbedPane{
 		}
 	}
 	
+	/**
+	 * Editor for file path type settings
+	 * @author Roan
+	 */
 	private static final class PathEditor extends JPanel{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = -5682762745185860450L;
-
+		
+		/**
+		 * Constructs a new PathEditor for the given setting
+		 * and with the given hint.
+		 * @param hint The hint for this setting
+		 * @param setting The setting to modify
+		 */
 		private PathEditor(String hint, Setting<String> setting){
 			this(hint, setting, false);
 		}
-		//TODO
+		
 		/**
-		 * 
-		 * @param name The name of this setting
+		 * Constructs a new PathEditor for the given setting
+		 * and with the given hint. If toggle is true the
+		 * editor will allow the user to disable or enable the setting
 		 * @param hint The hint for this setting
 		 * @param setting The setting to modify
 		 * @param toggle Whether or not this editor should have an enabled/disable toggle
