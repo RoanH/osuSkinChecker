@@ -1391,18 +1391,48 @@ public class SkinIni{
 		}
 	}
 	
+	/**
+	 * Enum for all the different SliderStyle options
+	 * @author Roan
+	 * @see Printable
+	 */
 	protected enum SliderStyle implements Printable{
+		/**
+		 * Segments style
+		 */
 		SEGMENTS(1, "Segments"),
+		/**
+		 * Gradients style
+		 */
 		GRADIENT(2, "Gradient");
 		
+		/**
+		 * Display name of this option
+		 */
 		private final String name;
+		/**
+		 * In file ID of this 
+		 */
 		private final int id;
 		
+		/**
+		 * Constructs a new SliderStyle
+		 * with the given id and name
+		 * @param id The id of the setting
+		 * @param name The display name of the setting
+		 */
 		private SliderStyle(int id, String name){
 			this.name = name;
 			this.id = id;
 		}
 		
+		/**
+		 * Parses the given string
+		 * to a SliderStyle
+		 * @param str The input string to parse
+		 * @return The SliderStyle the input was
+		 *         parsed to
+		 */
 		private static final SliderStyle fromString(String str){
 			switch(str){
 			case "1":
@@ -1426,19 +1456,50 @@ public class SkinIni{
 		}
 	}
 	
+	/**
+	 * Enum for all the different SpecialStyle options
+	 * @author Roan
+	 * @see Printable
+	 */
 	protected enum SpecialStyle implements Printable{
+		/**
+		 * No special style
+		 */
 		NONE(0, "None"),
+		/**
+		 * Left lane SP style
+		 */
 		LEFT(1, "Left lane SP - outer lanes DP"),
+		/**
+		 * Right lane SP style
+		 */
 		RIGHT(2, "Right lane SP - outer lanes DP");
 		
+		/**
+		 * The display name for this setting
+		 */
 		private final String name;
+		/**
+		 * The file ID for this setting
+		 */
 		private final int id;
 		
+		/**
+		 * Constructs a new SpecialStyle with
+		 * the given ID and display name
+		 * @param id The ID for this setting
+		 * @param name The display name for this setting
+		 */
 		private SpecialStyle(int id, String name){
 			this.name = name;
 			this.id = id;
 		}
 		
+		/**
+		 * Parses the given string to a SpecialStyle
+		 * @param line The input string to parse
+		 * @return The SpecialStyle parsed from the given input string
+		 */
 		private static final SpecialStyle fromString(String line){
 			switch(line.toLowerCase(Locale.ROOT)){
 			case "0":
@@ -1467,19 +1528,50 @@ public class SkinIni{
 		}
 	}
 	
+	/**
+	 * Enum for all the different ComboBurstStyle options
+	 * @author Roan
+	 * @see Printable
+	 */
 	protected enum ComboBurstStyle implements Printable{
+		/**
+		 * Left setting
+		 */
 		LEFT(0, "Left"),
+		/**
+		 * Right setting
+		 */
 		RIGHT(1, "Right"),
+		/**
+		 * Both setting
+		 */
 		BOTH(2, "Both");
 		
+		/**
+		 * The display name for this setting
+		 */
 		private final String name;
+		/**
+		 * The file ID for this setting
+		 */
 		private final int id;
 		
+		/**
+		 * Constructs a new ComboBurstStyle with
+		 * the given ID and display name
+		 * @param id The ID for this ComboBurstStyle
+		 * @param name The display name for this setting
+		 */
 		private ComboBurstStyle(int id, String name){
 			this.name = name;
 			this.id = id;
 		}
 		
+		/**
+		 * Parses the given input for a ComboBurstStyle
+		 * @param line The input to parse
+		 * @return The ComboBurstStyle parsed from the given input string
+		 */
 		private static final ComboBurstStyle fromString(String line){
 			switch(line.toLowerCase(Locale.ROOT)){
 			case "0":
@@ -1508,19 +1600,50 @@ public class SkinIni{
 		}
 	}
 	
+	/**
+	 * Enum for all the different NoteBodyStyle options
+	 * @author Roan
+	 * @see Printable
+	 */
 	protected enum NoteBodyStyle implements Printable{
+		/**
+		 * Stretched option
+		 */
 		STRETCHED(0, "Stretched to fit the whole length"),
+		/**
+		 * Cascading tail to head option
+		 */
 		CASCADINGTH(1, "Cascading from tail to head"),
+		/**
+		 * Cascading head to tail option
+		 */
 		CASCADINGHT(2, "Cascading from head to tail");
 
+		/**
+		 * The display name for this setting
+		 */
 		private final String name;
+		/**
+		 * The file ID for this setting
+		 */
 		private final int id;
 		
+		/**
+		 * Constructs a new NoteBodyStyle with
+		 * the given ID and display name
+		 * @param id The ID for this NoteBodyStyle
+		 * @param name The display name for this setting
+		 */
 		private NoteBodyStyle(int id, String name){
 			this.name = name;
 			this.id = id;
 		}
 		
+		/**
+		 * Parses the given input for a NoteBodyStyle
+		 * @param line The input to parse
+		 * @return The NoteBodyStyle parsed from the given input string
+		 */
 		private static NoteBodyStyle fromString(String line){
 			switch(line){
 			case "0":
@@ -1545,24 +1668,70 @@ public class SkinIni{
 		}
 	}
 
+	/**
+	 * Enum for all the different NoteBodyStyle options
+	 * @author Roan
+	 * @see Printable
+	 */
 	protected enum Version implements Printable{
+		/**
+		 * Version 1.0
+		 */
 		V1("1", "(Old style)"),
+		/**
+		 * Version 2.0
+		 */
 		V2("2", "(Basic new style)"),
+		/**
+		 * Version 2.1
+		 */
 		V21("2.1", "(Taiko position changes)"),
+		/**
+		 * Version 2.2
+		 */
 		V22("2.2", "(UI changes)"),
+		/**
+		 * Version 2.3
+		 */
 		V23("2.3", "(New Catch catcher style)"),
+		/**
+		 * Version 2.4
+		 */
 		V24("2.4", "(Mania stage scaling reduction)"),
+		/**
+		 * Version 2.5
+		 */
 		V25("2.5", "(Mania upscroll and column improvements)"),
+		/**
+		 * Latest version
+		 */
 		LATEST("latest", "(for personal skins)");
 
+		/**
+		 * The display name for this setting
+		 */
 		public final String name;
+		/**
+		 * The extra information for this setting
+		 */
 		public final String extra;
 
+		/**
+		 * Constructs a new Version with the
+		 * given name and information
+		 * @param name
+		 * @param extra
+		 */
 		private Version(String name, String extra){
 			this.name = name;
 			this.extra = extra;
 		}
-
+		
+		/**
+		 * Parses the given input for a Version
+		 * @param line The input to parse
+		 * @return The Version parsed from the given input string
+		 */
 		private static Version fromString(String str){
 			switch(str){
 			case "1":
@@ -1599,8 +1768,20 @@ public class SkinIni{
 		}
 	}
 	
+	/**
+	 * Interface that indicates that the
+	 * object has a special {@link #print()}
+	 * method that returns a configuration
+	 * style version of the data.
+	 * @author Roan
+	 */
 	protected static abstract interface Printable{
-		
+		/**
+		 * Gets the configuration style formatted
+		 * data for this object
+		 * @return The configuration style formatted
+		 *         data for this object
+		 */
 		public abstract String print();
 	}
 }
