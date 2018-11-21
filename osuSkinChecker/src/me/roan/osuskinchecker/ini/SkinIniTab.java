@@ -661,12 +661,26 @@ public class SkinIniTab extends JTabbedPane{
 		}
 	}
 	
+	/**
+	 * Special case combo box editor for the
+	 * <code>Flip</code>, <code>Don't flip</code>
+	 * boolean field.
+	 * @author Roan
+	 * @see Setting
+	 */
 	private static final class FlipEditor extends JPanel{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = -4635968938790424674L;
 
+		/**
+		 * Constructs a new FlipEditor for the given setting
+		 * and with the given hint.
+		 * @param hint The hint for this setting
+		 * @param setting The setting to modify
+		 * @see Setting
+		 */
 		private FlipEditor(String hint, Setting<Boolean> setting){
 			super(new SplitLayout());
 			JCheckBox enabled = new JCheckBox("", setting.getValue());
@@ -689,16 +703,38 @@ public class SkinIniTab extends JTabbedPane{
 		}
 	}
 	
+	/**
+	 * Editor for rgb color type settings
+	 * @author Roan
+	 * @see Setting
+	 * @see Colour
+	 */
 	private static final class ColorEditor extends JPanel{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = -1171023992187065714L;
 
+		/**
+		 * Constructs a new ColorEditor for the given setting
+		 * and with the given hint.
+		 * @param hint The hint for this setting
+		 * @param setting The setting to modify
+		 * @see Setting
+		 */
 		private ColorEditor(String hint, Setting<Colour> setting){
 			this(hint, setting, false);
 		}
 		
+		/**
+		 * Constructs a new ColorEditor for the given setting
+		 * and with the given hint. If toggle is true the
+		 * editor will allow the user to disable or enable the setting
+		 * @param hint The hint for this setting
+		 * @param setting The setting to modify
+		 * @param toggle Whether or not this editor should have an enabled/disable toggle
+		 * @see Setting
+		 */
 		private ColorEditor(String hint, Setting<Colour> setting, boolean toggle){
 			super(new SplitLayout());
 			JPanel settings = new JPanel(new BorderLayout());
@@ -716,28 +752,78 @@ public class SkinIniTab extends JTabbedPane{
 		}
 	}
 	
+	/**
+	 * Editor for integer type settings
+	 * @author Roan
+	 * @see Setting
+	 */
 	private static final class IntegerSpinnerEditor extends JPanel{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = -8823113464197619825L;
 
+		/**
+		 * Constructs a new IntegerSpinnerEditor for the given setting
+		 * and with the given hint.
+		 * @param hint The hint for this setting
+		 * @param setting The setting to modify
+		 * @see Setting
+		 */
 		private IntegerSpinnerEditor(String hint, Setting<Integer> setting){
 			this(hint, setting, Integer.MIN_VALUE, false);
 		}
 		
+		/**
+		 * Constructs a new IntegerSpinnerEditor for the given setting
+		 * and with the given hint and minimum value.
+		 * @param hint The hint for this setting
+		 * @param setting The setting to modify
+		 * @param min The minimum value for the setting
+		 * @see Setting
+		 */
 		private IntegerSpinnerEditor(String hint, Setting<Integer> setting, int min){
 			this(hint, setting, min, Integer.MAX_VALUE, false);
 		}
 		
+		/**
+		 * Constructs a new IntegerSpinnerEditor for the given setting
+		 * and with the given hint. If toggle is true the
+		 * editor will allow the user to disable or enable the setting
+		 * @param hint The hint for this setting
+		 * @param setting The setting to modify
+		 * @param toggle Whether or not this editor should have an enabled/disable toggle
+		 * @see Setting
+		 */
 		private IntegerSpinnerEditor(String hint, Setting<Integer> setting, boolean toggle){
 			this(hint, setting, Integer.MIN_VALUE, toggle);
 		}
 		
+		/**
+		 * Constructs a new IntegerSpinnerEditor for the given setting
+		 * and with the given hint and minimum value. If toggle is true the
+		 * editor will allow the user to disable or enable the setting
+		 * @param hint The hint for this setting
+		 * @param setting The setting to modify
+		 * @param min The minimum value for the setting
+		 * @param toggle Whether or not this editor should have an enabled/disable toggle
+		 * @see Setting
+		 */
 		private IntegerSpinnerEditor(String hint, Setting<Integer> setting, int min, boolean toggle){
 			this(hint, setting, min, Integer.MAX_VALUE, toggle);
 		}
 
+		/**
+		 * Constructs a new IntegerSpinnerEditor for the given setting
+		 * and with the given hint and constraints. If toggle is true the
+		 * editor will allow the user to disable or enable the setting
+		 * @param hint The hint for this setting
+		 * @param setting The setting to modify
+		 * @param min The minimum value for the setting
+		 * @param max the maximum value for the setting
+		 * @param toggle Whether or not this editor should have an enabled/disable toggle
+		 * @see Setting
+		 */
 		private IntegerSpinnerEditor(String hint, Setting<Integer> setting, int min, int max, boolean toggle){
 			super(new SplitLayout());
 			add(new JLabel(" " + setting.getName() + " (" + hint + "): "));
@@ -758,28 +844,78 @@ public class SkinIniTab extends JTabbedPane{
 		}
 	}
 	
+	/**
+	 * Editor for double type settings
+	 * @author Roan
+	 * @see Setting
+	 */
 	private static final class DoubleSpinnerEditor extends JPanel{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = -1377612278897030930L;
 
+		/**
+		 * Constructs a new DoubleSpinnerEditor for the given setting
+		 * and with the given hint.
+		 * @param hint The hint for this setting
+		 * @param setting The setting to modify
+		 * @see Setting
+		 */
 		private DoubleSpinnerEditor(String hint, Setting<Double> setting){
 			this(hint, setting, -Double.MAX_VALUE, false);
 		}
 		
+		/**
+		 * Constructs a new DoubleSpinnerEditor for the given setting
+		 * and with the given hint and minimum value.
+		 * @param hint The hint for this setting
+		 * @param setting The setting to modify
+		 * @param min The minimum value for the setting
+		 * @see Setting
+		 */
 		private DoubleSpinnerEditor(String hint, Setting<Double> setting, double min){
 			this(hint, setting, min, Double.MAX_VALUE, false);
 		}
 		
+		/**
+		 * Constructs a new DoubleSpinnerEditor for the given setting
+		 * and with the given hint. If toggle is true the
+		 * editor will allow the user to disable or enable the setting
+		 * @param hint The hint for this setting
+		 * @param setting The setting to modify
+		 * @param toggle Whether or not this editor should have an enabled/disable toggle
+		 * @see Setting
+		 */
 		private DoubleSpinnerEditor(String name, String hint, Setting<Double> setting, boolean toggle){
 			this(hint, setting, -Double.MAX_VALUE, Double.MAX_VALUE, toggle);
 		}
 		
+		/**
+		 * Constructs a new DoubleSpinnerEditor for the given setting
+		 * and with the given hint and minimum value. If toggle is true the
+		 * editor will allow the user to disable or enable the setting
+		 * @param hint The hint for this setting
+		 * @param setting The setting to modify
+		 * @param min The minimum value for the setting
+		 * @param toggle Whether or not this editor should have an enabled/disable toggle
+		 * @see Setting
+		 */
 		private DoubleSpinnerEditor(String hint, Setting<Double> setting, double min, boolean toggle){
 			this(hint, setting, min, Double.MAX_VALUE, toggle);
 		}
 		
+		/**
+		 * Constructs a new DoubleSpinnerEditor for the given setting
+		 * and with the given hint and constraints. If toggle is true the
+		 * editor will allow the user to disable or enable the setting
+		 * @param hint The hint for this setting
+		 * @param setting The setting to modify
+		 * @param min The minimum value for the setting
+		 * @param max the maximum value for the setting
+		 * @param toggle Whether or not this editor should have an enabled/disable toggle
+		 * @see Setting
+		 */
 		private DoubleSpinnerEditor(String hint, Setting<Double> setting, double min, double max, boolean toggle){
 			super(new SplitLayout());
 			JPanel settings = new JPanel(new BorderLayout());
@@ -803,6 +939,7 @@ public class SkinIniTab extends JTabbedPane{
 	/**
 	 * Editor for boolean type settings
 	 * @author Roan
+	 * @see Setting
 	 */
 	private static final class CheckBoxEditor extends JPanel{
 		/**
@@ -816,6 +953,7 @@ public class SkinIniTab extends JTabbedPane{
 		 * editor will allow the user to disable or enable the setting
 		 * @param hint The hint for this setting
 		 * @param setting The setting to modify
+		 * @see Setting
 		 */
 		private CheckBoxEditor(String hint, Setting<Boolean> setting){
 			this(hint, null, setting);
@@ -829,6 +967,7 @@ public class SkinIniTab extends JTabbedPane{
 		 * @param hint The hint for this setting
 		 * @param extra The text to display to the right of the check box
 		 * @param setting The setting to modify
+		 * @see Setting
 		 */
 		private CheckBoxEditor(String hint, String extra, Setting<Boolean> setting){
 			super(new SplitLayout());
@@ -846,6 +985,7 @@ public class SkinIniTab extends JTabbedPane{
 	 * Editor for option list based settings
 	 * @author Roan
 	 * @param <T> The type of the list options
+	 * @see Setting
 	 */
 	private static final class ComboBoxEditor<T> extends JPanel{
 		/**
@@ -857,6 +997,7 @@ public class SkinIniTab extends JTabbedPane{
 		 * Constructs a new ComboBoxEditor for the given setting
 		 * @param setting The setting to modify
 		 * @param values The list of values to allow the user to choose from
+		 * @see Setting
 		 */
 		private ComboBoxEditor(Setting<T> setting, T[] values){
 			this(null, setting, values);
@@ -868,6 +1009,7 @@ public class SkinIniTab extends JTabbedPane{
 		 * @param hint The hint for this setting
 		 * @param setting The setting to modify
 		 * @param values The list of values to allow the user to choose from
+		 * @see Setting
 		 */
 		private ComboBoxEditor(String hint, Setting<T> setting, T[] values){
 			this(hint, setting, values, false);
@@ -881,6 +1023,7 @@ public class SkinIniTab extends JTabbedPane{
 		 * @param setting The setting to modify
 		 * @param values The list of values to allow the user to choose from
 		 * @param toggle Whether or not this editor should have an enabled/disable toggle
+		 * @see Setting
 		 */
 		@SuppressWarnings("unchecked")
 		private ComboBoxEditor(String hint, Setting<T> setting, T[] values, boolean toggle){
@@ -911,6 +1054,8 @@ public class SkinIniTab extends JTabbedPane{
 	/**
 	 * Editor for rgba color type settings
 	 * @author Roan
+	 * @see Setting
+	 * @see Colour
 	 */
 	private static final class AlphaColorEditor extends JPanel{
 		/**
@@ -923,6 +1068,7 @@ public class SkinIniTab extends JTabbedPane{
 		 * and with the given hint.
 		 * @param hint The hint for this setting
 		 * @param setting The setting to modify
+		 * @see Setting
 		 */
 		private AlphaColorEditor(String hint, Setting<Colour> setting){
 			super(new SplitLayout());
@@ -946,6 +1092,7 @@ public class SkinIniTab extends JTabbedPane{
 	/**
 	 * Editor for text type settings
 	 * @author Roan
+	 * @see Setting
 	 */
 	private static final class TextEditor extends JPanel{
 		/**
@@ -956,6 +1103,7 @@ public class SkinIniTab extends JTabbedPane{
 		/**
 		 * Constructs a new TextEditor for the given setting.
 		 * @param setting The setting to modify
+		 * @see Setting
 		 */
 		private TextEditor(Setting<String> setting){
 			this(null, setting);
@@ -966,6 +1114,7 @@ public class SkinIniTab extends JTabbedPane{
 		 * and with the given hint.
 		 * @param hint The hint for this setting
 		 * @param setting The setting to modify
+		 * @see Setting
 		 */
 		private TextEditor(String hint, Setting<String> setting){
 			super(new SplitLayout());
@@ -985,6 +1134,7 @@ public class SkinIniTab extends JTabbedPane{
 	/**
 	 * Editor for double array type settings
 	 * @author Roan
+	 * @see Setting
 	 */
 	private static final class DoubleArrayEditor extends JPanel{
 		/**
@@ -997,6 +1147,7 @@ public class SkinIniTab extends JTabbedPane{
 		 * and with the given hint.
 		 * @param hint The hint for this setting
 		 * @param setting The setting to modify
+		 * @see Setting
 		 */
 		private DoubleArrayEditor(String hint, Setting<double[]> setting){
 			this(hint, setting, false);
@@ -1009,6 +1160,7 @@ public class SkinIniTab extends JTabbedPane{
 		 * @param hint The hint for this setting
 		 * @param setting The setting to modify
 		 * @param toggle Whether or not this editor should have an enabled/disable toggle
+		 * @see Setting
 		 */
 		private DoubleArrayEditor(String hint, Setting<double[]> setting, boolean toggle){
 			super(new SplitLayout());
@@ -1029,6 +1181,7 @@ public class SkinIniTab extends JTabbedPane{
 	/**
 	 * Editor for file path type settings
 	 * @author Roan
+     * @see Setting
 	 */
 	private static final class PathEditor extends JPanel{
 		/**
@@ -1041,6 +1194,7 @@ public class SkinIniTab extends JTabbedPane{
 		 * and with the given hint.
 		 * @param hint The hint for this setting
 		 * @param setting The setting to modify
+		 * @see Setting
 		 */
 		private PathEditor(String hint, Setting<String> setting){
 			this(hint, setting, false);
@@ -1053,6 +1207,7 @@ public class SkinIniTab extends JTabbedPane{
 		 * @param hint The hint for this setting
 		 * @param setting The setting to modify
 		 * @param toggle Whether or not this editor should have an enabled/disable toggle
+		 * @see Setting
 		 */
 		private PathEditor(String hint, Setting<String> setting, boolean toggle){
 			super(new SplitLayout());
