@@ -34,12 +34,25 @@ import me.roan.osuskinchecker.ini.SkinIni.SpecialStyle;
 import me.roan.osuskinchecker.ini.SkinIni.Version;
 import me.roan.osuskinchecker.ini.SplitLayout.ScrollPane;
 
+/**
+ * GUI based editor component
+ * for all the settings possible
+ * in a skin configuration
+ * @author Roan
+ * @see SkinIni
+ */
 public class SkinIniTab extends JTabbedPane{
 	/**
 	 * Serial ID
 	 */
 	private static final long serialVersionUID = -5575803475931849256L;
 
+	/**
+	 * Initialises all the tabs in this
+	 * component for the given skin configuration
+	 * @param ini The skin configuration to
+	 *        initialise the editors for
+	 */
 	public void init(SkinIni ini){
 		removeAll();
 		add("General", new GeneralTab(ini));
@@ -49,12 +62,25 @@ public class SkinIniTab extends JTabbedPane{
 		add("osu! Mania", new ManiaTab(ini));
 	}
 
+	/**
+	 * GUI based editor tab for the
+	 * general settings in
+	 * a skin configuration
+	 * @author Roan
+	 * @see SkinIni
+	 */
 	private static final class GeneralTab extends JPanel{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = -4554355388349363415L;
 
+		/**
+		 * Constructs a new GeneralTab for
+		 * the given skin configuration
+		 * @param ini The skin configuration
+		 *        to create an editor for
+		 */
 		private GeneralTab(SkinIni ini){
 			super(new BorderLayout());
 			JPanel content = new ScrollPane();
@@ -118,12 +144,25 @@ public class SkinIniTab extends JTabbedPane{
 		}
 	}
 
+	/**
+	 * GUI based editor tab for the
+	 * osu!standard related settings in
+	 * a skin configuration
+	 * @author Roan
+	 * @see SkinIni
+	 */	
 	private static final class StandardTab extends JPanel{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = -639789728841322306L;
 
+		/**
+		 * Constructs a new StandardTab for
+		 * the given skin configuration
+		 * @param ini The skin configuration
+		 *        to create an editor for
+		 */
 		private StandardTab(SkinIni ini){
 			super(new BorderLayout());
 			JPanel content = new ScrollPane();
@@ -180,12 +219,25 @@ public class SkinIniTab extends JTabbedPane{
 		}
 	}
 
+	/**
+	 * GUI based editor tab for the
+	 * gameplay related settings in
+	 * a skin configuration
+	 * @author Roan
+	 * @see SkinIni
+	 */
 	private static final class GameplayTab extends JPanel{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = -5006508447206574607L;
 
+		/**
+		 * Constructs a new GameplayTab for
+		 * the given skin configuration
+		 * @param ini The skin configuration
+		 *        to create an editor for
+		 */
 		private GameplayTab(SkinIni ini){
 			super(new BorderLayout());
 			JPanel content = new ScrollPane();
@@ -283,12 +335,25 @@ public class SkinIniTab extends JTabbedPane{
 		}
 	}
 
+	/**
+	 * GUI based editor tab for the
+	 * <code>[CatchTheBeat]</code> section in
+	 * a skin configuration
+	 * @author Roan
+	 * @see SkinIni
+	 */
 	private static final class CtbTab extends JPanel{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = -5006508447206574607L;
 
+		/**
+		 * Constructs a new CtbTab for
+		 * the given skin configuration
+		 * @param ini The skin configuration
+		 *        to create an editor for
+		 */
 		private CtbTab(SkinIni ini){
 			super(new BorderLayout());
 			JPanel content = new ScrollPane();
@@ -312,12 +377,32 @@ public class SkinIniTab extends JTabbedPane{
 		}
 	}
 
+	/**
+	 * GUI based editor tab for all the
+	 * <code>[Mania]</code> sections in
+	 * a skin configuration
+	 * @author Roan
+	 * @see SkinIni
+	 * @see ManiaIni
+	 * @see ManiaKeyTab
+	 */
 	private static final class ManiaTab extends JTabbedPane{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = 337165984317388690L;
 
+		/**
+		 * Constructs a new ManiaTab for the
+		 * Mania configurations in the given skin
+		 * configuration. Empty tabs are created
+		 * for key counts that do not yet exist
+		 * in the skin configuration
+		 * @param ini The skin configuration to
+		 *        make an editor for
+		 * @see ManiaIni
+		 * @see SkinIni
+		 */
 		private ManiaTab(SkinIni ini){
 			for(int i = 1; i <= 10; i++){
 				ManiaKeyTab tab = new ManiaKeyTab();
@@ -338,12 +423,23 @@ public class SkinIniTab extends JTabbedPane{
 			}
 		}
 
+		/**
+		 * GUI based editor tab for a {@link ManiaIni}
+		 * @author Roan
+		 * @see ManiaIni
+		 */
 		private static final class ManiaKeyTab extends JPanel{
 			/**
 			 * Serial ID
 			 */
 			private static final long serialVersionUID = -6820855921720231002L;
 
+			/**
+			 * Initialises this ManiaKeyTab with the
+			 * given mania configuration and key count
+			 * @param ini The mania configuration this tab is for
+			 * @param keys The key count this tab is for
+			 */
 			private void init(ManiaIni ini, int keys){
 				removeAll();
 				setLayout(new BorderLayout());

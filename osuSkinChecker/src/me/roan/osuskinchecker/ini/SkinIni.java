@@ -24,6 +24,7 @@ import me.roan.osuskinchecker.SkinChecker;
  * Main class that reflects all the
  * possible skin.ini settings
  * @author Roan
+ * @see ManiaIni
  */
 public class SkinIni{
 	/**
