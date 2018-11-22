@@ -121,11 +121,11 @@ public class SkinIniTab extends JTabbedPane{
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			content.add(new ColorEditor("what colour should the text of active panels be tinted", ini.songSelectActiveText));
+			content.add(new ColorEditor("what colour should the text of selected song carousel panels be tinted", ini.songSelectActiveText));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			content.add(new ColorEditor("what colour should the text of inactive panels be tinted", ini.songSelectInactiveText));
+			content.add(new ColorEditor("what colour should the text of not selected song carousel panels be tinted", ini.songSelectInactiveText));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
