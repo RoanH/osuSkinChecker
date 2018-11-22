@@ -137,7 +137,7 @@ public class SkinIniTab extends JTabbedPane{
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			content.add(new IntegerSpinnerEditor("by how many pixels should the score numbers overlap", ini.scoreOverlap));
+			content.add(new IntegerSpinnerEditor("by how many pixels should the score numbers overlap, positive means closer together", ini.scoreOverlap));
 			content.add(Box.createVerticalStrut(2));
 
 			content.add(new JPanel(new BorderLayout()));
@@ -320,7 +320,7 @@ public class SkinIniTab extends JTabbedPane{
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			content.add(new IntegerSpinnerEditor("by how many pixels should the hitcircle numbers overlap", ini.hitCircleOverlap));
+			content.add(new IntegerSpinnerEditor("by how many pixels should the hitcircle numbers overlap, positive means closer together", ini.hitCircleOverlap));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
@@ -328,7 +328,7 @@ public class SkinIniTab extends JTabbedPane{
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			content.add(new IntegerSpinnerEditor("by how many pixels should the combo numbers overlap", ini.comboOverlap));
+			content.add(new IntegerSpinnerEditor("by how many pixels should the combo numbers overlap, positive means closer together", ini.comboOverlap));
 			content.add(Box.createVerticalStrut(2));
 
 			content.add(new JPanel(new BorderLayout()));
