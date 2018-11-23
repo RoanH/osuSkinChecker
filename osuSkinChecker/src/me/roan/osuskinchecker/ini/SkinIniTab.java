@@ -131,14 +131,6 @@ public class SkinIniTab extends JTabbedPane{
 			content.add(Box.createVerticalStrut(2));
 			content.add(new ColorEditor("what colour should the spectrum bars be coloured in",  ini.menuGlow));
 			content.add(Box.createVerticalStrut(2));
-			content.add(new JSeparator());
-			content.add(Box.createVerticalStrut(2));
-			content.add(new TextEditor("what prefix to use for the score numbers", ini.scorePrefix));
-			content.add(Box.createVerticalStrut(2));
-			content.add(new JSeparator());
-			content.add(Box.createVerticalStrut(2));
-			content.add(new IntegerSpinnerEditor("by how many pixels should the score numbers overlap, positive means closer together", ini.scoreOverlap));
-			content.add(Box.createVerticalStrut(2));
 
 			content.add(new JPanel(new BorderLayout()));
 		}
@@ -330,7 +322,15 @@ public class SkinIniTab extends JTabbedPane{
 			content.add(Box.createVerticalStrut(2));
 			content.add(new IntegerSpinnerEditor("by how many pixels should the combo numbers overlap, positive means closer together", ini.comboOverlap));
 			content.add(Box.createVerticalStrut(2));
-
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			content.add(new TextEditor("what prefix to use for the score numbers", ini.scorePrefix));
+			content.add(Box.createVerticalStrut(2));
+			content.add(new JSeparator());
+			content.add(Box.createVerticalStrut(2));
+			content.add(new IntegerSpinnerEditor("by how many pixels should the score numbers overlap, positive means closer together", ini.scoreOverlap));
+			content.add(Box.createVerticalStrut(2));
+			
 			content.add(new JPanel(new BorderLayout()));
 		}
 	}
