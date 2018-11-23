@@ -824,7 +824,7 @@ public class SkinIni{
 		 * [Mania]<br>
 		 * <code>WidthForNoteHeightScale: < width ></code>
 		 */
-		protected final Setting<Double> widthForNoteHeightScale = new Setting<Double>("WidthForNoteHeightScale", -1.0D);
+		protected final Setting<Double> widthForNoteHeightScale = new Setting<Double>("WidthForNoteHeightScale", false, 1.0D);
 		/**
 		 * [Mania]<br>
 		 * <code>HitPosition: < height ></code>
