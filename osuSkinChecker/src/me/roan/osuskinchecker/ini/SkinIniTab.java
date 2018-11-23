@@ -176,7 +176,7 @@ public class SkinIniTab extends JTabbedPane{
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			content.add(new ComboBoxEditor<SliderStyle>("what filling to use for sliders", ini.sliderStyle, SliderStyle.values()));
+			content.add(new ComboBoxEditor<SliderStyle>("what filling to use for sliders, this an unsupported legacy option do not use it", ini.sliderStyle, SliderStyle.values()));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
