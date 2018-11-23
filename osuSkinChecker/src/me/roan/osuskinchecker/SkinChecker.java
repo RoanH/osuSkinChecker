@@ -390,12 +390,14 @@ public class SkinChecker{
 		controls.setBorder(BorderFactory.createTitledBorder("Filter"));
 		content.add(controlPanel, BorderLayout.PAGE_START);
 
-		JPanel links = new JPanel(new GridLayout(2, 1, 0, 4));
+		JPanel links = new JPanel(new GridLayout(3, 1, 0, 4));
 		links.setBorder(BorderFactory.createTitledBorder("Links"));
-		JLabel forumPost = new JLabel("<html>Forum post: <font color=blue><u><i>https://osu.ppy.sh/community/forums/topics/617168</i></u></font></html>");
-		JLabel sheet = new JLabel("<html>Spreadsheet with information on each file: <font color=blue><u><i>https://docs.google.com/spreadsheets/d/1bhnV-CQRMy3Z0npQd9XSoTdkYxz0ew5e648S00qkJZ8/edit</font></i></u></html>");
+		JLabel forumPost = new JLabel("<html>Forum&nbsp;post:&nbsp;<font color=blue><u><i>https://osu.ppy.sh/community/forums/topics/617168</i></u></font></html>");
+		JLabel sheet = new JLabel("<html>Spreadsheet&nbsp;with&nbsp;information&nbsp;on&nbsp;each&nbsp;file:&nbsp;<font color=blue><u><i>https://docs.google.com/spreadsheets/d/1bhnV-CQRMy3Z0npQd9XSoTdkYxz0ew5e648S00qkJZ8/edit</font></i></u></html>");
+		JLabel wiki = new JLabel("<html>osu!&nbsp;wiki&nbsp;page&nbsp;on&nbsp;the&nbsp;skin.ini:&nbsp;<font color=blue><u><i>https://osu.ppy.sh/help/wiki/Skinning/skin.ini</font></i></u></html>");
 		links.add(forumPost);
 		links.add(sheet);
+		links.add(wiki);
 		forumPost.addMouseListener(new MouseListener(){
 
 			@Override
