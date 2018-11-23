@@ -423,7 +423,7 @@ public class SkinIni{
 			}	
 		}catch(Exception e){
 			e.printStackTrace();
-			throw new IllegalArgumentException("Line: " + line, e);
+			throw new IllegalArgumentException("Error on line: " + line + "\nCause: " + e.getMessage(), e);
 		}
 		
 		outer: for(Entry<String, Setting<?>[]> cat : all.entrySet()){

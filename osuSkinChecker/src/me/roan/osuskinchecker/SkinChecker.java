@@ -519,7 +519,7 @@ public class SkinChecker{
 					errl.add("	" + elem.toString());
 				}
 				Files.write(err, errl, StandardOpenOption.CREATE_NEW);
-				JOptionPane.showMessageDialog(frame, "An error occurred while reading the skin.ini\nThe error was saved to: " + err.toAbsolutePath().toString(), "Skin Checker", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(frame, "An error occurred while reading the skin.ini\nThe error was saved to: " + err.toAbsolutePath().toString() + "\n" + e.getMessage(), "Skin Checker", JOptionPane.ERROR_MESSAGE);
 			}catch(Exception e1){
 				JOptionPane.showMessageDialog(frame, "An internal error occurred!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
 			}
