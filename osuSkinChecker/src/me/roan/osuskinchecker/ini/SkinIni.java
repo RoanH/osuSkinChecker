@@ -711,6 +711,7 @@ public class SkinIni{
 			return parseBoolean(comboBurstRandom, args[1]);
 		case "CustomComboBurstSounds":
 			return customComboBurstSounds.update(args[1].replaceAll(" ", ""));
+		case "HitCircleOverlayAboveNumer":
 		case "HitCircleOverlayAboveNumber":
 			return parseBoolean(hitCircleOverlayAboveNumber, args[1]);
 		case "SliderStyle":
