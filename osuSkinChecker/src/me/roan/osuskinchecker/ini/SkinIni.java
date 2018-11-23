@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.StringJoiner;
 import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
@@ -28,11 +29,10 @@ import me.roan.osuskinchecker.SkinChecker;
  */
 public class SkinIni{
 	/**
-	 * Whether or not default values were used
-	 * while loading the most recently loaded
-	 * skin.ini configration file
+	 * Field for which default values were used
+	 * during the parsing
 	 */
-	private static boolean usedDefault = false;
+	private static List<String> usedDefault = new ArrayList<String>();
 	/**
 	 * All the setting in this skin.ini
 	 */
@@ -276,7 +276,7 @@ public class SkinIni{
 	 */
 	public void readIni(File file) throws IOException{
 		ini = file;
-		usedDefault = false;
+		usedDefault.clear();
 		data = new ArrayList<Section>();
 		Section section = new Section(null);
 		data.add(section);
@@ -422,8 +422,12 @@ public class SkinIni{
 		
 		Setting.singleUpdateMode = false;
 				
-		if(usedDefault){
-			JOptionPane.showMessageDialog(SkinChecker.frame, "Skin.ini fields were found that couldn't be parsed. Default values were used.", "Skin Checker", JOptionPane.WARNING_MESSAGE);
+		if(usedDefault.size() != 0){
+			StringJoiner defaults = new StringJoiner(", ");
+			for(String setting : usedDefault){
+				defaults.add(setting);
+			}
+			JOptionPane.showMessageDialog(SkinChecker.frame, "Skin.ini fields were found that couldn't be parsed. Default values were used for the following fields:\n" + defaults.toString(), "Skin Checker", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 	
@@ -509,10 +513,10 @@ public class SkinIni{
 			if(val >= min && val <= max){
 				return setting.update(val);
 			}else{
-				usedDefault = true;
+				usedDefault.add(setting.getName());
 			}
 		}catch(NumberFormatException e){
-			usedDefault = true;
+			usedDefault.add(setting.getName());
 		}
 		return setting;
 	}
@@ -564,10 +568,10 @@ public class SkinIni{
 			if(val >= min && val <= max){
 				return setting.update(val);
 			}else{
-				usedDefault = true;
+				usedDefault.add(setting.getName());
 			}
 		}catch(NumberFormatException e){
-			usedDefault = true;
+			usedDefault.add(setting.getName());
 		}
 		return setting;
 	}
@@ -585,7 +589,7 @@ public class SkinIni{
 		if(line.equals("1") || line.equals("0")){
 			return setting.update(line.equals("1"));
 		}else{
-			usedDefault = true;
+			usedDefault.add(setting.getName());
 			return setting;
 		}
 	}
@@ -605,7 +609,7 @@ public class SkinIni{
 	private static Setting<double[]> parseList(Setting<double[]> setting, String data, int expected){
 		String[] args = data.split(",");
 		if(args.length != expected){
-			usedDefault = true;
+			usedDefault.add(setting.getName());
 			return setting;
 		}
 		for(int i = 0; i < expected; i++){
@@ -632,10 +636,10 @@ public class SkinIni{
 			}else if(args.length == 4){
 				return setting.update(new Colour(Integer.parseInt(args[0].trim()), Integer.parseInt(args[1].trim()), Integer.parseInt(args[2].trim()), Integer.parseInt(args[3].trim())));
 			}else{
-				usedDefault = true;
+				usedDefault.add(setting.getName());
 			}
 		}catch(NumberFormatException e){
-			usedDefault = true;
+			usedDefault.add(setting.getName());
 		}
 		return setting;
 	}
@@ -1443,7 +1447,7 @@ public class SkinIni{
 			case "2":
 				return GRADIENT;
 			default:
-				usedDefault = true;
+				usedDefault.add("SliderStyle");
 				return GRADIENT;
 			}
 		}
@@ -1515,7 +1519,7 @@ public class SkinIni{
 			case "right":
 				return RIGHT;
 			default:
-				usedDefault = true;
+				usedDefault.add("SpecialStyle");
 				return NONE;
 			}
 		}
@@ -1587,7 +1591,7 @@ public class SkinIni{
 			case "both":
 				return BOTH;
 			default:
-				usedDefault = true;
+				usedDefault.add("ComboBurstStyle");
 				return RIGHT;
 			}
 		}
@@ -1755,7 +1759,7 @@ public class SkinIni{
 			case "latest":
 				return LATEST;
 			default:
-				usedDefault = true;
+				usedDefault.add("Version");
 				return V1;
 			}
 		}
