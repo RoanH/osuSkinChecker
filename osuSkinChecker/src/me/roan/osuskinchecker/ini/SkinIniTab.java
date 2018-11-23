@@ -105,7 +105,19 @@ public class SkinIniTab extends JTabbedPane{
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			content.add(new CheckBoxEditor("should the cursor be centered", "false implies the top left corner", ini.cursorCentre));
+			{
+				JPanel panel = new JPanel(new SplitLayout());
+				JPanel settings = new JPanel(new BorderLayout());
+				panel.add(new JLabel(" " + ini.cursorCentre.getName() + " (should the cursor be centered): "));
+				JComboBox<String> box = new JComboBox<String>(new String[]{"Centered", "Top left corner"});
+				box.setSelectedItem(ini.cursorCentre.getValue() ? 0 : 1);
+				settings.add(box, BorderLayout.CENTER);
+				box.addActionListener((e)->{
+					ini.cursorCentre.update(box.getSelectedIndex() == 0);
+				});
+				panel.add(settings);
+				content.add(panel);
+			}
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
