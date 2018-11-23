@@ -257,12 +257,12 @@ public class SkinIni{
 	 * [CatchTheBeat]<br>
 	 * <code>HyperDashFruit: < rgb color ></code>
 	 */
-	protected final Setting<Colour> hyperDashFruit = new Setting<Colour>("HyperDashFruit", new Colour(0, 0, 0));
+	protected final Setting<Colour> hyperDashFruit = new Setting<Colour>("HyperDashFruit", false, new Colour(0, 0, 0));
 	/**
 	 * [CatchTheBeat]<br>
 	 * <code>HyperDashAfterImage: < rgb color ></code>
 	 */
-	protected final Setting<Colour> hyperDashAfterImage = new Setting<Colour>("HyperDashAfterImage", new Colour(0, 0, 0));
+	protected final Setting<Colour> hyperDashAfterImage = new Setting<Colour>("HyperDashAfterImage", false, new Colour(0, 0, 0));
 	/**
 	 * All mania configurations from 1 to {@link ManiaIni#MAX_KEYS}
 	 */

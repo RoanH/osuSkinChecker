@@ -366,11 +366,11 @@ public class SkinIniTab extends JTabbedPane{
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			content.add(new ColorEditor("what colour is used for the fruits", ini.hyperDashFruit, true));
+			content.add(new ColorEditor("what colour is used for the fruits, if not defined the HyperDash colour is used", ini.hyperDashFruit, true));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			content.add(new ColorEditor("what colour is used for the after images", ini.hyperDashAfterImage, true));
+			content.add(new ColorEditor("what colour is used for the after images, if not defined the HyperDash colour is used", ini.hyperDashAfterImage, true));
 			content.add(Box.createVerticalStrut(2));
 
 			content.add(new JPanel(new BorderLayout()));
