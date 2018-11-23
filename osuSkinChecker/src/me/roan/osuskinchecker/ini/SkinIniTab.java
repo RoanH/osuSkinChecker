@@ -117,7 +117,7 @@ public class SkinIniTab extends JTabbedPane{
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			content.add(new IntegerSpinnerEditor("how many frame per second for most animations", ini.animationFramerate, 1));
+			content.add(new IntegerSpinnerEditor("how many frame per second for most animations", ini.animationFramerate, 1, true));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
