@@ -519,7 +519,7 @@ public class SkinIniTab extends JTabbedPane{
 				content.add(Box.createVerticalStrut(2));
 				{
 					JPanel panel = new JPanel(new SplitLayout());
-					JCheckBox enabled = new JCheckBox("", ini.splitStages != null);
+					JCheckBox enabled = new JCheckBox("", ini.splitStages.isEnabled());
 					JPanel settings = new JPanel(new BorderLayout());
 					settings.add(enabled, BorderLayout.LINE_START);
 					panel.add(new JLabel(" " + ini.splitStages.getName() + " (should the stage be split into 2 stages): "));
@@ -529,7 +529,7 @@ public class SkinIniTab extends JTabbedPane{
 					});
 					box.setSelectedIndex(ini.splitStages.getValue() ? 1 : 0);
 					box.addActionListener((event)->{
-						ini.splitStages.setEnabled(box.getSelectedIndex() == 1);
+						ini.splitStages.update(box.getSelectedIndex() == 1);
 					});
 					settings.add(box, BorderLayout.CENTER);
 					enabled.addActionListener((e)->{
