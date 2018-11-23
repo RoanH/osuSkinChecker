@@ -765,7 +765,7 @@ public class SkinIni{
 	 *         was not a valid setting for this section
 	 * @see Setting
 	 */
-	public Setting<?> parseFonts(String line){
+	private Setting<?> parseFonts(String line){
 		String[] args = line.split(":", 2);
 		args[1] = args[1].trim();
 		switch(args[0]){
@@ -797,7 +797,7 @@ public class SkinIni{
 	 *         was not a valid setting for this section
 	 * @see Setting
 	 */
-	public Setting<?> parseColours(String line){
+	private Setting<?> parseColours(String line){
 		String[] args = line.split(":", 2);
 		args[1] = args[1].trim();
 		switch(args[0]){
