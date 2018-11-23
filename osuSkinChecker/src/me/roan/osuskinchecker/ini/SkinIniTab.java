@@ -204,7 +204,7 @@ public class SkinIniTab extends JTabbedPane{
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			content.add(new ColorEditor("what colour should the slider body be coloured", ini.sliderTrackOverride, true));
+			content.add(new ColorEditor("what colour should the slider body be coloured, decided by the combo colours if not defined", ini.sliderTrackOverride, true));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
