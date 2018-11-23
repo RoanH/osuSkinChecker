@@ -167,6 +167,9 @@ public class SkinIniTab extends JTabbedPane{
 			content.add(new CustomOptionEditor("should the hitcircleoverlay be drawn above the numbers", ini.hitCircleOverlayAboveNumber, "Numbers above the overlay", "Numbers below the overlay"));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
+			
+			
+			content.add(new IntegerSpinnerEditor("how many frames are there for the sliderball animation", ini.sliderBallFrames, 1, true));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new ComboBoxEditor<SliderStyle>("what filling to use for sliders, this an unsupported legacy option do not use it", ini.sliderStyle, SliderStyle.values()));
 			content.add(Box.createVerticalStrut(2));

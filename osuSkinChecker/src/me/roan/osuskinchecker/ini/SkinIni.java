@@ -115,6 +115,11 @@ public class SkinIni{
 	protected final Setting<Boolean> sliderBallFlip = new Setting<Boolean>("SliderBallFlip", false);
 	/**
 	 * [General]<br>
+	 * <code>SliderBallFrames: < positive integer ></code>
+	 */
+	protected final Setting<Integer> sliderBallFrames = new Setting<Integer>("SliderBallFrames", false, 1);
+	/**
+	 * [General]<br>
 	 * <code>AllowSliderBallTint: < 0:1 ></code>
 	 */
 	protected final Setting<Boolean> allowSliderBallTint = new Setting<Boolean>("AllowSliderBallTint", false);
@@ -300,6 +305,7 @@ public class SkinIni{
 			hitCircleOverlayAboveNumber,
 			sliderStyle,
 			sliderBallFlip,
+			sliderBallFrames,
 			allowSliderBallTint,
 			spinnerNoBlink,
 			spinnerFadePlayfield,
@@ -711,6 +717,8 @@ public class SkinIni{
 			return sliderStyle.update(SliderStyle.fromString(args[1]));
 		case "SliderBallFlip":
 			return parseBoolean(sliderBallFlip, args[1]);
+		case "SliderBallFrames":
+			return parseInt(sliderBallFrames, args[1], 1);
 		case "AllowSliderBallTint":
 			return parseBoolean(allowSliderBallTint, args[1]);
 		case "SpinnerNoBlink":
