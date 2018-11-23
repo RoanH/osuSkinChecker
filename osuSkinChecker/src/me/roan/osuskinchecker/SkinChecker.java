@@ -487,13 +487,10 @@ public class SkinChecker{
 				JOptionPane.showMessageDialog(frame, "No skin selected!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			skinFolder = chooser.getSelectedFile();
-		}else{
-			skinFolder = folder;
+			folder = chooser.getSelectedFile();
 		}
-		skin.setText(skinFolder.getName());
 
-		File iniFile = new File(skinFolder, "skin.ini");
+		File iniFile = new File(folder, "skin.ini");
 		
 		if(!iniFile.exists()){
 			int option = JOptionPane.showOptionDialog(frame, "This folder doesn't have a skin.ini file.\nWithout this file this skin won't even be recognized as a skin!", "Skin Checker", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[]{"OK", "Add empty skin.ini"}, null);
@@ -503,6 +500,9 @@ public class SkinChecker{
 				return;
 			}
 		}
+		
+		skinFolder = folder;
+		skin.setText(skinFolder.getName());
 
 		skinIni = new SkinIni();
 		try{
