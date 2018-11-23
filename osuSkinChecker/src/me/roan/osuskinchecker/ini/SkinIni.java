@@ -392,12 +392,31 @@ public class SkinIni{
 							throw new IllegalArgumentException("Mania config does not define a key count!");
 						}
 					}
-				}else if(section.isMania()){
-					Setting<?> setting = maniaIni.parseMania(line);
-					setting.added = true;
-					section.data.add(setting);
 				}else{
-					Setting<?> setting = parse(line);
+					Setting<?> setting;
+					if(line.trim().isEmpty() || line.startsWith("//") || section.name == null){
+						setting = new Comment(line);
+					}else{
+						switch(section.name){
+						case "[Mania]":
+							setting = maniaIni.parseMania(line);
+							break;
+						case "[CatchTheBeat]":
+							setting = parseCtb(line);
+							break;
+						case "[Fonts]":
+							setting = parseFonts(line);
+							break;
+						case "[Colours]":
+							setting = parseColours(line);
+							break;
+						case "[General]":
+							setting = parseGeneral(line);
+							break;
+						default:
+							throw new IllegalArgumentException("The " + section.name + " section is not a valid skin.ini section.");
+						}
+					}
 					setting.added = true;
 					section.data.add(setting);
 				}
@@ -644,27 +663,22 @@ public class SkinIni{
 		return setting;
 	}
 	
-	/**
-	 * Parses the given string and updates the
-	 * setting that it represents. If the given
-	 * line is not a valid setting it will be
-	 * returned as a {@link Comment} setting.<br>
-	 * NOTE: This subroutine does not handle
-	 * Mania settings, 
-	 * see {@link ManiaIni#parseMania(String)}
-	 * for that functionality.
-	 * @param line The line to parse
-	 * @return The setting or comment that
-	 *         was updated or created
-	 * @throws IOException When an IOException occurs
-	 * @see Setting
-	 * @see Comment
-	 * @see ManiaIni
-	 */
-	public Setting<?> parse(String line) throws IOException{
-		if(line.trim().isEmpty() || line.startsWith("//")){
-			return new Comment(line);
+	public Setting<?> parseCtb(String line){
+		String[] args = line.split(":", 2);
+		args[1] = args[1].trim();
+		switch(args[0]){
+		case "HyperDash":
+			return parseColor(hyperDash, args[1]);
+		case "HyperDashFruit":
+			return parseColor(hyperDashFruit, args[1]);
+		case "HyperDashAfterImage":
+			return parseColor(hyperDashAfterImage, args[1]);
+		default:
+			throw new IllegalArgumentException("Illegal command in the [CatchTheBeat] section: " + line);
 		}
+	}
+	
+	public Setting<?> parseGeneral(String line){
 		String[] args = line.split(":", 2);
 		args[1] = args[1].trim();
 		switch(args[0]){
@@ -705,6 +719,37 @@ public class SkinIni{
 			return parseBoolean(spinnerFadePlayfield, args[1]);
 		case "SpinnerFrequencyModulate":
 			return parseBoolean(spinnerFrequencyModulate, args[1]);
+		default:
+			throw new IllegalArgumentException("Illegal command in the [General] section: " + line);
+		}
+	}
+	
+	public Setting<?> parseFonts(String line){
+		String[] args = line.split(":", 2);
+		args[1] = args[1].trim();
+		switch(args[0]){
+		//[Fonts]
+		case "HitCirclePrefix":
+			return hitCirclePrefix.update(args[1]);
+		case "HitCircleOverlap":
+			return parseInt(hitCircleOverlap, args[1]);
+		case "ScorePrefix":
+			return scorePrefix.update(args[1]);
+		case "ScoreOverlap":
+			return parseInt(scoreOverlap, args[1]);
+		case "ComboPrefix":
+			return comboPrefix.update(args[1]);
+		case "ComboOverlap":
+			return parseInt(comboOverlap, args[1]);
+		default:
+			throw new IllegalArgumentException("Illegal command in the [Fonts] section: " + line);
+		}
+	}
+	
+	public Setting<?> parseColours(String line){
+		String[] args = line.split(":", 2);
+		args[1] = args[1].trim();
+		switch(args[0]){
 		//[Colours]
 		case "SongSelectActiveText":
 			return parseColor(songSelectActiveText, args[1]);
@@ -740,28 +785,8 @@ public class SkinIni{
 			return parseColor(combo7, args[1]);
 		case "Combo8":
 			return parseColor(combo8, args[1]);
-		//[Fonts]
-		case "HitCirclePrefix":
-			return hitCirclePrefix.update(args[1]);
-		case "HitCircleOverlap":
-			return parseInt(hitCircleOverlap, args[1]);
-		case "ScorePrefix":
-			return scorePrefix.update(args[1]);
-		case "ScoreOverlap":
-			return parseInt(scoreOverlap, args[1]);
-		case "ComboPrefix":
-			return comboPrefix.update(args[1]);
-		case "ComboOverlap":
-			return parseInt(comboOverlap, args[1]);
-		//[CatchTheBeat]
-		case "HyperDash":
-			return parseColor(hyperDash, args[1]);
-		case "HyperDashFruit":
-			return parseColor(hyperDashFruit, args[1]);
-		case "HyperDashAfterImage":
-			return parseColor(hyperDashAfterImage, args[1]);
 		default:
-			return new Comment(line);
+			throw new IllegalArgumentException("Illegal command in the [Colours] section: " + line);
 		}
 	}
 	
@@ -1045,22 +1070,14 @@ public class SkinIni{
 		
 		/**
 		 * Parses the given string and updates the
-		 * setting that it represents. If the given
-		 * line is not a valid setting it will be
-		 * returned as a {@link Comment} setting.<br>
-		 * NOTE: This subroutine only handles
-		 * Mania settings.
+		 * setting that it represents.
 		 * @param line The line to parse
-		 * @return The setting or comment that
+		 * @return The setting that
 		 *         was updated or created
 		 * @throws IOException When an IOException occurs
 		 * @see Setting
-		 * @see Comment
 		 */
 		private Setting<?> parseMania(String line) throws IOException{
-			if(line.trim().isEmpty() || line.startsWith("//")){
-				return new Comment(line);
-			}
 			String[] args = line.split(":", 2);
 			args[1] = args[1].trim();
 			switch(args[0]){
@@ -1199,7 +1216,7 @@ public class SkinIni{
 						return columns[Integer.parseInt(args[0])].noteImage.update(args[1]);
 					}
 				}
-				return new Comment(line);
+				throw new IllegalArgumentException("Illegal command in the [Mania] section: " + line);
 			}
 		}
 
