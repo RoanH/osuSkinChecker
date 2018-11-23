@@ -886,6 +886,11 @@ public class SkinIni{
 		protected final Setting<Boolean> judgementLine = new Setting<Boolean>("JudgementLine", true);
 		/**
 		 * [Mania]<br>
+		 * <code>LightFramePerSecond: < unknown ></code>
+		 */
+		protected final Setting<Integer> lightFramePerSecond = new Setting<Integer>("LightFramePerSecond", false, 1);
+		/**
+		 * [Mania]<br>
 		 * <code>SpecialStyle: < style ></code>
 		 * @see SpecialStyle
 		 */
@@ -1118,6 +1123,8 @@ public class SkinIni{
 				return parseInt(comboPosition, args[1], 0);
 			case "JudgementLine":
 				return parseBoolean(judgementLine, args[1]);
+			case "LightFramePerSecond":
+				return parseInt(lightFramePerSecond, args[1], 1);
 			case "SpecialStyle":
 				return specialStyle.update(SpecialStyle.fromString(args[1]));
 			case "ComboBurstStyle":
