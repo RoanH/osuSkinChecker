@@ -669,7 +669,18 @@ public class SkinIni{
 		return setting;
 	}
 	
-	public Setting<?> parseCtb(String line){
+	/**
+	 * Parses the given string and updates the setting
+	 * that it represents in the [CatchTheBeat] section.
+	 * @param line The line to parse
+	 * @return The setting that
+	 *         was updated or created
+	 * @throws IOException When an IOException occurs
+	 * @throws IllegalArgumentException If the given line
+	 *         was not a valid setting for this section
+	 * @see Setting
+	 */
+	private Setting<?> parseCtb(String line){
 		String[] args = line.split(":", 2);
 		args[1] = args[1].trim();
 		switch(args[0]){
@@ -684,11 +695,21 @@ public class SkinIni{
 		}
 	}
 	
-	public Setting<?> parseGeneral(String line){
+	/**
+	 * Parses the given string and updates the setting
+	 * that it represents in the [General] section.
+	 * @param line The line to parse
+	 * @return The setting that
+	 *         was updated or created
+	 * @throws IOException When an IOException occurs
+	 * @throws IllegalArgumentException If the given line
+	 *         was not a valid setting for this section
+	 * @see Setting
+	 */
+	private Setting<?> parseGeneral(String line){
 		String[] args = line.split(":", 2);
 		args[1] = args[1].trim();
 		switch(args[0]){
-		//[General]
 		case "Name":
 			return name.update(args[1]);
 		case "Author":
@@ -733,11 +754,21 @@ public class SkinIni{
 		}
 	}
 	
+	/**
+	 * Parses the given string and updates the setting
+	 * that it represents in the [Fonts] section.
+	 * @param line The line to parse
+	 * @return The setting that
+	 *         was updated or created
+	 * @throws IOException When an IOException occurs
+	 * @throws IllegalArgumentException If the given line
+	 *         was not a valid setting for this section
+	 * @see Setting
+	 */
 	public Setting<?> parseFonts(String line){
 		String[] args = line.split(":", 2);
 		args[1] = args[1].trim();
 		switch(args[0]){
-		//[Fonts]
 		case "HitCirclePrefix":
 			return hitCirclePrefix.update(args[1]);
 		case "HitCircleOverlap":
@@ -755,11 +786,21 @@ public class SkinIni{
 		}
 	}
 	
+	/**
+	 * Parses the given string and updates the setting
+	 * that it represents in the [Colours] section.
+	 * @param line The line to parse
+	 * @return The setting that
+	 *         was updated or created
+	 * @throws IOException When an IOException occurs
+	 * @throws IllegalArgumentException If the given line
+	 *         was not a valid setting for this section
+	 * @see Setting
+	 */
 	public Setting<?> parseColours(String line){
 		String[] args = line.split(":", 2);
 		args[1] = args[1].trim();
 		switch(args[0]){
-		//[Colours]
 		case "SongSelectActiveText":
 			return parseColor(songSelectActiveText, args[1]);
 		case "SongSelectInactiveText":
