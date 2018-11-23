@@ -249,7 +249,7 @@ public class SkinIniTab extends JTabbedPane{
 			content.add(Box.createVerticalStrut(2));
 			{
 				JPanel panel = new JPanel(new SplitLayout());
-				JCheckBox enabled = new JCheckBox("", ini.customComboBurstSounds != null);
+				JCheckBox enabled = new JCheckBox("", ini.customComboBurstSounds.isEnabled());
 				panel.add(new JLabel(" " + ini.customComboBurstSounds.getName() + " (on which combo marks should comboburst sounds play): "));
 				JPanel list = new JPanel(new BorderLayout());
 				list.add(enabled, BorderLayout.LINE_START);
