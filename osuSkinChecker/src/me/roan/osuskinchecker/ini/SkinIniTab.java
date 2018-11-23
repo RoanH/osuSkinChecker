@@ -105,19 +105,7 @@ public class SkinIniTab extends JTabbedPane{
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			{
-				JPanel panel = new JPanel(new SplitLayout());
-				JPanel settings = new JPanel(new BorderLayout());
-				panel.add(new JLabel(" " + ini.cursorCentre.getName() + " (should the cursor be centered): "));
-				JComboBox<String> box = new JComboBox<String>(new String[]{"Centered", "Top left corner"});
-				box.setSelectedItem(ini.cursorCentre.getValue() ? 0 : 1);
-				settings.add(box, BorderLayout.CENTER);
-				box.addActionListener((e)->{
-					ini.cursorCentre.update(box.getSelectedIndex() == 0);
-				});
-				panel.add(settings);
-				content.add(panel);
-			}
+			content.add(new CustomOptionEditor("should the cursor be centered", ini.cursorCentre, "Centered", "Top left corner"));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
@@ -176,7 +164,7 @@ public class SkinIniTab extends JTabbedPane{
 
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			content.add(new CheckBoxEditor("should the hitcircleoverlay be drawn above the numbers", "false implies that they will be drawn below the overlay", ini.hitCircleOverlayAboveNumber));
+			content.add(new CustomOptionEditor("should the hitcircleoverlay be drawn above the numbers", ini.hitCircleOverlayAboveNumber, "Numbers above the overlay", "Numbers below the overlay"));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
@@ -255,7 +243,7 @@ public class SkinIniTab extends JTabbedPane{
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			content.add(new CheckBoxEditor("should combursts be shown in a random order", "false implies that they will appear in order", ini.comboBurstRandom));
+			content.add(new CustomOptionEditor("should combursts be shown in a random order", ini.comboBurstRandom, "Random order", "In order"));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
@@ -949,6 +937,40 @@ public class SkinIniTab extends JTabbedPane{
 				});
 			}
 			add(p);
+		}
+	}
+	
+	/**
+	 * Editor for boolean type settings
+	 * @author Roan
+	 * @see Setting
+	 */
+	private static final class CustomOptionEditor extends JPanel{
+		/**
+		 * Serial ID
+		 */
+		private static final long serialVersionUID = -5395132365466117123L;
+
+		/**
+		 * Constructs a new CustomOptionEditor for the given setting
+		 * and with the given hint and options.
+		 * @param hint The hint for this setting
+		 * @param setting The setting to modify
+		 * @param trueOption The first option that write true to the given setting
+		 * @param falseOption The second option that writes false to the given setting
+		 * @see Setting
+		 */
+		private CustomOptionEditor(String hint, Setting<Boolean> setting, String trueOption, String falseOption){
+			super(new SplitLayout());
+			JPanel settings = new JPanel(new BorderLayout());
+			add(new JLabel(" " + setting.getName() + " (" + hint + "): "));
+			JComboBox<String> box = new JComboBox<String>(new String[]{trueOption, falseOption});
+			box.setSelectedItem(setting.getValue() ? 0 : 1);
+			settings.add(box, BorderLayout.CENTER);
+			box.addActionListener((e)->{
+				setting.update(box.getSelectedIndex() == 0);
+			});
+			add(settings);
 		}
 	}
 	
