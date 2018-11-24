@@ -45,10 +45,10 @@ public final class ImageInfo implements Info{
 	 * integer <code>>= 0</code>.
 	 */
 	protected boolean variableWithoutDash = false;
-	 /**
-	  * Whether or not the image could be located in a 
-	  * different folder relative to the base folder
-	  */
+	/**
+	 * Whether or not the image could be located in a 
+	 * different folder relative to the base folder
+	 */
 	private boolean customPath = false;
 	/**
 	 * Whether or not the image file itself could
@@ -114,7 +114,7 @@ public final class ImageInfo implements Info{
 	 * of frames in the animation
 	 */
 	protected int frames;
-	
+
 	/**
 	 * Creates an information object
 	 * for a file as specified by its
@@ -163,7 +163,7 @@ public final class ImageInfo implements Info{
 	public String toString(){
 		return name;
 	}
-	
+
 	@Override
 	public void reset(){
 		hasSD = null;
@@ -174,7 +174,7 @@ public final class ImageInfo implements Info{
 		hasSDVersion();
 		hasHDVersion();
 	}
-	
+
 	@Override
 	public boolean show(){
 		if(SkinChecker.showAll){
@@ -189,7 +189,7 @@ public final class ImageInfo implements Info{
 			}
 		}
 	}
-	
+
 	/**
 	 * Checks whether or not a SD
 	 * version exists of the image
@@ -222,7 +222,7 @@ public final class ImageInfo implements Info{
 			return hasSD ? "Yes" : "No";
 		}
 	}
-	
+
 	/**
 	 * Checks whether or not a HD
 	 * version exists of the image
@@ -257,7 +257,7 @@ public final class ImageInfo implements Info{
 			return hasHD ? "Yes" : "No";
 		}
 	}
-	
+
 	/**
 	 * Check to see if a specific image exists 
 	 * given a specific set of conditions
@@ -296,7 +296,7 @@ public final class ImageInfo implements Info{
 		}else{
 			extension = "." + ext;
 		}
-		
+
 		if(spinner != null){
 			if(!new File(folder, "spinner-background.png").exists()){
 				if(spinner){
@@ -311,7 +311,7 @@ public final class ImageInfo implements Info{
 		if(ignore){
 			return null;
 		}
-		
+
 		if(variableDash && (match = new File(folder, name + "-0" + extension)).exists()){
 			animated = true;
 			SkinChecker.allFiles.remove(match);
@@ -343,7 +343,7 @@ public final class ImageInfo implements Info{
 		}else if(orig.exists()){
 			return orig;
 		}
-			
+
 		if((custom || customPrefix) && this.customID != -1){
 			if(customPrefix){
 				File file = checkForFile(SkinChecker.customPathing.get(this.customID), name, hd, ext, variableDash, variableNoDash, false, false);
@@ -358,7 +358,7 @@ public final class ImageInfo implements Info{
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Check if an image is empty.
 	 * An Image is considered empty if it's
@@ -368,7 +368,7 @@ public final class ImageInfo implements Info{
 	 * @return Whether or not the image is empty
 	 */
 	private static boolean isEmptyImage(File img){
-		try {
+		try{
 			Iterator<ImageReader> readers = ImageIO.getImageReadersBySuffix(img.getName().substring(img.getName().lastIndexOf('.') + 1));
 			while(readers.hasNext()){
 				ImageReader reader = readers.next();
@@ -376,7 +376,7 @@ public final class ImageInfo implements Info{
 				return reader.getWidth(0) == 1 && reader.getHeight(0) == 1;
 			}
 			return false;
-		} catch (IOException e) {
+		}catch(IOException e){
 			return false;
 		}
 	}

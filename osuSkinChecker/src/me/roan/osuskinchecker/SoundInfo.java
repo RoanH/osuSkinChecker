@@ -37,7 +37,7 @@ public final class SoundInfo implements Info{
 	 * by this information object
 	 */
 	protected String name;
-	
+
 	/**
 	 * Creates an information object
 	 * for a file as specified by its
@@ -66,13 +66,13 @@ public final class SoundInfo implements Info{
 	public String toString(){
 		return name;
 	}
-	
+
 	@Override
 	public void reset(){
 		exists = null;
 		exists();
 	}
-	
+
 	@Override
 	public boolean show(){
 		if(SkinChecker.showAll){
@@ -81,7 +81,7 @@ public final class SoundInfo implements Info{
 			return !exists();
 		}
 	}
-	
+
 	/**
 	 * Checks whether or not a sound
 	 * file exists that matches
@@ -102,7 +102,7 @@ public final class SoundInfo implements Info{
 		}
 		return exists;
 	}
-	
+
 	/**
 	 * Check to see if a file exists that
 	 * matches the given conditions.
