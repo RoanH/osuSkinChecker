@@ -1340,19 +1340,48 @@ public class SkinIniTab extends JTabbedPane{
 		}
 	}
 	
-	//TODO
+	/**
+	 * Defines a value depended list of setting
+	 * where a setting may only be enabled if
+	 * all of its predecessor also get/are enabled
+	 * @author Roan
+	 * @param <T> The type of the setting objects
+	 */
 	private static final class ToggleNode<T>{
-		
+		/**
+		 * The previous node in this linked list
+		 */
 		private ToggleNode<T> prev;
+		/**
+		 * The next node in this linked list
+		 */
 		private ToggleNode<T> next;
+		/**
+		 * The GUI reflection of the enabled
+		 * state of the setting
+		 */
 		private JCheckBox toggle;
+		/**
+		 * The setting that gets enabled/disabled
+		 */
 		private Setting<T> setting;
 		
+		/**
+		 * Constructs a new ToggleNode
+		 * with the given check box and setting
+		 * @param toggle The visual enabled check box
+		 * @param setting The actual setting that gets toggled
+		 */
 		private ToggleNode(JCheckBox toggle, Setting<T> setting){
 			this.toggle = toggle;
 			this.setting = setting;
 		}
-				
+		
+		/**
+		 * Adds a new node to the end
+		 * of this linked list of nodes
+		 * @param node The node to add
+		 */
 		private void add(ToggleNode<T> node){
 			ToggleNode<T> last = this;
 			while(last.next != null){
@@ -1362,12 +1391,18 @@ public class SkinIniTab extends JTabbedPane{
 			node.prev = last;
 		}
 		
+		/**
+		 * Toggles this node with the new value.
+		 * If the new value is true all nodes
+		 * before this node also get updated to
+		 * true, if the new value is false all
+		 * nodes after this also get updated to false.
+		 * @param newValue The new value
+		 */
 		private void toggle(boolean newValue){
-			System.out.println("Toggle to: " + newValue);
 			if(newValue){
 				ToggleNode<T> prev = this;
 				do{
-					System.out.println("Update:  " + prev);
 					prev.toggle.setSelected(true);
 					prev.setting.setEnabled(true);
 					prev = prev.prev;
