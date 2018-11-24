@@ -790,7 +790,7 @@ public class SkinIniTab extends JTabbedPane{
 		 */
 		private FlipEditor(String hint, Setting<Boolean> setting){
 			super(new SplitLayout());
-			JCheckBox enabled = new JCheckBox("", setting.getValue());
+			JCheckBox enabled = new JCheckBox("", setting.isEnabled());
 			JPanel settings = new JPanel(new BorderLayout());
 			settings.add(enabled, BorderLayout.LINE_START);
 			add(new JLabel(" " + setting.getName() + " (" + hint + "): "));
@@ -802,9 +802,11 @@ public class SkinIniTab extends JTabbedPane{
 			box.addActionListener((event)->{
 				setting.update(box.getSelectedIndex() == 1);
 			});
+			box.setEnabled(setting.isEnabled());
 			settings.add(box, BorderLayout.CENTER);
 			enabled.addActionListener((e)->{
 				setting.setEnabled(enabled.isSelected());
+				box.setEnabled(enabled.isSelected());
 			});
 			add(settings);
 		}
@@ -873,9 +875,11 @@ public class SkinIniTab extends JTabbedPane{
 				if(parent != null){
 					parent.add(node);
 				}
+				selector.setEnabled(setting.isEnabled());
 				settings.add(enabled, BorderLayout.LINE_START);
 				enabled.addActionListener((e)->{
 					node.toggle(enabled.isSelected());
+					selector.setEnabled(enabled.isSelected());
 				});
 			}
 			add(settings);
@@ -965,9 +969,11 @@ public class SkinIniTab extends JTabbedPane{
 			});
 			if(toggle){
 				JCheckBox enabled = new JCheckBox("", setting.isEnabled());
+				spinner.setEnabled(setting.isEnabled());
 				p.add(enabled, BorderLayout.LINE_START);
 				enabled.addActionListener((e)->{
 					setting.setEnabled(enabled.isSelected());
+					spinner.setEnabled(enabled.isSelected());
 				});
 			}
 			add(p);
@@ -1092,8 +1098,10 @@ public class SkinIniTab extends JTabbedPane{
 			if(toggle){
 				JCheckBox enabled = new JCheckBox("", setting.isEnabled());
 				settings.add(enabled, BorderLayout.LINE_START);
+				spinner.setEnabled(setting.isEnabled());
 				enabled.addActionListener((e)->{
 					setting.setEnabled(enabled.isSelected());
+					spinner.setEnabled(enabled.isSelected());
 				});
 			}
 			add(settings);
@@ -1206,8 +1214,10 @@ public class SkinIniTab extends JTabbedPane{
 			});
 			if(toggle){
 				JCheckBox enabled = new JCheckBox("", setting.isEnabled());
+				box.setEnabled(setting.isEnabled());
 				enabled.addActionListener((event)->{
 					setting.setEnabled(enabled.isSelected());
+					box.setEnabled(enabled.isSelected());
 				});
 				settings.add(enabled, BorderLayout.LINE_START);
 			}
@@ -1314,30 +1324,11 @@ public class SkinIniTab extends JTabbedPane{
 		 * @see Setting
 		 */
 		private DoubleArrayEditor(String hint, Setting<double[]> setting){
-			this(hint, setting, false);
-		}
-		
-		/**
-		 * Constructs a new DoubleArrayEditor for the given setting
-		 * and with the given hint. If toggle is true the
-		 * editor will allow the user to disable or enable the setting
-		 * @param hint The hint for this setting
-		 * @param setting The setting to modify
-		 * @param toggle Whether or not this editor should have an enabled/disable toggle
-		 * @see Setting
-		 */
-		private DoubleArrayEditor(String hint, Setting<double[]> setting, boolean toggle){
 			super(new SplitLayout());
 			JPanel settings = new JPanel(new BorderLayout());
 			add(new JLabel(" " + setting.getName() + " (" + hint + "): "));
-			settings.add(new DoubleArray(setting.getValue()));
-			if(toggle){
-				JCheckBox enabled = new JCheckBox("", setting.isEnabled());
-				settings.add(enabled, BorderLayout.LINE_START);
-				enabled.addActionListener((e)->{
-					setting.setEnabled(enabled.isSelected());
-				});
-			}
+			DoubleArray editor = new DoubleArray(setting.getValue());
+			settings.add(editor);
 			add(settings);
 		}
 	}
@@ -1463,8 +1454,10 @@ public class SkinIniTab extends JTabbedPane{
 			if(toggle){
 				JCheckBox enabled = new JCheckBox("", setting.isEnabled());
 				settings.add(enabled, BorderLayout.LINE_START);
+				field.setEnabled(setting.isEnabled());
 				enabled.addActionListener((e)->{
 					setting.setEnabled(enabled.isSelected());
+					field.setEnabled(enabled.isSelected());
 				});
 			}
 			add(settings);
@@ -1524,10 +1517,12 @@ public class SkinIniTab extends JTabbedPane{
 
 		@Override
 		public void mouseClicked(MouseEvent arg0){
-			Color c = JColorChooser.showDialog(this, "Colour Chooser", color.getValue().toColor());
-			if(c != null){
-				this.setBackground(c);
-				color.update(new Colour(c));
+			if(this.isEnabled()){
+				Color c = JColorChooser.showDialog(this, "Colour Chooser", color.getValue().toColor());
+				if(c != null){
+					this.setBackground(c);
+					color.update(new Colour(c));
+				}
 			}
 		}
 
