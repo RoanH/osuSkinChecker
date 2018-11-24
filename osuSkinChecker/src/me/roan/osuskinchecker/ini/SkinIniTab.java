@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.regex.Pattern;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -21,6 +22,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.border.BevelBorder;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
@@ -1516,6 +1518,7 @@ public class SkinIniTab extends JTabbedPane{
 		private ColorSelector(Setting<Colour> setting){
 			color = setting;
 			this.setBackground(color.getValue().toColor());
+			this.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 			this.addMouseListener(this);
 		}
 
