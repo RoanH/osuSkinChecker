@@ -347,6 +347,7 @@ public class SkinIni{
 		String line = null;
 		try(BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))){
 			while((line = reader.readLine()) != null){
+				line = line.replaceFirst("^[\t ]*", "");
 				if(header.matcher(line.trim()).matches()){
 					int index = section.data.size() - 1;
 					Setting<?> last = index < 0 ? null : section.data.get(index);
