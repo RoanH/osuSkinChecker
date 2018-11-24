@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -871,7 +872,7 @@ public class SkinIniTab extends JTabbedPane{
 			settings.add(selector, BorderLayout.CENTER);
 			if(toggle){
 				JCheckBox enabled = new JCheckBox("", setting.isEnabled());
-				node = new ToggleNode<Colour>(enabled, setting);
+				node = new ToggleNode<Colour>(enabled, selector, setting);
 				if(parent != null){
 					parent.add(node);
 				}
@@ -879,7 +880,6 @@ public class SkinIniTab extends JTabbedPane{
 				settings.add(enabled, BorderLayout.LINE_START);
 				enabled.addActionListener((e)->{
 					node.toggle(enabled.isSelected());
-					selector.setEnabled(enabled.isSelected());
 				});
 			}
 			add(settings);
@@ -1358,16 +1358,22 @@ public class SkinIniTab extends JTabbedPane{
 		 * The setting that gets enabled/disabled
 		 */
 		private Setting<T> setting;
+		/**
+		 * The editor for the setting
+		 */
+		private JComponent editor;
 		
 		/**
 		 * Constructs a new ToggleNode
 		 * with the given check box and setting
 		 * @param toggle The visual enabled check box
+		 * @param editor The editor for the setting 
 		 * @param setting The actual setting that gets toggled
 		 */
-		private ToggleNode(JCheckBox toggle, Setting<T> setting){
+		private ToggleNode(JCheckBox toggle, JComponent editor, Setting<T> setting){
 			this.toggle = toggle;
 			this.setting = setting;
+			this.editor = editor;
 		}
 		
 		/**
@@ -1398,6 +1404,7 @@ public class SkinIniTab extends JTabbedPane{
 				do{
 					prev.toggle.setSelected(true);
 					prev.setting.setEnabled(true);
+					prev.editor.setEnabled(true);
 					prev = prev.prev;
 				}while(prev != null);
 			}else{
@@ -1405,6 +1412,7 @@ public class SkinIniTab extends JTabbedPane{
 				do{
 					next.toggle.setSelected(false);
 					next.setting.setEnabled(false);
+					next.editor.setEnabled(false);
 					next = next.next;
 				}while(next != null);
 			}
