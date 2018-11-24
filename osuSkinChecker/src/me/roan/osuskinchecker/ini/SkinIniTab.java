@@ -284,31 +284,32 @@ public class SkinIniTab extends JTabbedPane{
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			content.add(new ColorEditor("what colour is used for the first combo", ini.combo2, true));
+			ColorEditor c1 = new ColorEditor("what colour is used for the first combo", ini.combo2, true);
+			content.add(c1);
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			content.add(new ColorEditor("what colour is used for the second combo", ini.combo3, true));
+			content.add(new ColorEditor("what colour is used for the second combo", ini.combo3, true, c1.node));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			content.add(new ColorEditor("what colour is used for the third combo", ini.combo4, true));
+			content.add(new ColorEditor("what colour is used for the third combo", ini.combo4, true, c1.node));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			content.add(new ColorEditor("what colour is used for the fourth combo", ini.combo5, true));
+			content.add(new ColorEditor("what colour is used for the fourth combo", ini.combo5, true, c1.node));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			content.add(new ColorEditor("what colour is used for the fifth combo", ini.combo6, true));
+			content.add(new ColorEditor("what colour is used for the fifth combo", ini.combo6, true, c1.node));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			content.add(new ColorEditor("what colour is used for the sixth combo", ini.combo7, true));
+			content.add(new ColorEditor("what colour is used for the sixth combo", ini.combo7, true, c1.node));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
-			content.add(new ColorEditor("what colour is used for the seventh combo", ini.combo8, true));
+			content.add(new ColorEditor("what colour is used for the seventh combo", ini.combo8, true, c1.node));
 			content.add(Box.createVerticalStrut(2));
 			content.add(new JSeparator());
 			content.add(Box.createVerticalStrut(2));
@@ -818,6 +819,10 @@ public class SkinIniTab extends JTabbedPane{
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = -1171023992187065714L;
+		/**
+		 * The toggle node for this editor
+		 */
+		private ToggleNode<Colour> node;
 
 		/**
 		 * Constructs a new ColorEditor for the given setting
@@ -840,6 +845,21 @@ public class SkinIniTab extends JTabbedPane{
 		 * @see Setting
 		 */
 		private ColorEditor(String hint, Setting<Colour> setting, boolean toggle){
+			this(hint, setting, toggle, null);
+		}
+		
+		/**
+		 * Constructs a new ColorEditor for the given setting
+		 * and with the given hint. If toggle is true the
+		 * editor will allow the user to disable or enable the setting
+		 * @param hint The hint for this setting
+		 * @param setting The setting to modify
+		 * @param toggle Whether or not this editor should have an enabled/disable toggle
+		 * @param parent The toggle node chain to register to
+		 * @see Setting
+		 * @see ToggleNode
+		 */
+		private ColorEditor(String hint, Setting<Colour> setting, boolean toggle, ToggleNode<Colour> parent){
 			super(new SplitLayout());
 			JPanel settings = new JPanel(new BorderLayout());
 			add(new JLabel(" " + setting.getName() + " (" + hint + "): "));
@@ -847,9 +867,13 @@ public class SkinIniTab extends JTabbedPane{
 			settings.add(selector, BorderLayout.CENTER);
 			if(toggle){
 				JCheckBox enabled = new JCheckBox("", setting.isEnabled());
+				node = new ToggleNode<Colour>(enabled, setting);
+				if(parent != null){
+					parent.add(node);
+				}
 				settings.add(enabled, BorderLayout.LINE_START);
 				enabled.addActionListener((e)->{
-					setting.setEnabled(enabled.isSelected());
+					node.toggle(enabled.isSelected());
 				});
 			}
 			add(settings);
@@ -1313,6 +1337,49 @@ public class SkinIniTab extends JTabbedPane{
 				});
 			}
 			add(settings);
+		}
+	}
+	
+	//TODO
+	private static final class ToggleNode<T>{
+		
+		private ToggleNode<T> prev;
+		private ToggleNode<T> next;
+		private JCheckBox toggle;
+		private Setting<T> setting;
+		
+		private ToggleNode(JCheckBox toggle, Setting<T> setting){
+			this.toggle = toggle;
+			this.setting = setting;
+		}
+				
+		private void add(ToggleNode<T> node){
+			ToggleNode<T> last = this;
+			while(last.next != null){
+				last = last.next;
+			}
+			last.next = node;
+			node.prev = last;
+		}
+		
+		private void toggle(boolean newValue){
+			System.out.println("Toggle to: " + newValue);
+			if(newValue){
+				ToggleNode<T> prev = this;
+				do{
+					System.out.println("Update:  " + prev);
+					prev.toggle.setSelected(true);
+					prev.setting.setEnabled(true);
+					prev = prev.prev;
+				}while(prev != null);
+			}else{
+				ToggleNode<T> next = this;
+				do{
+					next.toggle.setSelected(false);
+					next.setting.setEnabled(false);
+					next = next.next;
+				}while(next != null);
+			}
 		}
 	}
 	
