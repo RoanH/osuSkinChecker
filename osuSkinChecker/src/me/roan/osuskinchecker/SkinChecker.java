@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -52,6 +53,7 @@ import javax.swing.UIManager;
 
 import me.roan.osuskinchecker.ini.SkinIni;
 import me.roan.osuskinchecker.ini.SkinIniTab;
+import me.roan.osuskinchecker.ini.SplitLayout;
 
 /**
  * This program can be used to see what
@@ -390,84 +392,40 @@ public class SkinChecker{
 		controls.setBorder(BorderFactory.createTitledBorder("Filter"));
 		content.add(controlPanel, BorderLayout.PAGE_START);
 
-		JPanel links = new JPanel(new GridLayout(3, 1, 0, 4));
+		JPanel links = new JPanel(new GridLayout(2, 1));
 		links.setBorder(BorderFactory.createTitledBorder("Links"));
-		JLabel forumPost = new JLabel("<html>Forum&nbsp;post:&nbsp;<font color=blue><u><i>https://osu.ppy.sh/community/forums/topics/617168</i></u></font></html>");
-		JLabel sheet = new JLabel("<html>Spreadsheet&nbsp;with&nbsp;information&nbsp;on&nbsp;each&nbsp;file:&nbsp;<font color=blue><u><i>https://docs.google.com/spreadsheets/d/1bhnV-CQRMy3Z0npQd9XSoTdkYxz0ew5e648S00qkJZ8/edit</font></i></u></html>");
-		JLabel wiki = new JLabel("<html>osu!&nbsp;wiki&nbsp;page&nbsp;on&nbsp;the&nbsp;skin.ini:&nbsp;<font color=blue><u><i>https://osu.ppy.sh/help/wiki/Skinning/skin.ini</font></i></u></html>");
-		links.add(forumPost);
+		JLabel sheet = new JLabel("<html>Spreadsheet&nbsp;with&nbsp;information&nbsp;on&nbsp;each&nbsp;file:&nbsp;<font color=blue><u>https://docs.google.com/spreadsheets/d/1bhnV-CQRMy3Z0npQd9XSoTdkYxz0ew5e648S00qkJZ8</font></u></html>");
+		JLabel wiki = new JLabel("<html>osu!&nbsp;wiki&nbsp;page&nbsp;on&nbsp;the&nbsp;skin.ini:&nbsp;<font color=blue><u>https://osu.ppy.sh/help/wiki/Skinning/skin.ini</font></u></html>");
 		links.add(sheet);
 		links.add(wiki);
-		forumPost.addMouseListener(new MouseListener(){
-
-			@Override
-			public void mouseClicked(MouseEvent e){
-				if(Desktop.isDesktopSupported()){
-					try{
-						Desktop.getDesktop().browse(new URL("https://osu.ppy.sh/community/forums/topics/617168").toURI());
-					}catch(IOException | URISyntaxException e1){
-						//pity
-					}
-				}
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e){
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e){
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e){
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e){
-			}
-		});
-		sheet.addMouseListener(new MouseListener(){
-
-			@Override
-			public void mouseClicked(MouseEvent e){
-				if(Desktop.isDesktopSupported()){
-					try{
-						Desktop.getDesktop().browse(new URL("https://docs.google.com/spreadsheets/d/1bhnV-CQRMy3Z0npQd9XSoTdkYxz0ew5e648S00qkJZ8/edit").toURI());
-					}catch(IOException | URISyntaxException e1){
-						//pity
-					}
-				}
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e){
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e){
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e){
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e){
-			}
-		});
-		JPanel lower = new JPanel(new BorderLayout());
-		lower.add(links, BorderLayout.CENTER);
-		JPanel version = new JPanel(new GridLayout(2, 1, 0, 4));
-		version.add(new JLabel("Running version: v2.0 pre-release"));//XXX version
-		JLabel latest = new JLabel("Latest version: loading...");
+		
+		JPanel info = new JPanel(new GridLayout(2, 1));
+		JLabel ver = new JLabel("<html><center><i>Version: v2.0-pre, latest version: <font color=gray>loading</font></i></center></html>", SwingConstants.CENTER);
+		info.add(ver);
 		new Thread(()->{
-			String ver = checkVersion();
-			latest.setText("Latest version: " + (ver == null ? "Unknown" : ver));
-		}).start();
-		version.add(latest);
-		version.setBorder(BorderFactory.createTitledBorder("Version"));
-		lower.add(version, BorderLayout.LINE_END);
+			String version = checkVersion();//XXX the version number 
+			ver.setText("<html><center><i>Version: v2.0-pre, latest version: " + (version == null ? "unknown :(" : version) + "</i></center></html>");
+		}, "Version Checker").start();
+		JPanel linksProgram = new JPanel(new GridLayout(1, 2, -2, 0));
+		JLabel forum = new JLabel("<html><font color=blue><u>Forums</u></font> -</html>", SwingConstants.RIGHT);
+		JLabel git = new JLabel("<html>- <font color=blue><u>GitHub</u></font></html>", SwingConstants.LEFT);
+		//JLabel 
+		linksProgram.add(forum);
+		linksProgram.add(git);
+		
+		wiki.addMouseListener(new ClickableLink("https://osu.ppy.sh/help/wiki/Skinning/skin.ini"));
+		sheet.addMouseListener(new ClickableLink("https://docs.google.com/spreadsheets/d/1bhnV-CQRMy3Z0npQd9XSoTdkYxz0ew5e648S00qkJZ8/edit"));
+		forum.addMouseListener(new ClickableLink("https://osu.ppy.sh/community/forums/topics/617168"));
+		git.addMouseListener(new ClickableLink("https://github.com/RoanH/osuSkinChecker"));
+		
+		JPanel right = new JPanel(new GridLayout(2, 1));
+		right.setBorder(BorderFactory.createTitledBorder("Information"));
+		right.add(linksProgram);
+		right.add(info);
+		
+		JPanel lower = new JPanel(new SplitLayout());
+		lower.add(links);
+		lower.add(right);
 		content.add(lower, BorderLayout.PAGE_END);
 
 		frame.add(content);
@@ -774,5 +732,58 @@ public class SkinChecker{
 	 */
 	private static final String getDateTime(){
 		return DateTimeFormatter.ofPattern("yyyy-MM-dd_HH.mm.ss").withZone(ZoneId.systemDefault()).format(Instant.now(Clock.systemDefaultZone()));
+	}
+	
+	/**
+	 * MouseListener that opens the URL it is
+	 * instantiated with when triggered
+	 * @author Roan
+	 */
+	private static final class ClickableLink implements MouseListener{
+		/**
+		 * The target link
+		 */
+		private URI uri = null;
+		
+		/**
+		 * Constructs a new ClickableLink
+		 * with the given url
+		 * @param link The link to browse to
+		 *        when clicked
+		 */
+		private ClickableLink(String link){
+			try{
+				uri = new URI(link);
+			}catch(URISyntaxException e){
+				//pity
+			}
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent e){
+			if(Desktop.isDesktopSupported() && uri != null){
+				try{
+					Desktop.getDesktop().browse(uri);
+				}catch(IOException e1){
+					//pity
+				}
+			}
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e){
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e){
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e){
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e){
+		}
 	}
 }
