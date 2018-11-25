@@ -1422,7 +1422,7 @@ public class SkinIniTab extends JTabbedPane{
 	/**
 	 * Editor for file path type settings
 	 * @author Roan
-     * @see Setting
+	 * @see Setting
 	 */
 	private static final class PathEditor extends JPanel{
 		/**
