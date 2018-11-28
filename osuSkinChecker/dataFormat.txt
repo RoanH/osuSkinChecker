@@ -28,9 +28,10 @@ Format for the .txt files that contain all the data about all the files.
        and false indicates the new style.
    - - A dash means that no special options apply to the file.
 
-6. If the C or P option is used then the options section has to be followed directly by an
-   integer specifying the id of the skin.ini property that specifies the custom location for
-   the file. The id section should be omitted for files that don't have the C or P option.
+6. If the C option is used then the options section has to be followed directly by the
+   name of the skin.ini property that specifies the custom location for
+   the file and by the default name of the setting. Also the default name part should be
+   omitted from the name for this item.
    
 7. The extension section is a list of extension that are allowed for the file. If more then on 
    extension is possible they should be separated by a , (comma) and not spaces should be used.

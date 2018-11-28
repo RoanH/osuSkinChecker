@@ -697,6 +697,25 @@ public class SkinIni{
 	}
 	
 	/**
+	 * Searches though all the settings in
+	 * the skin.ini and find one with the
+	 * given name.
+	 * @param name The name of the setting
+	 *        to search for.
+	 * @return The setting or null if it was not found.
+	 */
+	public Setting<?> find(String name){
+		for(Section section : data){
+			for(Setting<?> setting : section.data){
+				if(!(setting instanceof Comment) && setting.getName().equals(name)){
+					return setting;
+				}
+			}
+		}
+		return null;
+	}
+	
+	/**
 	 * Parses the given string and updates the setting
 	 * that it represents in the [General] section.
 	 * @param line The line to parse

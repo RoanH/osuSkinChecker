@@ -23,33 +23,33 @@
 - png ranking-d-small
 
 ===> Score Numbers
-C 2 png score-0
-C 2 png score-1
-C 2 png score-2
-C 2 png score-3
-C 2 png score-4
-C 2 png score-5
-C 2 png score-6
-C 2 png score-7
-C 2 png score-8
-C 2 png score-9
-C 2 png score-comma
-C 2 png score-dot
-C 2 png score-percent
-C 2 png score-x
+C ScorePrefix score png -0
+C ScorePrefix score png -1
+C ScorePrefix score png -2
+C ScorePrefix score png -3
+C ScorePrefix score png -4
+C ScorePrefix score png -5
+C ScorePrefix score png -6
+C ScorePrefix score png -7
+C ScorePrefix score png -8
+C ScorePrefix score png -9
+C ScorePrefix score png -comma
+C ScorePrefix score png -dot
+C ScorePrefix score png -percent
+C ScorePrefix score png -x
 
 ===> Combo Numbers
-C 3 png score-0
-C 3 png score-1
-C 3 png score-2
-C 3 png score-3
-C 3 png score-4
-C 3 png score-5
-C 3 png score-6
-C 3 png score-7
-C 3 png score-8
-C 3 png score-9
-C 3 png score-comma
-C 3 png score-dot
-C 3 png score-percent
-C 3 png score-x
+C ComboPrefix score png -0
+C ComboPrefix score png -1
+C ComboPrefix score png -2
+C ComboPrefix score png -3
+C ComboPrefix score png -4
+C ComboPrefix score png -5
+C ComboPrefix score png -6
+C ComboPrefix score png -7
+C ComboPrefix score png -8
+C ComboPrefix score png -9
+C ComboPrefix score png -comma
+C ComboPrefix score png -dot
+C ComboPrefix score png -percent
+C ComboPrefix score png -x

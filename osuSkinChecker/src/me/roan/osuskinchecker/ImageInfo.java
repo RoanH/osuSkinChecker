@@ -45,19 +45,9 @@ public final class ImageInfo implements Info{
 	 * integer <code>>= 0</code>.
 	 */
 	protected boolean variableWithoutDash = false;
-	/**
-	 * Whether or not the image could be located in a 
-	 * different folder relative to the base folder
-	 */
-	private boolean customPath = false;
-	/**
-	 * If there is a possible custom path for the file
-	 * described by this object then this ID specifies
-	 * the alternative location to search for a matching
-	 * file
-	 */
-	@Deprecated
-	private int customID = -1;
+	//TODO
+	protected String customProperty = null;
+	protected String customDefault = null;
 	/**
 	 * Boolean to store whether or not a SD image
 	 * exists that matches the criteria specified
@@ -121,6 +111,7 @@ public final class ImageInfo implements Info{
 	 */
 	public ImageInfo(String line){
 		String[] data = line.split(" ");
+		int offset = 0;
 		if(!data[0].equals("-")){
 			char[] args = data[0].toUpperCase(Locale.ROOT).toCharArray();
 			for(char option : args){
@@ -135,21 +126,22 @@ public final class ImageInfo implements Info{
 					singleImage = true;
 					break;
 				case 'C':
-					customPath = true;
-					customID = Integer.parseInt(data[1]);
+					customProperty = data[1];
+					customDefault = data[2];
+					offset += 2;
 					break;
 				case 'L':
 					legacy = true;
 					break;
 				case 'O':
 					spinner = Boolean.parseBoolean(data[1]);
+					offset++;
 					break;
 				}
 			}
 		}
-		//TODO check offsets
-		this.extensions = data[1 + ((customPath || spinner != null) ? 1 : 0)].split(",");
-		this.name = data[2 + ((customPath || spinner != null) ? 1 : 0)];
+		this.extensions = data[1 + offset].split(",");
+		this.name = data[2 + offset];
 	}
 
 	@Override
@@ -198,7 +190,7 @@ public final class ImageInfo implements Info{
 			if(hasSD == null){
 				for(String ext : extensions){
 					File file;
-					if((file = checkForFile(SkinChecker.skinFolder, name, false, ext, variableWithDash, variableWithoutDash, customPath)) != null){
+					if((file = checkForFile(SkinChecker.skinFolder, name, false, ext, variableWithDash, variableWithoutDash, customProperty, customDefault)) != null){
 						SkinChecker.allFiles.remove(file);
 						hasSD = true;
 						break;
@@ -237,7 +229,7 @@ public final class ImageInfo implements Info{
 			if(hasHD == null){
 				for(String ext : extensions){
 					File file;
-					if((file = checkForFile(SkinChecker.skinFolder, name, true, ext, variableWithDash, variableWithoutDash, customPath)) != null){
+					if((file = checkForFile(SkinChecker.skinFolder, name, true, ext, variableWithDash, variableWithoutDash, customProperty, customDefault)) != null){
 						SkinChecker.allFiles.remove(file);
 						hasHD = true;
 						break;
@@ -268,17 +260,22 @@ public final class ImageInfo implements Info{
 	 *        image can exist, where extra files are named by adding
 	 *        <code>n</code> to the name. Where <code>n</code> is an
 	 *        integer <code>>= 0</code>.
-	 * @param custom Whether or not the image could be located in a 
-	 *        different folder relative to the base folder.
+	 * @param customProperty
+	 * @param customDefault
 	 * @return A file that matches all the criteria or <code>null</code>
 	 *         if none were found.
 	 */
-	private File checkForFile(File folder, String name, boolean hd, final String ext, boolean variableDash, boolean variableNoDash, boolean custom){
+	private File checkForFile(File folder, String name, boolean hd, final String ext, boolean variableDash, boolean variableNoDash, String customProperty, String customDefault){
+		String customPath = SkinChecker.resolveCustomPath(customProperty, customDefault);
+		if(customPath != null){
+			name = customPath.replace("/", File.separator) + name;
+		}
+		
 		String extension;
 		File match = null;
 		if(hd){
 			if(hasSD == null || hasSD == true){
-				File sdver = checkForFile(folder, name, false, ext, variableDash, variableNoDash, custom);
+				File sdver = checkForFile(folder, name, false, ext, variableDash, variableNoDash, customProperty, customDefault);
 				if(sdver != null && isEmptyImage(sdver)){
 					ignored = true;
 				}
@@ -335,13 +332,6 @@ public final class ImageInfo implements Info{
 			return orig;
 		}
 
-		//TODO modify
-		if((custom) && this.customID != -1){
-			File f = SkinChecker.customPathing.get(this.customID);
-			File file = (f == null ? null : checkForFile(f.getParentFile(), f.getName(), hd, ext, variableDash, variableNoDash, false));
-			SkinChecker.allFiles.remove(file);
-			return file;
-		}
 		return null;
 	}
 
