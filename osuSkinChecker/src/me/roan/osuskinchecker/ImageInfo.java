@@ -51,16 +51,12 @@ public final class ImageInfo implements Info{
 	 */
 	private boolean customPath = false;
 	/**
-	 * Whether or not the image file itself could
-	 * be located somewhere else relative to the base folder
-	 */
-	private boolean customPathPrefix = false;
-	/**
 	 * If there is a possible custom path for the file
 	 * described by this object then this ID specifies
 	 * the alternative location to search for a matching
 	 * file
 	 */
+	@Deprecated
 	private int customID = -1;
 	/**
 	 * Boolean to store whether or not a SD image
@@ -142,10 +138,6 @@ public final class ImageInfo implements Info{
 					customPath = true;
 					customID = Integer.parseInt(data[1]);
 					break;
-				case 'P':
-					customPathPrefix = true;
-					customID = Integer.parseInt(data[1]);
-					break;
 				case 'L':
 					legacy = true;
 					break;
@@ -155,8 +147,9 @@ public final class ImageInfo implements Info{
 				}
 			}
 		}
-		this.extensions = data[1 + ((customPath || customPathPrefix || spinner != null) ? 1 : 0)].split(",");
-		this.name = data[2 + ((customPath || customPathPrefix || spinner != null) ? 1 : 0)];
+		//TODO check offsets
+		this.extensions = data[1 + ((customPath || spinner != null) ? 1 : 0)].split(",");
+		this.name = data[2 + ((customPath || spinner != null) ? 1 : 0)];
 	}
 
 	@Override
@@ -205,7 +198,7 @@ public final class ImageInfo implements Info{
 			if(hasSD == null){
 				for(String ext : extensions){
 					File file;
-					if((file = checkForFile(SkinChecker.skinFolder, name, false, ext, variableWithDash, variableWithoutDash, customPath, customPathPrefix)) != null){
+					if((file = checkForFile(SkinChecker.skinFolder, name, false, ext, variableWithDash, variableWithoutDash, customPath)) != null){
 						SkinChecker.allFiles.remove(file);
 						hasSD = true;
 						break;
@@ -244,7 +237,7 @@ public final class ImageInfo implements Info{
 			if(hasHD == null){
 				for(String ext : extensions){
 					File file;
-					if((file = checkForFile(SkinChecker.skinFolder, name, true, ext, variableWithDash, variableWithoutDash, customPath, customPathPrefix)) != null){
+					if((file = checkForFile(SkinChecker.skinFolder, name, true, ext, variableWithDash, variableWithoutDash, customPath)) != null){
 						SkinChecker.allFiles.remove(file);
 						hasHD = true;
 						break;
@@ -277,17 +270,15 @@ public final class ImageInfo implements Info{
 	 *        integer <code>>= 0</code>.
 	 * @param custom Whether or not the image could be located in a 
 	 *        different folder relative to the base folder.
-	 * @param customPrefix Whether or not the image file itself could
-	 *        be located somewhere else relative to the base folder.
 	 * @return A file that matches all the criteria or <code>null</code>
 	 *         if none were found.
 	 */
-	private File checkForFile(File folder, String name, boolean hd, final String ext, boolean variableDash, boolean variableNoDash, boolean custom, boolean customPrefix){
+	private File checkForFile(File folder, String name, boolean hd, final String ext, boolean variableDash, boolean variableNoDash, boolean custom){
 		String extension;
 		File match = null;
 		if(hd){
 			if(hasSD == null || hasSD == true){
-				File sdver = checkForFile(folder, name, false, ext, variableDash, variableNoDash, custom, customPrefix);
+				File sdver = checkForFile(folder, name, false, ext, variableDash, variableNoDash, custom);
 				if(sdver != null && isEmptyImage(sdver)){
 					ignored = true;
 				}
@@ -344,17 +335,12 @@ public final class ImageInfo implements Info{
 			return orig;
 		}
 
-		if((custom || customPrefix) && this.customID != -1){
-			if(customPrefix){
-				File file = checkForFile(SkinChecker.customPathing.get(this.customID), name, hd, ext, variableDash, variableNoDash, false, false);
-				SkinChecker.allFiles.remove(file);
-				return file;
-			}else{
-				File f = SkinChecker.customPathing.get(this.customID);
-				File file = (f == null ? null : checkForFile(f.getParentFile(), f.getName(), hd, ext, variableDash, variableNoDash, false, false));
-				SkinChecker.allFiles.remove(file);
-				return file;
-			}
+		//TODO modify
+		if((custom) && this.customID != -1){
+			File f = SkinChecker.customPathing.get(this.customID);
+			File file = (f == null ? null : checkForFile(f.getParentFile(), f.getName(), hd, ext, variableDash, variableNoDash, false));
+			SkinChecker.allFiles.remove(file);
+			return file;
 		}
 		return null;
 	}

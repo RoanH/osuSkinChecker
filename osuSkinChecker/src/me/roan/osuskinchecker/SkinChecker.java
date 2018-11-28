@@ -104,6 +104,7 @@ public class SkinChecker{
 	 * Map, mapping all the custom path ID's to the File
 	 * specified in the skin.ini
 	 */
+	@Deprecated
 	protected static Map<Integer, File> customPathing = new HashMap<Integer, File>();
 	/**
 	 * List of all the tables model that is used to

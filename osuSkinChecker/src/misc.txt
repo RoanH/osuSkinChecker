@@ -23,17 +23,33 @@
 - png ranking-d-small
 
 ===> Score Numbers
-P 2 png score-0
-P 2 png score-1
-P 2 png score-2
-P 2 png score-3
-P 2 png score-4
-P 2 png score-5
-P 2 png score-6
-P 2 png score-7
-P 2 png score-8
-P 2 png score-9
-P 2 png score-comma
-P 2 png score-dot
-P 2 png score-percent
-P 2 png score-x
+C 2 png score-0
+C 2 png score-1
+C 2 png score-2
+C 2 png score-3
+C 2 png score-4
+C 2 png score-5
+C 2 png score-6
+C 2 png score-7
+C 2 png score-8
+C 2 png score-9
+C 2 png score-comma
+C 2 png score-dot
+C 2 png score-percent
+C 2 png score-x
+
+===> Combo Numbers
+C 3 png score-0
+C 3 png score-1
+C 3 png score-2
+C 3 png score-3
+C 3 png score-4
+C 3 png score-5
+C 3 png score-6
+C 3 png score-7
+C 3 png score-8
+C 3 png score-9
+C 3 png score-comma
+C 3 png score-dot
+C 3 png score-percent
+C 3 png score-x

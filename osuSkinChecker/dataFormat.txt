@@ -23,8 +23,6 @@ Format for the .txt files that contain all the data about all the files.
        set in the skin.ini and therefore might not exist in the root folder of the skin.
        If the file could not be found in the root folder of the skin the custom path set
        in the skin.ini file is checked.
-   P - Same as C but instead only the folder name can be specified in the skin.ini
-       and not the filename.
    O - Indicates the spinner style used if this image is for a specific spinner style. Has
        to be followed by a boolean that indicates the style. True indicates the old style
        and false indicates the new style.
