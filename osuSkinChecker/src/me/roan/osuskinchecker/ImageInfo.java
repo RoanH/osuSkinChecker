@@ -100,6 +100,7 @@ public final class ImageInfo implements Info{
 	 * of frames in the animation
 	 */
 	protected int frames;
+	private String fullName = null;
 
 	/**
 	 * Creates an information object
@@ -141,12 +142,13 @@ public final class ImageInfo implements Info{
 			}
 		}
 		this.extensions = data[1 + offset].split(",");
-		this.name = data[2 + offset];
+		this.name = 2 + offset < data.length ? data[2 + offset] : "";
 	}
 
 	@Override
 	public String toString(){
-		return name;
+		setFullName();
+		return fullName;
 	}
 
 	@Override
@@ -156,6 +158,7 @@ public final class ImageInfo implements Info{
 		ignored = false;
 		animated = false;
 		ignore = false;
+		fullName = null;
 		hasSDVersion();
 		hasHDVersion();
 	}
@@ -189,8 +192,9 @@ public final class ImageInfo implements Info{
 		}else{
 			if(hasSD == null){
 				for(String ext : extensions){
+					setFullName();
 					File file;
-					if((file = checkForFile(SkinChecker.skinFolder, name, false, ext, variableWithDash, variableWithoutDash, customProperty, customDefault)) != null){
+					if((file = checkForFile(SkinChecker.skinFolder, name, false, ext, variableWithDash, variableWithoutDash)) != null){
 						SkinChecker.allFiles.remove(file);
 						hasSD = true;
 						break;
@@ -228,8 +232,9 @@ public final class ImageInfo implements Info{
 			}
 			if(hasHD == null){
 				for(String ext : extensions){
+					setFullName();
 					File file;
-					if((file = checkForFile(SkinChecker.skinFolder, name, true, ext, variableWithDash, variableWithoutDash, customProperty, customDefault)) != null){
+					if((file = checkForFile(SkinChecker.skinFolder, fullName, true, ext, variableWithDash, variableWithoutDash)) != null){
 						SkinChecker.allFiles.remove(file);
 						hasHD = true;
 						break;
@@ -240,6 +245,21 @@ public final class ImageInfo implements Info{
 				}
 			}
 			return hasHD ? "Yes" : "No";
+		}
+	}
+	
+	/**
+	 * Sets the full name for this file, this combines the name
+	 * of the image file with custom paths in the skin.ini
+	 */
+	private final void setFullName(){
+		if(fullName == null){
+			String customPath = SkinChecker.resolveCustomPath(customProperty, customDefault);
+			if(customPath != null){
+				fullName = customPath.replace("/", File.separator) + name;
+			}else{
+				fullName = name;
+			}
 		}
 	}
 
@@ -260,22 +280,15 @@ public final class ImageInfo implements Info{
 	 *        image can exist, where extra files are named by adding
 	 *        <code>n</code> to the name. Where <code>n</code> is an
 	 *        integer <code>>= 0</code>.
-	 * @param customProperty
-	 * @param customDefault
 	 * @return A file that matches all the criteria or <code>null</code>
 	 *         if none were found.
 	 */
-	private File checkForFile(File folder, String name, boolean hd, final String ext, boolean variableDash, boolean variableNoDash, String customProperty, String customDefault){
-		String customPath = SkinChecker.resolveCustomPath(customProperty, customDefault);
-		if(customPath != null){
-			name = customPath.replace("/", File.separator) + name;
-		}
-		
+	private File checkForFile(File folder, String name, boolean hd, final String ext, boolean variableDash, boolean variableNoDash){
 		String extension;
 		File match = null;
 		if(hd){
 			if(hasSD == null || hasSD == true){
-				File sdver = checkForFile(folder, name, false, ext, variableDash, variableNoDash, customProperty, customDefault);
+				File sdver = checkForFile(folder, name, false, ext, variableDash, variableNoDash);
 				if(sdver != null && isEmptyImage(sdver)){
 					ignored = true;
 				}
