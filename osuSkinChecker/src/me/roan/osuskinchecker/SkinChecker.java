@@ -518,10 +518,11 @@ public class SkinChecker{
 	 * for the given setting (if it exists).
 	 * @param name The name of the setting to read the path from
 	 * @param def The value to return if no custom path was set
+	 * @param customKeyCount 
 	 * @return The custom path if set, the given defaul value otherwise
 	 */
-	protected static String resolveCustomPath(String name, String def){
-		Setting<?> setting = skinIni.find(name);
+	protected static String resolveCustomPath(String name, String def, int customKeyCount){
+		Setting<?> setting = skinIni.find(name, customKeyCount);
 		if(setting != null && setting.isEnabled()){
 			Object value = setting.getValue();
 			if(value instanceof String){

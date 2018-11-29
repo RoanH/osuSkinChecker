@@ -1,144 +1,124 @@
 ===> 1K - Stage
 N png comboburst-mania
-C 0111 png mania-stage-left
-C 0112 png mania-stage-right
-NC 0113 png mania-stage-bottom
-C 0114 png mania-stage-hint
-NC 0115 png mania-stage-light
-C 0116 png mania-warningarrow
-NC 0117 png lightingN
-NC 0118 png lightingL
+C  1 StageLeft    mania-stage-left   png
+C  1 StageRight   mania-stage-right  png
+NC 1 StageBottom  mania-stage-bottom png
+C  1 StageHint    mania-stage-hint   png
+NC 1 StageLight   mania-stage-light  png
+C  1 WarningArrow mania-warningarrow png
+NC 1 LightingN    lightingN          png
+NC 1 LightingL    lightingL          png
 
 ===> 1K - Keys
-C 0121 png mania-key1
-C 0121 png mania-key2
-C 0121 png mania-keyS
-C 0122 png mania-key1D
-C 0122 png mania-key2D
-C 0122 png mania-keySD
+C 1 KeyImage0 mania-key1 png
+C 1 KeyImage0D mania-key1D png
 
 ===> 1K - Notes
-NC 0131 png mania-note1
-NC 0131 png mania-note2
-NC 0131 png mania-noteS
-NC 0132 png mania-note1H
-NC 0132 png mania-note2H
-NC 0132 png mania-noteSH
-NC 0133 png mania-note1T
-NC 0133 png mania-note2T
-NC 0133 png mania-noteST
-NC 0134 png mania-note1L
-NC 0134 png mania-note2L
-NC 0134 png mania-noteSL
+NC 1 NoteImage0  mania-note1  png
+NC 1 NoteImage0H mania-note1H png
+NC 1 NoteImage0T mania-note1T png
+NC 1 NoteImage0L mania-note1L png
 
 ===> 1K - Hitbursts
-NC 0141 png mania-hit0
-NC 0142 png mania-hit50
-NC 0143 png mania-hit100
-NC 0144 png mania-hit200
-NC 0145 png mania-hit300
-NC 0146 png mania-hit300g
+NC 1 Hit0    mania-hit0    png
+NC 1 Hit50   mania-hit50   png
+NC 1 Hit100  mania-hit100  png
+NC 1 Hit200  mania-hit200  png
+NC 1 Hit300  mania-hit300  png
+NC 1 Hit300g mania-hit300g png
 
 ===> 2K - Stage
 N png comboburst-mania
-C 0211 png mania-stage-left
-C 0212 png mania-stage-right
-NC 0213 png mania-stage-bottom
-C 0214 png mania-stage-hint
-NC 0215 png mania-stage-light
-C 0216 png mania-warningarrow
-NC 0217 png lightingN
-NC 0218 png lightingL
+C  2 StageLeft    mania-stage-left   png
+C  2 StageRight   mania-stage-right  png
+NC 2 StageBottom  mania-stage-bottom png
+C  2 StageHint    mania-stage-hint   png
+NC 2 StageLight   mania-stage-light  png
+C  2 WarningArrow mania-warningarrow png
+NC 2 LightingN    lightingN          png
+NC 2 LightingL    lightingL          png
 
 ===> 2K - Keys
-C 0221 png mania-key1
-C 0221 png mania-key2
-C 0221 png mania-keyS
-C 0222 png mania-key1D
-C 0222 png mania-key2D
-C 0222 png mania-keySD
+C 2 KeyImage0 mania-key1 png
+C 2 KeyImage1 mania-key1 png
+C 2 KeyImage0D mania-key1D png
+C 2 KeyImage1D mania-key1D png
 
 ===> 2K - Notes
-NC 0231 png mania-note1
-NC 0231 png mania-note2
-NC 0231 png mania-noteS
-NC 0232 png mania-note1H
-NC 0232 png mania-note2H
-NC 0232 png mania-noteSH
-NC 0233 png mania-note1T
-NC 0233 png mania-note2T
-NC 0233 png mania-noteST
-NC 0234 png mania-note1L
-NC 0234 png mania-note2L
-NC 0234 png mania-noteSL
+NC 2 NoteImage0  mania-note1  png
+NC 2 NoteImage1  mania-note1  png
+NC 2 NoteImage0H mania-note1H png
+NC 2 NoteImage1H mania-note1H png
+NC 2 NoteImage0T mania-note1T png
+NC 2 NoteImage1T mania-note1T png
+NC 2 NoteImage0L mania-note1L png
+NC 2 NoteImage1L mania-note1L png
 
 ===> 2K - Hitbursts
-NC 0241 png mania-hit0
-NC 0242 png mania-hit50
-NC 0243 png mania-hit100
-NC 0244 png mania-hit200
-NC 0245 png mania-hit300
-NC 0246 png mania-hit300g
+NC 2 Hit0    mania-hit0    png
+NC 2 Hit50   mania-hit50   png
+NC 2 Hit100  mania-hit100  png
+NC 2 Hit200  mania-hit200  png
+NC 2 Hit300  mania-hit300  png
+NC 2 Hit300g mania-hit300g png
 
 ===> 3K - Stage
 N png comboburst-mania
-C 0311 png mania-stage-left
-C 0312 png mania-stage-right
-NC 0313 png mania-stage-bottom
-C 0314 png mania-stage-hint
-NC 0315 png mania-stage-light
-C 0316 png mania-warningarrow
-NC 0317 png lightingN
-NC 0318 png lightingL
+C  3 StageLeft    mania-stage-left   png
+C  3 StageRight   mania-stage-right  png
+NC 3 StageBottom  mania-stage-bottom png
+C  3 StageHint    mania-stage-hint   png
+NC 3 StageLight   mania-stage-light  png
+C  3 WarningArrow mania-warningarrow png
+NC 3 LightingN    lightingN          png
+NC 3 LightingL    lightingL          png
 
 ===> 3K - Keys
-C 0321 png mania-key1
-C 0321 png mania-key2
-C 0321 png mania-keyS
-C 0322 png mania-key1D
-C 0322 png mania-key2D
-C 0322 png mania-keySD
+C 3 KeyImage0 mania-key1 png
+C 3 KeyImage1 mania-keyS png
+C 3 KeyImage2 mania-key1 png
+C 3 KeyImage0D mania-key1D png
+C 3 KeyImage1D mania-keySD png
+C 3 KeyImage2D mania-key1D png
 
 ===> 3K - Notes
-NC 0331 png mania-note1
-NC 0331 png mania-note2
-NC 0331 png mania-noteS
-NC 0332 png mania-note1H
-NC 0332 png mania-note2H
-NC 0332 png mania-noteSH
-NC 0333 png mania-note1T
-NC 0333 png mania-note2T
-NC 0333 png mania-noteST
-NC 0334 png mania-note1L
-NC 0334 png mania-note2L
-NC 0334 png mania-noteSL
+NC 2 NoteImage0  mania-note1  png
+NC 2 NoteImage1  mania-noteS  png
+NC 2 NoteImage2  mania-note1  png
+NC 2 NoteImage0H mania-note1H png
+NC 2 NoteImage1H mania-noteSH png
+NC 2 NoteImage2H mania-note1H png
+NC 2 NoteImage0T mania-note1T png
+NC 2 NoteImage1T mania-noteST png
+NC 2 NoteImage2T mania-note1T png
+NC 2 NoteImage0L mania-note1L png
+NC 2 NoteImage1L mania-noteSL png
+NC 2 NoteImage2L mania-note1L png
 
 ===> 3K - Hitbursts
-NC 0341 png mania-hit0
-NC 0342 png mania-hit50
-NC 0343 png mania-hit100
-NC 0344 png mania-hit200
-NC 0345 png mania-hit300
-NC 0346 png mania-hit300g
+NC 3 Hit0    mania-hit0    png
+NC 3 Hit50   mania-hit50   png
+NC 3 Hit100  mania-hit100  png
+NC 3 Hit200  mania-hit200  png
+NC 3 Hit300  mania-hit300  png
+NC 3 Hit300g mania-hit300g png
 
 ===> 4K - Stage
 N png comboburst-mania
-C 0411 png mania-stage-left
-C 0412 png mania-stage-right
-NC 0413 png mania-stage-bottom
-C 0414 png mania-stage-hint
-NC 0415 png mania-stage-light
-C 0416 png mania-warningarrow
-NC 0417 png lightingN
-NC 0418 png lightingL
+C  4 StageLeft    mania-stage-left   png
+C  4 StageRight   mania-stage-right  png
+NC 4 StageBottom  mania-stage-bottom png
+C  4 StageHint    mania-stage-hint   png
+NC 4 StageLight   mania-stage-light  png
+C  4 WarningArrow mania-warningarrow png
+NC 4 LightingN    lightingN          png
+NC 4 LightingL    lightingL          png
 
 ===> 4K - Keys
-C 0421 png mania-key1
-C 0421 png mania-key2
-C 0421 png mania-keyS
-C 0422 png mania-key1D
-C 0422 png mania-key2D
-C 0422 png mania-keySD
+C 4 KeyImage0 mania-key1 png
+C 4 KeyImage1 mania-key2 png
+C 4 KeyImage0D mania-key1D png
+C 4 KeyImage1D mania-key2D png
 
 ===> 4K - Notes
 NC 0431 png mania-note1
@@ -155,31 +135,31 @@ NC 0434 png mania-note2L
 NC 0434 png mania-noteSL
 
 ===> 4K - Hitbursts
-NC 0441 png mania-hit0
-NC 0442 png mania-hit50
-NC 0443 png mania-hit100
-NC 0444 png mania-hit200
-NC 0445 png mania-hit300
-NC 0446 png mania-hit300g
+NC 4 Hit0    mania-hit0    png
+NC 4 Hit50   mania-hit50   png
+NC 4 Hit100  mania-hit100  png
+NC 4 Hit200  mania-hit200  png
+NC 4 Hit300  mania-hit300  png
+NC 4 Hit300g mania-hit300g png
 
 ===> 5K - Stage
 N png comboburst-mania
-C 0511 png mania-stage-left
-C 0512 png mania-stage-right
-NC 0513 png mania-stage-bottom
-C 0514 png mania-stage-hint
-NC 0515 png mania-stage-light
-C 0516 png mania-warningarrow
-NC 0517 png lightingN
-NC 0518 png lightingL
+C  5 StageLeft    mania-stage-left   png
+C  5 StageRight   mania-stage-right  png
+NC 5 StageBottom  mania-stage-bottom png
+C  5 StageHint    mania-stage-hint   png
+NC 5 StageLight   mania-stage-light  png
+C  5 WarningArrow mania-warningarrow png
+NC 5 LightingN    lightingN          png
+NC 5 LightingL    lightingL          png
 
 ===> 5K - Keys
-C 0521 png mania-key1
-C 0521 png mania-key2
-C 0521 png mania-keyS
-C 0522 png mania-key1D
-C 0522 png mania-key2D
-C 0522 png mania-keySD
+C 5 KeyImage0 mania-key1 png
+C 5 KeyImage1 mania-key2 png
+C 5 KeyImage2 mania-keyS png
+C 5 KeyImage0D mania-key1D png
+C 5 KeyImage1D mania-key2D png
+C 5 KeyImage2D mania-keySD png
 
 ===> 5K - Notes
 NC 0531 png mania-note1
@@ -196,31 +176,29 @@ NC 0534 png mania-note2L
 NC 0534 png mania-noteSL
 
 ===> 5K - Hitbursts
-NC 0541 png mania-hit0
-NC 0542 png mania-hit50
-NC 0543 png mania-hit100
-NC 0544 png mania-hit200
-NC 0545 png mania-hit300
-NC 0546 png mania-hit300g
+NC 5 Hit0    mania-hit0    png
+NC 5 Hit50   mania-hit50   png
+NC 5 Hit100  mania-hit100  png
+NC 5 Hit200  mania-hit200  png
+NC 5 Hit300  mania-hit300  png
+NC 5 Hit300g mania-hit300g png
 
 ===> 6K - Stage
 N png comboburst-mania
-C 0611 png mania-stage-left
-C 0612 png mania-stage-right
-NC 0613 png mania-stage-bottom
-C 0614 png mania-stage-hint
-NC 0615 png mania-stage-light
-C 0616 png mania-warningarrow
-NC 0617 png lightingN
-NC 0618 png lightingL
+C  6 StageLeft    mania-stage-left   png
+C  6 StageRight   mania-stage-right  png
+NC 6 StageBottom  mania-stage-bottom png
+C  6 StageHint    mania-stage-hint   png
+NC 6 StageLight   mania-stage-light  png
+C  6 WarningArrow mania-warningarrow png
+NC 6 LightingN    lightingN          png
+NC 6 LightingL    lightingL          png
 
 ===> 6K - Keys
-C 0621 png mania-key1
-C 0621 png mania-key2
-C 0621 png mania-keyS
-C 0622 png mania-key1D
-C 0622 png mania-key2D
-C 0622 png mania-keySD
+C 6 KeyImage0 mania-key1 png
+C 6 KeyImage1 mania-key2 png
+C 6 KeyImage0D mania-key1D png
+C 6 KeyImage1D mania-key2D png
 
 ===> 6K - Notes
 NC 0631 png mania-note1
@@ -236,32 +214,32 @@ NC 0634 png mania-note1L
 NC 0634 png mania-note2L
 NC 0634 png mania-noteSL
 
-===> 7K - Hitbursts
-NC 0641 png mania-hit0
-NC 0642 png mania-hit50
-NC 0643 png mania-hit100
-NC 0644 png mania-hit200
-NC 0645 png mania-hit300
-NC 0646 png mania-hit300g
+===> 6K - Hitbursts
+NC 6 Hit0    mania-hit0    png
+NC 6 Hit50   mania-hit50   png
+NC 6 Hit100  mania-hit100  png
+NC 6 Hit200  mania-hit200  png
+NC 6 Hit300  mania-hit300  png
+NC 6 Hit300g mania-hit300g png
 
 ===> 7K - Stage
 N png comboburst-mania
-C 0711 png mania-stage-left
-C 0712 png mania-stage-right
-NC 0713 png mania-stage-bottom
-C 0714 png mania-stage-hint
-NC 0715 png mania-stage-light
-C 076 png mania-warningarrow
-NC 0717 png lightingN
-NC 0718 png lightingL
+C  7 StageLeft    mania-stage-left   png
+C  7 StageRight   mania-stage-right  png
+NC 7 StageBottom  mania-stage-bottom png
+C  7 StageHint    mania-stage-hint   png
+NC 7 StageLight   mania-stage-light  png
+C  7 WarningArrow mania-warningarrow png
+NC 7 LightingN    lightingN          png
+NC 7 LightingL    lightingL          png
 
 ===> 7K - Keys
-C 0721 png mania-key1
-C 0721 png mania-key2
-C 0721 png mania-keyS
-C 0722 png mania-key1D
-C 0722 png mania-key2D
-C 0722 png mania-keySD
+C 7 KeyImage0 mania-key1 png
+C 7 KeyImage1 mania-key2 png
+C 7 KeyImage3 mania-keyS png
+C 7 KeyImage0D mania-key1D png
+C 7 KeyImage1D mania-key2D png
+C 7 KeyImage3D mania-keySD png
 
 ===> 7K - Notes
 NC 0731 png mania-note1
@@ -278,31 +256,29 @@ NC 0734 png mania-note2L
 NC 0734 png mania-noteSL
 
 ===> 7K - Hitbursts
-NC 0741 png mania-hit0
-NC 0742 png mania-hit50
-NC 0743 png mania-hit100
-NC 0744 png mania-hit200
-NC 0745 png mania-hit300
-NC 0746 png mania-hit300g
+NC 7 Hit0    mania-hit0    png
+NC 7 Hit50   mania-hit50   png
+NC 7 Hit100  mania-hit100  png
+NC 7 Hit200  mania-hit200  png
+NC 7 Hit300  mania-hit300  png
+NC 7 Hit300g mania-hit300g png
 
 ===> 8K - Stage
 N png comboburst-mania
-C 0811 png mania-stage-left
-C 0812 png mania-stage-right
-NC 0813 png mania-stage-bottom
-C 0814 png mania-stage-hint
-NC 0815 png mania-stage-light
-C 0816 png mania-warningarrow
-NC 0817 png lightingN
-NC 0818 png lightingL
+C  8 StageLeft    mania-stage-left   png
+C  8 StageRight   mania-stage-right  png
+NC 8 StageBottom  mania-stage-bottom png
+C  8 StageHint    mania-stage-hint   png
+NC 8 StageLight   mania-stage-light  png
+C  8 WarningArrow mania-warningarrow png
+NC 8 LightingN    lightingN          png
+NC 8 LightingL    lightingL          png
 
 ===> 8K - Keys
-C 0821 png mania-key1
-C 0821 png mania-key2
-C 0821 png mania-keyS
-C 0822 png mania-key1D
-C 0822 png mania-key2D
-C 0822 png mania-keySD
+C 8 KeyImage0 mania-key1 png
+C 8 KeyImage1 mania-key2 png
+C 8 KeyImage0D mania-key1D png
+C 8 KeyImage1D mania-key2D png
 
 ===> 8K - Notes
 NC 0831 png mania-note1
@@ -319,31 +295,31 @@ NC 0834 png mania-note2L
 NC 0834 png mania-noteSL
 
 ===> 8K - Hitbursts
-NC 0841 png mania-hit0
-NC 0842 png mania-hit50
-NC 0843 png mania-hit100
-NC 0844 png mania-hit200
-NC 0845 png mania-hit300
-NC 0846 png mania-hit300g
+NC 8 Hit0    mania-hit0    png
+NC 8 Hit50   mania-hit50   png
+NC 8 Hit100  mania-hit100  png
+NC 8 Hit200  mania-hit200  png
+NC 8 Hit300  mania-hit300  png
+NC 8 Hit300g mania-hit300g png
 
 ===> 9K - Stage
 N png comboburst-mania
-C 0911 png mania-stage-left
-C 0912 png mania-stage-right
-NC 0913 png mania-stage-bottom
-C 0914 png mania-stage-hint
-NC 0915 png mania-stage-light
-C 0916 png mania-warningarrow
-NC 0917 png lightingN
-NC 0918 png lightingL
+C  9 StageLeft    mania-stage-left   png
+C  9 StageRight   mania-stage-right  png
+NC 9 StageBottom  mania-stage-bottom png
+C  9 StageHint    mania-stage-hint   png
+NC 9 StageLight   mania-stage-light  png
+C  9 WarningArrow mania-warningarrow png
+NC 9 LightingN    lightingN          png
+NC 9 LightingL    lightingL          png
 
 ===> 9K - Keys
-C 0921 png mania-key1
-C 0921 png mania-key2
-C 0921 png mania-keyS
-C 0922 png mania-key1D
-C 0922 png mania-key2D
-C 0922 png mania-keySD
+C 9 KeyImage0 mania-key1 png
+C 9 KeyImage1 mania-key2 png
+C 9 KeyImage4 mania-keyS png
+C 9 KeyImage0D mania-key1D png
+C 9 KeyImage1D mania-key2D png
+C 9 KeyImage4D mania-keySD png
 
 ===> 9K - Notes
 NC 0931 png mania-note1
@@ -360,23 +336,23 @@ NC 0934 png mania-note2L
 NC 0934 png mania-noteSL
 
 ===> 9K - Hitbursts
-NC 0941 png mania-hit0
-NC 0942 png mania-hit50
-NC 0943 png mania-hit100
-NC 0944 png mania-hit200
-NC 0945 png mania-hit300
-NC 0946 png mania-hit300g
+NC 9 Hit0    mania-hit0    png
+NC 9 Hit50   mania-hit50   png
+NC 9 Hit100  mania-hit100  png
+NC 9 Hit200  mania-hit200  png
+NC 9 Hit300  mania-hit300  png
+NC 9 Hit300g mania-hit300g png
 
 ===> 10K - Stage
 N png comboburst-mania
-C 1011 png mania-stage-left
-C 1012 png mania-stage-right
-NC 1013 png mania-stage-bottom
-C 1014 png mania-stage-hint
-NC 1015 png mania-stage-light
-C 1016 png mania-warningarrow
-NC 1017 png lightingN
-NC 1018 png lightingL
+C  10 StageLeft    mania-stage-left   png
+C  10 StageRight   mania-stage-right  png
+NC 10 StageBottom  mania-stage-bottom png
+C  10 StageHint    mania-stage-hint   png
+NC 10 StageLight   mania-stage-light  png
+C  10 WarningArrow mania-warningarrow png
+NC 10 LightingN    lightingN          png
+NC 10 LightingL    lightingL          png
 
 ===> 10K - Keys
 C 1021 png mania-key1
@@ -401,9 +377,9 @@ NC 1034 png mania-note2L
 NC 1034 png mania-noteSL
 
 ===> 10K - Hitbursts
-NC 1041 png mania-hit0
-NC 1042 png mania-hit50
-NC 1043 png mania-hit100
-NC 1044 png mania-hit200
-NC 1045 png mania-hit300
-NC 1046 png mania-hit300g
+NC 10 Hit0    mania-hit0    png
+NC 10 Hit50   mania-hit50   png
+NC 10 Hit100  mania-hit100  png
+NC 10 Hit200  mania-hit200  png
+NC 10 Hit300  mania-hit300  png
+NC 10 Hit300g mania-hit300g png

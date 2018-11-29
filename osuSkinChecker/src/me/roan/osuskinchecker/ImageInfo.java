@@ -48,6 +48,7 @@ public final class ImageInfo implements Info{
 	//TODO
 	protected String customProperty = null;
 	protected String customDefault = null;
+	protected int customKeyCount = -1;
 	/**
 	 * Boolean to store whether or not a SD image
 	 * exists that matches the criteria specified
@@ -111,7 +112,7 @@ public final class ImageInfo implements Info{
 	 *        for this information object
 	 */
 	public ImageInfo(String line){
-		String[] data = line.split(" ");
+		String[] data = line.split(" +");
 		int offset = 0;
 		if(!data[0].equals("-")){
 			char[] args = data[0].toUpperCase(Locale.ROOT).toCharArray();
@@ -130,6 +131,12 @@ public final class ImageInfo implements Info{
 					customProperty = data[1];
 					customDefault = data[2];
 					offset += 2;
+					break;
+				case 'P':
+					customKeyCount = Integer.parseInt(data[1]);
+					customProperty = data[2];
+					customDefault = data[3];
+					offset += 3;
 					break;
 				case 'L':
 					legacy = true;
@@ -254,7 +261,7 @@ public final class ImageInfo implements Info{
 	 */
 	private final void setFullName(){
 		if(fullName == null){
-			String customPath = SkinChecker.resolveCustomPath(customProperty, customDefault);
+			String customPath = SkinChecker.resolveCustomPath(customProperty, customDefault, customKeyCount);
 			if(customPath != null){
 				fullName = customPath.replace("/", File.separator) + name;
 			}else{

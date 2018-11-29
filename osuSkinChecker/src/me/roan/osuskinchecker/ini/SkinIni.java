@@ -702,13 +702,17 @@ public class SkinIni{
 	 * given name.
 	 * @param name The name of the setting
 	 *        to search for.
+	 * @param customKeyCount The mania key count to look
+	 *        in or -1 if the setting is not a mania setting
 	 * @return The setting or null if it was not found.
 	 */
-	public Setting<?> find(String name){
+	public Setting<?> find(String name, int customKeyCount){
 		for(Section section : data){
-			for(Setting<?> setting : section.data){
-				if(!(setting instanceof Comment) && setting.getName().equals(name)){
-					return setting;
+			if((!section.isMania() && customKeyCount == -1) || (section.isMania() && section.mania.keys == customKeyCount)){
+				for(Setting<?> setting : section.data){
+					if(!(setting instanceof Comment) && setting.getName().equals(name)){
+						return setting;
+					}
 				}
 			}
 		}
