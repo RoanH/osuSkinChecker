@@ -217,22 +217,42 @@ NC 6 LightingL    lightingL          png
 ===> 6K - Keys
 C 6 KeyImage0 mania-key1 png
 C 6 KeyImage1 mania-key2 png
+C 6 KeyImage2 mania-key1 png
+C 6 KeyImage3 mania-key1 png
+C 6 KeyImage4 mania-key2 png
+C 6 KeyImage5 mania-key1 png
 C 6 KeyImage0D mania-key1D png
 C 6 KeyImage1D mania-key2D png
+C 6 KeyImage2D mania-key1D png
+C 6 KeyImage3D mania-key1D png
+C 6 KeyImage4D mania-key2D png
+C 6 KeyImage5D mania-key1D png
 
 ===> 6K - Notes
-NC 0631 png mania-note1
-NC 0631 png mania-note2
-NC 0631 png mania-noteS
-NC 0632 png mania-note1H
-NC 0632 png mania-note2H
-NC 0632 png mania-noteSH
-NC 0633 png mania-note1T
-NC 0633 png mania-note2T
-NC 0633 png mania-noteST
-NC 0634 png mania-note1L
-NC 0634 png mania-note2L
-NC 0634 png mania-noteSL
+NC 6 NoteImage0  mania-note1  png
+NC 6 NoteImage1  mania-note2  png
+NC 6 NoteImage2  mania-note1  png
+NC 6 NoteImage3  mania-note1  png
+NC 6 NoteImage4  mania-note2  png
+NC 6 NoteImage5  mania-note1  png
+NC 6 NoteImage0H mania-note1H png
+NC 6 NoteImage1H mania-note2H png
+NC 6 NoteImage2H mania-note1H png
+NC 6 NoteImage3H mania-note1H png
+NC 6 NoteImage4H mania-note2H png
+NC 6 NoteImage5H mania-note1H png
+NC 6 NoteImage0T mania-note1T png
+NC 6 NoteImage1T mania-note2T png
+NC 6 NoteImage2T mania-note1T png
+NC 6 NoteImage3T mania-note1T png
+NC 6 NoteImage4T mania-note2T png
+NC 6 NoteImage5T mania-note1T png
+NC 6 NoteImage0L mania-note1L png
+NC 6 NoteImage1L mania-note2L png
+NC 6 NoteImage2L mania-note1L png
+NC 6 NoteImage3L mania-note1L png
+NC 6 NoteImage4L mania-note2L png
+NC 6 NoteImage5L mania-note1L png
 
 ===> 6K - Hitbursts
 NC 6 Hit0    mania-hit0    png
@@ -256,24 +276,48 @@ NC 7 LightingL    lightingL          png
 ===> 7K - Keys
 C 7 KeyImage0 mania-key1 png
 C 7 KeyImage1 mania-key2 png
+C 7 KeyImage2 mania-key1 png
 C 7 KeyImage3 mania-keyS png
+C 7 KeyImage4 mania-key1 png
+C 7 KeyImage5 mania-key2 png
+C 7 KeyImage6 mania-key1 png
 C 7 KeyImage0D mania-key1D png
 C 7 KeyImage1D mania-key2D png
+C 7 KeyImage2D mania-key1D png
 C 7 KeyImage3D mania-keySD png
+C 7 KeyImage4D mania-key1D png
+C 7 KeyImage5D mania-key2D png
+C 7 KeyImage6D mania-key1D png
 
 ===> 7K - Notes
-NC 0731 png mania-note1
-NC 0731 png mania-note2
-NC 0731 png mania-noteS
-NC 0732 png mania-note1H
-NC 0732 png mania-note2H
-NC 0732 png mania-noteSH
-NC 0733 png mania-note1T
-NC 0733 png mania-note2T
-NC 0733 png mania-noteST
-NC 0734 png mania-note1L
-NC 0734 png mania-note2L
-NC 0734 png mania-noteSL
+NC 7 NoteImage0  mania-note1  png
+NC 7 NoteImage1  mania-note2  png
+NC 7 NoteImage2  mania-note1  png
+NC 7 NoteImage3  mania-noteS  png
+NC 7 NoteImage4  mania-note1  png
+NC 7 NoteImage5  mania-note2  png
+NC 7 NoteImage6  mania-note1  png
+NC 7 NoteImage0H mania-note1H png
+NC 7 NoteImage1H mania-note2H png
+NC 7 NoteImage2H mania-note1H png
+NC 7 NoteImage3H mania-noteSH png
+NC 7 NoteImage4H mania-note1H png
+NC 7 NoteImage5H mania-note2H png
+NC 7 NoteImage6H mania-note1H png
+NC 7 NoteImage0T mania-note1T png
+NC 7 NoteImage1T mania-note2T png
+NC 7 NoteImage2T mania-note1T png
+NC 7 NoteImage3T mania-noteST png
+NC 7 NoteImage4T mania-note1T png
+NC 7 NoteImage5T mania-note2T png
+NC 7 NoteImage6T mania-note1T png
+NC 7 NoteImage0L mania-note1L png
+NC 7 NoteImage1L mania-note2L png
+NC 7 NoteImage2L mania-note1L png
+NC 7 NoteImage3L mania-noteSL png
+NC 7 NoteImage4L mania-note1L png
+NC 7 NoteImage5L mania-note2L png
+NC 7 NoteImage6L mania-note1L png
 
 ===> 7K - Hitbursts
 NC 7 Hit0    mania-hit0    png
