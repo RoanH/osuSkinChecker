@@ -573,7 +573,7 @@ public class SkinChecker{
 		imagesMap.put("Menu", readDataFile("menu.txt", false));
 		imagesMap.put("osu!", readDataFile("osu.txt", false));
 		imagesMap.put("Taiko", readDataFile("taiko.txt", false));
-		//imagesMap.put("Mania", readDataFile("mania.txt", false));
+		imagesMap.put("Mania", readDataFile("mania.txt", false));
 		imagesMap.put("Catch", readDataFile("catch.txt", false));
 		imagesMap.put("Miscellaneous", readDataFile("misc.txt", false));
 		imagesMap.put("Gameplay", readDataFile("gameplay.txt", false));
