@@ -341,22 +341,54 @@ NC 8 LightingL    lightingL          png
 ===> 8K - Keys
 C 8 KeyImage0 mania-key1 png
 C 8 KeyImage1 mania-key2 png
+C 8 KeyImage2 mania-key1 png
+C 8 KeyImage3 mania-key2 png
+C 8 KeyImage4 mania-key2 png
+C 8 KeyImage5 mania-key1 png
+C 8 KeyImage6 mania-key2 png
+C 8 KeyImage7 mania-key1 png
 C 8 KeyImage0D mania-key1D png
 C 8 KeyImage1D mania-key2D png
+C 8 KeyImage2D mania-key1D png
+C 8 KeyImage3D mania-key2D png
+C 8 KeyImage4D mania-key2D png
+C 8 KeyImage5D mania-key1D png
+C 8 KeyImage6D mania-key2D png
+C 8 KeyImage7D mania-key1D png
 
 ===> 8K - Notes
-NC 0831 png mania-note1
-NC 0831 png mania-note2
-NC 0831 png mania-noteS
-NC 0832 png mania-note1H
-NC 0832 png mania-note2H
-NC 0832 png mania-noteSH
-NC 0833 png mania-note1T
-NC 0833 png mania-note2T
-NC 0833 png mania-noteST
-NC 0834 png mania-note1L
-NC 0834 png mania-note2L
-NC 0834 png mania-noteSL
+NC 8 NoteImage0  mania-note1  png
+NC 8 NoteImage1  mania-note2  png
+NC 8 NoteImage2  mania-note1  png
+NC 8 NoteImage3  mania-note2  png
+NC 8 NoteImage4  mania-note2  png
+NC 8 NoteImage5  mania-note1  png
+NC 8 NoteImage6  mania-note2  png
+NC 8 NoteImage7  mania-note1  png
+NC 8 NoteImage0H mania-note1H png
+NC 8 NoteImage1H mania-note2H png
+NC 8 NoteImage2H mania-note1H png
+NC 8 NoteImage3H mania-note2H png
+NC 8 NoteImage4H mania-note2H png
+NC 8 NoteImage5H mania-note1H png
+NC 8 NoteImage6H mania-note2H png
+NC 8 NoteImage7H mania-note1H png
+NC 8 NoteImage0T mania-note1T png
+NC 8 NoteImage1T mania-note2T png
+NC 8 NoteImage2T mania-note1T png
+NC 8 NoteImage3T mania-note2T png
+NC 8 NoteImage4T mania-note2T png
+NC 8 NoteImage5T mania-note1T png
+NC 8 NoteImage6T mania-note2T png
+NC 8 NoteImage7T mania-note1T png
+NC 8 NoteImage0L mania-note1L png
+NC 8 NoteImage1L mania-note2L png
+NC 8 NoteImage2L mania-note1L png
+NC 8 NoteImage3L mania-note2L png
+NC 8 NoteImage4L mania-note2L png
+NC 8 NoteImage5L mania-note1L png
+NC 8 NoteImage6L mania-note2L png
+NC 8 NoteImage7L mania-note1L png
 
 ===> 8K - Hitbursts
 NC 8 Hit0    mania-hit0    png
@@ -378,26 +410,10 @@ NC 9 LightingN    lightingN          png
 NC 9 LightingL    lightingL          png
 
 ===> 9K - Keys
-C 9 KeyImage0 mania-key1 png
-C 9 KeyImage1 mania-key2 png
-C 9 KeyImage4 mania-keyS png
-C 9 KeyImage0D mania-key1D png
-C 9 KeyImage1D mania-key2D png
-C 9 KeyImage4D mania-keySD png
+
 
 ===> 9K - Notes
-NC 0931 png mania-note1
-NC 0931 png mania-note2
-NC 0931 png mania-noteS
-NC 0932 png mania-note1H
-NC 0932 png mania-note2H
-NC 0932 png mania-noteSH
-NC 0933 png mania-note1T
-NC 0933 png mania-note2T
-NC 0933 png mania-noteST
-NC 0934 png mania-note1L
-NC 0934 png mania-note2L
-NC 0934 png mania-noteSL
+
 
 ===> 9K - Hitbursts
 NC 9 Hit0    mania-hit0    png
@@ -419,26 +435,10 @@ NC 10 LightingN    lightingN          png
 NC 10 LightingL    lightingL          png
 
 ===> 10K - Keys
-C 1021 png mania-key1
-C 1021 png mania-key2
-C 1021 png mania-keyS
-C 1022 png mania-key1D
-C 1022 png mania-key2D
-C 1022 png mania-keySD
+
 
 ===> 10K - Notes
-NC 1031 png mania-note1
-NC 1031 png mania-note2
-NC 1031 png mania-noteS
-NC 1032 png mania-note1H
-NC 1032 png mania-note2H
-NC 1032 png mania-noteSH
-NC 1033 png mania-note1T
-NC 1033 png mania-note2T
-NC 1033 png mania-noteST
-NC 1034 png mania-note1L
-NC 1034 png mania-note2L
-NC 1034 png mania-noteSL
+
 
 ===> 10K - Hitbursts
 NC 10 Hit0    mania-hit0    png
