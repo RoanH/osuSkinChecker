@@ -581,7 +581,6 @@ public class SkinChecker{
 		soundsMap.put("Menu", readDataFile("menu-sounds.txt", true));
 		soundsMap.put("osu!", readDataFile("osu-sounds.txt", true));
 		soundsMap.put("Taiko", readDataFile("taiko-sounds.txt", true));
-		//readDataFile("mania-extra.txt", false);
 	}
 
 	/**
