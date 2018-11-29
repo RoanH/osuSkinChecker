@@ -45,9 +45,17 @@ public final class ImageInfo implements Info{
 	 * integer <code>>= 0</code>.
 	 */
 	protected boolean variableWithoutDash = false;
-	//TODO
+	/**
+	 * The skin.ini setting the custom path is tied to
+	 */
 	protected String customProperty = null;
+	/**
+	 * The default resource location for the custom path
+	 */
 	protected String customDefault = null;
+	/**
+	 * The mania key count this custom path setting is for
+	 */
 	protected int customKeyCount = -1;
 	/**
 	 * Boolean to store whether or not a SD image
@@ -101,6 +109,9 @@ public final class ImageInfo implements Info{
 	 * of frames in the animation
 	 */
 	protected int frames;
+	/**
+	 * Full name custom path included for this image
+	 */
 	private String fullName = null;
 
 	/**
