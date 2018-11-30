@@ -212,7 +212,7 @@ public final class ImageInfo implements Info{
 				for(String ext : extensions){
 					setFullName();
 					File file;
-					if((file = checkForFile(SkinChecker.skinFolder, name, false, ext, variableWithDash, variableWithoutDash)) != null){
+					if((file = checkForFile(SkinChecker.skinFolder, fullName, false, ext, variableWithDash, variableWithoutDash)) != null){
 						SkinChecker.allFiles.remove(file);
 						hasSD = true;
 						break;
