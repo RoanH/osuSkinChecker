@@ -49,7 +49,3 @@ C ComboPrefix score png -6
 C ComboPrefix score png -7
 C ComboPrefix score png -8
 C ComboPrefix score png -9
-C ComboPrefix score png -comma
-C ComboPrefix score png -dot
-C ComboPrefix score png -percent
-C ComboPrefix score png -x
