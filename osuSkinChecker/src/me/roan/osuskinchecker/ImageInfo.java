@@ -343,14 +343,21 @@ public final class ImageInfo implements Info{
 			animated = true;
 			SkinChecker.allFiles.remove(match);
 			int c = 1;
-			File f = null;
+			File fhd;
 			File fsd;
-			while((fsd = new File(folder, name + "-" + c + "." + ext)).exists() || (f = new File(folder, name + "-" + c + "@2x." + ext)).exists()){
+			while(true){
+				fsd = new File(folder, name + "-" + c + "." + ext);
+				fhd = new File(folder, name + "-" + c + "@2x." + ext);
+				
+				if(!fsd.exists() && !fhd.exists()){
+					break;
+				}
+				
 				if(!hd){
 					empty = empty ? isEmptyImage(fsd) : false;
 				}
 				SkinChecker.allFiles.remove(fsd);
-				SkinChecker.allFiles.remove(f);
+				SkinChecker.allFiles.remove(fhd);
 				c++;
 			}
 			frames = c;
@@ -362,14 +369,21 @@ public final class ImageInfo implements Info{
 			animated = true;
 			SkinChecker.allFiles.remove(match);
 			int c = 1;
-			File f = null;
+			File fhd;
 			File fsd;
-			while((fsd = new File(folder, name + c + "." + ext)).exists() || (f = new File(folder, name + c + "@2x." + ext)).exists()){
+			while(true){
+				fsd = new File(folder, name + c + "." + ext);
+				fhd = new File(folder, name + c + "@2x." + ext);
+				
+				if(!fsd.exists() && !fhd.exists()){
+					break;
+				}
+				
 				if(!hd){
 					empty = empty ? isEmptyImage(fsd) : false;
 				}
 				SkinChecker.allFiles.remove(fsd);
-				SkinChecker.allFiles.remove(f);
+				SkinChecker.allFiles.remove(fhd);
 				c++;
 			}
 			frames = c;
