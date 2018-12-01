@@ -23,16 +23,16 @@ Format for the .txt files that contain all the data about all the files.
        set in the skin.ini and therefore might not exist in the root folder of the skin.
        If the file could not be found in the root folder of the skin the custom path set
        in the skin.ini file is checked.
-   P - Same as C but instead only the folder name can be specified in the skin.ini
-       and not the filename.
+   P - Special variant of C where before the other properties is the mania key count.
    O - Indicates the spinner style used if this image is for a specific spinner style. Has
        to be followed by a boolean that indicates the style. True indicates the old style
        and false indicates the new style.
    - - A dash means that no special options apply to the file.
 
-6. If the C or P option is used then the options section has to be followed directly by an
-   integer specifying the id of the skin.ini property that specifies the custom location for
-   the file. The id section should be omitted for files that don't have the C or P option.
+6. If the C or P option is used then the options section has to be followed directly by the
+   name of the skin.ini property that specifies the custom location for
+   the file and by the default name of the setting. Also the default name part should be
+   omitted from the name for this item.
    
 7. The extension section is a list of extension that are allowed for the file. If more then on 
    extension is possible they should be separated by a , (comma) and not spaces should be used.

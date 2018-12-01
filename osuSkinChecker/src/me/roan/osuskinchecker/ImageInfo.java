@@ -46,22 +46,17 @@ public final class ImageInfo implements Info{
 	 */
 	protected boolean variableWithoutDash = false;
 	/**
-	 * Whether or not the image could be located in a 
-	 * different folder relative to the base folder
+	 * The skin.ini setting the custom path is tied to
 	 */
-	private boolean customPath = false;
+	protected String customProperty = null;
 	/**
-	 * Whether or not the image file itself could
-	 * be located somewhere else relative to the base folder
+	 * The default resource location for the custom path
 	 */
-	private boolean customPathPrefix = false;
+	protected String customDefault = null;
 	/**
-	 * If there is a possible custom path for the file
-	 * described by this object then this ID specifies
-	 * the alternative location to search for a matching
-	 * file
+	 * The mania key count this custom path setting is for
 	 */
-	private int customID = -1;
+	protected int customKeyCount = -1;
 	/**
 	 * Boolean to store whether or not a SD image
 	 * exists that matches the criteria specified
@@ -114,6 +109,14 @@ public final class ImageInfo implements Info{
 	 * of frames in the animation
 	 */
 	protected int frames;
+	/**
+	 * Full name custom path included for this image
+	 */
+	private String fullName = null;
+	/**
+	 * Whether or not this image is empty
+	 */
+	private boolean empty = true;
 
 	/**
 	 * Creates an information object
@@ -124,7 +127,8 @@ public final class ImageInfo implements Info{
 	 *        for this information object
 	 */
 	public ImageInfo(String line){
-		String[] data = line.split(" ");
+		String[] data = line.split(" +");
+		int offset = 0;
 		if(!data[0].equals("-")){
 			char[] args = data[0].toUpperCase(Locale.ROOT).toCharArray();
 			for(char option : args){
@@ -139,29 +143,34 @@ public final class ImageInfo implements Info{
 					singleImage = true;
 					break;
 				case 'C':
-					customPath = true;
-					customID = Integer.parseInt(data[1]);
+					customProperty = data[1];
+					customDefault = data[2];
+					offset += 2;
 					break;
 				case 'P':
-					customPathPrefix = true;
-					customID = Integer.parseInt(data[1]);
+					customKeyCount = Integer.parseInt(data[1]);
+					customProperty = data[2];
+					customDefault = data[3];
+					offset += 3;
 					break;
 				case 'L':
 					legacy = true;
 					break;
 				case 'O':
 					spinner = Boolean.parseBoolean(data[1]);
+					offset++;
 					break;
 				}
 			}
 		}
-		this.extensions = data[1 + ((customPath || customPathPrefix || spinner != null) ? 1 : 0)].split(",");
-		this.name = data[2 + ((customPath || customPathPrefix || spinner != null) ? 1 : 0)];
+		this.extensions = data[1 + offset].split(",");
+		this.name = 2 + offset < data.length ? data[2 + offset] : "";
 	}
 
 	@Override
 	public String toString(){
-		return name;
+		setFullName();
+		return fullName;
 	}
 
 	@Override
@@ -171,6 +180,8 @@ public final class ImageInfo implements Info{
 		ignored = false;
 		animated = false;
 		ignore = false;
+		fullName = null;
+		empty = true;
 		hasSDVersion();
 		hasHDVersion();
 	}
@@ -204,8 +215,9 @@ public final class ImageInfo implements Info{
 		}else{
 			if(hasSD == null){
 				for(String ext : extensions){
+					setFullName();
 					File file;
-					if((file = checkForFile(SkinChecker.skinFolder, name, false, ext, variableWithDash, variableWithoutDash, customPath, customPathPrefix)) != null){
+					if((file = checkForFile(SkinChecker.skinFolder, fullName, false, ext, variableWithDash, variableWithoutDash)) != null){
 						SkinChecker.allFiles.remove(file);
 						hasSD = true;
 						break;
@@ -243,8 +255,9 @@ public final class ImageInfo implements Info{
 			}
 			if(hasHD == null){
 				for(String ext : extensions){
+					setFullName();
 					File file;
-					if((file = checkForFile(SkinChecker.skinFolder, name, true, ext, variableWithDash, variableWithoutDash, customPath, customPathPrefix)) != null){
+					if((file = checkForFile(SkinChecker.skinFolder, fullName, true, ext, variableWithDash, variableWithoutDash)) != null){
 						SkinChecker.allFiles.remove(file);
 						hasHD = true;
 						break;
@@ -255,6 +268,21 @@ public final class ImageInfo implements Info{
 				}
 			}
 			return hasHD ? "Yes" : "No";
+		}
+	}
+	
+	/**
+	 * Sets the full name for this file, this combines the name
+	 * of the image file with custom paths in the skin.ini
+	 */
+	private final void setFullName(){
+		if(fullName == null){
+			String customPath = SkinChecker.resolveCustomPath(customProperty, customDefault, customKeyCount);
+			if(customPath != null){
+				fullName = customPath.replace("/", File.separator) + name;
+			}else{
+				fullName = name;
+			}
 		}
 	}
 
@@ -275,20 +303,16 @@ public final class ImageInfo implements Info{
 	 *        image can exist, where extra files are named by adding
 	 *        <code>n</code> to the name. Where <code>n</code> is an
 	 *        integer <code>>= 0</code>.
-	 * @param custom Whether or not the image could be located in a 
-	 *        different folder relative to the base folder.
-	 * @param customPrefix Whether or not the image file itself could
-	 *        be located somewhere else relative to the base folder.
 	 * @return A file that matches all the criteria or <code>null</code>
 	 *         if none were found.
 	 */
-	private File checkForFile(File folder, String name, boolean hd, final String ext, boolean variableDash, boolean variableNoDash, boolean custom, boolean customPrefix){
+	private File checkForFile(File folder, String name, boolean hd, final String ext, boolean variableDash, boolean variableNoDash){
 		String extension;
 		File match = null;
 		if(hd){
 			if(hasSD == null || hasSD == true){
-				File sdver = checkForFile(folder, name, false, ext, variableDash, variableNoDash, custom, customPrefix);
-				if(sdver != null && isEmptyImage(sdver)){
+				File sdver = checkForFile(folder, name, false, ext, variableDash, variableNoDash);
+				if(sdver != null && empty){
 					ignored = true;
 				}
 			}
@@ -313,22 +337,38 @@ public final class ImageInfo implements Info{
 		}
 
 		if(variableDash && (match = new File(folder, name + "-0" + extension)).exists()){
+			if(!hd){
+				empty = empty ? isEmptyImage(match) : false;
+			}
 			animated = true;
 			SkinChecker.allFiles.remove(match);
 			int c = 1;
-			File f;
-			while((f = new File(folder, name + "-" + c + "." + ext)).exists() || (f = new File(folder, name + "-" + c + "@2x." + ext)).exists()){
+			File f = null;
+			File fsd;
+			while((fsd = new File(folder, name + "-" + c + "." + ext)).exists() || (f = new File(folder, name + "-" + c + "@2x." + ext)).exists()){
+				if(!hd){
+					empty = empty ? isEmptyImage(fsd) : false;
+				}
+				SkinChecker.allFiles.remove(fsd);
 				SkinChecker.allFiles.remove(f);
 				c++;
 			}
 			frames = c;
 		}
 		if(variableNoDash && (match = new File(folder, name + "0" + extension)).exists()){
+			if(!hd){
+				empty = empty ? isEmptyImage(match) : false;
+			}
 			animated = true;
 			SkinChecker.allFiles.remove(match);
 			int c = 1;
-			File f;
-			while((f = new File(folder, name + c + "." + ext)).exists() || (f = new File(folder, name + c + "@2x." + ext)).exists()){
+			File f = null;
+			File fsd;
+			while((fsd = new File(folder, name + c + "." + ext)).exists() || (f = new File(folder, name + c + "@2x." + ext)).exists()){
+				if(!hd){
+					empty = empty ? isEmptyImage(fsd) : false;
+				}
+				SkinChecker.allFiles.remove(fsd);
 				SkinChecker.allFiles.remove(f);
 				c++;
 			}
@@ -336,6 +376,7 @@ public final class ImageInfo implements Info{
 		}
 		File orig = new File(folder, name + extension);
 		if(orig.exists()){
+			empty = empty ? isEmptyImage(orig) : false;
 			SkinChecker.allFiles.remove(orig);
 		}
 		if(animated && match != null){
@@ -344,40 +385,32 @@ public final class ImageInfo implements Info{
 			return orig;
 		}
 
-		if((custom || customPrefix) && this.customID != -1){
-			if(customPrefix){
-				File file = checkForFile(SkinChecker.customPathing.get(this.customID), name, hd, ext, variableDash, variableNoDash, false, false);
-				SkinChecker.allFiles.remove(file);
-				return file;
-			}else{
-				File f = SkinChecker.customPathing.get(this.customID);
-				File file = (f == null ? null : checkForFile(f.getParentFile(), f.getName(), hd, ext, variableDash, variableNoDash, false, false));
-				SkinChecker.allFiles.remove(file);
-				return file;
-			}
-		}
 		return null;
 	}
 
 	/**
-	 * Check if an image is empty.
-	 * An Image is considered empty if it's
-	 * size is under 4096 bytes and it's dimensions
-	 * are 1 by 1.
+	 * Checks if an image is empty.
+	 * An Image is considered empty if 
+	 * it's dimensions are 1 by 1 or if
+	 * it does not exist.
 	 * @param img The image file to check
 	 * @return Whether or not the image is empty
 	 */
 	private static boolean isEmptyImage(File img){
-		try{
-			Iterator<ImageReader> readers = ImageIO.getImageReadersBySuffix(img.getName().substring(img.getName().lastIndexOf('.') + 1));
-			while(readers.hasNext()){
-				ImageReader reader = readers.next();
-				reader.setInput(ImageIO.createImageInputStream(img));
-				return reader.getWidth(0) == 1 && reader.getHeight(0) == 1;
+		if(img.exists()){
+			try{
+				Iterator<ImageReader> readers = ImageIO.getImageReadersBySuffix(img.getName().substring(img.getName().lastIndexOf('.') + 1));
+				while(readers.hasNext()){
+					ImageReader reader = readers.next();
+					reader.setInput(ImageIO.createImageInputStream(img));
+					return reader.getWidth(0) == 1 && reader.getHeight(0) == 1;
+				}
+				return false;
+			}catch(IOException e){
+				return false;
 			}
-			return false;
-		}catch(IOException e){
-			return false;
+		}else{
+			return true;
 		}
 	}
 }

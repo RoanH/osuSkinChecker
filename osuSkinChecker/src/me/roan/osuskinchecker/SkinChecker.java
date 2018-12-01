@@ -10,7 +10,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -51,6 +50,7 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
+import me.roan.osuskinchecker.ini.Setting;
 import me.roan.osuskinchecker.ini.SkinIni;
 import me.roan.osuskinchecker.ini.SkinIniTab;
 import me.roan.osuskinchecker.ini.SplitLayout;
@@ -100,11 +100,6 @@ public class SkinChecker{
 	 * images that have an empty SD image
 	 */
 	protected static boolean ignoreEmpty = true;
-	/**
-	 * Map, mapping all the custom path ID's to the File
-	 * specified in the skin.ini
-	 */
-	protected static Map<Integer, File> customPathing = new HashMap<Integer, File>();
 	/**
 	 * List of all the tables model that is used to
 	 * update the tables when the filter changes
@@ -489,8 +484,6 @@ public class SkinChecker{
 		addAllFiles(skinFolder);
 		allFiles.remove(iniFile);
 
-		parseINI();
-
 		for(Info i : info){
 			i.reset();
 		}
@@ -519,82 +512,24 @@ public class SkinChecker{
 			}
 		}
 	}
-
+	
 	/**
-	 * This subroutine read the skin.ini file and maps
-	 * custom file paths to a map with a specific ID
-	 * @throws IOException When an IOException occurs
+	 * Resolves the custom path defined in the skin.ini
+	 * for the given setting (if it exists).
+	 * @param name The name of the setting to read the path from
+	 * @param def The value to return if no custom path was set
+	 * @param customKeyCount 
+	 * @return The custom path if set, the given defaul value otherwise
 	 */
-	@Deprecated
-	private static void parseINI() throws IOException{
-		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(skinFolder, "skin.ini"))));
-		String line;
-		while((line = reader.readLine()) != null){
-			if(line.startsWith("ScorePrefix:") || line.startsWith("ComboPrefix:")){
-				customPathing.put(2, new File(skinFolder, line.substring(12).trim()));
-			}else if(line.startsWith("HitCirclePrefix:")){
-				customPathing.put(1, new File(skinFolder, line.substring(16).trim()));
-			}else if(line.trim().equals("[Mania]")){
-				int keys = -1;
-				while(true){
-					reader.mark(100);
-					line = reader.readLine();
-					if(line == null || line.startsWith("[")){
-						reader.reset();
-						break;
-					}
-					String[] args = line.split(":");
-					if(args[0].startsWith("Keys")){
-						keys = Integer.parseInt(args[1].trim());
-					}else if(args[0].startsWith("KeyImage")){
-						if(args[0].endsWith("D")){
-							customPathing.put(keys * 100 + 22 + 10000 * Integer.parseInt(args[0].substring(args[0].length() - 2, args[0].length() - 1)), new File(skinFolder, args[1].trim()));
-						}else{
-							customPathing.put(keys * 100 + 21 + 10000 * Integer.parseInt(args[0].substring(args[0].length() - 1)), new File(skinFolder, args[1].trim()));
-						}
-					}else if(args[0].startsWith("NoteImage")){
-						if(args[0].endsWith("H")){
-							customPathing.put(keys * 100 + 32 + 10000 * Integer.parseInt(args[0].substring(args[0].length() - 2, args[0].length() - 1)), new File(skinFolder, args[1].trim()));
-						}else if(args[0].endsWith("T")){
-							customPathing.put(keys * 100 + 33 + 10000 * Integer.parseInt(args[0].substring(args[0].length() - 2, args[0].length() - 1)), new File(skinFolder, args[1].trim()));
-						}else if(args[0].endsWith("L")){
-							customPathing.put(keys * 100 + 34 + 10000 * Integer.parseInt(args[0].substring(args[0].length() - 2, args[0].length() - 1)), new File(skinFolder, args[1].trim()));
-						}else{
-							customPathing.put(keys * 100 + 31 + 10000 * Integer.parseInt(args[0].substring(args[0].length() - 1)), new File(skinFolder, args[1].trim()));
-						}
-					}else if(args[0].startsWith("StageLeft")){
-						customPathing.put(keys * 100 + 11, new File(skinFolder, args[1].trim()));
-					}else if(args[0].startsWith("StageRight")){
-						customPathing.put(keys * 100 + 12, new File(skinFolder, args[1].trim()));
-					}else if(args[0].startsWith("StageBottom")){
-						customPathing.put(keys * 100 + 13, new File(skinFolder, args[1].trim()));
-					}else if(args[0].startsWith("StageHint")){
-						customPathing.put(keys * 100 + 14, new File(skinFolder, args[1].trim()));
-					}else if(args[0].startsWith("StageLight")){
-						customPathing.put(keys * 100 + 15, new File(skinFolder, args[1].trim()));
-					}else if(args[0].startsWith("LightingN")){
-						customPathing.put(keys * 100 + 17, new File(skinFolder, args[1].trim()));
-					}else if(args[0].startsWith("LightingL")){
-						customPathing.put(keys * 100 + 18, new File(skinFolder, args[1].trim()));
-					}else if(args[0].startsWith("WarningArrow")){
-						customPathing.put(keys * 100 + 16, new File(skinFolder, args[1].trim()));
-					}else if(args[0].startsWith("Hit0")){
-						customPathing.put(keys * 100 + 41, new File(skinFolder, args[1].trim()));
-					}else if(args[0].startsWith("Hit50")){
-						customPathing.put(keys * 100 + 42, new File(skinFolder, args[1].trim()));
-					}else if(args[0].startsWith("Hit100")){
-						customPathing.put(keys * 100 + 43, new File(skinFolder, args[1].trim()));
-					}else if(args[0].startsWith("Hit200")){
-						customPathing.put(keys * 100 + 44, new File(skinFolder, args[1].trim()));
-					}else if(args[0].startsWith("Hit300")){
-						customPathing.put(keys * 100 + 45, new File(skinFolder, args[1].trim()));
-					}else if(args[0].startsWith("Hit300g")){
-						customPathing.put(keys * 100 + 6, new File(skinFolder, args[1].trim()));
-					}
-				}
+	protected static String resolveCustomPath(String name, String def, int customKeyCount){
+		Setting<?> setting = skinIni.find(name, customKeyCount);
+		if(setting != null && setting.isEnabled()){
+			Object value = setting.getValue();
+			if(value instanceof String){
+				return (String)value;
 			}
 		}
-		reader.close();
+		return def;
 	}
 
 	/**
@@ -646,7 +581,6 @@ public class SkinChecker{
 		soundsMap.put("Menu", readDataFile("menu-sounds.txt", true));
 		soundsMap.put("osu!", readDataFile("osu-sounds.txt", true));
 		soundsMap.put("Taiko", readDataFile("taiko-sounds.txt", true));
-		readDataFile("mania-extra.txt", false);
 	}
 
 	/**

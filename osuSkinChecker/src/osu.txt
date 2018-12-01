@@ -1,14 +1,14 @@
 ===> Hitcircle Numbers
-P 1 png default-0
-P 1 png default-1
-P 1 png default-2
-P 1 png default-3
-P 1 png default-4
-P 1 png default-5
-P 1 png default-6
-P 1 png default-7
-P 1 png default-8
-P 1 png default-9
+C HitCirclePrefix default png -0
+C HitCirclePrefix default png -1
+C HitCirclePrefix default png -2
+C HitCirclePrefix default png -3
+C HitCirclePrefix default png -4
+C HitCirclePrefix default png -5
+C HitCirclePrefix default png -6
+C HitCirclePrefix default png -7
+C HitCirclePrefix default png -8
+C HitCirclePrefix default png -9
 
 ===> Hitcircle
 - png approachcircle

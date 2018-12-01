@@ -74,7 +74,7 @@ public class Setting<T>{
 	 * Gets the value of this setting
 	 * @return The current value of this setting
 	 */
-	protected T getValue(){
+	public T getValue(){
 		return value;
 	}
 	
@@ -109,7 +109,7 @@ public class Setting<T>{
 	 * @return Whether this setting is
 	 *         enabled or not
 	 */
-	protected boolean isEnabled(){
+	public boolean isEnabled(){
 		return enabled;
 	}
 	
