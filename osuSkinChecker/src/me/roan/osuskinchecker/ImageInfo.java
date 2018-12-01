@@ -113,6 +113,10 @@ public final class ImageInfo implements Info{
 	 * Full name custom path included for this image
 	 */
 	private String fullName = null;
+	/**
+	 * Whether or not this image is empty
+	 */
+	private boolean empty = true;
 
 	/**
 	 * Creates an information object
@@ -177,6 +181,7 @@ public final class ImageInfo implements Info{
 		animated = false;
 		ignore = false;
 		fullName = null;
+		empty = true;
 		hasSDVersion();
 		hasHDVersion();
 	}
@@ -307,7 +312,7 @@ public final class ImageInfo implements Info{
 		if(hd){
 			if(hasSD == null || hasSD == true){
 				File sdver = checkForFile(folder, name, false, ext, variableDash, variableNoDash);
-				if(sdver != null && isEmptyImage(sdver)){
+				if(sdver != null && empty){
 					ignored = true;
 				}
 			}
@@ -332,22 +337,38 @@ public final class ImageInfo implements Info{
 		}
 
 		if(variableDash && (match = new File(folder, name + "-0" + extension)).exists()){
+			if(!hd){
+				empty = empty ? isEmptyImage(match) : false;
+			}
 			animated = true;
 			SkinChecker.allFiles.remove(match);
 			int c = 1;
-			File f;
-			while((f = new File(folder, name + "-" + c + "." + ext)).exists() || (f = new File(folder, name + "-" + c + "@2x." + ext)).exists()){
+			File f = null;
+			File fsd;
+			while((fsd = new File(folder, name + "-" + c + "." + ext)).exists() || (f = new File(folder, name + "-" + c + "@2x." + ext)).exists()){
+				if(!hd){
+					empty = empty ? isEmptyImage(fsd) : false;
+				}
+				SkinChecker.allFiles.remove(fsd);
 				SkinChecker.allFiles.remove(f);
 				c++;
 			}
 			frames = c;
 		}
 		if(variableNoDash && (match = new File(folder, name + "0" + extension)).exists()){
+			if(!hd){
+				empty = empty ? isEmptyImage(match) : false;
+			}
 			animated = true;
 			SkinChecker.allFiles.remove(match);
 			int c = 1;
-			File f;
-			while((f = new File(folder, name + c + "." + ext)).exists() || (f = new File(folder, name + c + "@2x." + ext)).exists()){
+			File f = null;
+			File fsd;
+			while((fsd = new File(folder, name + c + "." + ext)).exists() || (f = new File(folder, name + c + "@2x." + ext)).exists()){
+				if(!hd){
+					empty = empty ? isEmptyImage(fsd) : false;
+				}
+				SkinChecker.allFiles.remove(fsd);
 				SkinChecker.allFiles.remove(f);
 				c++;
 			}
@@ -355,6 +376,7 @@ public final class ImageInfo implements Info{
 		}
 		File orig = new File(folder, name + extension);
 		if(orig.exists()){
+			empty = empty ? isEmptyImage(orig) : false;
 			SkinChecker.allFiles.remove(orig);
 		}
 		if(animated && match != null){
@@ -367,24 +389,28 @@ public final class ImageInfo implements Info{
 	}
 
 	/**
-	 * Check if an image is empty.
-	 * An Image is considered empty if it's
-	 * size is under 4096 bytes and it's dimensions
-	 * are 1 by 1.
+	 * Checks if an image is empty.
+	 * An Image is considered empty if 
+	 * it's dimensions are 1 by 1 or if
+	 * it does not exist.
 	 * @param img The image file to check
 	 * @return Whether or not the image is empty
 	 */
 	private static boolean isEmptyImage(File img){
-		try{
-			Iterator<ImageReader> readers = ImageIO.getImageReadersBySuffix(img.getName().substring(img.getName().lastIndexOf('.') + 1));
-			while(readers.hasNext()){
-				ImageReader reader = readers.next();
-				reader.setInput(ImageIO.createImageInputStream(img));
-				return reader.getWidth(0) == 1 && reader.getHeight(0) == 1;
+		if(img.exists()){
+			try{
+				Iterator<ImageReader> readers = ImageIO.getImageReadersBySuffix(img.getName().substring(img.getName().lastIndexOf('.') + 1));
+				while(readers.hasNext()){
+					ImageReader reader = readers.next();
+					reader.setInput(ImageIO.createImageInputStream(img));
+					return reader.getWidth(0) == 1 && reader.getHeight(0) == 1;
+				}
+				return false;
+			}catch(IOException e){
+				return false;
 			}
-			return false;
-		}catch(IOException e){
-			return false;
+		}else{
+			return true;
 		}
 	}
 }
