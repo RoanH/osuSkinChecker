@@ -593,7 +593,7 @@ P 12 KeyImage7D mania-key1D png
 P 12 KeyImage8D mania-key2D png
 P 12 KeyImage9D mania-key1D png
 P 12 KeyImage10D mania-key2D png
-P 12 KeyImage10D mania-key1D png
+P 12 KeyImage11D mania-key1D png
 
 ===> 12K - Notes
 NP 12 NoteImage0  mania-note1  png
