@@ -34,7 +34,7 @@ Format for the .txt files that contain all the data about all the files.
    the file and by the default name of the setting. Also the default name part should be
    omitted from the name for this item.
    
-7. The extension section is a list of extension that are allowed for the file. If more then on 
-   extension is possible they should be separated by a , (comma) and not spaces should be used.
+7. The extension section is a list of extensions that are allowed for the file. If more then one 
+   extension is possible they should be separated by a , (comma) and no spaces should be used.
    
 8. The filename of the file is the name of the file without the extension, hd indicator and animation indicators.
