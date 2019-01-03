@@ -380,12 +380,12 @@ public class SkinIni{
 								if(line.startsWith("Keys:")){
 									try{
 										int keys = Integer.parseInt(line.substring(5).trim());
-										if(keys >= 1 && keys <= ManiaIni.MAX_KEYS){
+										if(keys >= 1 && keys <= ManiaIni.MAX_KEYS && !(keys > 10 && keys % 2 == 0)){
 											mania[keys - 1] = (maniaIni = new ManiaIni(keys));
 											section.mania = maniaIni;
 											break;
 										}else{
-											throw new IllegalArgumentException("Unsupported key count: " + keys);
+											throw new IllegalArgumentException("Invalid key count: " + keys);
 										}
 									}catch(NumberFormatException e){
 										throw new IllegalArgumentException("Mania key count is not a number!");
@@ -874,7 +874,7 @@ public class SkinIni{
 		 * The maximum key count that will be parsed
 		 * by this program
 		 */
-		protected static final int MAX_KEYS = 10;
+		protected static final int MAX_KEYS = 12;
 		/**
 		 * The key count this mania configuration is for
 		 */
