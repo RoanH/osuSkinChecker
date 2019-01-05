@@ -2,7 +2,6 @@ package me.roan.osuskinchecker.ini;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -24,11 +23,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
-import javax.swing.JSpinner.NumberEditor;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.BevelBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
@@ -1663,13 +1663,38 @@ public class SkinIniTab extends JTabbedPane{
 			field = new JFormattedTextField(setting.getValue());
 			spinner = new JSpinner(new SpinnerNumberModel(setting.getValue(), min, max, 1));
 			this.addComponentListener(this);
+			field.setEnabled(false);
 			this.add(spinner);
+			spinner.addChangeListener((e)->{
+				field.setValue(spinner.getValue());
+			});
+			field.getDocument().addDocumentListener(new DocumentListener(){
+				@Override
+				public void insertUpdate(DocumentEvent e){
+					update();
+				}
+
+				@Override
+				public void removeUpdate(DocumentEvent e){
+					update();
+				}
+
+				@Override
+				public void changedUpdate(DocumentEvent e){
+					update();
+				}
+				
+				private void update(){
+					spinner.setValue(field.getValue());
+					System.out.println(field.getValue());
+				}
+			});
 		}
 		
 		private void setComponent(){
 			if(this.getWidth() < 40){
 				if(!noButtons){
-					this.removeAll();
+					this.removeAll();					
 					this.add(field);
 					noButtons = true;
 				}
