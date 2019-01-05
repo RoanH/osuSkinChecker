@@ -1099,7 +1099,7 @@ public class SkinIniTab extends JTabbedPane{
 			spinner.addChangeListener((event)->{
 				setting.update((double)spinner.getValue());
 			});
-			settings.add(new Spinner(), BorderLayout.CENTER);
+			settings.add(new Spinner<Double>(setting, min, max), BorderLayout.CENTER);
 			if(toggle){
 				JCheckBox enabled = new JCheckBox("", setting.isEnabled());
 				settings.add(enabled, BorderLayout.LINE_START);
@@ -1648,41 +1648,45 @@ public class SkinIniTab extends JTabbedPane{
 		}
 	}
 	
-	private static final class Spinner extends JPanel implements ComponentListener{
+	private static final class Spinner<T extends Number & Comparable<T>> extends JPanel implements ComponentListener{
+		/**
+		 * Serial ID
+		 */
+		private static final long serialVersionUID = -5798808556648418260L;
 		private JSpinner spinner;
 		private JFormattedTextField field;
-		private Component button;
 		private boolean noButtons = false;
 		
-		private Spinner(){
+		private Spinner(Setting<T> setting, T min, T max){
 			super(new BorderLayout());
 			this.setBackground(Color.BLACK);
-			field = new JFormattedTextField();
-			spinner = new JSpinner();
-			for(Component c : spinner.getComponents()){
-				button = c;
-			}
+			field = new JFormattedTextField(setting.getValue());
+			spinner = new JSpinner(new SpinnerNumberModel(setting.getValue(), min, max, 1));
 			this.addComponentListener(this);
 			this.add(spinner);
 		}
 		
 		private void setComponent(){
-			System.out.println(this.getWidth() + " | " + button.getWidth() + " | " + noButtons);
 			if(this.getWidth() < 40){
 				if(!noButtons){
-					System.out.println("Set to field");
 					this.removeAll();
 					this.add(field);
 					noButtons = true;
 				}
 			}else{
 				if(noButtons){
-					System.out.println("Set to spinner");
 					this.removeAll();
 					this.add(spinner);
 					noButtons = false;
 				}
 			}
+		}
+		
+		@Override
+		public void setEnabled(boolean enabled){
+			super.setEnabled(enabled);
+			field.setEnabled(enabled);
+			spinner.setEnabled(enabled);
 		}
 
 		@Override
