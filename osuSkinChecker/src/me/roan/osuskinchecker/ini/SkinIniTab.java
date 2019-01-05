@@ -2,7 +2,10 @@ package me.roan.osuskinchecker.ini;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.regex.Pattern;
@@ -15,11 +18,13 @@ import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
+import javax.swing.JSpinner.NumberEditor;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
@@ -1094,7 +1099,7 @@ public class SkinIniTab extends JTabbedPane{
 			spinner.addChangeListener((event)->{
 				setting.update((double)spinner.getValue());
 			});
-			settings.add(spinner, BorderLayout.CENTER);
+			settings.add(new Spinner(), BorderLayout.CENTER);
 			if(toggle){
 				JCheckBox enabled = new JCheckBox("", setting.isEnabled());
 				settings.add(enabled, BorderLayout.LINE_START);
@@ -1640,6 +1645,61 @@ public class SkinIniTab extends JTabbedPane{
 					fb.remove(offset, length);
 				}
 			}
+		}
+	}
+	
+	private static final class Spinner extends JPanel implements ComponentListener{
+		private JSpinner spinner;
+		private JFormattedTextField field;
+		private Component button;
+		private boolean noButtons = false;
+		
+		private Spinner(){
+			super(new BorderLayout());
+			this.setBackground(Color.BLACK);
+			field = new JFormattedTextField();
+			spinner = new JSpinner();
+			for(Component c : spinner.getComponents()){
+				button = c;
+			}
+			this.addComponentListener(this);
+			this.add(spinner);
+		}
+		
+		private void setComponent(){
+			System.out.println(this.getWidth() + " | " + button.getWidth() + " | " + noButtons);
+			if(this.getWidth() < 40){
+				if(!noButtons){
+					System.out.println("Set to field");
+					this.removeAll();
+					this.add(field);
+					noButtons = true;
+				}
+			}else{
+				if(noButtons){
+					System.out.println("Set to spinner");
+					this.removeAll();
+					this.add(spinner);
+					noButtons = false;
+				}
+			}
+		}
+
+		@Override
+		public void componentResized(ComponentEvent e){
+			setComponent();
+		}
+
+		@Override
+		public void componentMoved(ComponentEvent e){			
+		}
+
+		@Override
+		public void componentShown(ComponentEvent e){			
+		}
+
+		@Override
+		public void componentHidden(ComponentEvent e){			
 		}
 	}
 }
