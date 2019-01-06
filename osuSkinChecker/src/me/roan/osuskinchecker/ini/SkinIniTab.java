@@ -970,10 +970,7 @@ public class SkinIniTab extends JTabbedPane{
 			add(new JLabel(" " + setting.getName() + " (" + hint + "): "));
 			JPanel p = new JPanel(new BorderLayout());
 			JSpinner spinner = new JSpinner(new SpinnerNumberModel((int)setting.getValue(), min, max, 1));
-			p.add(spinner, BorderLayout.CENTER);
-			spinner.addChangeListener((e)->{
-				setting.update((Integer)spinner.getValue());
-			});
+			p.add(new Spinner<Integer>(val->setting.update(val), setting.getValue(), min, max), BorderLayout.CENTER);
 			if(toggle){
 				JCheckBox enabled = new JCheckBox("", setting.isEnabled());
 				spinner.setEnabled(setting.isEnabled());
@@ -1101,7 +1098,7 @@ public class SkinIniTab extends JTabbedPane{
 			spinner.addChangeListener((event)->{
 				setting.update((double)spinner.getValue());
 			});
-			settings.add(new Spinner<Double>(setting, min, max), BorderLayout.CENTER);
+			settings.add(new Spinner<Double>(val->setting.update(val), setting.getValue(), min, max), BorderLayout.CENTER);
 			if(toggle){
 				JCheckBox enabled = new JCheckBox("", setting.isEnabled());
 				settings.add(enabled, BorderLayout.LINE_START);
@@ -1576,12 +1573,8 @@ public class SkinIniTab extends JTabbedPane{
 		private DoubleArray(double[] data){
 			this.setLayout(new GridLayout(1, data.length, 2, 0));
 			for(int i = 0; i < data.length; i++){
-				JSpinner spinner = new JSpinner(new SpinnerNumberModel(data[i], 0.0D, Double.MAX_VALUE, 1.0D));
 				final int field = i;
-				spinner.addChangeListener((e)->{
-					data[field] = (double)spinner.getValue();
-				});
-				this.add(spinner);
+				this.add(new Spinner<Double>(val->data[field] = val, data[field], 0.0D, Double.MAX_VALUE));
 			}
 		}
 	}
@@ -1659,12 +1652,14 @@ public class SkinIniTab extends JTabbedPane{
 		private JFormattedTextField field;
 		private boolean noButtons = false;
 		private boolean ignoreEvents = false;
+		private SpinnerChangeListener<T> listener;
 		
-		private Spinner(Setting<T> setting, T min, T max){
+		private Spinner(SpinnerChangeListener<T> listener, T value, T min, T max){
 			super(new BorderLayout());
+			this.listener = listener;
 			this.setBackground(Color.BLACK);
-			field = new JFormattedTextField(setting.getValue());
-			spinner = new JSpinner(new SpinnerNumberModel(setting.getValue(), min, max, 1));
+			field = new JFormattedTextField(value);
+			spinner = new JSpinner(new SpinnerNumberModel(value, min, max, 1));
 			this.addComponentListener(this);
 			this.add(spinner);
 			spinner.addChangeListener(this);
@@ -1687,11 +1682,13 @@ public class SkinIniTab extends JTabbedPane{
 			}
 		}
 		
+		@SuppressWarnings("unchecked")
 		private void fieldUpdate(){
 			if(!ignoreEvents){
 				ignoreEvents = true;
 				spinner.setValue(field.getValue());
 				ignoreEvents = false;
+				listener.update((T)spinner.getValue());
 			}
 		}
 		
@@ -1719,12 +1716,14 @@ public class SkinIniTab extends JTabbedPane{
 		public void componentHidden(ComponentEvent e){			
 		}
 
+		@SuppressWarnings("unchecked")
 		@Override
 		public void stateChanged(ChangeEvent e){
 			if(!ignoreEvents){
 				ignoreEvents = true;
 				field.setValue(spinner.getValue());
 				ignoreEvents = false;
+				listener.update((T)spinner.getValue());
 			}
 		}
 
@@ -1741,6 +1740,12 @@ public class SkinIniTab extends JTabbedPane{
 		@Override
 		public void changedUpdate(DocumentEvent e){
 			fieldUpdate();			
+		}
+		
+		@FunctionalInterface
+		private static abstract interface SpinnerChangeListener<T>{
+			
+			public abstract void update(T newValue);
 		}
 	}
 }
