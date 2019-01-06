@@ -27,6 +27,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.BevelBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.AttributeSet;
@@ -1648,7 +1650,7 @@ public class SkinIniTab extends JTabbedPane{
 		}
 	}
 	
-	private static final class Spinner<T extends Number & Comparable<T>> extends JPanel implements ComponentListener{
+	private static final class Spinner<T extends Number & Comparable<T>> extends JPanel implements ComponentListener, DocumentListener, ChangeListener{
 		/**
 		 * Serial ID
 		 */
@@ -1656,6 +1658,7 @@ public class SkinIniTab extends JTabbedPane{
 		private JSpinner spinner;
 		private JFormattedTextField field;
 		private boolean noButtons = false;
+		private boolean ignoreEvents = false;
 		
 		private Spinner(Setting<T> setting, T min, T max){
 			super(new BorderLayout());
@@ -1663,32 +1666,9 @@ public class SkinIniTab extends JTabbedPane{
 			field = new JFormattedTextField(setting.getValue());
 			spinner = new JSpinner(new SpinnerNumberModel(setting.getValue(), min, max, 1));
 			this.addComponentListener(this);
-			field.setEnabled(false);
 			this.add(spinner);
-			spinner.addChangeListener((e)->{
-				field.setValue(spinner.getValue());
-			});
-			field.getDocument().addDocumentListener(new DocumentListener(){
-				@Override
-				public void insertUpdate(DocumentEvent e){
-					update();
-				}
-
-				@Override
-				public void removeUpdate(DocumentEvent e){
-					update();
-				}
-
-				@Override
-				public void changedUpdate(DocumentEvent e){
-					update();
-				}
-				
-				private void update(){
-					spinner.setValue(field.getValue());
-					System.out.println(field.getValue());
-				}
-			});
+			spinner.addChangeListener(this);
+			field.getDocument().addDocumentListener(this);
 		}
 		
 		private void setComponent(){
@@ -1704,6 +1684,14 @@ public class SkinIniTab extends JTabbedPane{
 					this.add(spinner);
 					noButtons = false;
 				}
+			}
+		}
+		
+		private void fieldUpdate(){
+			if(!ignoreEvents){
+				ignoreEvents = true;
+				spinner.setValue(field.getValue());
+				ignoreEvents = false;
 			}
 		}
 		
@@ -1729,6 +1717,30 @@ public class SkinIniTab extends JTabbedPane{
 
 		@Override
 		public void componentHidden(ComponentEvent e){			
+		}
+
+		@Override
+		public void stateChanged(ChangeEvent e){
+			if(!ignoreEvents){
+				ignoreEvents = true;
+				field.setValue(spinner.getValue());
+				ignoreEvents = false;
+			}
+		}
+
+		@Override
+		public void insertUpdate(DocumentEvent e){
+			fieldUpdate();
+		}
+
+		@Override
+		public void removeUpdate(DocumentEvent e){
+			fieldUpdate();			
+		}
+
+		@Override
+		public void changedUpdate(DocumentEvent e){
+			fieldUpdate();			
 		}
 	}
 }
