@@ -2,7 +2,9 @@ package me.roan.osuskinchecker.ini;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
+import java.awt.LayoutManager;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
@@ -23,6 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
+import javax.swing.JSpinner.NumberEditor;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
@@ -1696,7 +1699,46 @@ public class SkinIniTab extends JTabbedPane{
 			this.addComponentListener(this);
 			this.add(spinner);
 			spinner.addChangeListener(this);
+			
+			System.out.println("layout: " + spinner.getLayout());
+			LayoutManager mgr = spinner.getLayout();
+			for(Component c : spinner.getComponents()){
+				System.out.println(c);
+				if(!(c instanceof NumberEditor)){
+					c.setVisible(false);
+					mgr.removeLayoutComponent(c);
+					System.out.println("Name: " + c.getName());
+					//"Previous" and "Next" are the names
+					mgr.addLayoutComponent(c.getName(), c);
+				}else{
+					c.setBackground(Color.RED);
+				}
+			}
+			
 			field.getDocument().addDocumentListener(this);
+			((PlainDocument)field.getDocument()).setDocumentFilter(new DocumentFilter(){
+				
+				@Override
+				public void insertString(FilterBypass fb, int offset, String text, AttributeSet attr) throws BadLocationException{
+					replace(fb, offset, 0, text, attr);
+				}
+
+				@SuppressWarnings("unchecked")
+				@Override
+				public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException{
+					String str = fb.getDocument().getText(0, offset) + text + fb.getDocument().getText(offset + length, fb.getDocument().getLength() - offset - length);
+					T obj;
+					System.out.println("huh");
+					if(value instanceof Double){
+						obj = (T)(Number)Double.parseDouble(str);
+					}else{
+						obj = (T)(Number)Integer.parseInt(str);
+					}
+					if(obj.compareTo(min) >= 0 && 0 >= obj.compareTo(max)){
+						fb.replace(offset, length, text, attrs);
+					}
+				}
+			});
 		}
 		
 		private void setComponent(){
@@ -1767,18 +1809,41 @@ public class SkinIniTab extends JTabbedPane{
 
 		@Override
 		public void removeUpdate(DocumentEvent e){
-			fieldUpdate();			
+			fieldUpdate();
 		}
 
 		@Override
 		public void changedUpdate(DocumentEvent e){
-			fieldUpdate();			
+			fieldUpdate();
 		}
 		
 		@FunctionalInterface
 		private static abstract interface SpinnerChangeListener<T>{
 			
 			public abstract void update(T newValue);
+		}
+		
+		private static final class NumberFilter extends DocumentFilter{
+			
+			private Class<? extends Number> type;
+			
+			private NumberFilter(Class<? extends Number> type){
+				this.type = type;
+			}
+			
+			@Override
+			public void insertString(FilterBypass fb, int offset, String text, AttributeSet attr) throws BadLocationException{
+				replace(fb, offset, 0, text, attr);
+			}
+
+			@Override
+			public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException{
+				String str = fb.getDocument().getText(0, offset) + text + fb.getDocument().getText(offset + length, fb.getDocument().getLength() - offset - length);
+				
+				//if(spinner.){
+				//	fb.replace(offset, length, text, attrs);
+				//}
+			}
 		}
 	}
 }
