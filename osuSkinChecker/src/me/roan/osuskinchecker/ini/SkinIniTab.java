@@ -1643,17 +1643,50 @@ public class SkinIniTab extends JTabbedPane{
 		}
 	}
 	
+	/**
+	 * Number spinner that hides its spinner buttons when it
+	 * becomes too small and would obstruct the value
+	 * @author Roan
+	 * @param <T> The number type for this spinner
+	 */
 	private static final class Spinner<T extends Number & Comparable<T>> extends JPanel implements ComponentListener, DocumentListener, ChangeListener{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = -5798808556648418260L;
+		/**
+		 * The spinner used to change the value
+		 * if there is enough space for it
+		 */
 		private JSpinner spinner;
+		/**
+		 * The text field used to change the value
+		 * used when there is not enough space for the spinner
+		 */
 		private JFormattedTextField field;
+		/**
+		 * Whether or not no button are shown at
+		 * the moment. In other words if #spinner or
+		 * #field is currently being displayed.
+		 */
 		private boolean noButtons = false;
+		/**
+		 * Whether to respond to event or not
+		 */
 		private boolean ignoreEvents = false;
+		/**
+		 * The listener to inform of change to this object
+		 */
 		private SpinnerChangeListener<T> listener;
 		
+		/**
+		 * Constructs a new Spinner with the given value
+		 * bounds and listener
+		 * @param listener The listener to inform when the value changes
+		 * @param value The initial value for this spinner
+		 * @param min The minimum value for this spinner
+		 * @param max The maximum value for this spinner
+		 */
 		private Spinner(SpinnerChangeListener<T> listener, T value, T min, T max){
 			super(new BorderLayout());
 			this.listener = listener;
