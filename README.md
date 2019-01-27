@@ -18,7 +18,7 @@ And if you find any bugs feel free to report them (spelling mistakes included :3
 [Runnable Java Archive](https://github.com/RoanH/osuSkinChecker/releases/download/v2.1/SkinChecker-v2.1.jar)
 
 All releases: [releases](https://github.com/RoanH/osuSkinChecker/releases)<br>
-GitHub repository: [repository](https://github.com/RoanH/osuSkinChecker]SkinChecker)<br>
+GitHub repository: [repository](https://github.com/RoanH/osuSkinChecker)<br>
 Forum post: [post](https://osu.ppy.sh/community/forums/topics/617168)
 
 ## History
