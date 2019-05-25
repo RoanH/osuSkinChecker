@@ -1,9 +1,9 @@
 image: openjdk:8
 
 variables:
-   GIT_STRATEGY: clone
-   SSL_SELF_SIGNED: "true"
-   PROJECTNAME: "osuSkinChecker"
+  GIT_STRATEGY: clone
+  SSL_SELF_SIGNED: "true"
+  PROJECTNAME: "osuSkinChecker"
 
 before_script:
   - java -version
@@ -12,7 +12,7 @@ stages:
   - compile
   - status
   - javadoc
-  
+
 pending:
   allow_failure: true
   script:
@@ -33,7 +33,6 @@ failure:
   when: on_failure
   stage: status
 
-
 verify:
   allow_failure: true
   script:
@@ -48,7 +47,6 @@ javadoc:
     - find src -name "*.java" > sources.txt
     - javadoc -private @sources.txt
   stage: javadoc
-
 
 compile:
   script:
