@@ -129,7 +129,7 @@ public class Colour{
 	/**
 	 * Gets the alpha component for this colour
 	 * as a percentage between 0.0 and 100.0
-	 * @return
+	 * @return The alpha value as a percentage
 	 */
 	public final double getAlphaPercentage(){
 		return a / 2.55;
