@@ -516,10 +516,11 @@ public class SkinChecker{
 	/**
 	 * Resolves the custom path defined in the skin.ini
 	 * for the given setting (if it exists).
-	 * @param name The name of the setting to read the path from
-	 * @param def The value to return if no custom path was set
-	 * @param customKeyCount 
-	 * @return The custom path if set, the given defaul value otherwise
+	 * @param name The name of the setting to read the path from.
+	 * @param def The value to return if no custom path was set.
+	 * @param customKeyCount The mania key count to look in or -1 
+	 *        if the setting is not a mania setting.
+	 * @return The custom path if set, the given default value otherwise.
 	 */
 	protected static String resolveCustomPath(String name, String def, int customKeyCount){
 		Setting<?> setting = skinIni.find(name, customKeyCount);
