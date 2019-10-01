@@ -1,5 +1,5 @@
 ===> Home Screen
-- jpg,jpeg menu-background
+S jpg,jpeg menu-background
 - png welcome_text
 - png menu-snow
 - png options-offset-tick
