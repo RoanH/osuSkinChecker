@@ -976,7 +976,7 @@ public class SkinIni{
 		 * [Mania]<br>
 		 * <code>SeparateScore: &lt; 0:1 &gt;</code>
 		 */
-		protected final Setting<Boolean> separateScore = new Setting<Boolean>("SeparationScore", true);
+		protected final Setting<Boolean> separateScore = new Setting<Boolean>("SeparateScore", true);
 		/**
 		 * [Mania]<br>
 		 * <code>KeysUnderNotes: &lt; 0:1 &gt;</code>
