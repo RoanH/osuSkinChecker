@@ -398,7 +398,7 @@ public class SkinChecker{
 		JLabel ver = new JLabel("<html><center><i>Version: v2.2, latest version: <font color=gray>loading</font></i></center></html>", SwingConstants.CENTER);
 		info.add(ver);
 		new Thread(()->{
-			String version = checkVersion();//XXX the version number 
+			String version = checkVersion();//XXX the version number - don't forget build.gradle
 			ver.setText("<html><center><i>Version: v2.2, latest version: " + (version == null ? "unknown :(" : version) + "</i></center></html>");
 		}, "Version Checker").start();
 		JPanel linksProgram = new JPanel(new GridLayout(1, 2, -2, 0));
