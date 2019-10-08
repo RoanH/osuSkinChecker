@@ -52,7 +52,7 @@ launch4j{
 	jar = "${projectDir}/build/libs/" + shadowJar.archiveName
 	icon = "${projectDir}/skinchecker.ico"
 	jreMinVersion = project.sourceCompatibility
-	outfile = project.name + '-' + project.version + '.exe'
+	outfile = project.name.substring(3) + '-' + project.version + '.exe'
 	fileDescription = project.name
 	version = project.version.substring(1)
 	textVersion = project.version.substring(1)
