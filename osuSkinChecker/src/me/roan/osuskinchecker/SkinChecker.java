@@ -15,10 +15,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -54,6 +52,7 @@ import me.roan.osuskinchecker.ini.Setting;
 import me.roan.osuskinchecker.ini.SkinIni;
 import me.roan.osuskinchecker.ini.SkinIniTab;
 import me.roan.osuskinchecker.ini.SplitLayout;
+import me.roan.util.Util;
 
 /**
  * This program can be used to see what
@@ -395,12 +394,7 @@ public class SkinChecker{
 		links.add(wiki);
 		
 		JPanel info = new JPanel(new GridLayout(2, 1));
-		JLabel ver = new JLabel("<html><center><i>Version: v2.2, latest version: <font color=gray>loading</font></i></center></html>", SwingConstants.CENTER);
-		info.add(ver);
-		new Thread(()->{
-			String version = checkVersion();//XXX the version number - don't forget build.gradle
-			ver.setText("<html><center><i>Version: v2.2, latest version: " + (version == null ? "unknown :(" : version) + "</i></center></html>");
-		}, "Version Checker").start();
+		info.add(Util.getVersionLabel("osuSkinChecker", "v2.2"));//XXX the version number - don't forget build.gradle
 		JPanel linksProgram = new JPanel(new GridLayout(1, 2, -2, 0));
 		JLabel forum = new JLabel("<html><font color=blue><u>Forums</u></font> -</html>", SwingConstants.RIGHT);
 		JLabel git = new JLabel("<html>- <font color=blue><u>GitHub</u></font></html>", SwingConstants.LEFT);
@@ -619,45 +613,6 @@ public class SkinChecker{
 		info.addAll(writing);
 		reader.close();
 		return data;
-	}
-
-	/**
-	 * Check the SkinChecker version to see
-	 * if we are running the latest version
-	 * @return The latest version
-	 */
-	private static final String checkVersion(){
-		try{
-			HttpURLConnection con = (HttpURLConnection)new URL("https://api.github.com/repos/RoanH/osuSkinChecker/tags").openConnection();
-			con.setRequestMethod("GET");
-			con.addRequestProperty("Accept", "application/vnd.github.v3+json");
-			con.setConnectTimeout(10000);
-			BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-			String line = reader.readLine();
-			reader.close();
-			String[] versions = line.split("\"name\":\"v");
-			int max_main = 0;
-			int max_sub = 0;
-			String[] tmp;
-			for(int i = 1; i < versions.length; i++){
-				tmp = versions[i].split("\",\"")[0].split("\\.");
-				if(Integer.parseInt(tmp[0]) > max_main){
-					max_main = Integer.parseInt(tmp[0]);
-					max_sub = Integer.parseInt(tmp[1]);
-				}else if(Integer.parseInt(tmp[0]) < max_main){
-					continue;
-				}else{
-					if(Integer.parseInt(tmp[1]) > max_sub){
-						max_sub = Integer.parseInt(tmp[1]);
-					}
-				}
-			}
-			return "v" + max_main + "." + max_sub;
-		}catch(Exception e){
-			return null;
-			//No Internet access or something else is wrong,
-			//No problem though since this isn't a critical function
-		}
 	}
 	
 	/**
