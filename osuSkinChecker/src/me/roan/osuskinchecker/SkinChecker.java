@@ -6,8 +6,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,8 +13,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -52,6 +48,7 @@ import me.roan.osuskinchecker.ini.Setting;
 import me.roan.osuskinchecker.ini.SkinIni;
 import me.roan.osuskinchecker.ini.SkinIniTab;
 import me.roan.osuskinchecker.ini.SplitLayout;
+import me.roan.util.ClickableLink;
 import me.roan.util.Util;
 
 /**
@@ -622,58 +619,5 @@ public class SkinChecker{
 	 */
 	private static final String getDateTime(){
 		return DateTimeFormatter.ofPattern("yyyy-MM-dd_HH.mm.ss").withZone(ZoneId.systemDefault()).format(Instant.now(Clock.systemDefaultZone()));
-	}
-	
-	/**
-	 * MouseListener that opens the URL it is
-	 * instantiated with when triggered
-	 * @author Roan
-	 */
-	private static final class ClickableLink implements MouseListener{
-		/**
-		 * The target link
-		 */
-		private URI uri = null;
-		
-		/**
-		 * Constructs a new ClickableLink
-		 * with the given url
-		 * @param link The link to browse to
-		 *        when clicked
-		 */
-		private ClickableLink(String link){
-			try{
-				uri = new URI(link);
-			}catch(URISyntaxException e){
-				//pity
-			}
-		}
-
-		@Override
-		public void mouseClicked(MouseEvent e){
-			if(Desktop.isDesktopSupported() && uri != null){
-				try{
-					Desktop.getDesktop().browse(uri);
-				}catch(IOException e1){
-					//pity
-				}
-			}
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e){
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e){
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e){
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e){
-		}
 	}
 }
