@@ -17,9 +17,7 @@ import java.util.Map.Entry;
 import java.util.StringJoiner;
 import java.util.regex.Pattern;
 
-import javax.swing.JOptionPane;
-
-import me.roan.osuskinchecker.SkinChecker;
+import me.roan.util.Dialog;
 
 /**
  * Main class that reflects all the
@@ -453,7 +451,7 @@ public class SkinIni{
 			for(String setting : usedDefault){
 				defaults.add(setting);
 			}
-			JOptionPane.showMessageDialog(SkinChecker.frame, "Skin.ini fields were found that couldn't be parsed. Default values were used for the following fields:\n" + defaults.toString(), "Skin Checker", JOptionPane.WARNING_MESSAGE);
+			Dialog.showMessageDialog("Skin.ini fields were found that couldn't be parsed. Default values were used for the following fields:\n" + defaults.toString());
 		}
 	}
 	

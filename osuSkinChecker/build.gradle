@@ -1,0 +1,60 @@
+plugins{
+	id 'java'
+	id 'application'
+	id 'eclipse'
+	id 'com.github.johnrengelman.shadow' version '5.1.0'
+	id 'edu.sc.seis.launch4j' version '2.4.6'
+}
+
+sourceSets{
+	main{
+		java{
+			srcDirs = ['src']
+		}
+		resources{
+			srcDirs = ['src']
+		}
+	}
+}
+
+javadoc{
+	options.memberLevel = JavadocMemberLevel.PRIVATE
+}
+
+compileJava.options.encoding = 'UTF-8'
+sourceCompatibility = 1.8
+version = 'v2.2'//Don't forget SkinChecker.java
+shadowJar.archiveName = 'SkinChecker-' + project.version + '.jar'
+
+repositories{
+	//Local cache
+	if(project.hasProperty("nexusPublic")){
+		maven{
+			url "$nexusPublic"
+		}
+	}
+	jcenter()
+	maven{
+		url "https://jitpack.io"
+	}
+}
+
+dependencies{
+	implementation 'com.github.RoanH:Util:v1.2'
+}
+
+application{
+	mainClassName = 'me.roan.osuskinchecker.SkinChecker'
+}
+
+launch4j{
+	mainClassName = application.mainClassName
+	jar = "${projectDir}/build/libs/" + shadowJar.archiveName
+	icon = "${projectDir}/skinchecker.ico"
+	jreMinVersion = project.sourceCompatibility
+	outfile = project.name.substring(3) + '-' + project.version + '.exe'
+	fileDescription = project.name
+	version = project.version.substring(1)
+	textVersion = project.version.substring(1)
+	copyright = "Roan Hofland"
+}
