@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -36,7 +37,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -49,6 +49,7 @@ import me.roan.osuskinchecker.ini.SkinIni;
 import me.roan.osuskinchecker.ini.SkinIniTab;
 import me.roan.osuskinchecker.ini.SplitLayout;
 import me.roan.util.ClickableLink;
+import me.roan.util.Dialog;
 import me.roan.util.Util;
 
 /**
@@ -179,9 +180,13 @@ public class SkinChecker{
 	 */
 	public static void buildGUI(){
 		try{
-			frame.setIconImage(ImageIO.read(ClassLoader.getSystemResource("skinchecker.png")));
+			Image icon = ImageIO.read(ClassLoader.getSystemResource("skinchecker.png"));
+			frame.setIconImage(icon);
+			Dialog.setDialogIcon(icon);
 		}catch(IOException e2){
 		}
+		Dialog.setDialogTitle("Skin Checker");
+		Dialog.setParentFrame(frame);
 		JPanel content = new JPanel(new BorderLayout());
 		JTabbedPane categories = new JTabbedPane();
 
@@ -200,12 +205,12 @@ public class SkinChecker{
 					try{
 						skinIni.ini.createNewFile();
 					}catch(IOException e1){
-						JOptionPane.showMessageDialog(frame, "Failed to create the skin.ini file!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+						Dialog.showErrorDialog("Failed to create the skin.ini file!");
 						return;
 					}
 					skinIni.writeIni(skinIni.ini);
 				}catch(FileNotFoundException e1){
-					JOptionPane.showMessageDialog(frame, "An error occurred while writing the new skin.ini!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+					Dialog.showErrorDialog("An error occurred while writing the new skin.ini!");
 				}
 			}
 		};
@@ -216,7 +221,7 @@ public class SkinChecker{
 				try{
 					Files.move(skinIni.ini.toPath(), new File(skinIni.ini.getParentFile(), "backup-" + getDateTime() + ".ini").toPath(), StandardCopyOption.REPLACE_EXISTING);
 				}catch(IOException e2){
-					JOptionPane.showMessageDialog(frame, "Failed to create a backup!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+					Dialog.showErrorDialog("Failed to create a backup!");
 					return;
 				}
 				defaultSave.actionPerformed(e);
@@ -308,7 +313,7 @@ public class SkinChecker{
 					e1.printStackTrace();
 				}
 			}else{
-				JOptionPane.showMessageDialog(frame, "No skin currently selected!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+				Dialog.showErrorDialog("No skin currently selected!");
 			}
 		});
 		recheck.addActionListener((e)->{
@@ -319,7 +324,7 @@ public class SkinChecker{
 					e1.printStackTrace();
 				}
 			}else{
-				JOptionPane.showMessageDialog(frame, "No skin currently selected!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+				Dialog.showErrorDialog("No skin currently selected!");
 			}
 		});
 		print.addActionListener((e)->{
@@ -356,13 +361,13 @@ public class SkinChecker{
 					}
 					writer.flush();
 					writer.close();
-					JOptionPane.showMessageDialog(frame, "File list succesfully exported", "Skin Checker", JOptionPane.INFORMATION_MESSAGE);
+					Dialog.showMessageDialog("File list succesfully exported");
 				}catch(FileNotFoundException e1){
-					JOptionPane.showMessageDialog(frame, "An error occured: " + e1.getMessage(), "Skin Checker", JOptionPane.ERROR_MESSAGE);
+					Dialog.showErrorDialog("An error occured: " + e1.getMessage());
 				}
 
 			}else{
-				JOptionPane.showMessageDialog(frame, "No skin currently selected!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+				Dialog.showErrorDialog("No skin currently selected!");
 			}
 		});
 
@@ -430,7 +435,7 @@ public class SkinChecker{
 	public static void checkSkin(File folder) throws IOException{
 		if(folder == null){
 			if(chooser.showOpenDialog(frame) != JFileChooser.APPROVE_OPTION){
-				JOptionPane.showMessageDialog(frame, "No skin selected!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+				Dialog.showErrorDialog("No skin selected!");
 				return;
 			}
 			folder = chooser.getSelectedFile();
@@ -439,7 +444,7 @@ public class SkinChecker{
 		File iniFile = new File(folder, "skin.ini");
 		
 		if(!iniFile.exists()){
-			int option = JOptionPane.showOptionDialog(frame, "This folder doesn't have a skin.ini file.\nWithout this file this skin won't even be recognized as a skin!", "Skin Checker", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[]{"OK", "Add empty skin.ini"}, null);
+			int option = Dialog.showDialog("This folder doesn't have a skin.ini file.\nWithout this file this skin won't even be recognized as a skin!", new String[]{"OK", "Add empty skin.ini"});
 			if(option == 1){
 				iniFile.createNewFile();
 			}else{
@@ -463,9 +468,9 @@ public class SkinChecker{
 					errl.add("	" + elem.toString());
 				}
 				Files.write(err, errl, StandardOpenOption.CREATE_NEW);
-				JOptionPane.showMessageDialog(frame, "An error occurred while reading the skin.ini\nThe error was saved to: " + err.toAbsolutePath().toString() + "\n" + e.getMessage(), "Skin Checker", JOptionPane.ERROR_MESSAGE);
+				Dialog.showErrorDialog("An error occurred while reading the skin.ini\nThe error was saved to: " + err.toAbsolutePath().toString() + "\n" + e.getMessage());
 			}catch(Exception e1){
-				JOptionPane.showMessageDialog(frame, "An internal error occurred!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+				Dialog.showErrorDialog("An internal error occurred!");
 			}
 			return;
 		}
