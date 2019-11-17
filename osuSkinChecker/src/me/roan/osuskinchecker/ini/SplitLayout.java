@@ -3,7 +3,6 @@ package me.roan.osuskinchecker.ini;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.LayoutManager;
 import java.awt.LayoutManager2;
 import java.awt.Rectangle;
 
@@ -16,7 +15,7 @@ import javax.swing.Scrollable;
  * a 2/3 and 1/3 area.
  * @author Roan
  */
-public class SplitLayout implements LayoutManager, LayoutManager2{
+public class SplitLayout implements LayoutManager2{
 	/**
 	 * The first component in this layout
 	 * that gets the 2/3 area

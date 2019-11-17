@@ -34,7 +34,7 @@ public final class ImageInfo implements Info{
 	 * image described by this information
 	 * object can exist, where extra files are named by adding
 	 * <code>-n</code> to the name. Where <code>n</code> is an
-	 * integer <code>>= 0</code>.
+	 * integer <code>&gt;= 0</code>.
 	 */
 	protected boolean variableWithDash = false;
 	/**
@@ -42,7 +42,7 @@ public final class ImageInfo implements Info{
 	 * image described by this information
 	 * object can exist, where extra files are named by adding
 	 * <code>n</code> to the name. Where <code>n</code> is an
-	 * integer <code>>= 0</code>.
+	 * integer <code>&gt;= 0</code>.
 	 */
 	protected boolean variableWithoutDash = false;
 	/**
@@ -298,11 +298,11 @@ public final class ImageInfo implements Info{
 	 * @param variableDash Whether or not multiple versions of the
 	 *        image can exist, where extra files are named by adding
 	 *        <code>-n</code> to the name. Where <code>n</code> is an
-	 *        integer <code>>= 0</code>.
+	 *        integer <code>&gt;= 0</code>.
 	 * @param variableNoDash Whether or not multiple versions of the
 	 *        image can exist, where extra files are named by adding
 	 *        <code>n</code> to the name. Where <code>n</code> is an
-	 *        integer <code>>= 0</code>.
+	 *        integer <code>&gt;= 0</code>.
 	 * @return A file that matches all the criteria or <code>null</code>
 	 *         if none were found.
 	 */

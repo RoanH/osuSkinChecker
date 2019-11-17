@@ -67,8 +67,8 @@ L png sliderpoint30
 - png target-pt-3
 - png target-pt-4
 - png target-pt-5
-- png target-pt-1
-- png target-pt-2
-- png target-pt-3
-- png target-pt-4
-- png target-pt-5
+- png targetoverlay-pt-1
+- png targetoverlay-pt-2
+- png targetoverlay-pt-3
+- png targetoverlay-pt-4
+- png targetoverlay-pt-5

@@ -4,10 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,10 +14,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -42,7 +37,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -54,6 +48,9 @@ import me.roan.osuskinchecker.ini.Setting;
 import me.roan.osuskinchecker.ini.SkinIni;
 import me.roan.osuskinchecker.ini.SkinIniTab;
 import me.roan.osuskinchecker.ini.SplitLayout;
+import me.roan.util.ClickableLink;
+import me.roan.util.Dialog;
+import me.roan.util.Util;
 
 /**
  * This program can be used to see what
@@ -108,7 +105,7 @@ public class SkinChecker{
 	/**
 	 * Main frame
 	 */
-	public static final JFrame frame = new JFrame("Skin Checker for osu!");
+	private static final JFrame frame = new JFrame("Skin Checker for osu!");
 	/**
 	 * The JLabel that displays the name of the skin
 	 * currently being checked
@@ -183,9 +180,13 @@ public class SkinChecker{
 	 */
 	public static void buildGUI(){
 		try{
-			frame.setIconImage(ImageIO.read(ClassLoader.getSystemResource("skinchecker.png")));
+			Image icon = ImageIO.read(ClassLoader.getSystemResource("skinchecker.png"));
+			frame.setIconImage(icon);
+			Dialog.setDialogIcon(icon);
 		}catch(IOException e2){
 		}
+		Dialog.setDialogTitle("Skin Checker");
+		Dialog.setParentFrame(frame);
 		JPanel content = new JPanel(new BorderLayout());
 		JTabbedPane categories = new JTabbedPane();
 
@@ -204,12 +205,12 @@ public class SkinChecker{
 					try{
 						skinIni.ini.createNewFile();
 					}catch(IOException e1){
-						JOptionPane.showMessageDialog(frame, "Failed to create the skin.ini file!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+						Dialog.showErrorDialog("Failed to create the skin.ini file!");
 						return;
 					}
 					skinIni.writeIni(skinIni.ini);
 				}catch(FileNotFoundException e1){
-					JOptionPane.showMessageDialog(frame, "An error occurred while writing the new skin.ini!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+					Dialog.showErrorDialog("An error occurred while writing the new skin.ini!");
 				}
 			}
 		};
@@ -220,7 +221,7 @@ public class SkinChecker{
 				try{
 					Files.move(skinIni.ini.toPath(), new File(skinIni.ini.getParentFile(), "backup-" + getDateTime() + ".ini").toPath(), StandardCopyOption.REPLACE_EXISTING);
 				}catch(IOException e2){
-					JOptionPane.showMessageDialog(frame, "Failed to create a backup!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+					Dialog.showErrorDialog("Failed to create a backup!");
 					return;
 				}
 				defaultSave.actionPerformed(e);
@@ -312,7 +313,7 @@ public class SkinChecker{
 					e1.printStackTrace();
 				}
 			}else{
-				JOptionPane.showMessageDialog(frame, "No skin currently selected!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+				Dialog.showErrorDialog("No skin currently selected!");
 			}
 		});
 		recheck.addActionListener((e)->{
@@ -323,7 +324,7 @@ public class SkinChecker{
 					e1.printStackTrace();
 				}
 			}else{
-				JOptionPane.showMessageDialog(frame, "No skin currently selected!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+				Dialog.showErrorDialog("No skin currently selected!");
 			}
 		});
 		print.addActionListener((e)->{
@@ -360,13 +361,13 @@ public class SkinChecker{
 					}
 					writer.flush();
 					writer.close();
-					JOptionPane.showMessageDialog(frame, "File list succesfully exported", "Skin Checker", JOptionPane.INFORMATION_MESSAGE);
+					Dialog.showMessageDialog("File list succesfully exported");
 				}catch(FileNotFoundException e1){
-					JOptionPane.showMessageDialog(frame, "An error occured: " + e1.getMessage(), "Skin Checker", JOptionPane.ERROR_MESSAGE);
+					Dialog.showErrorDialog("An error occured: " + e1.getMessage());
 				}
 
 			}else{
-				JOptionPane.showMessageDialog(frame, "No skin currently selected!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+				Dialog.showErrorDialog("No skin currently selected!");
 			}
 		});
 
@@ -395,12 +396,7 @@ public class SkinChecker{
 		links.add(wiki);
 		
 		JPanel info = new JPanel(new GridLayout(2, 1));
-		JLabel ver = new JLabel("<html><center><i>Version: v2.1, latest version: <font color=gray>loading</font></i></center></html>", SwingConstants.CENTER);
-		info.add(ver);
-		new Thread(()->{
-			String version = checkVersion();//XXX the version number 
-			ver.setText("<html><center><i>Version: v2.1, latest version: " + (version == null ? "unknown :(" : version) + "</i></center></html>");
-		}, "Version Checker").start();
+		info.add(Util.getVersionLabel("osuSkinChecker", "v2.2"));//XXX the version number - don't forget build.gradle
 		JPanel linksProgram = new JPanel(new GridLayout(1, 2, -2, 0));
 		JLabel forum = new JLabel("<html><font color=blue><u>Forums</u></font> -</html>", SwingConstants.RIGHT);
 		JLabel git = new JLabel("<html>- <font color=blue><u>GitHub</u></font></html>", SwingConstants.LEFT);
@@ -439,7 +435,7 @@ public class SkinChecker{
 	public static void checkSkin(File folder) throws IOException{
 		if(folder == null){
 			if(chooser.showOpenDialog(frame) != JFileChooser.APPROVE_OPTION){
-				JOptionPane.showMessageDialog(frame, "No skin selected!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+				Dialog.showErrorDialog("No skin selected!");
 				return;
 			}
 			folder = chooser.getSelectedFile();
@@ -448,7 +444,7 @@ public class SkinChecker{
 		File iniFile = new File(folder, "skin.ini");
 		
 		if(!iniFile.exists()){
-			int option = JOptionPane.showOptionDialog(frame, "This folder doesn't have a skin.ini file.\nWithout this file this skin won't even be recognized as a skin!", "Skin Checker", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[]{"OK", "Add empty skin.ini"}, null);
+			int option = Dialog.showDialog("This folder doesn't have a skin.ini file.\nWithout this file this skin won't even be recognized as a skin!", new String[]{"OK", "Add empty skin.ini"});
 			if(option == 1){
 				iniFile.createNewFile();
 			}else{
@@ -472,9 +468,9 @@ public class SkinChecker{
 					errl.add("	" + elem.toString());
 				}
 				Files.write(err, errl, StandardOpenOption.CREATE_NEW);
-				JOptionPane.showMessageDialog(frame, "An error occurred while reading the skin.ini\nThe error was saved to: " + err.toAbsolutePath().toString() + "\n" + e.getMessage(), "Skin Checker", JOptionPane.ERROR_MESSAGE);
+				Dialog.showErrorDialog("An error occurred while reading the skin.ini\nThe error was saved to: " + err.toAbsolutePath().toString() + "\n" + e.getMessage());
 			}catch(Exception e1){
-				JOptionPane.showMessageDialog(frame, "An internal error occurred!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+				Dialog.showErrorDialog("An internal error occurred!");
 			}
 			return;
 		}
@@ -516,10 +512,11 @@ public class SkinChecker{
 	/**
 	 * Resolves the custom path defined in the skin.ini
 	 * for the given setting (if it exists).
-	 * @param name The name of the setting to read the path from
-	 * @param def The value to return if no custom path was set
-	 * @param customKeyCount 
-	 * @return The custom path if set, the given defaul value otherwise
+	 * @param name The name of the setting to read the path from.
+	 * @param def The value to return if no custom path was set.
+	 * @param customKeyCount The mania key count to look in or -1 
+	 *        if the setting is not a mania setting.
+	 * @return The custom path if set, the given default value otherwise.
 	 */
 	protected static String resolveCustomPath(String name, String def, int customKeyCount){
 		Setting<?> setting = skinIni.find(name, customKeyCount);
@@ -619,45 +616,6 @@ public class SkinChecker{
 		reader.close();
 		return data;
 	}
-
-	/**
-	 * Check the SkinChecker version to see
-	 * if we are running the latest version
-	 * @return The latest version
-	 */
-	private static final String checkVersion(){
-		try{
-			HttpURLConnection con = (HttpURLConnection)new URL("https://api.github.com/repos/RoanH/osuSkinChecker/tags").openConnection();
-			con.setRequestMethod("GET");
-			con.addRequestProperty("Accept", "application/vnd.github.v3+json");
-			con.setConnectTimeout(10000);
-			BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-			String line = reader.readLine();
-			reader.close();
-			String[] versions = line.split("\"name\":\"v");
-			int max_main = 0;
-			int max_sub = 0;
-			String[] tmp;
-			for(int i = 1; i < versions.length; i++){
-				tmp = versions[i].split("\",\"")[0].split("\\.");
-				if(Integer.parseInt(tmp[0]) > max_main){
-					max_main = Integer.parseInt(tmp[0]);
-					max_sub = Integer.parseInt(tmp[1]);
-				}else if(Integer.parseInt(tmp[0]) < max_main){
-					continue;
-				}else{
-					if(Integer.parseInt(tmp[1]) > max_sub){
-						max_sub = Integer.parseInt(tmp[1]);
-					}
-				}
-			}
-			return "v" + max_main + "." + max_sub;
-		}catch(Exception e){
-			return null;
-			//No Internet access or something else is wrong,
-			//No problem though since this isn't a critical function
-		}
-	}
 	
 	/**
 	 * Gets the current time and date as a string
@@ -666,58 +624,5 @@ public class SkinChecker{
 	 */
 	private static final String getDateTime(){
 		return DateTimeFormatter.ofPattern("yyyy-MM-dd_HH.mm.ss").withZone(ZoneId.systemDefault()).format(Instant.now(Clock.systemDefaultZone()));
-	}
-	
-	/**
-	 * MouseListener that opens the URL it is
-	 * instantiated with when triggered
-	 * @author Roan
-	 */
-	private static final class ClickableLink implements MouseListener{
-		/**
-		 * The target link
-		 */
-		private URI uri = null;
-		
-		/**
-		 * Constructs a new ClickableLink
-		 * with the given url
-		 * @param link The link to browse to
-		 *        when clicked
-		 */
-		private ClickableLink(String link){
-			try{
-				uri = new URI(link);
-			}catch(URISyntaxException e){
-				//pity
-			}
-		}
-
-		@Override
-		public void mouseClicked(MouseEvent e){
-			if(Desktop.isDesktopSupported() && uri != null){
-				try{
-					Desktop.getDesktop().browse(uri);
-				}catch(IOException e1){
-					//pity
-				}
-			}
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e){
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e){
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e){
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e){
-		}
 	}
 }

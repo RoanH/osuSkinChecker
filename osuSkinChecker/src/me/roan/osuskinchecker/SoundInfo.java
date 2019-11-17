@@ -17,7 +17,7 @@ public final class SoundInfo implements Info{
 	 * sound file described by this information
 	 * object can exist, where extra files are named by adding
 	 * <code>-n</code> to the name. Where <code>n</code> is an
-	 * integer <code>>= 0</code>.
+	 * integer <code>&gt;= 0</code>.
 	 */
 	private boolean variableWithDash = false;
 	/**
@@ -112,7 +112,7 @@ public final class SoundInfo implements Info{
 	 * @param variableDash Whether or not multiple versions of the
 	 *        sound file can exist, where extra files are named by adding
 	 *        <code>-n</code> to the name. Where <code>n</code> is an
-	 *        integer <code>>= 0</code>.
+	 *        integer <code>&gt;= 0</code>.
 	 * @return True if a file exists that matches the given conditions
 	 *         false otherwise.
 	 */

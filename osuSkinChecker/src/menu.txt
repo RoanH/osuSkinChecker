@@ -1,5 +1,5 @@
 ===> Home Screen
-- jpg,jpeg menu-background
+S jpg,jpeg menu-background
 - png welcome_text
 - png menu-snow
 - png options-offset-tick
@@ -68,6 +68,7 @@ N png menu-back
 - png selection-mod-key8
 - png selection-mod-key9
 - png selection-mod-keycoop
+- png selection-mod-mirror
 - png selection-mod-random
 
 ===> Ranking Screen
