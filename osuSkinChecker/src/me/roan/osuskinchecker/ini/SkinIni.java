@@ -681,7 +681,7 @@ public class SkinIni{
 	private Setting<?> parseCtb(String line){
 		String[] args = line.split(":", 2);
 		args[1] = args[1].trim();
-		switch(args[0]){
+		switch(args[0].trim()){
 		case "HyperDash":
 			return parseColor(hyperDash, args[1]);
 		case "HyperDashFruit":
@@ -729,7 +729,7 @@ public class SkinIni{
 	private Setting<?> parseGeneral(String line){
 		String[] args = line.split(":", 2);
 		args[1] = args[1].trim();
-		switch(args[0]){
+		switch(args[0].trim()){
 		case "Name":
 			return name.update(args[1]);
 		case "Author":
@@ -787,7 +787,7 @@ public class SkinIni{
 	private Setting<?> parseFonts(String line){
 		String[] args = line.split(":", 2);
 		args[1] = args[1].trim();
-		switch(args[0]){
+		switch(args[0].trim()){
 		case "HitCirclePrefix":
 			return hitCirclePrefix.update(args[1]);
 		case "HitCircleOverlap":
@@ -818,7 +818,7 @@ public class SkinIni{
 	private Setting<?> parseColours(String line){
 		String[] args = line.split(":", 2);
 		args[1] = args[1].trim();
-		switch(args[0]){
+		switch(args[0].trim()){
 		case "SongSelectActiveText":
 			return parseColor(songSelectActiveText, args[1]);
 		case "SongSelectInactiveText":
@@ -1153,7 +1153,7 @@ public class SkinIni{
 		private Setting<?> parseMania(String line) throws IOException{
 			String[] args = line.split(":", 2);
 			args[1] = args[1].trim();
-			switch(args[0]){
+			switch(args[0].trim()){
 			case "ColumnStart":
 				return parseDouble(columnStart, args[1], 0.0D);
 			case "ColumnRight":
