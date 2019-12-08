@@ -50,6 +50,7 @@ import me.roan.osuskinchecker.ini.SkinIniTab;
 import me.roan.osuskinchecker.ini.SplitLayout;
 import me.roan.util.ClickableLink;
 import me.roan.util.Dialog;
+import me.roan.util.ExclamationMarkPath;
 import me.roan.util.Util;
 
 /**
@@ -156,6 +157,7 @@ public class SkinChecker{
 	 * @param args No valid command line options
 	 */
 	public static void main(String[] args){
+		ExclamationMarkPath.check(args);
 		try{
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		}catch(Throwable t){
