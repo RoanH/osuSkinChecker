@@ -121,11 +121,6 @@ public class SkinChecker{
 	 */
 	private static JTabbedPane soundTabs;
 	/**
-	 * The JFileChooser used to ask the user
-	 * for skin
-	 */
-	private static JFileChooser chooser;
-	/**
 	 * Initial list of all the files in the skin folder
 	 */
 	protected static List<File> allFiles = new ArrayList<File>();
@@ -168,9 +163,6 @@ public class SkinChecker{
 			e.printStackTrace();
 		}
 
-		chooser = new JFileChooser();
-		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		chooser.setMultiSelectionEnabled(false);
 		imageTabs = new JTabbedPane();
 		soundTabs = new JTabbedPane();
 		skin = new JLabel("<html><i>no skin selected</i></html>");
@@ -436,11 +428,13 @@ public class SkinChecker{
 	 */
 	public static void checkSkin(File folder) throws IOException{
 		if(folder == null){
-			if(chooser.showOpenDialog(frame) != JFileChooser.APPROVE_OPTION){
+			File selected = Dialog.showFolderOpenDialog();
+			if(selected == null || !selected.exists()){
 				Dialog.showErrorDialog("No skin selected!");
 				return;
+			}else{
+				folder = selected;
 			}
-			folder = chooser.getSelectedFile();
 		}
 
 		File iniFile = new File(folder, "skin.ini");
