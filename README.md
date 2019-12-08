@@ -8,14 +8,14 @@ And now I'm finally done :D
 The program looks like this:<br>
 ![GUI](https://i.imgur.com/B4HYyyD.png)
 
-It is a simple program that shows you which elements of your skin are skinned and which elements are not. It also shows if there's an SD/HD image in the skin for each element or not. For files that can be animated it also shows whether or not they are animated and if they are how many frames the animation consists of. Lastly, it also reports a missing skin.ini file and will read and use custom paths from the skin.ini if they exist.
+It is a simple program that shows you which elements of your skin are skinned and which elements are not. It also shows if there's an SD/HD image in the skin for each element or not. For files that can be animated it also shows whether or not they are animated and if they are how many frames the animation consists of. Lastly, it also reports a missing skin.ini file and will read and use custom paths from the skin.ini if they exist. The program also includes an editor for the `skin.ini`.
 
 Well I hope some of you find this program useful :)<br>
 And if you find any bugs feel free to report them (spelling mistakes included :3).
 
 ## Downloads (Java 8 required, should run on any OS)<br>
-[Windows executable](https://github.com/RoanH/osuSkinChecker/releases/download/v2.2/SkinChecker-v2.2.exe)<br>
-[Runnable Java Archive](https://github.com/RoanH/osuSkinChecker/releases/download/v2.2/SkinChecker-v2.2.jar)
+[Windows executable](https://github.com/RoanH/osuSkinChecker/releases/download/v2.3/SkinChecker-v2.3.exe)<br>
+[Runnable Java Archive](https://github.com/RoanH/osuSkinChecker/releases/download/v2.3/SkinChecker-v2.3.jar)
 
 All releases: [releases](https://github.com/RoanH/osuSkinChecker/releases)<br>
 GitHub repository: [repository](https://github.com/RoanH/osuSkinChecker)<br>
