@@ -1,4 +1,4 @@
-# osu! Skin Checker
+# osu! Skin Checker ![](https://img.shields.io/github/release/RoanH/osuSkinChecker.svg) ![](https://img.shields.io/github/downloads/RoanH/osuSkinChecker/total.svg)
 Simple program to check if all the elements for an osu! skin are present.
 
 # Forum post
@@ -13,7 +13,7 @@ It is a simple program that shows you which elements of your skin are skinned an
 Well I hope some of you find this program useful :)<br>
 And if you find any bugs feel free to report them (spelling mistakes included :3).
 
-## Downloads (Java 8 required, should run on any OS)<br>
+## Downloads (Java 8 required)<br>
 [Windows executable](https://github.com/RoanH/osuSkinChecker/releases/download/v2.3/SkinChecker-v2.3.exe)<br>
 [Runnable Java Archive](https://github.com/RoanH/osuSkinChecker/releases/download/v2.3/SkinChecker-v2.3.jar)
 
