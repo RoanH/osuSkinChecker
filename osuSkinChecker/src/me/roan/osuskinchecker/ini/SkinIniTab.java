@@ -34,7 +34,6 @@ import me.roan.osuskinchecker.ini.SkinIni.ManiaIni;
 import me.roan.osuskinchecker.ini.SkinIni.NoteBodyStyle;
 import me.roan.osuskinchecker.ini.SkinIni.SliderStyle;
 import me.roan.osuskinchecker.ini.SkinIni.SpecialStyle;
-import me.roan.osuskinchecker.ini.SkinIni.Version;
 import me.roan.osuskinchecker.ini.SplitLayout.ScrollPane;
 
 /**
