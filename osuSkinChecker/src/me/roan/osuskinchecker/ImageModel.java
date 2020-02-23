@@ -50,18 +50,17 @@ public class ImageModel extends Model{
 
 	@Override
 	public Object getValueAt(int row, int col){
+		ImageFilter filter = (ImageFilter)view.get(row);
 		try{
 			switch(col){
 			case 0:
-				return view.get(row);
-//			case 1:
-//				return ((ImageInfo)view.get(row)).hasSDVersion();
-//			case 2:
-//				ImageInfo info = ((ImageInfo)view.get(row));
-//				return (info.ignored && SkinChecker.ignoreEmpty) ? "Ignored" : info.hasHDVersion();
-//			case 3:
-//				ImageInfo i = ((ImageInfo)view.get(row));
-//				return (i.variableWithDash || i.variableWithoutDash) ? (i.animated ? ("Yes: " + i.frames + (i.frames == 1 ? " frame" : " frames")) : "No") : "N/A";
+				return filter;//TODO handle custom names
+			case 1:
+				return filter.hasSD();
+			case 2:
+			//	return (filter.ignored && SkinChecker.ignoreEmpty) ? "Ignored" : filter.hasHD();
+			case 3:
+			//	return (filter.variableWithDash || filter.variableWithoutDash) ? (filter.animated ? ("Yes: " + filter.frames + (filter.frames == 1 ? " frame" : " frames")) : "No") : "N/A";
 			}
 		}catch(Exception e){
 			return "Error";

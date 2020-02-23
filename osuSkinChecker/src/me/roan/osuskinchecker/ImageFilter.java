@@ -84,12 +84,30 @@ public class ImageFilter extends Filter{
 		}
 	}
 	
-	public void hasHD(){
+	public boolean hasHD(){
 		//TODO ...
+		for(File file : matches){
+			if(file.getName().endsWith("@2x\\..+")){
+				return true;
+			}
+		}
+		return false;
 	}
 
-
-
+	public boolean hasSD(){
+		//TODO
+		for(File file : matches){
+			if(!file.getName().endsWith("@2x\\..+")){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public int getFrames(){
+		//TODO
+		return -1;
+	}
 
 	@Override
 	protected boolean matches(File file, String fn, Deque<String> path){
@@ -120,6 +138,11 @@ public class ImageFilter extends Filter{
 		}else{
 			//strip file name
 			extra = fn.substring(name.length());
+		}
+		
+		//strip @2x
+		if(extra.endsWith("@2x")){
+			extra = extra.substring(0, extra.length() - 3);
 		}
 		
 		//if nothing special accept
