@@ -46,7 +46,7 @@ public abstract class Model extends DefaultTableModel{
 	 */
 	protected void updateView(){
 		view.clear();
-		for(Filter i : data){
+		for(Filter<?> i : data){
 			if(/*i.show()*/ true){ //TODO
 				view.add(i);
 			}

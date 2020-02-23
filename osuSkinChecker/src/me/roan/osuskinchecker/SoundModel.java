@@ -1,6 +1,5 @@
 package me.roan.osuskinchecker;
 
-import java.io.File;
 import java.util.List;
 
 /**

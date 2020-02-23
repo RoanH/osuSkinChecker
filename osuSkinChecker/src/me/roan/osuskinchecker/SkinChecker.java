@@ -32,11 +32,9 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Stack;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -552,7 +550,7 @@ public class SkinChecker{
 				path.pop();
 			}else{
 				//if none then foreign for sure
-				for(Filter filter : filters){
+				for(Filter<?> filter : filters){
 					if(filter.check(f, path)){
 						continue loop;
 					}

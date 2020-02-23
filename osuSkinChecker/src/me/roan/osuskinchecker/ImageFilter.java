@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Stack;
 
 import me.roan.osuskinchecker.ini.Setting;
 import me.roan.osuskinchecker.ini.SkinIni;
@@ -35,7 +34,7 @@ public class ImageFilter extends Filter<ImageMeta>{
 	 * filter exists, the file described by this filter
 	 * is not required.
 	 */
-	protected Filter override = null;
+	protected Filter<?> override = null;
 	protected String overrideName = null;
 	//true = need, false = ignored
 	protected boolean overrideMode = false;
