@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.StringJoiner;
 
 import me.roan.osuskinchecker.ini.Setting;
@@ -167,11 +168,11 @@ public class ImageFilter extends Filter<ImageMeta>{
 				if(customPath.length - 1 == path.size()){
 					Iterator<String> iter = path.iterator();
 					for(int i = customPath.length - 2; i >= 0; i--){
-						if(!iter.next().equals(customPath[i])){
+						if(!iter.next().equalsIgnoreCase(customPath[i])){
 							return null;
 						}
 					}
-					if(fn.startsWith(customPath[customPath.length - 1] + name)){
+					if(fn.startsWith((customPath[customPath.length - 1] + name).toLowerCase(Locale.ROOT))){
 						extra = fn.substring(customPath[customPath.length - 1].length() + name.length());
 					}else{
 						return null;
@@ -180,7 +181,7 @@ public class ImageFilter extends Filter<ImageMeta>{
 					return null;
 				}
 			}else{
-				if(fn.startsWith(customDefault + name)){
+				if(fn.startsWith((customDefault + name).toLowerCase(Locale.ROOT))){
 					extra = fn.substring(customDefault.length() + name.length());
 				}else{
 					return null;

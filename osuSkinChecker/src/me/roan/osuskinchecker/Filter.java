@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
+import java.util.Locale;
 
 import me.roan.osuskinchecker.ini.SkinIni;
 import me.roan.osuskinchecker.ini.Version;
@@ -36,7 +37,7 @@ public abstract class Filter<T>{
 			}
 		}
 		this.extensions = args[args.length - 2].split(",");
-		this.name = args[args.length - 1];
+		this.name = args[args.length - 1].toLowerCase(Locale.ROOT);
 		if(this.name.equals("-")){
 			this.name = "";
 		}
@@ -44,7 +45,7 @@ public abstract class Filter<T>{
 		
 	public boolean check(File file, Deque<String> path){
 		//check extension here, delegate other checks to subclass
-		String fn = file.getName();
+		String fn = file.getName().toLowerCase(Locale.ROOT);
 		for(String ext : extensions){
 			if(fn.endsWith("." + ext)){
 				if((fn.startsWith(name) && path.isEmpty()) || allowNonRoot()){

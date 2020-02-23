@@ -532,20 +532,18 @@ public class SkinChecker{
 			filter.reset(skinIni);
 		}
 
-		
-//		foreignFiles.clear();
-//		int offset = 1 + skinFolder.toString().length();
-//		for(File file : allFiles){
-//			foreignFiles.addElement(file.toString().substring(offset));
-//		}
-
-		
 		Deque<String> path = new ArrayDeque<String>();
 		List<File> foreign = new ArrayList<File>();//TODO use values
 		checkAllFiles(skinFolder, path, foreign);
 		
 		for(Model m : listeners){
 			m.updateView(version);
+		}
+		
+		foreignFiles.clear();
+		int offset = 1 + skinFolder.toString().length();
+		for(File file : foreign){
+			foreignFiles.addElement(file.toString().substring(offset));
 		}
 	}
 	
