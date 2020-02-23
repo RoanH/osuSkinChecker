@@ -16,13 +16,13 @@ public class ImageModel extends Model{
 
 	/**
 	 * Constructs a new ImageModel with
-	 * the given list of data to display.
-	 * @param list A list with data to display
+	 * the given list of filters to display.
+	 * @param list A list with filters to display
 	 *        the {@link Filter} objects should
 	 *        be of the {@link ImageFilter} type.
-	 * @see InfoOld
+	 * @see Filter
 	 * @see Model
-	 * @see ImageInfoOld
+	 * @see ImageFilter
 	 */
 	public ImageModel(List<Filter<?>> list){
 		super(list);
