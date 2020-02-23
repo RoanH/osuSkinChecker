@@ -205,6 +205,11 @@ public class ImageFilter extends Filter<ImageMeta>{
 			}
 		}
 	}
+	
+	@Override
+	public String toString(){
+		return customProperty == null ? super.toString() : (customPath[customPath.length - 1] + name);
+	}
 
 	@Override
 	public Model getModel(List<Filter<?>> filters){
