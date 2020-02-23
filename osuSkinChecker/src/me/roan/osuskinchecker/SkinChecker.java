@@ -18,10 +18,8 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -41,7 +39,6 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -533,6 +530,7 @@ public class SkinChecker{
 //			foreignFiles.addElement(file.toString().substring(offset));
 //		}
 		
+		//TODO is none then foreign for sure
 		for(File file : allFiles){
 			for(Filter filter : filters){
 				if(filter.check(file)){
