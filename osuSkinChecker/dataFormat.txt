@@ -18,15 +18,15 @@ Format for the .txt files that contain all the data about all the files.
    S - Indicates that the SD/HD distinction does not apply to this
        file and that there will always be only one version of the file.
    L - Indicates that this file is a legacy file and no longer used for
-       recent skins.
+       recent skins. Should be followed by the name of the highest skin.ini
+       version it was supported in.
    C - Indicates that the location for this file including the filename can be
        set in the skin.ini and therefore might not exist in the root folder of the skin.
        If the file could not be found in the root folder of the skin the custom path set
        in the skin.ini file is checked.
    P - Special variant of C where before the other properties is the mania key count.
-   O - Indicates the spinner style used if this image is for a specific spinner style. Has
-       to be followed by a boolean that indicates the style. True indicates the old style
-       and false indicates the new style.
+   O - Indicates that a file exists that overrides this file if present. Should be
+       followed by the name of the overriding file.
    - - A dash means that no special options apply to the file.
 
 6. If the C or P option is used then the options section has to be followed directly by the

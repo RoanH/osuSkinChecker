@@ -66,7 +66,7 @@ public enum Version implements Printable{
 	 * @param str The input to parse
 	 * @return The Version parsed from the given input string
 	 */
-	protected static Version fromString(String str){
+	public static Version fromString(String str){
 		switch(str){
 		case "1":
 			return V1;

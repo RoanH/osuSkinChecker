@@ -6,22 +6,6 @@ import java.util.List;
 import me.roan.osuskinchecker.ini.Version;
 
 public class ImageFilter extends Filter{
-	
-	public ImageFilter(String[] args){
-		super(args);
-		// TODO Auto-generated constructor stub
-	}
-
-
-
-
-
-
-
-
-
-
-
 	/**
 	 * Whether or not multiple versions of the
 	 * image described by this filter
@@ -29,30 +13,54 @@ public class ImageFilter extends Filter{
 	 * <code>n</code> to the name. Where <code>n</code> is an
 	 * integer <code>&gt;= 0</code>.
 	 */
-	protected boolean animatedNoDash;
-	protected boolean SdOnly;
+	protected boolean animatedNoDash = false;
+	protected boolean single = false;
 	/**
 	 * Last version the image described by this filter
 	 * was used in. If the <tt>skin.ini</tt> version is
 	 * higher than this, this file is a legacy file.
 	 */
-	protected Version maxVersion;
-	protected String customPath;
-	protected String customPathMania;
+	protected Version maxVersion = null;//XXX latest?
+	protected String customPath = null;
+	protected String customPathMania = null;
+	protected String customProperty = null;
+	protected String customDefault = null;
+	protected int customKeyCount = -1;
 	/**
 	 * Override filter, if the file described by the other
 	 * filter exists, the file described by this filter
 	 * is not required.
 	 */
-	protected Filter override;
+	protected Filter override = null;
 	
-	
-	
-	
-	
-	
-	
-	
+	public ImageFilter(String[] args){
+		super(args);
+		int c = 0;
+		while(c < args.length){
+			switch(args[c]){
+			case "M":
+				animatedNoDash = true;
+				break;
+			case "S":
+				single = true;
+				break;
+			case "L":
+				maxVersion = Version.fromString(args[++c]);
+				break;
+			case "P":
+				customKeyCount = Integer.parseInt(args[++c]);
+				//$FALL-THROUGH$
+			case "C":
+				customProperty = args[++c];
+				customDefault = args[++c];
+				break;
+			case "O":
+				//TODO read item name and map to filter
+				break;
+			}
+			c++;
+		}
+	}
 	
 	public void hasHD(){
 		//TODO ...

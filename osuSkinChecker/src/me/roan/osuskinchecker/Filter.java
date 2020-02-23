@@ -22,7 +22,7 @@ public abstract class Filter{
 	 * <code>-n</code> to the name. Where <code>n</code> is an
 	 * integer <code>&gt;= 0</code>.
 	 */
-	protected boolean animatedDash;
+	protected boolean animatedDash = false;
 
 	public Filter(String[] args){
 		for(String arg : args){
