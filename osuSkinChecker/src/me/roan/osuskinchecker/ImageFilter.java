@@ -86,8 +86,8 @@ public class ImageFilter extends Filter<ImageMeta>{
 	
 	public boolean hasHD(){
 		//TODO ...
-		for(ImageMeta file : matches){
-			if(file.getName().matches(".+@2x\\..+$")){
+		for(ImageMeta meta : matches){
+			if(meta.isHD()){
 				return true;
 			}
 		}
@@ -96,8 +96,8 @@ public class ImageFilter extends Filter<ImageMeta>{
 
 	public boolean hasSD(){
 		//TODO
-		for(ImageMeta file : matches){
-			if(!file.getName().matches(".+@2x\\..+$")){
+		for(ImageMeta meta : matches){
+			if(meta.isSD()){
 				return true;
 			}
 		}
@@ -110,7 +110,9 @@ public class ImageFilter extends Filter<ImageMeta>{
 	}
 
 	@Override
-	protected boolean matches(File file, String fn, Deque<String> path){
+	protected ImageMeta matches(File file, String fn, Deque<String> path){
+		boolean hd = false;
+		
 		//name without base
 		String extra;
 		
@@ -121,18 +123,18 @@ public class ImageFilter extends Filter<ImageMeta>{
 					Iterator<String> iter = path.iterator();
 					for(int i = customPath.length - 2; i >= 0; i--){
 						if(!iter.next().equals(customPath[i])){
-							return false;
+							return null;
 						}
 					}
 					extra = fn.substring(customPath[customPath.length - 1].length());
 				}else{
-					return false;
+					return null;
 				}
 			}else{
 				if(fn.startsWith(customDefault)){
 					extra = fn.substring(customDefault.length());
 				}else{
-					return false;
+					return null;
 				}
 			}
 		}else{
@@ -143,18 +145,31 @@ public class ImageFilter extends Filter<ImageMeta>{
 		//strip @2x
 		if(extra.endsWith("@2x")){
 			extra = extra.substring(0, extra.length() - 3);
+			hd = true;
 		}
 		
 		//if nothing special accept
 		if(extra.length() == 0){
-			return true;
+			return new ImageMeta(file, hd);
 		}else{
 			if(animatedDash){
-				return fn.matches("-[0-9]+");
+				if(extra.startsWith("-")){
+					try{
+						return new ImageMeta(file, hd, Integer.parseInt(extra.substring(1)));
+					}catch(NumberFormatException e){
+						return null;
+					}
+				}else{
+					return null;
+				}
 			}else if(animatedNoDash){
-				return fn.matches("[0-9]+");
+				try{
+					return new ImageMeta(file, hd, Integer.parseInt(extra.substring(1)));
+				}catch(NumberFormatException e){
+					return null;
+				}
 			}else{
-				return false;
+				return null;
 			}
 		}
 	}
