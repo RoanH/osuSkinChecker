@@ -21,20 +21,20 @@ public abstract class Model extends DefaultTableModel{
 	 */
 	private static final long serialVersionUID = 5912216650613737949L;
 	/**
-	 * The table data for this table model
+	 * The table data for this table model.
 	 */
-	private List<? extends Filter<?>> data;
+	private List<Filter<?>> data;
 	/**
-	 * The filtered table data for this table model
+	 * The filtered table data for this table model.
 	 */
 	protected List<Filter<?>> view = new ArrayList<Filter<?>>();
 
 	/**
 	 * Creates a new Model with the given
 	 * list of information objects as its
-	 * table data
+	 * table data.
 	 * @param list The table data for this
-	 *        table model
+	 *        table model.
 	 */
 	public Model(List<Filter<?>> list){
 		data = list;
@@ -44,6 +44,8 @@ public abstract class Model extends DefaultTableModel{
 	 * Updates the view for this model.
 	 * This includes filtering the table
 	 * data and repainting the table.
+	 * @param version The <tt>skin.ini</tt>
+	 *        version used in this skin.
 	 */
 	protected void updateView(Version version){
 		view.clear();
