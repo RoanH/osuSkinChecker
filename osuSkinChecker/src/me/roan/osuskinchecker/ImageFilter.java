@@ -151,7 +151,7 @@ public class ImageFilter extends Filter<ImageMeta>{
 	}
 	
 	public boolean isOverriden(){
-		return overrideMode ^ override.hasMatch();
+		return (overrideName == null) ? false : (overrideMode ^ override.hasMatch());
 	}
 
 	@Override
