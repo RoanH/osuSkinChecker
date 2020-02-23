@@ -20,6 +20,11 @@ public class ImageFilter extends Filter<ImageMeta>{
 	 * integer <code>&gt;= 0</code>.
 	 */
 	protected boolean animatedNoDash = false;
+	/**
+	 * Whether or not the SD/HD distinction
+	 * does not apply to the image matched
+	 * by this filter.
+	 */
 	protected boolean single = false;
 	/**
 	 * Last version the image described by this filter
@@ -50,8 +55,11 @@ public class ImageFilter extends Filter<ImageMeta>{
 	 * is not required.
 	 */
 	protected Filter<?> override = null;
+	/**
+	 * Name of the file that overrides the file
+	 * matches by this filter.
+	 */
 	protected String overrideName = null;
-	//true = need, false = ignored
 	/**
 	 * Specifies the override mode. If this flag is
 	 * <code>true</code> then the override file has
