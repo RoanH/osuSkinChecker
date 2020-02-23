@@ -16,6 +16,11 @@ import me.roan.osuskinchecker.ini.Version;
  */
 public final class SoundFilter extends Filter<File>{
 
+	/**
+	 * Constructs a new SoundFilter with the given
+	 * construction arguments.
+	 * @param args The filter construction arguments.
+	 */
 	public SoundFilter(String[] args){
 		super(args);
 	}
