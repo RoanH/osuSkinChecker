@@ -63,7 +63,7 @@ public abstract class Filter<T>{
 		}
 		return false;
 	}
-	
+		
 	public void reset(SkinIni ini){
 		matches.clear();
 	}
@@ -80,6 +80,8 @@ public abstract class Filter<T>{
 	protected abstract boolean allowNonRoot();
 	
 	protected abstract boolean show(Version version);
+	
+	protected abstract void link(List<Filter<?>> filters);
 	
 	@Override
 	public String toString(){

@@ -151,8 +151,7 @@ public class ImageFilter extends Filter<ImageMeta>{
 	}
 	
 	public boolean isOverriden(){
-		//TODO
-		return false;
+		return overrideMode ^ override.hasMatch();
 	}
 
 	@Override
@@ -246,6 +245,10 @@ public class ImageFilter extends Filter<ImageMeta>{
 		}else if(SkinChecker.showAll){
 			return true;
 		}else{
+			if(isOverriden()){
+				return false;
+			}
+			
 			if(SkinChecker.checkHD && !hasHD()){
 				return !(SkinChecker.ignoreEmpty && allEmptySD());
 			}
@@ -255,5 +258,17 @@ public class ImageFilter extends Filter<ImageMeta>{
 			}
 		}
 		return false;
+	}
+
+	@Override
+	protected void link(List<Filter<?>> filters){
+		if(overrideName != null){
+			for(Filter<?> filter : filters){
+				if(filter.name.equals(overrideName)){
+					override = filter;
+					break;
+				}
+			}
+		}
 	}
 }

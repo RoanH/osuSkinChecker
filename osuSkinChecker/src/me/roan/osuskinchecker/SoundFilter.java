@@ -48,4 +48,8 @@ public final class SoundFilter extends Filter<File>{
 	protected boolean show(Version version){
 		return SkinChecker.showAll || !hasMatch();
 	}
+
+	@Override
+	protected void link(List<Filter<?>> filters){
+	}
 }
