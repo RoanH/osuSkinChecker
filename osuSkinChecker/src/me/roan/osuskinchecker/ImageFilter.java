@@ -149,21 +149,15 @@ public class ImageFilter extends Filter{
 		if(extra.length() == 0){
 			return true;
 		}else{
-			
+			if(animatedDash){
+				return fn.matches("-[0-9]+");
+			}else if(animatedNoDash){
+				return fn.matches("[0-9]+");
+			}else{
+				return false;
+			}
 		}
-		
-		return false;
 	}
-
-
-
-
-
-
-
-
-
-
 
 	@Override
 	public Model getModel(List<Filter> filters){
