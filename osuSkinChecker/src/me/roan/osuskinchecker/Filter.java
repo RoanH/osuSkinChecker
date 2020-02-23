@@ -61,6 +61,11 @@ public abstract class Filter{
 		matches.clear();
 	}
 	
+	//at least one match (mostly for sound)
+	public boolean hasMatch(){
+		return !matches.isEmpty();
+	}
+	
 	public abstract Model getModel(List<Filter> filters);
 
 	protected abstract boolean matches(File file, String fn);
