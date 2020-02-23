@@ -44,11 +44,20 @@ public abstract class Filter{
 		String fn = file.getName();
 		for(String ext : extensions){
 			if(fn.endsWith("." + ext)){
-				if(fn.startsWith(name) && (path.isEmpty() || allowNonRoot()) && matches(file, fn.substring(0, fn.length() - 1 - ext.length()), path)){
-					matches.add(file);
-					return true;
+				if(allowNonRoot()){
+					if(matches(file, fn, path)){
+						matches.add(file);
+						return true;
+					}else{
+						return false;
+					}
 				}else{
-					return false;
+					if(fn.startsWith(name) && path.isEmpty() && matches(file, fn.substring(0, fn.length() - 1 - ext.length()), path)){
+						matches.add(file);
+						return true;
+					}else{
+						return false;
+					}
 				}
 			}
 		}

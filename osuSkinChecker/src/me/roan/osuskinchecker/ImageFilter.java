@@ -2,6 +2,7 @@ package me.roan.osuskinchecker;
 
 import java.io.File;
 import java.util.Deque;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 
@@ -72,12 +73,14 @@ public class ImageFilter extends Filter{
 	@Override
 	public void reset(SkinIni ini){
 		super.reset(ini);
-		Setting<?> pathSetting = ini.find(customProperty, customKeyCount);
-		if(pathSetting != null && pathSetting.isEnabled()){
-			//path separator is currently hard coded in the skin.ini format
-			customPath = pathSetting.getValue().toString().split("/");
-		}else{
-			customPath = new String[]{customDefault};
+		if(customProperty != null){
+			Setting<?> pathSetting = ini.find(customProperty, customKeyCount);
+			if(pathSetting != null && pathSetting.isEnabled()){
+				//path separator is currently hard coded in the skin.ini format
+				customPath = pathSetting.getValue().toString().split("/");
+			}else{
+				customPath = new String[]{customDefault};
+			}
 		}
 	}
 	
@@ -90,13 +93,37 @@ public class ImageFilter extends Filter{
 
 	@Override
 	protected boolean matches(File file, String fn, Deque<String> path){
+		//name without base
+		String extra;
 		
+		//verify custom path and name
+		if(customProperty != null){
+			if(customPath.length > 1 || !path.isEmpty()){
+				if(customPath.length - 1 == path.size()){
+					Iterator<String> iter = path.iterator();
+					for(int i = customPath.length - 2; i >= 0; i--){
+						if(!iter.next().equals(customPath[i])){
+							return false;
+						}
+					}
+					extra = fn.substring(customPath[customPath.length - 1].length());
+				}else{
+					return false;
+				}
+			}else{
+				if(fn.startsWith(customDefault)){
+					extra = fn.substring(customDefault.length());
+				}else{
+					return false;
+				}
+			}
+		}else{
+			//strip file name
+			extra = fn.substring(name.length());
+		}
 		
-		
-		
-		//TODO handle non root
-		fn = fn.substring(name.length());
-		if(fn.length() == 0){
+		//if nothing special accept
+		if(extra.length() == 0){
 			return true;
 		}else{
 			
