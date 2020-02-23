@@ -543,7 +543,9 @@ public class SkinChecker{
 		foreignFiles.clear();
 		int offset = 1 + skinFolder.toString().length();
 		for(File file : foreign){
-			foreignFiles.addElement(file.toString().substring(offset));
+			if(!file.equals(ini)){
+				foreignFiles.addElement(file.toString().substring(offset));
+			}
 		}
 	}
 	
