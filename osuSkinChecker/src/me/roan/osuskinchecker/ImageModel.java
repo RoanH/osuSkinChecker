@@ -24,7 +24,7 @@ public class ImageModel extends Model{
 	 * @see Model
 	 * @see ImageInfoOld
 	 */
-	public ImageModel(List<Filter> list){
+	public ImageModel(List<Filter<?>> list){
 		super(list);
 	}
 

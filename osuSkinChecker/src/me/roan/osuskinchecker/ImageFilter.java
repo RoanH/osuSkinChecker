@@ -10,7 +10,7 @@ import me.roan.osuskinchecker.ini.Setting;
 import me.roan.osuskinchecker.ini.SkinIni;
 import me.roan.osuskinchecker.ini.Version;
 
-public class ImageFilter extends Filter{
+public class ImageFilter extends Filter<ImageMeta>{
 	/**
 	 * Whether or not multiple versions of the
 	 * image described by this filter
@@ -86,7 +86,7 @@ public class ImageFilter extends Filter{
 	
 	public boolean hasHD(){
 		//TODO ...
-		for(File file : matches){
+		for(ImageMeta file : matches){
 			if(file.getName().matches(".+@2x\\..+$")){
 				return true;
 			}
@@ -96,7 +96,7 @@ public class ImageFilter extends Filter{
 
 	public boolean hasSD(){
 		//TODO
-		for(File file : matches){
+		for(ImageMeta file : matches){
 			if(!file.getName().matches(".+@2x\\..+$")){
 				return true;
 			}
@@ -160,7 +160,7 @@ public class ImageFilter extends Filter{
 	}
 
 	@Override
-	public Model getModel(List<Filter> filters){
+	public Model getModel(List<Filter<?>> filters){
 		return new ImageModel(filters);
 	}
 

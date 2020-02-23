@@ -75,13 +75,13 @@ public class SkinChecker{
 	 * Layered map with the information
 	 * about all the images
 	 */
-	private static final Map<String, Map<String, List<Filter>>> imagesMap = new HashMap<String, Map<String, List<Filter>>>();
+	private static final Map<String, Map<String, List<Filter<?>>>> imagesMap = new HashMap<String, Map<String, List<Filter<?>>>>();
 	/**
 	 * Layered map with the information
 	 * about all the sound files
 	 */
-	private static final Map<String, Map<String, List<Filter>>> soundsMap = new HashMap<String, Map<String, List<Filter>>>();
-	private static final List<Filter> filters = new ArrayList<Filter>();
+	private static final Map<String, Map<String, List<Filter<?>>>> soundsMap = new HashMap<String, Map<String, List<Filter<?>>>>();
+	private static final List<Filter<?>> filters = new ArrayList<Filter<?>>();
 	/**
 	 * Folder of the skin currently being checked
 	 */
@@ -527,7 +527,7 @@ public class SkinChecker{
 		mapToTabs(imageTabs, imagesMap);
 		mapToTabs(soundTabs, soundsMap);
 
-		for(Filter filter : filters){
+		for(Filter<?> filter : filters){
 			filter.reset(skinIni);
 		}
 
@@ -589,11 +589,11 @@ public class SkinChecker{
 	 * @param tabs The tabbed pane to map the data to
 	 * @param map The data to map to the tabs
 	 */
-	private static void mapToTabs(JTabbedPane tabs, Map<String, Map<String, List<Filter>>> map){
+	private static void mapToTabs(JTabbedPane tabs, Map<String, Map<String, List<Filter<?>>>> map){
 		tabs.removeAll();
-		for(Entry<String, Map<String, List<Filter>>> entry : map.entrySet()){
+		for(Entry<String, Map<String, List<Filter<?>>>> entry : map.entrySet()){
 			JTabbedPane inner = new JTabbedPane();
-			for(Entry<String, List<Filter>> e : entry.getValue().entrySet()){
+			for(Entry<String, List<Filter<?>>> e : entry.getValue().entrySet()){
 				inner.add(e.getKey(), new JScrollPane(getTableData(e.getValue())));
 			}
 			tabs.add(entry.getKey(), inner);
@@ -607,7 +607,7 @@ public class SkinChecker{
 	 * @param info The table data
 	 * @return The newly created JTable
 	 */
-	private static JTable getTableData(final List<Filter> info){
+	private static JTable getTableData(final List<Filter<?>> info){
 		JTable table = new JTable();
 		Model model = info.get(0) instanceof ImageFilter ? new ImageModel(info) : new SoundModel(info);
 		listeners.add(model);
@@ -643,10 +643,10 @@ public class SkinChecker{
 	 * @return A layered map of all the file descriptors
 	 * @throws IOException When an IOException occurs
 	 */
-	private static Map<String, List<Filter>> readDataFile(String name, boolean isSound) throws IOException{
-		Map<String, List<Filter>> data = new HashMap<String, List<Filter>>();
+	private static Map<String, List<Filter<?>>> readDataFile(String name, boolean isSound) throws IOException{
+		Map<String, List<Filter<?>>> data = new HashMap<String, List<Filter<?>>>();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(name)));
-		List<Filter> writing = null;
+		List<Filter<?>> writing = null;
 		String line;
 		while((line = reader.readLine()) != null){
 			if(line.trim().isEmpty()){
@@ -655,7 +655,7 @@ public class SkinChecker{
 				if(writing != null){
 					filters.addAll(writing);
 				}
-				writing = new ArrayList<Filter>();
+				writing = new ArrayList<Filter<?>>();
 				data.put(line.substring(4).trim(), writing);
 			}else{
 				String[] args = line.split(" +");

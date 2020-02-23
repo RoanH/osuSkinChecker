@@ -1,5 +1,6 @@
 package me.roan.osuskinchecker;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ public class SoundModel extends Model{
 	 * @see Filter
 	 * @see Model
 	 */
-	public SoundModel(List<Filter> list){
+	public SoundModel(List<Filter<?>> list){
 		super(list);
 	}
 

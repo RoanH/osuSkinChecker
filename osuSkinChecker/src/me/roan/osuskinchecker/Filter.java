@@ -8,9 +8,9 @@ import java.util.Stack;
 
 import me.roan.osuskinchecker.ini.SkinIni;
 
-public abstract class Filter{
+public abstract class Filter<T>{
 	
-	protected List<File> matches = new ArrayList<File>();
+	protected List<T> matches = new ArrayList<T>();
 	/**
 	 * Base file name without animation sequence number or extension.
 	 */
@@ -45,15 +45,21 @@ public abstract class Filter{
 		for(String ext : extensions){
 			if(fn.endsWith("." + ext)){
 				if(allowNonRoot()){
-					if(matches(file, fn, path)){
-						matches.add(file);
+					T meta = matches(file, fn, path);
+					if(meta != null){
+						matches.add(meta);
 						return true;
 					}else{
 						return false;
 					}
 				}else{
-					if(fn.startsWith(name) && path.isEmpty() && matches(file, fn.substring(0, fn.length() - 1 - ext.length()), path)){
-						matches.add(file);
+					if(fn.startsWith(name) && path.isEmpty()){
+						T meta = matches(file, fn.substring(0, fn.length() - 1 - ext.length()), path);
+						if(meta != null){
+							matches.add(meta);
+						}else{
+							return false;
+						}
 						return true;
 					}else{
 						return false;
@@ -73,9 +79,9 @@ public abstract class Filter{
 		return !matches.isEmpty();
 	}
 	
-	public abstract Model getModel(List<Filter> filters);
+	public abstract Model getModel(List<Filter<?>> filters);
 
-	protected abstract boolean matches(File file, String fn, Deque<String> path);
+	protected abstract T matches(File file, String fn, Deque<String> path);
 	
 	protected abstract boolean allowNonRoot();
 	
