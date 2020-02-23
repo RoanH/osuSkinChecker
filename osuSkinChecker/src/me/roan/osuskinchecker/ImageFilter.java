@@ -26,10 +26,23 @@ public class ImageFilter extends Filter<ImageMeta>{
 	 * was used in. If the <tt>skin.ini</tt> version is
 	 * higher than this, this file is a legacy file.
 	 */
-	protected Version maxVersion = null;//XXX latest?
+	protected Version maxVersion = null;
+	/**
+	 * The skin.ini setting the custom path is tied to.
+	 */
 	protected String customProperty = null;
+	/**
+	 * The default resource location for the custom path.
+	 */
 	protected String customDefault = null;
+	/**
+	 * Specifies the custom file location or the default
+	 * location if there is no custom one.
+	 */
 	protected String[] customPath;
+	/**
+	 * The mania key count the custom path setting is for.
+	 */
 	protected int customKeyCount = -1;
 	/**
 	 * Override filter, if the file described by the other
@@ -39,6 +52,12 @@ public class ImageFilter extends Filter<ImageMeta>{
 	protected Filter<?> override = null;
 	protected String overrideName = null;
 	//true = need, false = ignored
+	/**
+	 * Specifies the override mode. If this flag is
+	 * <code>true</code> then the override file has
+	 * to be present for this filter to activate. If
+	 * the flag is <code>false</code>
+	 */
 	protected boolean overrideMode = false;
 	
 	public ImageFilter(String[] args){

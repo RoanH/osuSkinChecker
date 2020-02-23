@@ -25,12 +25,6 @@ public final class ImageInfoOld{
 	 */
 	private boolean singleImage = false;
 	/**
-	 * Whether or not the image described by this
-	 * information object is a legacy file and not 
-	 * used anymore by recent skins.
-	 */
-	private boolean legacy = false;
-	/**
 	 * Whether or not multiple versions of the
 	 * image described by this information
 	 * object can exist, where extra files are named by adding
@@ -46,18 +40,6 @@ public final class ImageInfoOld{
 	 * integer <code>&gt;= 0</code>.
 	 */
 	protected boolean variableWithoutDash = false;
-	/**
-	 * The skin.ini setting the custom path is tied to
-	 */
-	protected String customProperty = null;
-	/**
-	 * The default resource location for the custom path
-	 */
-	protected String customDefault = null;
-	/**
-	 * The mania key count this custom path setting is for
-	 */
-	protected int customKeyCount = -1;
 	/**
 	 * Boolean to store whether or not a missing
 	 * HD image for a file could be ignored because
@@ -84,17 +66,4 @@ public final class ImageInfoOld{
 	 * entire image could be ignored
 	 */
 	private boolean ignore = false;
-	/**
-	 * If this image is an animation the number
-	 * of frames in the animation
-	 */
-	protected int frames;
-	/**
-	 * Full name custom path included for this image
-	 */
-	private String fullName = null;
-	/**
-	 * Whether or not this image is empty
-	 */
-	private boolean empty = true;
 }
