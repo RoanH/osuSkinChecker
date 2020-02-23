@@ -529,6 +529,7 @@ public class SkinChecker{
 		mapToTabs(soundTabs, soundsMap);
 
 		for(Filter<?> filter : filters){
+			filter.link(filters);
 			filter.reset(skinIni);
 		}
 
