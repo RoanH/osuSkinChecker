@@ -28,11 +28,15 @@ import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Stack;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -515,42 +519,45 @@ public class SkinChecker{
 		}
 		iniTab.init(skinIni);
 
-		allFiles.clear();
-		addAllFiles(skinFolder);
+		allFiles.clear();//TODO obsolete var?
+		//addAllFiles(skinFolder);
 		//XXX allFiles.remove(iniFile);
 
-		filters.forEach(Filter::reset);
 
 		mapToTabs(imageTabs, imagesMap);
 		mapToTabs(soundTabs, soundsMap);
 
+		for(Filter filter : filters){
+			filter.reset(skinIni);
+		}
+
+		
 //		foreignFiles.clear();
 //		int offset = 1 + skinFolder.toString().length();
 //		for(File file : allFiles){
 //			foreignFiles.addElement(file.toString().substring(offset));
 //		}
-		
-		//TODO is none then foreign for sure
-		for(File file : allFiles){
-			for(Filter filter : filters){
-				if(filter.check(file)){
-					break;
-				}
-			}
-		}
-	}
 
-	/**
-	 * Adds all the files form the given directory
-	 * to the {@link #allFiles} list.
-	 * @param dir The directory to parse
-	 */
-	private static void addAllFiles(File dir){
-		for(File f : dir.listFiles()){
+		
+		Deque<String> path = new ArrayDeque<String>();
+		List<File> foreign = new ArrayList<File>();//TODO use values
+		checkAllFiles(skinFolder, path, foreign);
+	}
+	
+	private static void checkAllFiles(File dir, Deque<String> path, List<File> foreign){
+		loop: for(File f : dir.listFiles()){
 			if(f.isDirectory()){
-				addAllFiles(f);
+				path.push(f.getName());
+				checkAllFiles(f, path, foreign);
+				path.pop();
 			}else{
-				allFiles.add(f);
+				//if none then foreign for sure
+				for(Filter filter : filters){
+					if(filter.check(f, path)){
+						continue loop;
+					}
+				}
+				foreign.add(f);
 			}
 		}
 	}

@@ -1,6 +1,7 @@
 package me.roan.osuskinchecker;
 
 import java.io.File;
+import java.util.Deque;
 import java.util.List;
 
 /**
@@ -23,16 +24,17 @@ public final class SoundFilter extends Filter{
 	}
 
 	@Override
-	protected boolean matches(File file, String fn){
-		if(fn.startsWith(name)){
-			fn = fn.substring(name.length());
-			if(fn.length() == 0){
-				return true;
-			}else{
-				return fn.matches("-[0-9]+");
-			}
+	protected boolean matches(File file, String fn, Deque<String> path){
+		fn = fn.substring(name.length());
+		if(fn.length() == 0){
+			return true;
 		}else{
-			return false;
+			return animatedDash && fn.matches("-[0-9]+");
 		}
+	}
+
+	@Override
+	protected boolean allowNonRoot(){
+		return false;
 	}
 }

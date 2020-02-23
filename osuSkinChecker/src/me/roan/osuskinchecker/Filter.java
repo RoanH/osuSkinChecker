@@ -2,7 +2,11 @@ package me.roan.osuskinchecker;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
+import java.util.Stack;
+
+import me.roan.osuskinchecker.ini.SkinIni;
 
 public abstract class Filter{
 	
@@ -35,12 +39,12 @@ public abstract class Filter{
 		this.name = args[args.length - 1];
 	}
 		
-	public boolean check(File file){
+	public boolean check(File file, Deque<String> path){
 		//check extension here, delegate other checks to subclass
 		String fn = file.getName();
 		for(String ext : extensions){
 			if(fn.endsWith("." + ext)){
-				if(matches(file, fn.substring(0, fn.length() - 1 - ext.length()))){
+				if(fn.startsWith(name) && (path.isEmpty() || allowNonRoot()) && matches(file, fn.substring(0, fn.length() - 1 - ext.length()), path)){
 					matches.add(file);
 					return true;
 				}else{
@@ -51,7 +55,7 @@ public abstract class Filter{
 		return false;
 	}
 	
-	public void reset(){
+	public void reset(SkinIni ini){
 		matches.clear();
 	}
 	
@@ -62,7 +66,9 @@ public abstract class Filter{
 	
 	public abstract Model getModel(List<Filter> filters);
 
-	protected abstract boolean matches(File file, String fn);
+	protected abstract boolean matches(File file, String fn, Deque<String> path);
+	
+	protected abstract boolean allowNonRoot();
 	
 	@Override
 	public String toString(){
