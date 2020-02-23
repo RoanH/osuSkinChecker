@@ -3,7 +3,6 @@ package me.roan.osuskinchecker;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public abstract class Filter{
 	
