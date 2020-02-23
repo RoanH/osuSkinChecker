@@ -543,19 +543,21 @@ public class SkinChecker{
 	}
 	
 	private static void checkAllFiles(File dir, Deque<String> path, List<File> foreign){
-		loop: for(File f : dir.listFiles()){
+		for(File f : dir.listFiles()){
 			if(f.isDirectory()){
 				path.push(f.getName());
 				checkAllFiles(f, path, foreign);
 				path.pop();
 			}else{
 				//if none then foreign for sure
+				//no short circuiting because numbers can count for two filters, score and combo
+				boolean found = false;
 				for(Filter<?> filter : filters){
-					if(filter.check(f, path)){
-						continue loop;
-					}
+					found |= filter.check(f, path);
 				}
-				foreign.add(f);
+				if(!found){
+					foreign.add(f);
+				}
 			}
 		}
 	}
