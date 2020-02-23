@@ -6,7 +6,8 @@ import java.util.List;
 import me.roan.osuskinchecker.ini.Version;
 
 public class ImageFilter extends Filter{
-	public ImageFilter(String line){
+	
+	public ImageFilter(String[] args){
 		super(line);
 		// TODO Auto-generated constructor stub
 	}

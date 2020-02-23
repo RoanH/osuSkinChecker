@@ -25,22 +25,17 @@ public abstract class Filter{
 	 */
 	protected boolean animatedDash;
 
-	public Filter(String line){
-		String[] data = line.split(" ");
-		if(!data[0].equals("-")){
-			char[] args = data[0].toUpperCase(Locale.ROOT).toCharArray();
-			for(char option : args){
-				switch(option){
-				case 'N':
-					animatedDash = true;
-					break;
-				}
+	public Filter(String[] args){
+		for(String arg : args){
+			if(arg.equals("N")){
+				animatedDash = true;
+				break;
 			}
 		}
-		this.extensions = data[1].split(",");
-		this.name = data[2];
+		this.extensions = args[args.length - 2].split(",");
+		this.name = args[args.length - 1];
 	}
-	
+		
 	public boolean check(File file){
 		//check extension here, delegate other checks to subclass
 		String fn = file.getName();

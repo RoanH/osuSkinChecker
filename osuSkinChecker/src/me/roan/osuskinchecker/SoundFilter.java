@@ -13,8 +13,8 @@ import java.util.List;
  */
 public final class SoundFilter extends Filter{
 
-	public SoundFilter(String line){
-		super(line);
+	public SoundFilter(String[] args){
+		super(args);
 	}
 	
 	@Override

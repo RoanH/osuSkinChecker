@@ -651,7 +651,8 @@ public class SkinChecker{
 				writing = new ArrayList<Filter>();
 				data.put(line.substring(4).trim(), writing);
 			}else{
-				writing.add(isSound ?  new SoundFilter(line) : new ImageFilter(line));
+				String[] args = line.split(" +");
+				writing.add(isSound ?  new SoundFilter(args) : new ImageFilter(args));
 			}
 		}
 		filters.addAll(writing);
