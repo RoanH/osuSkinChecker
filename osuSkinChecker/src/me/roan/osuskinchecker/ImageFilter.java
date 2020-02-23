@@ -68,7 +68,7 @@ public class ImageFilter extends Filter{
 
 
 	@Override
-	protected boolean matches(File file){
+	protected boolean matches(File file, String fn){
 		// TODO Auto-generated method stub
 		return false;
 	}
