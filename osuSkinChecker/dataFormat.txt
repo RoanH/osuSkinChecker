@@ -40,3 +40,4 @@ Format for the .txt files that contain all the data about all the files.
    extension is possible they should be separated by a , (comma) and no spaces should be used.
    
 8. The filename of the file is the name of the file without the extension, hd indicator and animation indicators.
+   If this ends up being an empty string - should be used instead.

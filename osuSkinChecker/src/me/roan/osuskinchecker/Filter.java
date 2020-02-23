@@ -36,6 +36,9 @@ public abstract class Filter<T>{
 		}
 		this.extensions = args[args.length - 2].split(",");
 		this.name = args[args.length - 1];
+		if(this.name.equals("-")){
+			this.name = "";
+		}
 	}
 		
 	public boolean check(File file, Deque<String> path){
