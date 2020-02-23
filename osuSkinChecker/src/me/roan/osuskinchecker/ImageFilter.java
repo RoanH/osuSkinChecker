@@ -32,6 +32,9 @@ public class ImageFilter extends Filter{
 	 * is not required.
 	 */
 	protected Filter override = null;
+	protected String overrideName = null;
+	//true = need, false = ignored
+	protected boolean overrideMode = false;
 	
 	public ImageFilter(String[] args){
 		super(args);
@@ -55,7 +58,8 @@ public class ImageFilter extends Filter{
 				customDefault = args[++c];
 				break;
 			case "O":
-				//TODO read item name and map to filter
+				overrideMode = Boolean.parseBoolean(args[++c]);
+				overrideName = args[++c];
 				break;
 			}
 			c++;

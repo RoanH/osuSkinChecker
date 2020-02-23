@@ -25,8 +25,10 @@ Format for the .txt files that contain all the data about all the files.
        If the file could not be found in the root folder of the skin the custom path set
        in the skin.ini file is checked.
    P - Special variant of C where before the other properties is the mania key count.
-   O - Indicates that a file exists that overrides this file if present. Should be
-       followed by the name of the overriding file.
+   O - Indicates that a file exists that modifies this files behavior if present. Should be
+       followed by a boolean that is true if this file needs the additional file to load.
+       Should be followed by a boolean that is false is this file is ignored when the additional
+       file is present. Should specific the additional file name after the boolean.
    - - A dash means that no special options apply to the file.
 
 6. If the C or P option is used then the options section has to be followed directly by the
