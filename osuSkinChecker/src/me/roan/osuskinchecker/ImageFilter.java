@@ -6,6 +6,21 @@ import java.util.List;
 import me.roan.osuskinchecker.ini.Version;
 
 public class ImageFilter extends Filter{
+	public ImageFilter(String line){
+		super(line);
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+
+
+
+
+
+
+
+
 	/**
 	 * Whether or not multiple versions of the
 	 * image described by this filter

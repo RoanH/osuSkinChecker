@@ -327,47 +327,48 @@ public class SkinChecker{
 			}
 		});
 		print.addActionListener((e)->{
-			if(skinFolder != null){
-				JFileChooser chooser = new JFileChooser();
-				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				chooser.setMultiSelectionEnabled(false);
-				if(chooser.showSaveDialog(frame) != JFileChooser.APPROVE_OPTION){
-					return;
-				}
-				File dest = chooser.getSelectedFile();
-				try{
-					final PrintWriter writer = new PrintWriter(new FileOutputStream(dest));
-					writer.println("========== Images ==========");
-					for(Entry<String, Map<String, List<Info>>> m : imagesMap.entrySet()){
-						for(Entry<String, List<Info>> ml : m.getValue().entrySet()){
-							for(Info mli : ml.getValue()){
-								if(mli.show()){
-									writer.println('[' + m.getKey() + "|" + ml.getKey() + "]: " + ((ImageInfo)mli).name);
-								}
-							}
-						}
-					}
-					writer.println();
-					writer.println("========== Sounds ==========");
-					for(Entry<String, Map<String, List<Info>>> m : soundsMap.entrySet()){
-						for(Entry<String, List<Info>> ml : m.getValue().entrySet()){
-							for(Info mli : ml.getValue()){
-								if(mli.show()){
-									writer.println('[' + m.getKey() + "|" + ml.getKey() + "]: " + ((SoundInfo)mli).name);
-								}
-							}
-						}
-					}
-					writer.flush();
-					writer.close();
-					Dialog.showMessageDialog("File list succesfully exported");
-				}catch(FileNotFoundException e1){
-					Dialog.showErrorDialog("An error occured: " + e1.getMessage());
-				}
-
-			}else{
-				Dialog.showErrorDialog("No skin currently selected!");
-			}
+			//TODO reimplement
+//			if(skinFolder != null){
+//				JFileChooser chooser = new JFileChooser();
+//				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+//				chooser.setMultiSelectionEnabled(false);
+//				if(chooser.showSaveDialog(frame) != JFileChooser.APPROVE_OPTION){
+//					return;
+//				}
+//				File dest = chooser.getSelectedFile();
+//				try{
+//					final PrintWriter writer = new PrintWriter(new FileOutputStream(dest));
+//					writer.println("========== Images ==========");
+//					for(Entry<String, Map<String, List<Info>>> m : imagesMap.entrySet()){
+//						for(Entry<String, List<Info>> ml : m.getValue().entrySet()){
+//							for(Info mli : ml.getValue()){
+//								if(mli.show()){
+//									writer.println('[' + m.getKey() + "|" + ml.getKey() + "]: " + ((ImageInfo)mli).name);
+//								}
+//							}
+//						}
+//					}
+//					writer.println();
+//					writer.println("========== Sounds ==========");
+//					for(Entry<String, Map<String, List<Info>>> m : soundsMap.entrySet()){
+//						for(Entry<String, List<Info>> ml : m.getValue().entrySet()){
+//							for(Info mli : ml.getValue()){
+//								if(mli.show()){
+//									writer.println('[' + m.getKey() + "|" + ml.getKey() + "]: " + ((SoundInfo)mli).name);
+//								}
+//							}
+//						}
+//					}
+//					writer.flush();
+//					writer.close();
+//					Dialog.showMessageDialog("File list succesfully exported");
+//				}catch(FileNotFoundException e1){
+//					Dialog.showErrorDialog("An error occured: " + e1.getMessage());
+//				}
+//
+//			}else{
+//				Dialog.showErrorDialog("No skin currently selected!");
+//			}
 		});
 
 		JPanel flow = new JPanel();
@@ -519,11 +520,9 @@ public class SkinChecker{
 
 		allFiles.clear();
 		addAllFiles(skinFolder);
-		allFiles.remove(iniFile);
+		//XXX allFiles.remove(iniFile);
 
-		for(Info i : info){
-			i.reset();
-		}
+		filters.forEach(Filter::reset);
 
 		mapToTabs(imageTabs, imagesMap);
 		mapToTabs(soundTabs, soundsMap);
@@ -577,11 +576,11 @@ public class SkinChecker{
 	 * @param tabs The tabbed pane to map the data to
 	 * @param map The data to map to the tabs
 	 */
-	private static void mapToTabs(JTabbedPane tabs, Map<String, Map<String, List<Info>>> map){
+	private static void mapToTabs(JTabbedPane tabs, Map<String, Map<String, List<Filter>>> map){
 		tabs.removeAll();
-		for(Entry<String, Map<String, List<Info>>> entry : map.entrySet()){
+		for(Entry<String, Map<String, List<Filter>>> entry : map.entrySet()){
 			JTabbedPane inner = new JTabbedPane();
-			for(Entry<String, List<Info>> e : entry.getValue().entrySet()){
+			for(Entry<String, List<Filter>> e : entry.getValue().entrySet()){
 				inner.add(e.getKey(), new JScrollPane(getTableData(e.getValue())));
 			}
 			tabs.add(entry.getKey(), inner);
@@ -597,7 +596,7 @@ public class SkinChecker{
 	 */
 	private static JTable getTableData(final List<Filter> info){
 		JTable table = new JTable();
-		Model model = info.get(0).getModel(info);
+		Model model = info.get(0) instanceof ImageFilter ? new ImageModel(info) : new SoundModel(info);
 		listeners.add(model);
 		table.setModel(model);
 		return table;

@@ -3,6 +3,7 @@ package me.roan.osuskinchecker;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public abstract class Filter{
 	
@@ -23,6 +24,22 @@ public abstract class Filter{
 	 * integer <code>&gt;= 0</code>.
 	 */
 	protected boolean animatedDash;
+
+	public Filter(String line){
+		String[] data = line.split(" ");
+		if(!data[0].equals("-")){
+			char[] args = data[0].toUpperCase(Locale.ROOT).toCharArray();
+			for(char option : args){
+				switch(option){
+				case 'N':
+					animatedDash = true;
+					break;
+				}
+			}
+		}
+		this.extensions = data[1].split(",");
+		this.name = data[2];
+	}
 	
 	public void check(File file){
 		if(matches(file)){

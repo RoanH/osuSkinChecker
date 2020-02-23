@@ -34,7 +34,7 @@ public abstract class Model extends DefaultTableModel{
 	 * @param list The table data for this
 	 *        table model
 	 */
-	public Model(List<? extends Filter> list){
+	public Model(List<Filter> list){
 		data = list;
 		updateView();
 	}
@@ -46,8 +46,8 @@ public abstract class Model extends DefaultTableModel{
 	 */
 	protected void updateView(){
 		view.clear();
-		for(Info i : data){
-			if(i.show()){
+		for(Filter i : data){
+			if(/*i.show()*/ true){ //TODO
 				view.add(i);
 			}
 		}

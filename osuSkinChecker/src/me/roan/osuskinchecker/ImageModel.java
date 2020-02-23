@@ -24,7 +24,7 @@ public class ImageModel extends Model{
 	 * @see Model
 	 * @see ImageInfo
 	 */
-	public ImageModel(List<ImageFilter> list){
+	public ImageModel(List<Filter> list){
 		super(list);
 	}
 
@@ -54,14 +54,14 @@ public class ImageModel extends Model{
 			switch(col){
 			case 0:
 				return view.get(row);
-			case 1:
-				return ((ImageInfo)view.get(row)).hasSDVersion();
-			case 2:
-				ImageInfo info = ((ImageInfo)view.get(row));
-				return (info.ignored && SkinChecker.ignoreEmpty) ? "Ignored" : info.hasHDVersion();
-			case 3:
-				ImageInfo i = ((ImageInfo)view.get(row));
-				return (i.variableWithDash || i.variableWithoutDash) ? (i.animated ? ("Yes: " + i.frames + (i.frames == 1 ? " frame" : " frames")) : "No") : "N/A";
+//			case 1:
+//				return ((ImageInfo)view.get(row)).hasSDVersion();
+//			case 2:
+//				ImageInfo info = ((ImageInfo)view.get(row));
+//				return (info.ignored && SkinChecker.ignoreEmpty) ? "Ignored" : info.hasHDVersion();
+//			case 3:
+//				ImageInfo i = ((ImageInfo)view.get(row));
+//				return (i.variableWithDash || i.variableWithoutDash) ? (i.animated ? ("Yes: " + i.frames + (i.frames == 1 ? " frame" : " frames")) : "No") : "N/A";
 			}
 		}catch(Exception e){
 			return "Error";
