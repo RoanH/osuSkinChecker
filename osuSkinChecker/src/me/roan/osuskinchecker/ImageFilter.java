@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 import me.roan.osuskinchecker.ini.Setting;
 import me.roan.osuskinchecker.ini.SkinIni;
@@ -345,5 +346,10 @@ public class ImageFilter extends Filter<ImageMeta>{
 				}
 			}
 		}
+	}
+
+	@Override
+	public List<File> getMatchedFiles(){
+		return matches.stream().map(ImageMeta::getFile).collect(Collectors.toList());
 	}
 }

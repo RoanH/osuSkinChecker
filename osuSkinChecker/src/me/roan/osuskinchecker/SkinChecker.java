@@ -549,6 +549,15 @@ public class SkinChecker{
 				foreignFiles.addElement(file.toString().substring(offset));
 			}
 		}
+		for(Filter<?> filter : filters){
+			if(filter instanceof ImageFilter){
+				if(((ImageFilter)filter).isLegacy(version)){
+					for(File file : filter.getMatchedFiles()){
+						foreignFiles.addElement(file.toString().substring(offset));
+					}
+				}
+			}
+		}
 	}
 	
 	/**

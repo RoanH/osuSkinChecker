@@ -144,6 +144,8 @@ public abstract class Filter<T>{
 	 */
 	protected abstract void link(List<Filter<?>> filters);
 	
+	public abstract List<File> getMatchedFiles();
+	
 	@Override
 	public String toString(){
 		return name;

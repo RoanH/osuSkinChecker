@@ -57,4 +57,9 @@ public final class SoundFilter extends Filter<File>{
 	@Override
 	protected void link(List<Filter<?>> filters){
 	}
+
+	@Override
+	public List<File> getMatchedFiles(){
+		return matches;
+	}
 }

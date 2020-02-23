@@ -49,6 +49,10 @@ public class ImageMeta{
 		this.sequenceNum = seq;
 	}
 	
+	public File getFile(){
+		return file;
+	}
+	
 	/**
 	 * Checks if this is a HD file.
 	 * @return True if this file is a HD file.
