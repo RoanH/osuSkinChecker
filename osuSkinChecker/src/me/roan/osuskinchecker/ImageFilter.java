@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
+import java.util.StringJoiner;
 
 import me.roan.osuskinchecker.ini.Setting;
 import me.roan.osuskinchecker.ini.SkinIni;
@@ -101,6 +102,36 @@ public class ImageFilter extends Filter<ImageMeta>{
 		return false;
 	}
 	
+	public boolean isAnimated(){
+		for(ImageMeta meta : matches){
+			if(meta.isAnimated()){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public String getFrameString(){
+		int[] nums = matches.stream().mapToInt(ImageMeta::getSequenceNumber).filter(i->i >= 0).distinct().sorted().toArray();
+		StringJoiner buffer = new StringJoiner(", ");
+		int start = nums[0];
+		int last = nums[0];
+		for(int i = 1; i < nums.length; i++){
+			if(nums[i] != last + 1){
+				buffer.add(start + "-" + last);
+				start = nums[i];
+			}
+			last = nums[i];
+		}
+		if(start == 0){
+			buffer.add(last == 0 ? "1 frame" : ((last + 1) + " frames"));
+			return buffer.toString();
+		}else{
+			buffer.add(start + "-" + last);
+			return "frames " + buffer.toString();
+		}
+	}
+	
 	public boolean allEmptyImages(){
 		for(ImageMeta meta : matches){
 			if(!meta.isEmpty()){
@@ -108,11 +139,6 @@ public class ImageFilter extends Filter<ImageMeta>{
 			}
 		}
 		return true;
-	}
-	
-	public int getFrames(){
-		//TODO
-		return -1;
 	}
 
 	@Override

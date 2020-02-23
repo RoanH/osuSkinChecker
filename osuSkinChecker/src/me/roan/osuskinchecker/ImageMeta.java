@@ -30,8 +30,16 @@ public class ImageMeta{
 		return !hd;
 	}
 	
+	public boolean isAnimated(){
+		return sequenceNum != -1;
+	}
+	
 	public boolean isEmpty(){
 		return isEmptyImage(file);//TODO cache
+	}
+	
+	public int getSequenceNumber(){
+		return sequenceNum;
 	}
 	
 	/**
