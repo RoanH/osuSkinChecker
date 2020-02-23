@@ -11,6 +11,12 @@ import me.roan.osuskinchecker.ini.Setting;
 import me.roan.osuskinchecker.ini.SkinIni;
 import me.roan.osuskinchecker.ini.Version;
 
+/**
+ * Represent a filter that matches image files.
+ * @author Roan
+ * @see Filter
+ * @see ImageMeta
+ */
 public class ImageFilter extends Filter<ImageMeta>{
 	/**
 	 * Whether or not multiple versions of the
@@ -68,6 +74,10 @@ public class ImageFilter extends Filter<ImageMeta>{
 	 */
 	protected boolean overrideMode = false;
 	
+	/**
+	 * Constructs a new ImageFilter with the given arguments.
+	 * @param args The filter construction arguments.
+	 */
 	public ImageFilter(String[] args){
 		super(args);
 		int c = 0;
@@ -112,6 +122,12 @@ public class ImageFilter extends Filter<ImageMeta>{
 		}
 	}
 	
+	/**
+	 * Checks if any matched file in this filter
+	 * is a HD image.
+	 * @return Whether or not this filter matched
+	 *         a HD image.
+	 */
 	public boolean hasHD(){
 		for(ImageMeta meta : matches){
 			if(meta.isHD()){
@@ -121,6 +137,12 @@ public class ImageFilter extends Filter<ImageMeta>{
 		return false;
 	}
 
+	/**
+	 * Checks if any matched file in this filter
+	 * is a SD image.
+	 * @return Whether or not this filter matched
+	 *         a SD image.
+	 */
 	public boolean hasSD(){
 		for(ImageMeta meta : matches){
 			if(meta.isSD()){
@@ -130,6 +152,12 @@ public class ImageFilter extends Filter<ImageMeta>{
 		return false;
 	}
 	
+	/**
+	 * Checks if any matched file in this filter
+	 * is an animated image.
+	 * @return Whether or not this filter matched
+	 *         an animated image.
+	 */
 	public boolean isAnimated(){
 		for(ImageMeta meta : matches){
 			if(meta.isAnimated()){
@@ -139,6 +167,11 @@ public class ImageFilter extends Filter<ImageMeta>{
 		return false;
 	}
 	
+	/**
+	 * Constructs a string stating the frames that are animated
+	 * from all the files that matched this filter.
+	 * @return A string stated all the animated frames.
+	 */
 	public String getFrameString(){
 		int[] nums = matches.stream().mapToInt(ImageMeta::getSequenceNumber).filter(i->i >= 0).distinct().sorted().toArray();
 		StringJoiner buffer = new StringJoiner(", ");
@@ -160,6 +193,14 @@ public class ImageFilter extends Filter<ImageMeta>{
 		}
 	}
 	
+	/**
+	 * Checks if all SD images matched by
+	 * this filter are empty.
+	 * @return True if all matched SD images
+	 *         are empty, false otherwise. If
+	 *         no SD images were matched false
+	 *         is returned.
+	 */
 	public boolean allEmptySD(){
 		boolean none = true;
 		for(ImageMeta meta : matches){
@@ -173,6 +214,13 @@ public class ImageFilter extends Filter<ImageMeta>{
 		return !none;
 	}
 	
+	/**
+	 * Checks whether or not the image matched by this filter
+	 * is no longer supported in the given current version.
+	 * @param current The version of the skin being checked.
+	 * @return True if the images matched by this filter are
+	 *         legacy files with respect to the skin.
+	 */
 	public boolean isLegacy(Version current){
 		return maxVersion != null && !maxVersion.isAfterOrSame(current);
 	}
