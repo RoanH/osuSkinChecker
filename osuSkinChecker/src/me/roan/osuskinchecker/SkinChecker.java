@@ -18,8 +18,10 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -328,48 +330,45 @@ public class SkinChecker{
 			}
 		});
 		print.addActionListener((e)->{
-			//TODO reimplement
-//			if(skinFolder != null){
-//				JFileChooser chooser = new JFileChooser();
-//				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-//				chooser.setMultiSelectionEnabled(false);
-//				if(chooser.showSaveDialog(frame) != JFileChooser.APPROVE_OPTION){
-//					return;
-//				}
-//				File dest = chooser.getSelectedFile();
-//				try{
-//					final PrintWriter writer = new PrintWriter(new FileOutputStream(dest));
-//					writer.println("========== Images ==========");
-//					for(Entry<String, Map<String, List<InfoOld>>> m : imagesMap.entrySet()){
-//						for(Entry<String, List<InfoOld>> ml : m.getValue().entrySet()){
-//							for(InfoOld mli : ml.getValue()){
-//								if(mli.show()){
-//									writer.println('[' + m.getKey() + "|" + ml.getKey() + "]: " + ((ImageInfoOld)mli).name);
-//								}
-//							}
-//						}
-//					}
-//					writer.println();
-//					writer.println("========== Sounds ==========");
-//					for(Entry<String, Map<String, List<InfoOld>>> m : soundsMap.entrySet()){
-//						for(Entry<String, List<InfoOld>> ml : m.getValue().entrySet()){
-//							for(InfoOld mli : ml.getValue()){
-//								if(mli.show()){
-//									writer.println('[' + m.getKey() + "|" + ml.getKey() + "]: " + ((SoundInfo)mli).name);
-//								}
-//							}
-//						}
-//					}
-//					writer.flush();
-//					writer.close();
-//					Dialog.showMessageDialog("File list succesfully exported");
-//				}catch(FileNotFoundException e1){
-//					Dialog.showErrorDialog("An error occured: " + e1.getMessage());
-//				}
-//
-//			}else{
-//				Dialog.showErrorDialog("No skin currently selected!");
-//			}
+			if(skinFolder != null){
+				File dest = Dialog.showFileSaveDialog();
+				if(dest == null){
+					return;
+				}
+				
+				try{
+					final PrintWriter writer = new PrintWriter(new FileOutputStream(dest));
+					writer.println("========== Images ==========");
+					for(Entry<String, Map<String, List<Filter<?>>>> m : imagesMap.entrySet()){
+						for(Entry<String, List<Filter<?>>> ml : m.getValue().entrySet()){
+							for(Filter<?> mli : ml.getValue()){
+								if(mli.show(version)){
+									writer.println('[' + m.getKey() + "|" + ml.getKey() + "]: " + mli.toString());
+								}
+							}
+						}
+					}
+					writer.println();
+					writer.println("========== Sounds ==========");
+					for(Entry<String, Map<String, List<Filter<?>>>> m : soundsMap.entrySet()){
+						for(Entry<String, List<Filter<?>>> ml : m.getValue().entrySet()){
+							for(Filter<?> mli : ml.getValue()){
+								if(mli.show(version)){
+									writer.println('[' + m.getKey() + "|" + ml.getKey() + "]: " + mli.toString());
+								}
+							}
+						}
+					}
+					writer.flush();
+					writer.close();
+					Dialog.showMessageDialog("File list succesfully exported");
+				}catch(FileNotFoundException e1){
+					Dialog.showErrorDialog("An error occured: " + e1.getMessage());
+				}
+
+			}else{
+				Dialog.showErrorDialog("No skin currently selected!");
+			}
 		});
 
 		JPanel flow = new JPanel();
@@ -570,26 +569,6 @@ public class SkinChecker{
 		}
 	}
 	
-	/**
-	 * Resolves the custom path defined in the skin.ini
-	 * for the given setting (if it exists).
-	 * @param name The name of the setting to read the path from.
-	 * @param def The value to return if no custom path was set.
-	 * @param customKeyCount The mania key count to look in or -1 
-	 *        if the setting is not a mania setting.
-	 * @return The custom path if set, the given default value otherwise.
-	 */
-	protected static String resolveCustomPath(String name, String def, int customKeyCount){
-		Setting<?> setting = skinIni.find(name, customKeyCount);
-		if(setting != null && setting.isEnabled()){
-			Object value = setting.getValue();
-			if(value instanceof String){
-				return (String)value;
-			}
-		}
-		return def;
-	}
-
 	/**
 	 * Converts the given map of information
 	 * objects to a set of tabbedpanes for
