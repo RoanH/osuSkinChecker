@@ -336,96 +336,70 @@ public final class ImageInfoOld implements InfoOld{
 		if(ignore){
 			return null;
 		}
-
-		if(variableDash && (match = new File(folder, name + "-0" + extension)).exists()){
-			if(!hd){
-				empty = empty ? isEmptyImage(match) : false;
-			}
-			animated = true;
-			SkinChecker.allFiles.remove(match);
-			int c = 1;
-			File fhd;
-			File fsd;
-			while(true){
-				fsd = new File(folder, name + "-" + c + "." + ext);
-				fhd = new File(folder, name + "-" + c + "@2x." + ext);
-				
-				if(!fsd.exists() && !fhd.exists()){
-					break;
-				}
-				
-				if(!hd){
-					empty = empty ? isEmptyImage(fsd) : false;
-				}
-				SkinChecker.allFiles.remove(fsd);
-				SkinChecker.allFiles.remove(fhd);
-				c++;
-			}
-			frames = c;
-		}
-		if(variableNoDash && (match = new File(folder, name + "0" + extension)).exists()){
-			if(!hd){
-				empty = empty ? isEmptyImage(match) : false;
-			}
-			animated = true;
-			SkinChecker.allFiles.remove(match);
-			int c = 1;
-			File fhd;
-			File fsd;
-			while(true){
-				fsd = new File(folder, name + c + "." + ext);
-				fhd = new File(folder, name + c + "@2x." + ext);
-				
-				if(!fsd.exists() && !fhd.exists()){
-					break;
-				}
-				
-				if(!hd){
-					empty = empty ? isEmptyImage(fsd) : false;
-				}
-				SkinChecker.allFiles.remove(fsd);
-				SkinChecker.allFiles.remove(fhd);
-				c++;
-			}
-			frames = c;
-		}
-		File orig = new File(folder, name + extension);
-		if(orig.exists()){
-			empty = empty ? isEmptyImage(orig) : false;
-			SkinChecker.allFiles.remove(orig);
-		}
-		if(animated && match != null){
-			return match;
-		}else if(orig.exists()){
-			return orig;
-		}
+//
+//		if(variableDash && (match = new File(folder, name + "-0" + extension)).exists()){
+//			if(!hd){
+//				empty = empty ? isEmptyImage(match) : false;
+//			}
+//			animated = true;
+//			SkinChecker.allFiles.remove(match);
+//			int c = 1;
+//			File fhd;
+//			File fsd;
+//			while(true){
+//				fsd = new File(folder, name + "-" + c + "." + ext);
+//				fhd = new File(folder, name + "-" + c + "@2x." + ext);
+//				
+//				if(!fsd.exists() && !fhd.exists()){
+//					break;
+//				}
+//				
+//				if(!hd){
+//					empty = empty ? isEmptyImage(fsd) : false;
+//				}
+//				SkinChecker.allFiles.remove(fsd);
+//				SkinChecker.allFiles.remove(fhd);
+//				c++;
+//			}
+//			frames = c;
+//		}
+//		if(variableNoDash && (match = new File(folder, name + "0" + extension)).exists()){
+//			if(!hd){
+//				empty = empty ? isEmptyImage(match) : false;
+//			}
+//			animated = true;
+//			SkinChecker.allFiles.remove(match);
+//			int c = 1;
+//			File fhd;
+//			File fsd;
+//			while(true){
+//				fsd = new File(folder, name + c + "." + ext);
+//				fhd = new File(folder, name + c + "@2x." + ext);
+//				
+//				if(!fsd.exists() && !fhd.exists()){
+//					break;
+//				}
+//				
+//				if(!hd){
+//					empty = empty ? isEmptyImage(fsd) : false;
+//				}
+//				SkinChecker.allFiles.remove(fsd);
+//				SkinChecker.allFiles.remove(fhd);
+//				c++;
+//			}
+//			frames = c;
+//		}
+//		File orig = new File(folder, name + extension);
+//		if(orig.exists()){
+//			empty = empty ? isEmptyImage(orig) : false;
+//			SkinChecker.allFiles.remove(orig);
+//		}
+//		if(animated && match != null){
+//			return match;
+//		}else if(orig.exists()){
+//			return orig;
+//		}
 
 		return null;
-	}
-
-	/**
-	 * Checks if an image is empty.
-	 * An Image is considered empty if 
-	 * it's dimensions are 1 by 1 or if
-	 * it does not exist.
-	 * @param img The image file to check
-	 * @return Whether or not the image is empty
-	 */
-	private static boolean isEmptyImage(File img){
-		if(img.exists()){
-			try{
-				Iterator<ImageReader> readers = ImageIO.getImageReadersBySuffix(img.getName().substring(img.getName().lastIndexOf('.') + 1));
-				while(readers.hasNext()){
-					ImageReader reader = readers.next();
-					reader.setInput(ImageIO.createImageInputStream(img));
-					return reader.getWidth(0) == 1 && reader.getHeight(0) == 1;
-				}
-				return false;
-			}catch(IOException e){
-				return false;
-			}
-		}else{
-			return true;
-		}
 	}
 }

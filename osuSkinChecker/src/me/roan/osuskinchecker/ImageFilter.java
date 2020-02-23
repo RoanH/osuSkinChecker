@@ -84,7 +84,6 @@ public class ImageFilter extends Filter<ImageMeta>{
 	}
 	
 	public boolean hasHD(){
-		//TODO ...
 		for(ImageMeta meta : matches){
 			if(meta.isHD()){
 				return true;
@@ -94,13 +93,21 @@ public class ImageFilter extends Filter<ImageMeta>{
 	}
 
 	public boolean hasSD(){
-		//TODO
 		for(ImageMeta meta : matches){
 			if(meta.isSD()){
 				return true;
 			}
 		}
 		return false;
+	}
+	
+	public boolean allEmptyImages(){
+		for(ImageMeta meta : matches){
+			if(!meta.isEmpty()){
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	public int getFrames(){
