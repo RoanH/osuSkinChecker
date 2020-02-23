@@ -7,11 +7,11 @@ import java.util.List;
 import me.roan.osuskinchecker.ini.Version;
 
 /**
- * SoundInfo objects are used to describe a
+ * SoundFilter objects are used to describe a
  * sound file and check whether or not a
  * matching sound file exists.
  * @author Roan
- * @see InfoOld
+ * @see Filter
  * @see SoundModel
  */
 public final class SoundFilter extends Filter<File>{
