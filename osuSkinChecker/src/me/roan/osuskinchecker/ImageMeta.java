@@ -7,37 +7,84 @@ import java.util.Iterator;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 
+/**
+ * Metadata class desribing a filter match.
+ * @author Roan
+ * @see ImageFilter
+ */
 public class ImageMeta{
+	/**
+	 * The image file.
+	 */
 	private final File file;
+	/**
+	 * Whether or not this is a HD image file.
+	 */
 	private final boolean hd;
+	/**
+	 * The animation sequence number for this file.
+	 */
 	private final int sequenceNum;
 	
+	/**
+	 * Constructs a new ImageMeta with the
+	 * given file and hd flag.
+	 * @param file The file the metadata is for.
+	 * @param hd If the given file is a HD file.
+	 */
 	protected ImageMeta(File file, boolean hd){
 		this(file, hd, -1);
 	}
 	
+	/**
+	 * Constructs a new ImageMeta with the
+	 * given file, hd flag and sequence number.
+	 * @param file The file the metadata is for.
+	 * @param hd If the given file is a HD file.
+	 * @param seq The animation sequence number.
+	 */
 	protected ImageMeta(File file, boolean hd, int seq){
 		this.file = file;
 		this.hd = hd;
 		this.sequenceNum = seq;
 	}
 	
+	/**
+	 * Checks if this is a HD file.
+	 * @return True if this file is a HD file.
+	 */
 	public boolean isHD(){
 		return hd;
 	}
 	
+	/**
+	 * Checks if this is a SD file.
+	 * @return True if this file is a SD file.
+	 */
 	public boolean isSD(){
 		return !hd;
 	}
 	
+	/**
+	 * Checks if this is an animated file.
+	 * @return True if this file is an animated file.
+	 */
 	public boolean isAnimated(){
 		return sequenceNum != -1;
 	}
 	
+	/**
+	 * Checks if this is an empty file.
+	 * @return True if this file is an empty file.
+	 */
 	public boolean isEmpty(){
-		return isEmptyImage(file);//TODO cache
+		return isEmptyImage(file);
 	}
 	
+	/**
+	 * Gets the animation sequence number for this file.
+	 * @return The animation sequence number.
+	 */
 	public int getSequenceNumber(){
 		return sequenceNum;
 	}
