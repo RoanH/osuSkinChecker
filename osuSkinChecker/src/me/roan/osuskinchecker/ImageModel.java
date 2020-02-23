@@ -56,22 +56,18 @@ public class ImageModel extends Model{
 			case 0:
 				return filter;
 			case 1:
-				return filter.isOverriden() ? "Ignored" : filter.hasSD();
+				return filter.isOverriden() ? "Ignored" : (filter.hasSD() ? "Yes" : "No");
 			case 2:
 				if(filter.single){
 					return "N/A";
 				}else if((filter.allEmptySD() && SkinChecker.ignoreEmpty) || filter.isOverriden()){
 					return "Ignored";
 				}else{
-					return filter.hasHD();
+					return filter.hasHD() ? "Yes" : "No";
 				}
 			case 3:
 				if(filter.animatedDash || filter.animatedNoDash){
-					if(filter.isAnimated()){
-						return "Yes: " + filter.getFrameString();
-					}else{
-						return "No";
-					}
+					return filter.isAnimated() ? ("Yes: " + filter.getFrameString()) : "No";
 				}else{
 					return "N/A";
 				}
