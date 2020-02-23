@@ -53,7 +53,6 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
-import me.roan.osuskinchecker.ini.Setting;
 import me.roan.osuskinchecker.ini.SkinIni;
 import me.roan.osuskinchecker.ini.SkinIniTab;
 import me.roan.osuskinchecker.ini.SplitLayout;
@@ -132,10 +131,6 @@ public class SkinChecker{
 	 */
 	private static JTabbedPane soundTabs;
 	/**
-	 * Initial list of all the files in the skin folder
-	 */
-	protected static List<File> allFiles = new ArrayList<File>();
-	/**
 	 * Model for the list that displays files
 	 * that should not be in the skin
 	 */
@@ -167,12 +162,18 @@ public class SkinChecker{
 		}
 		try{
 			readDatabase();
+			for(Filter<?> filter : filters){
+				filter.link(filters);
+			}
 		}catch(IOException e){
 			e.printStackTrace();
 		}
 
 		imageTabs = new JTabbedPane();
 		soundTabs = new JTabbedPane();
+		mapToTabs(imageTabs, imagesMap);
+		mapToTabs(soundTabs, soundsMap);
+		
 		skin = new JLabel("<html><i>no skin selected</i></html>");
 		buildGUI();
 	}
@@ -489,11 +490,10 @@ public class SkinChecker{
 			}
 		}
 		
-		//TODO required?
 		skinFolder = folder;
 		skin.setText(skinFolder.getName());
 
-		executeChecks(skinFolder, iniFile);//TODO revise
+		executeChecks(skinFolder, iniFile);
 	}
 	
 	private static void executeChecks(File skinFolder, File ini){
@@ -519,21 +519,12 @@ public class SkinChecker{
 		iniTab.init(skinIni);
 		version = (Version)skinIni.find("Version", -1).getValue();
 
-		allFiles.clear();//TODO obsolete var?
-		//addAllFiles(skinFolder);
-		//XXX allFiles.remove(iniFile);
-
-
-		mapToTabs(imageTabs, imagesMap);
-		mapToTabs(soundTabs, soundsMap);
-
 		for(Filter<?> filter : filters){
-			filter.link(filters);
 			filter.reset(skinIni);
 		}
 
 		Deque<String> path = new ArrayDeque<String>();
-		List<File> foreign = new ArrayList<File>();//TODO use values
+		List<File> foreign = new ArrayList<File>();
 		checkAllFiles(skinFolder, path, foreign);
 		
 		for(Model m : listeners){
