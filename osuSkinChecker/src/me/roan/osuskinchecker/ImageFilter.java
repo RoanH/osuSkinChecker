@@ -101,7 +101,7 @@ public class ImageFilter extends Filter<ImageMeta>{
 	@Override
 	public void reset(SkinIni ini){
 		super.reset(ini);
-		if(customProperty != null){//TODO use SkinChecker#resolve ?
+		if(customProperty != null){
 			Setting<?> pathSetting = ini.find(customProperty, customKeyCount);
 			if(pathSetting != null && pathSetting.isEnabled()){
 				//path separator is currently hard coded in the skin.ini format

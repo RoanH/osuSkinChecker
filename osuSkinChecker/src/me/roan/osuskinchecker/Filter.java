@@ -63,7 +63,10 @@ public abstract class Filter<T>{
 		}
 		return false;
 	}
-		
+	
+	/**
+	 * Removes all matches from this filter.
+	 */
 	public void reset(SkinIni ini){
 		matches.clear();
 	}
@@ -79,6 +82,12 @@ public abstract class Filter<T>{
 	
 	protected abstract boolean allowNonRoot();
 	
+	/**
+	 * Called to determine if this file
+	 * should be listed in the tables.
+	 * @return Whether or not to show this
+	 *         file in the GUI.
+	 */
 	protected abstract boolean show(Version version);
 	
 	protected abstract void link(List<Filter<?>> filters);
