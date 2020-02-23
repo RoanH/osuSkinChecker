@@ -87,7 +87,7 @@ public class ImageFilter extends Filter{
 	public boolean hasHD(){
 		//TODO ...
 		for(File file : matches){
-			if(file.getName().endsWith("@2x\\..+")){
+			if(file.getName().matches(".+@2x\\..+$")){
 				return true;
 			}
 		}
@@ -97,7 +97,7 @@ public class ImageFilter extends Filter{
 	public boolean hasSD(){
 		//TODO
 		for(File file : matches){
-			if(!file.getName().endsWith("@2x\\..+")){
+			if(!file.getName().matches(".+@2x\\..+$")){
 				return true;
 			}
 		}

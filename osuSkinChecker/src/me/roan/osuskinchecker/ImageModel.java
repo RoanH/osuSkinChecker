@@ -58,7 +58,9 @@ public class ImageModel extends Model{
 			case 1:
 				return filter.hasSD();
 			case 2:
+				//TODO
 			//	return (filter.ignored && SkinChecker.ignoreEmpty) ? "Ignored" : filter.hasHD();
+				return filter.hasHD();
 			case 3:
 			//	return (filter.variableWithDash || filter.variableWithoutDash) ? (filter.animated ? ("Yes: " + filter.frames + (filter.frames == 1 ? " frame" : " frames")) : "No") : "N/A";
 			}
