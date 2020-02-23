@@ -56,11 +56,11 @@ public class ImageModel extends Model{
 			case 0:
 				return filter;
 			case 1:
-				return filter.hasSD();
+				return filter.isOverriden() ? "Ignored" : filter.hasSD();
 			case 2:
 				if(filter.single){
 					return "N/A";
-				}else if(filter.allEmptyImages() && SkinChecker.ignoreEmpty){
+				}else if((filter.allEmptySD() && SkinChecker.ignoreEmpty) || filter.isOverriden()){
 					return "Ignored";
 				}else{
 					return filter.hasHD();

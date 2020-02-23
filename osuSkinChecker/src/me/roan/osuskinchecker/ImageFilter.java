@@ -132,17 +132,26 @@ public class ImageFilter extends Filter<ImageMeta>{
 		}
 	}
 	
-	public boolean allEmptyImages(){
+	public boolean allEmptySD(){
+		boolean none = true;
 		for(ImageMeta meta : matches){
-			if(!meta.isEmpty()){
-				return false;
+			if(meta.isSD()){
+				none = false;
+				if(!meta.isEmpty()){
+					return false;
+				}
 			}
 		}
-		return true;
+		return !none;
 	}
 	
 	public boolean isLegacy(Version current){
-		return !maxVersion.isAfterOrSame(current);
+		return maxVersion != null && !maxVersion.isAfterOrSame(current);
+	}
+	
+	public boolean isOverriden(){
+		//TODO
+		return false;
 	}
 
 	@Override
@@ -231,10 +240,19 @@ public class ImageFilter extends Filter<ImageMeta>{
 
 	@Override
 	protected boolean show(Version version){
-		
-		
-		
-		// TODO Auto-generated method stub
+		if(!SkinChecker.checkLegacy && isLegacy(version)){
+			return false;
+		}else if(SkinChecker.showAll){
+			return true;
+		}else{
+			if(SkinChecker.checkHD && !hasHD()){
+				return !(SkinChecker.ignoreEmpty && allEmptySD());
+			}
+			
+			if(SkinChecker.checkSD && !hasSD()){
+				return !(SkinChecker.ignoreSD && hasHD());
+			}
+		}
 		return false;
 	}
 }
