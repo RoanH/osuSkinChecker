@@ -11,7 +11,7 @@ public abstract class Filter{
 	/**
 	 * Base file name without animation sequence number or extension.
 	 */
-	private String name;
+	protected String name;
 	/**
 	 * Allowed file extensions.
 	 */
@@ -41,10 +41,20 @@ public abstract class Filter{
 		this.name = data[2];
 	}
 	
-	public void check(File file){
-		if(matches(file)){
-			matches.add(file);
+	public boolean check(File file){
+		//check extension here, delegate other checks to subclass
+		String fn = file.getName();
+		for(String ext : extensions){
+			if(fn.endsWith("." + ext)){
+				if(matches(file, fn.substring(0, fn.length() - 1 - ext.length()))){
+					matches.add(file);
+					return true;
+				}else{
+					return false;
+				}
+			}
 		}
+		return false;
 	}
 	
 	public void reset(){
@@ -53,5 +63,10 @@ public abstract class Filter{
 	
 	public abstract Model getModel(List<Filter> filters);
 
-	protected abstract boolean matches(File file);
+	protected abstract boolean matches(File file, String fn);
+	
+	@Override
+	public String toString(){
+		return name;
+	}
 }

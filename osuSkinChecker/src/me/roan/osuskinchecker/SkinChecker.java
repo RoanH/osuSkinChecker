@@ -493,7 +493,7 @@ public class SkinChecker{
 		skinFolder = folder;
 		skin.setText(skinFolder.getName());
 
-		
+		executeChecks(skinFolder, iniFile);//TODO revise
 	}
 	
 	private static void executeChecks(File skinFolder, File ini){
@@ -527,10 +527,18 @@ public class SkinChecker{
 		mapToTabs(imageTabs, imagesMap);
 		mapToTabs(soundTabs, soundsMap);
 
-		foreignFiles.clear();
-		int offset = 1 + skinFolder.toString().length();
+//		foreignFiles.clear();
+//		int offset = 1 + skinFolder.toString().length();
+//		for(File file : allFiles){
+//			foreignFiles.addElement(file.toString().substring(offset));
+//		}
+		
 		for(File file : allFiles){
-			foreignFiles.addElement(file.toString().substring(offset));
+			for(Filter filter : filters){
+				if(filter.check(file)){
+					break;
+				}
+			}
 		}
 	}
 
