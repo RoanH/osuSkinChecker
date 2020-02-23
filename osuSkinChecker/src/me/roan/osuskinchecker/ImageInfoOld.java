@@ -9,14 +9,15 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 
 /**
- * ImageInfo objects are used to describe an
+ * ImageInfoOld objects are used to describe an
  * image file and check whether or not a
  * matching image file exists.
  * @author Roan
- * @see Info
+ * @see InfoOld
  * @see ImageModel
  */
-public final class ImageInfo implements Info{
+@Deprecated
+public final class ImageInfoOld implements InfoOld{
 	/**
 	 * Whether or not the SD/HD distinction
 	 * does not apply to the image described
@@ -126,7 +127,7 @@ public final class ImageInfo implements Info{
 	 *        specifying the properties
 	 *        for this information object
 	 */
-	public ImageInfo(String line){
+	public ImageInfoOld(String line){
 		String[] data = line.split(" +");
 		int offset = 0;
 		if(!data[0].equals("-")){

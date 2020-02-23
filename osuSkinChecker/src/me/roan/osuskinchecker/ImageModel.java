@@ -20,9 +20,9 @@ public class ImageModel extends Model{
 	 * @param list A list with data to display
 	 *        the {@link Filter} objects should
 	 *        be of the {@link ImageFilter} type.
-	 * @see Info
+	 * @see InfoOld
 	 * @see Model
-	 * @see ImageInfo
+	 * @see ImageInfoOld
 	 */
 	public ImageModel(List<Filter> list){
 		super(list);

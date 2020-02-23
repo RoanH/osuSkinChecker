@@ -7,7 +7,8 @@ package me.roan.osuskinchecker;
  * for whether or not to show a file differ.
  * @author RoanH
  */
-public abstract interface Info{
+@Deprecated
+public abstract interface InfoOld{
 	/**
 	 * Called to determine if this file
 	 * should be listed in the tables.

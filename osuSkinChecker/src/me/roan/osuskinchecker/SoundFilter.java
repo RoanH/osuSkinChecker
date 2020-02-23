@@ -9,7 +9,7 @@ import java.util.List;
  * sound file and check whether or not a
  * matching sound file exists.
  * @author Roan
- * @see Info
+ * @see InfoOld
  * @see SoundModel
  */
 public final class SoundFilter extends Filter{

@@ -340,20 +340,20 @@ public class SkinChecker{
 //				try{
 //					final PrintWriter writer = new PrintWriter(new FileOutputStream(dest));
 //					writer.println("========== Images ==========");
-//					for(Entry<String, Map<String, List<Info>>> m : imagesMap.entrySet()){
-//						for(Entry<String, List<Info>> ml : m.getValue().entrySet()){
-//							for(Info mli : ml.getValue()){
+//					for(Entry<String, Map<String, List<InfoOld>>> m : imagesMap.entrySet()){
+//						for(Entry<String, List<InfoOld>> ml : m.getValue().entrySet()){
+//							for(InfoOld mli : ml.getValue()){
 //								if(mli.show()){
-//									writer.println('[' + m.getKey() + "|" + ml.getKey() + "]: " + ((ImageInfo)mli).name);
+//									writer.println('[' + m.getKey() + "|" + ml.getKey() + "]: " + ((ImageInfoOld)mli).name);
 //								}
 //							}
 //						}
 //					}
 //					writer.println();
 //					writer.println("========== Sounds ==========");
-//					for(Entry<String, Map<String, List<Info>>> m : soundsMap.entrySet()){
-//						for(Entry<String, List<Info>> ml : m.getValue().entrySet()){
-//							for(Info mli : ml.getValue()){
+//					for(Entry<String, Map<String, List<InfoOld>>> m : soundsMap.entrySet()){
+//						for(Entry<String, List<InfoOld>> ml : m.getValue().entrySet()){
+//							for(InfoOld mli : ml.getValue()){
 //								if(mli.show()){
 //									writer.println('[' + m.getKey() + "|" + ml.getKey() + "]: " + ((SoundInfo)mli).name);
 //								}
