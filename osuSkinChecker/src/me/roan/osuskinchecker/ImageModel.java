@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * This class determines how a list of
- * {@link ImageInfo} objects are displayed.
+ * {@link ImageFilter} objects are displayed.
  * @author Roan
  * @see Model
  */
@@ -18,13 +18,13 @@ public class ImageModel extends Model{
 	 * Constructs a new ImageModel with
 	 * the given list of data to display.
 	 * @param list A list with data to display
-	 *        the {@link Info} objects should
-	 *        be of the {@link ImageInfo} type.
+	 *        the {@link Filter} objects should
+	 *        be of the {@link ImageFilter} type.
 	 * @see Info
 	 * @see Model
 	 * @see ImageInfo
 	 */
-	public ImageModel(List<Info> list){
+	public ImageModel(List<ImageFilter> list){
 		super(list);
 	}
 

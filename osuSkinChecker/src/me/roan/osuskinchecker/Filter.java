@@ -33,6 +33,8 @@ public abstract class Filter{
 	public void reset(){
 		matches.clear();
 	}
+	
+	public abstract Model getModel(List<Filter> filters);
 
 	protected abstract boolean matches(File file);
 }

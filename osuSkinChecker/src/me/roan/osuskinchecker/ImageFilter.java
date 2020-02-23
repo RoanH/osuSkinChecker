@@ -1,6 +1,7 @@
 package me.roan.osuskinchecker;
 
 import java.io.File;
+import java.util.List;
 
 import me.roan.osuskinchecker.ini.Version;
 
@@ -55,5 +56,20 @@ public class ImageFilter extends Filter{
 	protected boolean matches(File file){
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+
+
+
+
+
+
+
+
+
+
+	@Override
+	public Model getModel(List<Filter> filters){
+		return new ImageModel(filters);
 	}
 }

@@ -21,11 +21,11 @@ public abstract class Model extends DefaultTableModel{
 	/**
 	 * The table data for this table model
 	 */
-	private List<Info> data;
+	private List<? extends Filter> data;
 	/**
 	 * The filtered table data for this table model
 	 */
-	protected List<Info> view = new ArrayList<Info>();
+	protected List<Filter> view = new ArrayList<Filter>();
 
 	/**
 	 * Creates a new Model with the given
@@ -34,7 +34,7 @@ public abstract class Model extends DefaultTableModel{
 	 * @param list The table data for this
 	 *        table model
 	 */
-	public Model(List<Info> list){
+	public Model(List<? extends Filter> list){
 		data = list;
 		updateView();
 	}

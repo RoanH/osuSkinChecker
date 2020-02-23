@@ -74,12 +74,13 @@ public class SkinChecker{
 	 * Layered map with the information
 	 * about all the images
 	 */
-	private static final Map<String, Map<String, List<Info>>> imagesMap = new HashMap<String, Map<String, List<Info>>>();
+	private static final Map<String, Map<String, List<Filter>>> imagesMap = new HashMap<String, Map<String, List<Filter>>>();
 	/**
 	 * Layered map with the information
 	 * about all the sound files
 	 */
-	private static final Map<String, Map<String, List<Info>>> soundsMap = new HashMap<String, Map<String, List<Info>>>();
+	private static final Map<String, Map<String, List<Filter>>> soundsMap = new HashMap<String, Map<String, List<Filter>>>();
+	private static final List<Filter> filters = new ArrayList<Filter>();
 	/**
 	 * Folder of the skin currently being checked
 	 */
@@ -132,10 +133,6 @@ public class SkinChecker{
 	 * Initial list of all the files in the skin folder
 	 */
 	protected static List<File> allFiles = new ArrayList<File>();
-	/**
-	 * List of all the information objects
-	 */
-	private static List<Info> info = new ArrayList<Info>();
 	/**
 	 * Model for the list that displays files
 	 * that should not be in the skin
@@ -491,12 +488,17 @@ public class SkinChecker{
 			}
 		}
 		
+		//TODO required?
 		skinFolder = folder;
 		skin.setText(skinFolder.getName());
 
+		
+	}
+	
+	private static void executeChecks(File skinFolder, File ini){
 		skinIni = new SkinIni();
 		try{
-			skinIni.readIni(iniFile);
+			skinIni.readIni(ini);
 		}catch(Throwable e){
 			try{
 				String name = "error-" + getDateTime() + ".txt";
@@ -593,9 +595,9 @@ public class SkinChecker{
 	 * @param info The table data
 	 * @return The newly created JTable
 	 */
-	private static JTable getTableData(final List<Info> info){
+	private static JTable getTableData(final List<Filter> info){
 		JTable table = new JTable();
-		Model model = info.get(0) instanceof ImageInfo ? new ImageModel(info) : (info.get(0) instanceof SoundInfo ? new SoundModel(info) : null);
+		Model model = info.get(0).getModel(info);
 		listeners.add(model);
 		table.setModel(model);
 		return table;
@@ -629,33 +631,30 @@ public class SkinChecker{
 	 * @return A layered map of all the file descriptors
 	 * @throws IOException When an IOException occurs
 	 */
-	private static Map<String, List<Info>> readDataFile(String name, boolean isSound) throws IOException{
-		Map<String, List<Info>> data = new HashMap<String, List<Info>>();
+	private static Map<String, List<Filter>> readDataFile(String name, boolean isSound) throws IOException{
+		Map<String, List<Filter>> data = new HashMap<String, List<Filter>>();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(name)));
-		List<Info> writing = null;
+		List<Filter> writing = null;
 		String line;
 		while((line = reader.readLine()) != null){
 			if(line.trim().isEmpty()){
 				continue;
 			}else if(line.startsWith("===>")){
 				if(writing != null){
-					info.addAll(writing);
+					filters.addAll(writing);
 				}
-				writing = new ArrayList<Info>();
+				writing = new ArrayList<Filter>();
 				data.put(line.substring(4).trim(), writing);
 			}else{
-				if(isSound){
-					writing.add(new SoundInfo(line));
-				}else{
-					writing.add(new ImageInfo(line));
-				}
+				writing.add(isSound ?  new SoundFilter(line) : new ImageFilter(line));
 			}
 		}
-		info.addAll(writing);
+		filters.addAll(writing);
 		reader.close();
 		return data;
 	}
 	
+	//TODO move to util
 	/**
 	 * Gets the current time and date as a string
 	 * in the <code>yyyy-MM-dd_HH.mm.ss</code> format
