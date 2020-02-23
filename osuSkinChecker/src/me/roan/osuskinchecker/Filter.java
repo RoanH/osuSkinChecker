@@ -43,8 +43,8 @@ public abstract class Filter<T>{
 		String fn = file.getName();
 		for(String ext : extensions){
 			if(fn.endsWith("." + ext)){
-				if(allowNonRoot()){
-					T meta = matches(file, fn, path);
+				if((fn.startsWith(name) && path.isEmpty()) || allowNonRoot()){
+					T meta = matches(file, fn.substring(0, fn.length() - 1 - ext.length()), path);
 					if(meta != null){
 						matches.add(meta);
 						return true;
@@ -52,17 +52,7 @@ public abstract class Filter<T>{
 						return false;
 					}
 				}else{
-					if(fn.startsWith(name) && path.isEmpty()){
-						T meta = matches(file, fn.substring(0, fn.length() - 1 - ext.length()), path);
-						if(meta != null){
-							matches.add(meta);
-						}else{
-							return false;
-						}
-						return true;
-					}else{
-						return false;
-					}
+					return false;
 				}
 			}
 		}

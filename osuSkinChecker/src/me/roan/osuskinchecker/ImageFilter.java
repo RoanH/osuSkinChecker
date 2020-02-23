@@ -150,6 +150,7 @@ public class ImageFilter extends Filter<ImageMeta>{
 		
 		//verify custom path and name
 		if(customProperty != null){
+			System.out.println("Custom input: " + file + " / " + fn + " / " + path);
 			if(customPath.length > 1 || !path.isEmpty()){
 				if(customPath.length - 1 == path.size()){
 					Iterator<String> iter = path.iterator();
@@ -158,13 +159,13 @@ public class ImageFilter extends Filter<ImageMeta>{
 							return null;
 						}
 					}
-					extra = fn.substring(customPath[customPath.length - 1].length());
+					extra = fn.substring(customPath[customPath.length - 1].length() + name.length());
 				}else{
 					return null;
 				}
 			}else{
 				if(fn.startsWith(customDefault)){
-					extra = fn.substring(customDefault.length());
+					extra = fn.substring(customDefault.length() + name.length());
 				}else{
 					return null;
 				}
@@ -173,6 +174,7 @@ public class ImageFilter extends Filter<ImageMeta>{
 			//strip file name
 			extra = fn.substring(name.length());
 		}
+		System.out.println();
 		
 		//strip @2x
 		if(extra.endsWith("@2x")){
