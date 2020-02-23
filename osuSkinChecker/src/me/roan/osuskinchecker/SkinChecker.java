@@ -81,11 +81,14 @@ public class SkinChecker{
 	 * about all the sound files
 	 */
 	private static final Map<String, Map<String, List<Filter<?>>>> soundsMap = new HashMap<String, Map<String, List<Filter<?>>>>();
+	/**
+	 * List of all loaded filters.
+	 */
 	private static final List<Filter<?>> filters = new ArrayList<Filter<?>>();
 	/**
 	 * Folder of the skin currently being checked
 	 */
-	protected static File skinFolder;
+	private static File skinFolder;
 	/**
 	 * Whether or not to check for missing SD images
 	 */
@@ -148,6 +151,9 @@ public class SkinChecker{
 	 * The skin.ini settings for the skin currently loaded
 	 */
 	protected static SkinIni skinIni = null;
+	/**
+	 * Version set in the currently loaded <tt>skin.ini</tt>.
+	 */
 	protected static Version version = null;
 
 	/**
@@ -496,6 +502,11 @@ public class SkinChecker{
 		executeChecks(skinFolder, iniFile);
 	}
 	
+	/**
+	 * Checks the skin denoted by the given folder and ini file.
+	 * @param skinFolder The skin folder.
+	 * @param ini The <tt>skin.ini</tt> file.
+	 */
 	private static void executeChecks(File skinFolder, File ini){
 		skinIni = new SkinIni();
 		try{
@@ -540,6 +551,12 @@ public class SkinChecker{
 		}
 	}
 	
+	/**
+	 * Checks all the files in the given directory again the filters.
+	 * @param dir The directory the parse.
+	 * @param path The path stack.
+	 * @param foreign A list of files that did not match any filter.
+	 */
 	private static void checkAllFiles(File dir, Deque<String> path, List<File> foreign){
 		for(File f : dir.listFiles()){
 			if(f.isDirectory()){
@@ -645,7 +662,6 @@ public class SkinChecker{
 		return data;
 	}
 	
-	//TODO move to util
 	/**
 	 * Gets the current time and date as a string
 	 * in the <code>yyyy-MM-dd_HH.mm.ss</code> format
