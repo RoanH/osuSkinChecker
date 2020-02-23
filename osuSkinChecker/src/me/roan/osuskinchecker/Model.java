@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
+import me.roan.osuskinchecker.ini.Version;
+
 /**
  * Abstract base class for table models
  * that predefines filtering subroutines
@@ -36,7 +38,6 @@ public abstract class Model extends DefaultTableModel{
 	 */
 	public Model(List<Filter<?>> list){
 		data = list;
-		updateView();
 	}
 
 	/**
@@ -44,10 +45,10 @@ public abstract class Model extends DefaultTableModel{
 	 * This includes filtering the table
 	 * data and repainting the table.
 	 */
-	protected void updateView(){
+	protected void updateView(Version version){
 		view.clear();
 		for(Filter<?> i : data){
-			if(/*i.show()*/ true){ //TODO
+			if(i.show(version)){
 				view.add(i);
 			}
 		}

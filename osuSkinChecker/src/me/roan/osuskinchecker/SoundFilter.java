@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.Deque;
 import java.util.List;
 
+import me.roan.osuskinchecker.ini.Version;
+
 /**
  * SoundInfo objects are used to describe a
  * sound file and check whether or not a
@@ -40,5 +42,10 @@ public final class SoundFilter extends Filter<File>{
 	@Override
 	protected boolean allowNonRoot(){
 		return false;
+	}
+
+	@Override
+	protected boolean show(Version version){
+		return SkinChecker.showAll || !hasMatch();
 	}
 }

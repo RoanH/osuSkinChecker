@@ -140,6 +140,10 @@ public class ImageFilter extends Filter<ImageMeta>{
 		}
 		return true;
 	}
+	
+	public boolean isLegacy(Version current){
+		return !maxVersion.isAfterOrSame(current);
+	}
 
 	@Override
 	protected ImageMeta matches(File file, String fn, Deque<String> path){
@@ -223,5 +227,14 @@ public class ImageFilter extends Filter<ImageMeta>{
 	@Override
 	protected boolean allowNonRoot(){
 		return customProperty != null;
+	}
+
+	@Override
+	protected boolean show(Version version){
+		
+		
+		
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

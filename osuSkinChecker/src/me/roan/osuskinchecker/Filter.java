@@ -6,6 +6,7 @@ import java.util.Deque;
 import java.util.List;
 
 import me.roan.osuskinchecker.ini.SkinIni;
+import me.roan.osuskinchecker.ini.Version;
 
 public abstract class Filter<T>{
 	
@@ -76,6 +77,8 @@ public abstract class Filter<T>{
 	protected abstract T matches(File file, String fn, Deque<String> path);
 	
 	protected abstract boolean allowNonRoot();
+	
+	protected abstract boolean show(Version version);
 	
 	@Override
 	public String toString(){

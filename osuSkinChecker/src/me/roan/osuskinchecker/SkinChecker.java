@@ -55,6 +55,7 @@ import me.roan.osuskinchecker.ini.Setting;
 import me.roan.osuskinchecker.ini.SkinIni;
 import me.roan.osuskinchecker.ini.SkinIniTab;
 import me.roan.osuskinchecker.ini.SplitLayout;
+import me.roan.osuskinchecker.ini.Version;
 import me.roan.util.ClickableLink;
 import me.roan.util.Dialog;
 import me.roan.util.ExclamationMarkPath;
@@ -149,7 +150,8 @@ public class SkinChecker{
 	/**
 	 * The skin.ini settings for the skin currently loaded
 	 */
-	private static SkinIni skinIni = null;
+	protected static SkinIni skinIni = null;
+	protected static Version version = null;
 
 	/**
 	 * Main method
@@ -253,37 +255,37 @@ public class SkinChecker{
 		chd.addActionListener((e)->{
 			checkHD = chd.isSelected();
 			for(Model m : listeners){
-				m.updateView();
+				m.updateView(version);
 			}
 		});
 		csd.addActionListener((e)->{
 			checkSD = csd.isSelected();
 			for(Model m : listeners){
-				m.updateView();
+				m.updateView(version);
 			}
 		});
 		call.addActionListener((e)->{
 			showAll = call.isSelected();
 			for(Model m : listeners){
-				m.updateView();
+				m.updateView(version);
 			}
 		});
 		clegacy.addActionListener((e)->{
 			checkLegacy = clegacy.isSelected();
 			for(Model m : listeners){
-				m.updateView();
+				m.updateView(version);
 			}
 		});
 		cempty.addActionListener((e)->{
 			ignoreEmpty = cempty.isSelected();
 			for(Model m : listeners){
-				m.updateView();
+				m.updateView(version);
 			}
 		});
 		cisd.addActionListener((e)->{
 			ignoreSD = cisd.isSelected();
 			for(Model m : listeners){
-				m.updateView();
+				m.updateView(version);
 			}
 		});
 
@@ -516,6 +518,7 @@ public class SkinChecker{
 			return;
 		}
 		iniTab.init(skinIni);
+		version = (Version)skinIni.find("Version", -1).getValue();
 
 		allFiles.clear();//TODO obsolete var?
 		//addAllFiles(skinFolder);
@@ -540,6 +543,10 @@ public class SkinChecker{
 		Deque<String> path = new ArrayDeque<String>();
 		List<File> foreign = new ArrayList<File>();//TODO use values
 		checkAllFiles(skinFolder, path, foreign);
+		
+		for(Model m : listeners){
+			m.updateView(version);
+		}
 	}
 	
 	private static void checkAllFiles(File dir, Deque<String> path, List<File> foreign){

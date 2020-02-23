@@ -54,11 +54,17 @@ public class ImageModel extends Model{
 		try{
 			switch(col){
 			case 0:
-				return filter;//TODO handle custom names
+				return filter;
 			case 1:
 				return filter.hasSD();
 			case 2:
-				return (filter.allEmptyImages() && SkinChecker.ignoreEmpty) ? "Ignored" : filter.hasHD();
+				if(filter.single){
+					return "N/A";
+				}else if(filter.allEmptyImages() && SkinChecker.ignoreEmpty){
+					return "Ignored";
+				}else{
+					return filter.hasHD();
+				}
 			case 3:
 				if(filter.animatedDash || filter.animatedNoDash){
 					if(filter.isAnimated()){
