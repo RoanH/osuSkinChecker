@@ -263,39 +263,27 @@ public class SkinChecker{
 		controls.add(cisd);
 		chd.addActionListener((e)->{
 			checkHD = chd.isSelected();
-			for(Model m : listeners){
-				m.updateView(version);
-			}
+			updateView();
 		});
 		csd.addActionListener((e)->{
 			checkSD = csd.isSelected();
-			for(Model m : listeners){
-				m.updateView(version);
-			}
+			updateView();
 		});
 		call.addActionListener((e)->{
 			showAll = call.isSelected();
-			for(Model m : listeners){
-				m.updateView(version);
-			}
+			updateView();
 		});
 		clegacy.addActionListener((e)->{
 			checkLegacy = clegacy.isSelected();
-			for(Model m : listeners){
-				m.updateView(version);
-			}
+			updateView();
 		});
 		cempty.addActionListener((e)->{
 			ignoreEmpty = cempty.isSelected();
-			for(Model m : listeners){
-				m.updateView(version);
-			}
+			updateView();
 		});
 		cisd.addActionListener((e)->{
 			ignoreSD = cisd.isSelected();
-			for(Model m : listeners){
-				m.updateView(version);
-			}
+			updateView();
 		});
 
 		JPanel buttons = new JPanel(new GridLayout(4, 1));
@@ -466,6 +454,18 @@ public class SkinChecker{
 				}
 			}
 		});
+	}
+	
+	/**
+	 * Updates the information displayed in the tabs
+	 * based on the new settings.
+	 */
+	private static void updateView(){
+		if(version != null){
+			for(Model m : listeners){
+				m.updateView(version);
+			}
+		}
 	}
 
 	/**
