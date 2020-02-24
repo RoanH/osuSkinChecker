@@ -226,6 +226,11 @@ public class ImageFilter extends Filter<ImageMeta>{
 		return maxVersion != null && !maxVersion.isAfterOrSame(current);
 	}
 	
+	/**
+	 * Whether or not this file is currently being overridden
+	 * by a different file.
+	 * @return True if this file is currently being overridden.
+	 */
 	public boolean isOverriden(){
 		return (overrideName == null) ? false : (overrideMode ^ override.hasMatch());
 	}
