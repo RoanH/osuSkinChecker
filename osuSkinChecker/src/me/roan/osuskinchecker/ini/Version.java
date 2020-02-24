@@ -37,9 +37,17 @@ public enum Version implements Printable{
 	 */
 	V25("2.5", "(Mania upscroll and column improvements)"),
 	/**
+	 * Version 2.6
+	 */
+	V26("2.6", "(No added functionality)"),
+	/**
+	 * Version 2.7
+	 */
+	V27("2.7", "(No added functionality)"),
+	/**
 	 * Latest version
 	 */
-	LATEST("latest", "(for personal skins)");
+	LATEST("latest", "(For personal skins)");
 
 	/**
 	 * The display name for this setting
@@ -83,6 +91,10 @@ public enum Version implements Printable{
 			return V24;
 		case "2.5":
 			return V25;
+		case "2.6":
+			return V26;
+		case "2.7":
+			return V27;
 		case "latest":
 			return LATEST;
 		default:
