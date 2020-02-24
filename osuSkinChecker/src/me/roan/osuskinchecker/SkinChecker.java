@@ -32,11 +32,15 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Queue;
+import java.util.function.Consumer;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -47,6 +51,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -534,9 +539,8 @@ public class SkinChecker{
 			filter.reset(skinIni);
 		}
 
-		Deque<String> path = new ArrayDeque<String>();
 		List<File> foreign = new ArrayList<File>();
-		checkAllFiles(skinFolder, path, foreign);
+		checkFiles(skinFolder, foreign);
 		
 		for(Model m : listeners){
 			m.updateView(version);
@@ -560,19 +564,61 @@ public class SkinChecker{
 		}
 	}
 	
+	private static void checkFiles(File skinFolder, List<File> foreign){
+		//get skin size
+		Queue<File> files = new LinkedList<File>();
+		files.offer(skinFolder);
+		int count = 0;
+		while(!files.isEmpty()){
+			File file = files.poll();
+			if(file.isDirectory()){
+				Arrays.stream(file.listFiles()).forEach(files::offer);
+			}else{
+				count++;
+			}
+		}
+		
+		JProgressBar progress = new JProgressBar();
+		JLabel current = new JLabel();
+		
+		progress.setMinimum(0);
+		progress.setMaximum(count);
+		progress.setValue(0);
+		
+		new Thread(new Runnable(){
+
+			@Override
+			public void run(){
+				Deque<String> path = new ArrayDeque<String>();
+				checkAllFiles(skinFolder, path, foreign, name->{
+					current.setText(name);
+					progress.setValue(progress.getValue() + 1);
+				});
+			}
+			
+		}).start();
+		
+		JPanel dialog = new JPanel(new BorderLayout());
+		dialog.add(progress, BorderLayout.PAGE_END);
+		dialog.add(current, BorderLayout.CENTER);
+		
+		Dialog.showMessageDialog(dialog);
+	}
+	
 	/**
 	 * Checks all the files in the given directory again the filters.
 	 * @param dir The directory the parse.
 	 * @param path The path stack.
 	 * @param foreign A list of files that did not match any filter.
 	 */
-	private static void checkAllFiles(File dir, Deque<String> path, List<File> foreign){
+	private static void checkAllFiles(File dir, Deque<String> path, List<File> foreign, Consumer<String> next){
 		for(File f : dir.listFiles()){
 			if(f.isDirectory()){
 				path.push(f.getName());
-				checkAllFiles(f, path, foreign);
+				checkAllFiles(f, path, foreign, next);
 				path.pop();
 			}else{
+				next.accept(f.getName());
 				//if none then foreign for sure
 				//no short circuiting because numbers can count for two filters, score and combo
 				boolean found = false;
