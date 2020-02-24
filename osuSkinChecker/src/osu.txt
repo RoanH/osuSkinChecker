@@ -24,8 +24,8 @@ N png sliderendcircleoverlay
 ===> Slider
 N png sliderfollowcircle
 N M png sliderb
-- png sliderb-nd
-- png sliderb-spec
+O false sliderb png sliderb-nd
+O false sliderb png sliderb-spec
 - png sliderscorepoint
 
 ===> Spinner
