@@ -30,7 +30,9 @@ import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +43,6 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -52,10 +53,10 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
-import me.roan.osuskinchecker.ini.Setting;
 import me.roan.osuskinchecker.ini.SkinIni;
 import me.roan.osuskinchecker.ini.SkinIniTab;
 import me.roan.osuskinchecker.ini.SplitLayout;
+import me.roan.osuskinchecker.ini.Version;
 import me.roan.util.ClickableLink;
 import me.roan.util.Dialog;
 import me.roan.util.ExclamationMarkPath;
@@ -74,16 +75,20 @@ public class SkinChecker{
 	 * Layered map with the information
 	 * about all the images
 	 */
-	private static final Map<String, Map<String, List<Info>>> imagesMap = new HashMap<String, Map<String, List<Info>>>();
+	private static final Map<String, Map<String, List<Filter<?>>>> imagesMap = new HashMap<String, Map<String, List<Filter<?>>>>();
 	/**
 	 * Layered map with the information
 	 * about all the sound files
 	 */
-	private static final Map<String, Map<String, List<Info>>> soundsMap = new HashMap<String, Map<String, List<Info>>>();
+	private static final Map<String, Map<String, List<Filter<?>>>> soundsMap = new HashMap<String, Map<String, List<Filter<?>>>>();
+	/**
+	 * List of all loaded filters.
+	 */
+	private static final List<Filter<?>> filters = new ArrayList<Filter<?>>();
 	/**
 	 * Folder of the skin currently being checked
 	 */
-	protected static File skinFolder;
+	private static File skinFolder;
 	/**
 	 * Whether or not to check for missing SD images
 	 */
@@ -129,14 +134,6 @@ public class SkinChecker{
 	 */
 	private static JTabbedPane soundTabs;
 	/**
-	 * Initial list of all the files in the skin folder
-	 */
-	protected static List<File> allFiles = new ArrayList<File>();
-	/**
-	 * List of all the information objects
-	 */
-	private static List<Info> info = new ArrayList<Info>();
-	/**
 	 * Model for the list that displays files
 	 * that should not be in the skin
 	 */
@@ -153,7 +150,11 @@ public class SkinChecker{
 	/**
 	 * The skin.ini settings for the skin currently loaded
 	 */
-	private static SkinIni skinIni = null;
+	protected static SkinIni skinIni = null;
+	/**
+	 * Version set in the currently loaded <tt>skin.ini</tt>.
+	 */
+	protected static Version version = null;
 
 	/**
 	 * Main method
@@ -167,12 +168,18 @@ public class SkinChecker{
 		}
 		try{
 			readDatabase();
+			for(Filter<?> filter : filters){
+				filter.link(filters);
+			}
 		}catch(IOException e){
 			e.printStackTrace();
 		}
 
 		imageTabs = new JTabbedPane();
 		soundTabs = new JTabbedPane();
+		mapToTabs(imageTabs, imagesMap);
+		mapToTabs(soundTabs, soundsMap);
+		
 		skin = new JLabel("<html><i>no skin selected</i></html>");
 		buildGUI();
 	}
@@ -257,37 +264,37 @@ public class SkinChecker{
 		chd.addActionListener((e)->{
 			checkHD = chd.isSelected();
 			for(Model m : listeners){
-				m.updateView();
+				m.updateView(version);
 			}
 		});
 		csd.addActionListener((e)->{
 			checkSD = csd.isSelected();
 			for(Model m : listeners){
-				m.updateView();
+				m.updateView(version);
 			}
 		});
 		call.addActionListener((e)->{
 			showAll = call.isSelected();
 			for(Model m : listeners){
-				m.updateView();
+				m.updateView(version);
 			}
 		});
 		clegacy.addActionListener((e)->{
 			checkLegacy = clegacy.isSelected();
 			for(Model m : listeners){
-				m.updateView();
+				m.updateView(version);
 			}
 		});
 		cempty.addActionListener((e)->{
 			ignoreEmpty = cempty.isSelected();
 			for(Model m : listeners){
-				m.updateView();
+				m.updateView(version);
 			}
 		});
 		cisd.addActionListener((e)->{
 			ignoreSD = cisd.isSelected();
 			for(Model m : listeners){
-				m.updateView();
+				m.updateView(version);
 			}
 		});
 
@@ -331,32 +338,30 @@ public class SkinChecker{
 		});
 		print.addActionListener((e)->{
 			if(skinFolder != null){
-				JFileChooser chooser = new JFileChooser();
-				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				chooser.setMultiSelectionEnabled(false);
-				if(chooser.showSaveDialog(frame) != JFileChooser.APPROVE_OPTION){
+				File dest = Dialog.showFileSaveDialog();
+				if(dest == null){
 					return;
 				}
-				File dest = chooser.getSelectedFile();
+				
 				try{
 					final PrintWriter writer = new PrintWriter(new FileOutputStream(dest));
 					writer.println("========== Images ==========");
-					for(Entry<String, Map<String, List<Info>>> m : imagesMap.entrySet()){
-						for(Entry<String, List<Info>> ml : m.getValue().entrySet()){
-							for(Info mli : ml.getValue()){
-								if(mli.show()){
-									writer.println('[' + m.getKey() + "|" + ml.getKey() + "]: " + ((ImageInfo)mli).name);
+					for(Entry<String, Map<String, List<Filter<?>>>> m : imagesMap.entrySet()){
+						for(Entry<String, List<Filter<?>>> ml : m.getValue().entrySet()){
+							for(Filter<?> mli : ml.getValue()){
+								if(mli.show(version)){
+									writer.println('[' + m.getKey() + "|" + ml.getKey() + "]: " + mli.toString());
 								}
 							}
 						}
 					}
 					writer.println();
 					writer.println("========== Sounds ==========");
-					for(Entry<String, Map<String, List<Info>>> m : soundsMap.entrySet()){
-						for(Entry<String, List<Info>> ml : m.getValue().entrySet()){
-							for(Info mli : ml.getValue()){
-								if(mli.show()){
-									writer.println('[' + m.getKey() + "|" + ml.getKey() + "]: " + ((SoundInfo)mli).name);
+					for(Entry<String, Map<String, List<Filter<?>>>> m : soundsMap.entrySet()){
+						for(Entry<String, List<Filter<?>>> ml : m.getValue().entrySet()){
+							for(Filter<?> mli : ml.getValue()){
+								if(mli.show(version)){
+									writer.println('[' + m.getKey() + "|" + ml.getKey() + "]: " + mli.toString());
 								}
 							}
 						}
@@ -494,9 +499,18 @@ public class SkinChecker{
 		skinFolder = folder;
 		skin.setText(skinFolder.getName());
 
+		executeChecks(skinFolder, iniFile);
+	}
+	
+	/**
+	 * Checks the skin denoted by the given folder and ini file.
+	 * @param skinFolder The skin folder.
+	 * @param ini The <tt>skin.ini</tt> file.
+	 */
+	private static void executeChecks(File skinFolder, File ini){
 		skinIni = new SkinIni();
 		try{
-			skinIni.readIni(iniFile);
+			skinIni.readIni(ini);
 		}catch(Throwable e){
 			try{
 				String name = "error-" + getDateTime() + ".txt";
@@ -514,60 +528,64 @@ public class SkinChecker{
 			return;
 		}
 		iniTab.init(skinIni);
+		version = (Version)skinIni.find("Version", -1).getValue();
 
-		allFiles.clear();
-		addAllFiles(skinFolder);
-		allFiles.remove(iniFile);
-
-		for(Info i : info){
-			i.reset();
+		for(Filter<?> filter : filters){
+			filter.reset(skinIni);
 		}
 
-		mapToTabs(imageTabs, imagesMap);
-		mapToTabs(soundTabs, soundsMap);
-
+		Deque<String> path = new ArrayDeque<String>();
+		List<File> foreign = new ArrayList<File>();
+		checkAllFiles(skinFolder, path, foreign);
+		
+		for(Model m : listeners){
+			m.updateView(version);
+		}
+		
 		foreignFiles.clear();
 		int offset = 1 + skinFolder.toString().length();
-		for(File file : allFiles){
-			foreignFiles.addElement(file.toString().substring(offset));
+		for(File file : foreign){
+			if(!file.equals(ini)){
+				foreignFiles.addElement(file.toString().substring(offset));
+			}
 		}
-	}
-
-	/**
-	 * Adds all the files form the given directory
-	 * to the {@link #allFiles} list.
-	 * @param dir The directory to parse
-	 */
-	private static void addAllFiles(File dir){
-		for(File f : dir.listFiles()){
-			if(f.isDirectory()){
-				addAllFiles(f);
-			}else{
-				allFiles.add(f);
+		for(Filter<?> filter : filters){
+			if(filter instanceof ImageFilter){
+				if(((ImageFilter)filter).isLegacy(version)){
+					for(File file : filter.getMatchedFiles()){
+						foreignFiles.addElement(file.toString().substring(offset));
+					}
+				}
 			}
 		}
 	}
 	
 	/**
-	 * Resolves the custom path defined in the skin.ini
-	 * for the given setting (if it exists).
-	 * @param name The name of the setting to read the path from.
-	 * @param def The value to return if no custom path was set.
-	 * @param customKeyCount The mania key count to look in or -1 
-	 *        if the setting is not a mania setting.
-	 * @return The custom path if set, the given default value otherwise.
+	 * Checks all the files in the given directory again the filters.
+	 * @param dir The directory the parse.
+	 * @param path The path stack.
+	 * @param foreign A list of files that did not match any filter.
 	 */
-	protected static String resolveCustomPath(String name, String def, int customKeyCount){
-		Setting<?> setting = skinIni.find(name, customKeyCount);
-		if(setting != null && setting.isEnabled()){
-			Object value = setting.getValue();
-			if(value instanceof String){
-				return (String)value;
+	private static void checkAllFiles(File dir, Deque<String> path, List<File> foreign){
+		for(File f : dir.listFiles()){
+			if(f.isDirectory()){
+				path.push(f.getName());
+				checkAllFiles(f, path, foreign);
+				path.pop();
+			}else{
+				//if none then foreign for sure
+				//no short circuiting because numbers can count for two filters, score and combo
+				boolean found = false;
+				for(Filter<?> filter : filters){
+					found |= filter.check(f, path);
+				}
+				if(!found){
+					foreign.add(f);
+				}
 			}
 		}
-		return def;
 	}
-
+	
 	/**
 	 * Converts the given map of information
 	 * objects to a set of tabbedpanes for
@@ -575,11 +593,11 @@ public class SkinChecker{
 	 * @param tabs The tabbed pane to map the data to
 	 * @param map The data to map to the tabs
 	 */
-	private static void mapToTabs(JTabbedPane tabs, Map<String, Map<String, List<Info>>> map){
+	private static void mapToTabs(JTabbedPane tabs, Map<String, Map<String, List<Filter<?>>>> map){
 		tabs.removeAll();
-		for(Entry<String, Map<String, List<Info>>> entry : map.entrySet()){
+		for(Entry<String, Map<String, List<Filter<?>>>> entry : map.entrySet()){
 			JTabbedPane inner = new JTabbedPane();
-			for(Entry<String, List<Info>> e : entry.getValue().entrySet()){
+			for(Entry<String, List<Filter<?>>> e : entry.getValue().entrySet()){
 				inner.add(e.getKey(), new JScrollPane(getTableData(e.getValue())));
 			}
 			tabs.add(entry.getKey(), inner);
@@ -593,9 +611,9 @@ public class SkinChecker{
 	 * @param info The table data
 	 * @return The newly created JTable
 	 */
-	private static JTable getTableData(final List<Info> info){
+	private static JTable getTableData(final List<Filter<?>> info){
 		JTable table = new JTable();
-		Model model = info.get(0) instanceof ImageInfo ? new ImageModel(info) : (info.get(0) instanceof SoundInfo ? new SoundModel(info) : null);
+		Model model = info.get(0) instanceof ImageFilter ? new ImageModel(info) : new SoundModel(info);
 		listeners.add(model);
 		table.setModel(model);
 		return table;
@@ -629,29 +647,26 @@ public class SkinChecker{
 	 * @return A layered map of all the file descriptors
 	 * @throws IOException When an IOException occurs
 	 */
-	private static Map<String, List<Info>> readDataFile(String name, boolean isSound) throws IOException{
-		Map<String, List<Info>> data = new HashMap<String, List<Info>>();
+	private static Map<String, List<Filter<?>>> readDataFile(String name, boolean isSound) throws IOException{
+		Map<String, List<Filter<?>>> data = new HashMap<String, List<Filter<?>>>();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(name)));
-		List<Info> writing = null;
+		List<Filter<?>> writing = null;
 		String line;
 		while((line = reader.readLine()) != null){
 			if(line.trim().isEmpty()){
 				continue;
 			}else if(line.startsWith("===>")){
 				if(writing != null){
-					info.addAll(writing);
+					filters.addAll(writing);
 				}
-				writing = new ArrayList<Info>();
+				writing = new ArrayList<Filter<?>>();
 				data.put(line.substring(4).trim(), writing);
 			}else{
-				if(isSound){
-					writing.add(new SoundInfo(line));
-				}else{
-					writing.add(new ImageInfo(line));
-				}
+				String[] args = line.split(" +");
+				writing.add(isSound ?  new SoundFilter(args) : new ImageFilter(args));
 			}
 		}
-		info.addAll(writing);
+		filters.addAll(writing);
 		reader.close();
 		return data;
 	}

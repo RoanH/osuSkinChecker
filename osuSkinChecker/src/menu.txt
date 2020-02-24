@@ -79,13 +79,12 @@ N png menu-back
 - png ranking-graph
 - png ranking-perfect
 - png ranking-winner
-L png ranking-replay
-L png ranking-retry
+L 1 png ranking-replay
+L 1 png ranking-retry
 
 ===> Pause Screen
 - png,jpg,jpeg pause-overlay
 - png,jpg,jpeg fail-background
-L png menu-osu
 - png pause-back
 - png pause-continue
 - png pause-retry
