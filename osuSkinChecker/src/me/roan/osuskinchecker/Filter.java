@@ -144,6 +144,10 @@ public abstract class Filter<T>{
 	 */
 	protected abstract void link(List<Filter<?>> filters);
 	
+	/**
+	 * Gets a list of all the files that matched this filter.
+	 * @return A list of all the files that matched this filter.
+	 */
 	public abstract List<File> getMatchedFiles();
 	
 	@Override
