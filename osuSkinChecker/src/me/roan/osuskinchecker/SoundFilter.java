@@ -3,6 +3,7 @@ package me.roan.osuskinchecker;
 import java.io.File;
 import java.util.Deque;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import me.roan.osuskinchecker.ini.Version;
 
@@ -15,6 +16,10 @@ import me.roan.osuskinchecker.ini.Version;
  * @see SoundModel
  */
 public final class SoundFilter extends Filter<File>{
+	/**
+	 * Sequence regex.
+	 */
+	private static final Pattern SEQ_REGEX = Pattern.compile("-[0-9]+");
 
 	/**
 	 * Constructs a new SoundFilter with the given
@@ -36,7 +41,7 @@ public final class SoundFilter extends Filter<File>{
 		if(fn.length() == 0){
 			return file;
 		}else{
-			if(animatedDash && fn.matches("-[0-9]+")){
+			if(animatedDash && SEQ_REGEX.matcher(fn).matches()){
 				return file;
 			}else{
 				return null;
