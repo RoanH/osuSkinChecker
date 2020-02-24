@@ -391,7 +391,7 @@ public class SkinChecker{
 		links.add(wiki);
 		
 		JPanel info = new JPanel(new GridLayout(2, 1));
-		info.add(Util.getVersionLabel("osuSkinChecker", "v2.3"));//XXX the version number - don't forget build.gradle
+		info.add(Util.getVersionLabel("osuSkinChecker", "v3.0"));//XXX the version number - don't forget build.gradle
 		JPanel linksProgram = new JPanel(new GridLayout(1, 2, -2, 0));
 		JLabel forum = new JLabel("<html><font color=blue><u>Forums</u></font> -</html>", SwingConstants.RIGHT);
 		JLabel git = new JLabel("<html>- <font color=blue><u>GitHub</u></font></html>", SwingConstants.LEFT);

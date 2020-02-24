@@ -15,8 +15,8 @@ And if you find any bugs feel free to report them (spelling mistakes included :3
 
 ## Downloads
 _Requires Java 8 or higher_    
-- [Windows executable](https://github.com/RoanH/osuSkinChecker/releases/download/v2.3/SkinChecker-v2.3.exe)<br>
-- [Runnable Java Archive](https://github.com/RoanH/osuSkinChecker/releases/download/v2.3/SkinChecker-v2.3.jar)
+- [Windows executable](https://github.com/RoanH/osuSkinChecker/releases/download/v3.0/SkinChecker-v3.0.exe)<br>
+- [Runnable Java Archive](https://github.com/RoanH/osuSkinChecker/releases/download/v3.0/SkinChecker-v3.0.jar)
 
 All releases: [releases](https://github.com/RoanH/osuSkinChecker/releases)<br>
 GitHub repository: [repository](https://github.com/RoanH/osuSkinChecker)<br>

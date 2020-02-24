@@ -23,7 +23,7 @@ javadoc{
 
 compileJava.options.encoding = 'UTF-8'
 sourceCompatibility = 1.8
-version = 'v2.3'//Don't forget SkinChecker.java
+version = 'v3.0'//Don't forget SkinChecker.java
 shadowJar.archiveName = 'SkinChecker-' + project.version + '.jar'
 
 repositories{
