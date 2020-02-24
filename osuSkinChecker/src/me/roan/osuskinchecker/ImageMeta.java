@@ -49,6 +49,10 @@ public class ImageMeta{
 		this.sequenceNum = seq;
 	}
 	
+	/**
+	 * Gets the file this ImageMeta is for.
+	 * @return The file for this ImageMeta.
+	 */
 	public File getFile(){
 		return file;
 	}
