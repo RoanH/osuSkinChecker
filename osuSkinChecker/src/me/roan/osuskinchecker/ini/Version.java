@@ -91,6 +91,12 @@ public enum Version implements Printable{
 		}
 	}
 	
+	/**
+	 * Compares this version to the given other version.
+	 * @param other The version to compare to.
+	 * @return True if this version is after 
+	 *         or the same as the given other version.
+	 */
 	public boolean isAfterOrSame(Version other){
 		return this.ordinal() >= other.ordinal();
 	}
