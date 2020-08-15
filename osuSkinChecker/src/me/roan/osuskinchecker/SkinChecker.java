@@ -73,15 +73,18 @@ import me.roan.util.Util;
  * @author Roan
  */
 public class SkinChecker{
+	/**
+	 * File extension that matches <code>.txt</code> files.
+	 */
 	private static final FileExtension txtExtension = FileSelector.registerFileExtension("Text file", "txt");
 	/**
 	 * Layered map with the information
-	 * about all the images
+	 * about all the images.
 	 */
 	private static final Map<String, Map<String, List<Filter<?>>>> imagesMap = new HashMap<String, Map<String, List<Filter<?>>>>();
 	/**
 	 * Layered map with the information
-	 * about all the sound files
+	 * about all the sound files.
 	 */
 	private static final Map<String, Map<String, List<Filter<?>>>> soundsMap = new HashMap<String, Map<String, List<Filter<?>>>>();
 	/**
@@ -89,69 +92,69 @@ public class SkinChecker{
 	 */
 	private static final List<Filter<?>> filters = new ArrayList<Filter<?>>();
 	/**
-	 * Folder of the skin currently being checked
+	 * Folder of the skin currently being checked.
 	 */
 	private static File skinFolder;
 	/**
-	 * Whether or not to check for missing SD images
+	 * Whether or not to check for missing SD images.
 	 */
 	protected static boolean checkSD = true;
 	/**
-	 * Whether or not to check for missing HD images
+	 * Whether or not to check for missing HD images.
 	 */
 	protected static boolean checkHD = false;
 	/**
-	 * Whether or not to check for missing legacy images
+	 * Whether or not to check for missing legacy images.
 	 */
 	protected static boolean checkLegacy = false;
 	/**
 	 * Whether or not to show all files regardless of whether
-	 * they are present or not
+	 * they are present or not.
 	 */
 	protected static boolean showAll = false;
 	/**
 	 * Whether or not to ignore missing HD files of
-	 * images that have an empty SD image
+	 * images that have an empty SD image.
 	 */
 	protected static boolean ignoreEmpty = true;
 	/**
 	 * List of all the tables model that is used to
-	 * update the tables when the filter changes
+	 * update the tables when the filter changes.
 	 */
 	private static List<Model> listeners = new ArrayList<Model>();
 	/**
-	 * Main frame
+	 * Main frame.
 	 */
 	private static final JFrame frame = new JFrame("Skin Checker for osu!");
 	/**
 	 * The JLabel that displays the name of the skin
-	 * currently being checked
+	 * currently being checked.
 	 */
 	private static JLabel skin;
 	/**
-	 * The JTabbedPane that lists all the images
+	 * The JTabbedPane that lists all the images.
 	 */
 	private static JTabbedPane imageTabs;
 	/**
-	 * The JTabbedPane that lists all the sound files
+	 * The JTabbedPane that lists all the sound files.
 	 */
 	private static JTabbedPane soundTabs;
 	/**
 	 * Model for the list that displays files
-	 * that should not be in the skin
+	 * that should not be in the skin.
 	 */
 	private static DefaultListModel<String> foreignFiles = new DefaultListModel<String>();
 	/**
 	 * Whether or not to ignore a missing
-	 * SD image when a HD version exists
+	 * SD image when a HD version exists.
 	 */
 	protected static boolean ignoreSD = false;
 	/**
-	 * The tab showing all the skin.ini options and editors
+	 * The tab showing all the skin.ini options and editors.
 	 */
 	private static SkinIniTab iniTab;
 	/**
-	 * The skin.ini settings for the skin currently loaded
+	 * The skin.ini settings for the skin currently loaded.
 	 */
 	protected static SkinIni skinIni = null;
 	/**
