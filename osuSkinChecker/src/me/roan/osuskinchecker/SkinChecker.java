@@ -60,6 +60,8 @@ import me.roan.osuskinchecker.ini.Version;
 import me.roan.util.ClickableLink;
 import me.roan.util.Dialog;
 import me.roan.util.ExclamationMarkPath;
+import me.roan.util.FileSelector;
+import me.roan.util.FileSelector.FileExtension;
 import me.roan.util.Util;
 
 /**
@@ -71,6 +73,7 @@ import me.roan.util.Util;
  * @author Roan
  */
 public class SkinChecker{
+	private static final FileExtension txtExtension = FileSelector.registerFileExtension("Text file", "txt");
 	/**
 	 * Layered map with the information
 	 * about all the images
@@ -326,7 +329,7 @@ public class SkinChecker{
 		});
 		print.addActionListener((e)->{
 			if(skinFolder != null){
-				File dest = Dialog.showFileSaveDialog();
+				File dest = Dialog.showFileSaveDialog(txtExtension, "foreign files");
 				if(dest == null){
 					return;
 				}
