@@ -175,12 +175,19 @@ public class ImageFilter extends Filter<ImageMeta>{
 	 */
 	public String getFrameString(){
 		int[] nums = matches.stream().mapToInt(ImageMeta::getSequenceNumber).filter(i->i >= 0).distinct().sorted().toArray();
+		if(nums.length == 1){
+			return "frame " + nums[0];
+		}
 		StringJoiner buffer = new StringJoiner(", ");
 		int start = nums[0];
 		int last = nums[0];
 		for(int i = 1; i < nums.length; i++){
 			if(nums[i] != last + 1){
-				buffer.add(start + "-" + last);
+				if(start == last){
+					buffer.add(String.valueOf(start));
+				}else{
+					buffer.add(start + "-" + last);
+				}
 				start = nums[i];
 			}
 			last = nums[i];
