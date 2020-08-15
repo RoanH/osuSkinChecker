@@ -23,7 +23,7 @@ N png sliderendcircleoverlay
 
 ===> Slider
 N png sliderfollowcircle
-N M png sliderb
+M png sliderb
 O false sliderb png sliderb-nd
 O false sliderb png sliderb-spec
 - png sliderscorepoint
