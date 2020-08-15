@@ -294,7 +294,7 @@ public class ImageFilter extends Filter<ImageMeta>{
 				}
 			}else if(animatedNoDash){
 				try{
-					return new ImageMeta(file, hd, Integer.parseInt(extra.substring(1)));
+					return new ImageMeta(file, hd, Integer.parseInt(extra));
 				}catch(NumberFormatException e){
 					return null;
 				}
