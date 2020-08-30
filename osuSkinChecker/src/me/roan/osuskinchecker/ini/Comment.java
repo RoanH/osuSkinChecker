@@ -17,6 +17,11 @@ public class Comment extends Setting<String>{
 		super(null, line);
 		setEnabled(true);
 	}
+	
+	@Override
+	protected boolean wasUpdated(){
+		return true;
+	}
 
 	@Override
 	public String toString(){

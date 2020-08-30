@@ -28,7 +28,8 @@ Format for the .txt files that contain all the data about all the files.
    O - Indicates that a file exists that modifies this files behaviour if present. Should be
        followed by a boolean that is true if this file needs the additional file to load.
        Should be followed by a boolean that is false is this file is ignored when the additional
-       file is present. Should specify the additional file name after the boolean.
+       file is present. Should specify the additional file name after the boolean. Multiple conditions
+       can be present, all of them should be satisfied for the file to be listed.
    - - A dash means that no special options apply to the file.
 
 6. If the C or P option is used then the options section has to be followed directly by the
