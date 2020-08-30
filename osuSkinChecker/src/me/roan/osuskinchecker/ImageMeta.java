@@ -6,6 +6,7 @@ import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
 
 /**
  * Metadata class desribing a filter match.
@@ -107,17 +108,19 @@ public class ImageMeta{
 	 */
 	private static boolean isEmptyImage(File img){
 		if(img.exists()){
-			try{
-				Iterator<ImageReader> readers = ImageIO.getImageReadersBySuffix(img.getName().substring(img.getName().lastIndexOf('.') + 1));
-				while(readers.hasNext()){
-					ImageReader reader = readers.next();
-					reader.setInput(ImageIO.createImageInputStream(img));
-					return reader.getWidth(0) == 1 && reader.getHeight(0) == 1;
+			Iterator<ImageReader> readers = ImageIO.getImageReadersBySuffix(img.getName().substring(img.getName().lastIndexOf('.') + 1));
+			while(readers.hasNext()){
+				ImageReader reader = readers.next();
+				try(ImageInputStream in = ImageIO.createImageInputStream(img)){
+					reader.setInput(in);
+					boolean empty = reader.getWidth(0) == 1 && reader.getHeight(0) == 1;
+					reader.dispose();
+					return empty;
+				}catch(IOException e){
+					return false;
 				}
-				return false;
-			}catch(IOException e){
-				return false;
 			}
+			return false;
 		}else{
 			return true;
 		}
