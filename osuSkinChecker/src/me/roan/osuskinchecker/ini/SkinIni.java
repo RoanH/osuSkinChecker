@@ -473,7 +473,7 @@ public class SkinIni{
 				}
 			}
 			for(Setting<?> setting : section.data){
-				if(setting.isEnabled()){
+				if(setting.isEnabled() && setting.wasUpdated()){
 					writer.println(setting);
 				}
 			}
