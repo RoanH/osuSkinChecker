@@ -15,6 +15,7 @@ N png taiko-flower-group
 - png taiko-drum-outer
 - png taiko-bar-right
 - png taiko-bar-right-glow
+- png taiko-barline
 
 ===> Notes
 - png approachcircle
