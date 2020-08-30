@@ -61,6 +61,12 @@ public class Setting<T>{
 		this.enabled = enabled;
 	}
 	
+	/**
+	 * Checks whether or not this setting was updated
+	 * during this session. A setting always count as
+	 * updated if it was read from the <code>skin.ini</code>
+	 * @return True if this setting was updated.
+	 */
 	protected boolean wasUpdated(){
 		return wasUpdated;
 	}
