@@ -1,6 +1,7 @@
 package me.roan.osuskinchecker;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
@@ -56,24 +57,7 @@ public class ImageFilter extends Filter<ImageMeta>{
 	 * The mania key count the custom path setting is for.
 	 */
 	protected int customKeyCount = -1;
-	/**
-	 * Override filter, if the file described by the other
-	 * filter exists, the file described by this filter
-	 * is not required.
-	 */
-	protected Filter<?> override = null;
-	/**
-	 * Name of the file that overrides the file
-	 * matches by this filter.
-	 */
-	protected String overrideName = null;
-	/**
-	 * Specifies the override mode. If this flag is
-	 * <code>true</code> then the override file has
-	 * to be present for this filter to activate. If
-	 * the flag is <code>false</code>
-	 */
-	protected boolean overrideMode = false;
+	private List<OverrideRelation> overrides = new ArrayList<OverrideRelation>(1);
 	
 	/**
 	 * Constructs a new ImageFilter with the given arguments.
@@ -101,8 +85,7 @@ public class ImageFilter extends Filter<ImageMeta>{
 				customDefault = args[++c];
 				break;
 			case "O":
-				overrideMode = Boolean.parseBoolean(args[++c]);
-				overrideName = args[++c];
+				overrides.add(new OverrideRelation(Boolean.parseBoolean(args[++c]), args[++c]));
 				break;
 			}
 			c++;
@@ -239,7 +222,7 @@ public class ImageFilter extends Filter<ImageMeta>{
 	 * @return True if this file is currently being overridden.
 	 */
 	public boolean isOverriden(){
-		return (overrideName == null) ? false : (overrideMode ^ override.hasMatch());
+		return !overrides.isEmpty() && overrides.stream().allMatch(OverrideRelation::isOverriden);
 	}
 
 	@Override
@@ -350,11 +333,16 @@ public class ImageFilter extends Filter<ImageMeta>{
 
 	@Override
 	protected void link(List<Filter<?>> filters){
-		if(overrideName != null){
+		if(!overrides.isEmpty()){
+			int found = 0;
 			for(Filter<?> filter : filters){
-				if(filter.name.equals(overrideName)){
-					override = filter;
-					break;
+				for(OverrideRelation override : overrides){
+					if(filter.name.equals(override.overrideName)){
+						override.override = filter;
+						if(found == overrides.size()){
+							return;
+						}
+					}
 				}
 			}
 		}
@@ -363,5 +351,35 @@ public class ImageFilter extends Filter<ImageMeta>{
 	@Override
 	public List<File> getMatchedFiles(){
 		return matches.stream().map(ImageMeta::getFile).collect(Collectors.toList());
+	}
+	
+	private static final class OverrideRelation{
+		/**
+		 * Override filter, if the file described by the other
+		 * filter exists, the file described by this filter
+		 * is not required.
+		 */
+		private Filter<?> override = null;
+		/**
+		 * Name of the file that overrides the file
+		 * matches by this filter.
+		 */
+		private String overrideName = null;
+		/**
+		 * Specifies the override mode. If this flag is
+		 * <code>true</code> then the override file has
+		 * to be present for this filter to activate. If
+		 * the flag is <code>false</code>
+		 */
+		private boolean overrideMode = false;
+		
+		private OverrideRelation(boolean mode, String name){
+			overrideName = name;
+			overrideMode = mode;
+		}
+		
+		private boolean isOverriden(){
+			return overrideMode ^ override.hasMatch();
+		}
 	}
 }
