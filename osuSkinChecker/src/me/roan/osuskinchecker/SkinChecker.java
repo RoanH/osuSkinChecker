@@ -227,6 +227,7 @@ public class SkinChecker{
 				}catch(FileNotFoundException e1){
 					Dialog.showErrorDialog("An error occurred while writing the new skin.ini!");
 				}
+				Dialog.showMessageDialog("Succesfully saved the skin.ini file.");
 			}
 		};
 		save.addActionListener(defaultSave);
