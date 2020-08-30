@@ -82,7 +82,7 @@ N png menu-back
 - png ranking-perfect
 - png ranking-winner
 L 1 png ranking-replay
-L 1 png ranking-retry
+- png ranking-retry
 
 ===> Pause Screen
 - png,jpg,jpeg pause-overlay
