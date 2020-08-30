@@ -57,6 +57,9 @@ public class ImageFilter extends Filter<ImageMeta>{
 	 * The mania key count the custom path setting is for.
 	 */
 	protected int customKeyCount = -1;
+	/**
+	 * List of override relations with other skin files.
+	 */
 	private List<OverrideRelation> overrides = new ArrayList<OverrideRelation>(1);
 	
 	/**
@@ -338,8 +341,8 @@ public class ImageFilter extends Filter<ImageMeta>{
 			for(Filter<?> filter : filters){
 				for(OverrideRelation override : overrides){
 					if(filter.name.equals(override.overrideName)){
-						override.override = filter;
-						if(found == overrides.size()){
+						override.filter = filter;
+						if(++found == overrides.size()){
 							return;
 						}
 					}
@@ -353,33 +356,53 @@ public class ImageFilter extends Filter<ImageMeta>{
 		return matches.stream().map(ImageMeta::getFile).collect(Collectors.toList());
 	}
 	
+	/**
+	 * Denotes an override relation with an other file
+	 * in the skin. Such a relation may either take the
+	 * form of another skin element needing to be present
+	 * or absent for the original element to be relevant.
+	 * @author Roan
+	 *
+	 */
 	private static final class OverrideRelation{
 		/**
-		 * Override filter, if the file described by the other
-		 * filter exists, the file described by this filter
-		 * is not required.
+		 * Override filter, used to check if the other
+		 * file of the relation is present.
 		 */
-		private Filter<?> override = null;
+		private Filter<?> filter = null;
 		/**
-		 * Name of the file that overrides the file
-		 * matches by this filter.
+		 * Name of the file that overrides the original
+		 * file for this override.
 		 */
 		private String overrideName = null;
 		/**
 		 * Specifies the override mode. If this flag is
 		 * <code>true</code> then the override file has
-		 * to be present for this filter to activate. If
-		 * the flag is <code>false</code>
+		 * to be present for the original file to be present.
+		 * If the flag is <code>false</code> the original
+		 * file for this relation should be absent.
 		 */
 		private boolean overrideMode = false;
 		
+		/**
+		 * Constructs a new override relation with the
+		 * given mode and overriding file name.
+		 * @param mode The mode for this override relation.
+		 * @param name The name of the other file for this relation.
+		 */
 		private OverrideRelation(boolean mode, String name){
 			overrideName = name;
 			overrideMode = mode;
 		}
 		
+		/**
+		 * Checks whether the other file for this relation
+		 * overrides the original file.
+		 * @return True if the original file is overridden
+		 *         and should thus not be present.
+		 */
 		private boolean isOverriden(){
-			return overrideMode ^ override.hasMatch();
+			return overrideMode ^ filter.hasMatch();
 		}
 	}
 }
