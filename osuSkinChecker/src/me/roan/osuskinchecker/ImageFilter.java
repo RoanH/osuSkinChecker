@@ -253,12 +253,14 @@ public class ImageFilter extends Filter<ImageMeta>{
 				}else{
 					return null;
 				}
-			}else{
-				if(fn.startsWith((customDefault + name).toLowerCase(Locale.ROOT))){
-					extra = fn.substring(customDefault.length() + name.length());
+			}else if(customPath.length == 1){
+				if(fn.startsWith((customPath[0] + name).toLowerCase(Locale.ROOT))){
+					extra = fn.substring(customPath[0].length() + name.length());
 				}else{
 					return null;
 				}
+			}else{
+				return null;
 			}
 		}else{
 			//strip file name
