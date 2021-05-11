@@ -868,7 +868,7 @@ public class SkinIni{
 		 * The maximum key count that will be parsed
 		 * by this program
 		 */
-		protected static final int MAX_KEYS = 10;
+		protected static final int MAX_KEYS = 18;
 		/**
 		 * The key count this mania configuration is for
 		 */
