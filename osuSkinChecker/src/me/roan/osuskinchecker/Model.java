@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
+import me.roan.osuskinchecker.ini.Version;
+
 /**
  * Abstract base class for table models
  * that predefines filtering subroutines
@@ -19,35 +21,36 @@ public abstract class Model extends DefaultTableModel{
 	 */
 	private static final long serialVersionUID = 5912216650613737949L;
 	/**
-	 * The table data for this table model
+	 * The table data for this table model.
 	 */
-	private List<Info> data;
+	private List<Filter<?>> data;
 	/**
-	 * The filtered table data for this table model
+	 * The filtered table data for this table model.
 	 */
-	protected List<Info> view = new ArrayList<Info>();
+	protected List<Filter<?>> view = new ArrayList<Filter<?>>();
 
 	/**
 	 * Creates a new Model with the given
 	 * list of information objects as its
-	 * table data
+	 * table data.
 	 * @param list The table data for this
-	 *        table model
+	 *        table model.
 	 */
-	public Model(List<Info> list){
+	public Model(List<Filter<?>> list){
 		data = list;
-		updateView();
 	}
 
 	/**
 	 * Updates the view for this model.
 	 * This includes filtering the table
 	 * data and repainting the table.
+	 * @param version The <tt>skin.ini</tt>
+	 *        version used in this skin.
 	 */
-	protected void updateView(){
+	protected void updateView(Version version){
 		view.clear();
-		for(Info i : data){
-			if(i.show()){
+		for(Filter<?> i : data){
+			if(i.show(version)){
 				view.add(i);
 			}
 		}

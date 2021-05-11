@@ -4,10 +4,17 @@ import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetDragEvent;
+import java.awt.dnd.DropTargetDropEvent;
+import java.awt.dnd.DropTargetEvent;
+import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,10 +22,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -27,7 +30,9 @@ import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,11 +43,9 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -50,10 +53,16 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
-import me.roan.osuskinchecker.ini.Setting;
 import me.roan.osuskinchecker.ini.SkinIni;
 import me.roan.osuskinchecker.ini.SkinIniTab;
 import me.roan.osuskinchecker.ini.SplitLayout;
+import me.roan.osuskinchecker.ini.Version;
+import me.roan.util.ClickableLink;
+import me.roan.util.Dialog;
+import me.roan.util.ExclamationMarkPath;
+import me.roan.util.FileSelector;
+import me.roan.util.FileSelector.FileExtension;
+import me.roan.util.Util;
 
 /**
  * This program can be used to see what
@@ -65,115 +74,118 @@ import me.roan.osuskinchecker.ini.SplitLayout;
  */
 public class SkinChecker{
 	/**
-	 * Layered map with the information
-	 * about all the images
+	 * File extension that matches <code>.txt</code> files.
 	 */
-	private static final Map<String, Map<String, List<Info>>> imagesMap = new HashMap<String, Map<String, List<Info>>>();
+	private static final FileExtension txtExtension = FileSelector.registerFileExtension("Text file", "txt");
 	/**
 	 * Layered map with the information
-	 * about all the sound files
+	 * about all the images.
 	 */
-	private static final Map<String, Map<String, List<Info>>> soundsMap = new HashMap<String, Map<String, List<Info>>>();
+	private static final Map<String, Map<String, List<Filter<?>>>> imagesMap = new HashMap<String, Map<String, List<Filter<?>>>>();
 	/**
-	 * Folder of the skin currently being checked
+	 * Layered map with the information
+	 * about all the sound files.
 	 */
-	protected static File skinFolder;
+	private static final Map<String, Map<String, List<Filter<?>>>> soundsMap = new HashMap<String, Map<String, List<Filter<?>>>>();
 	/**
-	 * Whether or not to check for missing SD images
+	 * List of all loaded filters.
+	 */
+	private static final List<Filter<?>> filters = new ArrayList<Filter<?>>();
+	/**
+	 * Folder of the skin currently being checked.
+	 */
+	private static File skinFolder;
+	/**
+	 * Whether or not to check for missing SD images.
 	 */
 	protected static boolean checkSD = true;
 	/**
-	 * Whether or not to check for missing HD images
+	 * Whether or not to check for missing HD images.
 	 */
 	protected static boolean checkHD = false;
 	/**
-	 * Whether or not to check for missing legacy images
+	 * Whether or not to check for missing legacy images.
 	 */
 	protected static boolean checkLegacy = false;
 	/**
 	 * Whether or not to show all files regardless of whether
-	 * they are present or not
+	 * they are present or not.
 	 */
 	protected static boolean showAll = false;
 	/**
 	 * Whether or not to ignore missing HD files of
-	 * images that have an empty SD image
+	 * images that have an empty SD image.
 	 */
 	protected static boolean ignoreEmpty = true;
 	/**
 	 * List of all the tables model that is used to
-	 * update the tables when the filter changes
+	 * update the tables when the filter changes.
 	 */
 	private static List<Model> listeners = new ArrayList<Model>();
 	/**
-	 * Main frame
+	 * Main frame.
 	 */
-	public static final JFrame frame = new JFrame("Skin Checker for osu!");
+	private static final JFrame frame = new JFrame("Skin Checker for osu!");
 	/**
 	 * The JLabel that displays the name of the skin
-	 * currently being checked
+	 * currently being checked.
 	 */
 	private static JLabel skin;
 	/**
-	 * The JTabbedPane that lists all the images
+	 * The JTabbedPane that lists all the images.
 	 */
 	private static JTabbedPane imageTabs;
 	/**
-	 * The JTabbedPane that lists all the sound files
+	 * The JTabbedPane that lists all the sound files.
 	 */
 	private static JTabbedPane soundTabs;
 	/**
-	 * The JFileChooser used to ask the user
-	 * for skin
-	 */
-	private static JFileChooser chooser;
-	/**
-	 * Initial list of all the files in the skin folder
-	 */
-	protected static List<File> allFiles = new ArrayList<File>();
-	/**
-	 * List of all the information objects
-	 */
-	private static List<Info> info = new ArrayList<Info>();
-	/**
 	 * Model for the list that displays files
-	 * that should not be in the skin
+	 * that should not be in the skin.
 	 */
 	private static DefaultListModel<String> foreignFiles = new DefaultListModel<String>();
 	/**
 	 * Whether or not to ignore a missing
-	 * SD image when a HD version exists
+	 * SD image when a HD version exists.
 	 */
 	protected static boolean ignoreSD = false;
 	/**
-	 * The tab showing all the skin.ini options and editors
+	 * The tab showing all the skin.ini options and editors.
 	 */
 	private static SkinIniTab iniTab;
 	/**
-	 * The skin.ini settings for the skin currently loaded
+	 * The skin.ini settings for the skin currently loaded.
 	 */
-	private static SkinIni skinIni = null;
+	protected static SkinIni skinIni = null;
+	/**
+	 * Version set in the currently loaded <tt>skin.ini</tt>.
+	 */
+	protected static Version version = null;
 
 	/**
 	 * Main method
 	 * @param args No valid command line options
 	 */
 	public static void main(String[] args){
+		ExclamationMarkPath.check(args);
 		try{
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		}catch(Throwable t){
 		}
 		try{
 			readDatabase();
+			for(Filter<?> filter : filters){
+				filter.link(filters);
+			}
 		}catch(IOException e){
 			e.printStackTrace();
 		}
 
-		chooser = new JFileChooser();
-		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		chooser.setMultiSelectionEnabled(false);
 		imageTabs = new JTabbedPane();
 		soundTabs = new JTabbedPane();
+		mapToTabs(imageTabs, imagesMap);
+		mapToTabs(soundTabs, soundsMap);
+		
 		skin = new JLabel("<html><i>no skin selected</i></html>");
 		buildGUI();
 	}
@@ -183,9 +195,13 @@ public class SkinChecker{
 	 */
 	public static void buildGUI(){
 		try{
-			frame.setIconImage(ImageIO.read(ClassLoader.getSystemResource("skinchecker.png")));
+			Image icon = ImageIO.read(ClassLoader.getSystemResource("skinchecker.png"));
+			frame.setIconImage(icon);
+			Dialog.setDialogIcon(icon);
 		}catch(IOException e2){
 		}
+		Dialog.setDialogTitle("Skin Checker");
+		Dialog.setParentFrame(frame);
 		JPanel content = new JPanel(new BorderLayout());
 		JTabbedPane categories = new JTabbedPane();
 
@@ -204,13 +220,14 @@ public class SkinChecker{
 					try{
 						skinIni.ini.createNewFile();
 					}catch(IOException e1){
-						JOptionPane.showMessageDialog(frame, "Failed to create the skin.ini file!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+						Dialog.showErrorDialog("Failed to create the skin.ini file!");
 						return;
 					}
 					skinIni.writeIni(skinIni.ini);
 				}catch(FileNotFoundException e1){
-					JOptionPane.showMessageDialog(frame, "An error occurred while writing the new skin.ini!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+					Dialog.showErrorDialog("An error occurred while writing the new skin.ini!");
 				}
+				Dialog.showMessageDialog("Succesfully saved the skin.ini file.");
 			}
 		};
 		save.addActionListener(defaultSave);
@@ -220,7 +237,7 @@ public class SkinChecker{
 				try{
 					Files.move(skinIni.ini.toPath(), new File(skinIni.ini.getParentFile(), "backup-" + getDateTime() + ".ini").toPath(), StandardCopyOption.REPLACE_EXISTING);
 				}catch(IOException e2){
-					JOptionPane.showMessageDialog(frame, "Failed to create a backup!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+					Dialog.showErrorDialog("Failed to create a backup!");
 					return;
 				}
 				defaultSave.actionPerformed(e);
@@ -253,39 +270,27 @@ public class SkinChecker{
 		controls.add(cisd);
 		chd.addActionListener((e)->{
 			checkHD = chd.isSelected();
-			for(Model m : listeners){
-				m.updateView();
-			}
+			updateView();
 		});
 		csd.addActionListener((e)->{
 			checkSD = csd.isSelected();
-			for(Model m : listeners){
-				m.updateView();
-			}
+			updateView();
 		});
 		call.addActionListener((e)->{
 			showAll = call.isSelected();
-			for(Model m : listeners){
-				m.updateView();
-			}
+			updateView();
 		});
 		clegacy.addActionListener((e)->{
 			checkLegacy = clegacy.isSelected();
-			for(Model m : listeners){
-				m.updateView();
-			}
+			updateView();
 		});
 		cempty.addActionListener((e)->{
 			ignoreEmpty = cempty.isSelected();
-			for(Model m : listeners){
-				m.updateView();
-			}
+			updateView();
 		});
 		cisd.addActionListener((e)->{
 			ignoreSD = cisd.isSelected();
-			for(Model m : listeners){
-				m.updateView();
-			}
+			updateView();
 		});
 
 		JPanel buttons = new JPanel(new GridLayout(4, 1));
@@ -312,7 +317,7 @@ public class SkinChecker{
 					e1.printStackTrace();
 				}
 			}else{
-				JOptionPane.showMessageDialog(frame, "No skin currently selected!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+				Dialog.showErrorDialog("No skin currently selected!");
 			}
 		});
 		recheck.addActionListener((e)->{
@@ -323,50 +328,48 @@ public class SkinChecker{
 					e1.printStackTrace();
 				}
 			}else{
-				JOptionPane.showMessageDialog(frame, "No skin currently selected!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+				Dialog.showErrorDialog("No skin currently selected!");
 			}
 		});
 		print.addActionListener((e)->{
 			if(skinFolder != null){
-				JFileChooser chooser = new JFileChooser();
-				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				chooser.setMultiSelectionEnabled(false);
-				if(chooser.showSaveDialog(frame) != JFileChooser.APPROVE_OPTION){
+				File dest = Dialog.showFileSaveDialog(txtExtension, "foreign files");
+				if(dest == null){
 					return;
 				}
-				File dest = chooser.getSelectedFile();
+				
 				try{
 					final PrintWriter writer = new PrintWriter(new FileOutputStream(dest));
 					writer.println("========== Images ==========");
-					for(Entry<String, Map<String, List<Info>>> m : imagesMap.entrySet()){
-						for(Entry<String, List<Info>> ml : m.getValue().entrySet()){
-							for(Info mli : ml.getValue()){
-								if(mli.show()){
-									writer.println('[' + m.getKey() + "|" + ml.getKey() + "]: " + ((ImageInfo)mli).name);
+					for(Entry<String, Map<String, List<Filter<?>>>> m : imagesMap.entrySet()){
+						for(Entry<String, List<Filter<?>>> ml : m.getValue().entrySet()){
+							for(Filter<?> mli : ml.getValue()){
+								if(mli.show(version)){
+									writer.println('[' + m.getKey() + "|" + ml.getKey() + "]: " + mli.toString());
 								}
 							}
 						}
 					}
 					writer.println();
 					writer.println("========== Sounds ==========");
-					for(Entry<String, Map<String, List<Info>>> m : soundsMap.entrySet()){
-						for(Entry<String, List<Info>> ml : m.getValue().entrySet()){
-							for(Info mli : ml.getValue()){
-								if(mli.show()){
-									writer.println('[' + m.getKey() + "|" + ml.getKey() + "]: " + ((SoundInfo)mli).name);
+					for(Entry<String, Map<String, List<Filter<?>>>> m : soundsMap.entrySet()){
+						for(Entry<String, List<Filter<?>>> ml : m.getValue().entrySet()){
+							for(Filter<?> mli : ml.getValue()){
+								if(mli.show(version)){
+									writer.println('[' + m.getKey() + "|" + ml.getKey() + "]: " + mli.toString());
 								}
 							}
 						}
 					}
 					writer.flush();
 					writer.close();
-					JOptionPane.showMessageDialog(frame, "File list succesfully exported", "Skin Checker", JOptionPane.INFORMATION_MESSAGE);
+					Dialog.showMessageDialog("File list succesfully exported");
 				}catch(FileNotFoundException e1){
-					JOptionPane.showMessageDialog(frame, "An error occured: " + e1.getMessage(), "Skin Checker", JOptionPane.ERROR_MESSAGE);
+					Dialog.showErrorDialog("An error occured: " + e1.getMessage());
 				}
 
 			}else{
-				JOptionPane.showMessageDialog(frame, "No skin currently selected!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+				Dialog.showErrorDialog("No skin currently selected!");
 			}
 		});
 
@@ -395,12 +398,7 @@ public class SkinChecker{
 		links.add(wiki);
 		
 		JPanel info = new JPanel(new GridLayout(2, 1));
-		JLabel ver = new JLabel("<html><center><i>Version: v2.1, latest version: <font color=gray>loading</font></i></center></html>", SwingConstants.CENTER);
-		info.add(ver);
-		new Thread(()->{
-			String version = checkVersion();//XXX the version number 
-			ver.setText("<html><center><i>Version: v2.1, latest version: " + (version == null ? "unknown :(" : version) + "</i></center></html>");
-		}, "Version Checker").start();
+		info.add(Util.getVersionLabel("osuSkinChecker", "v3.3"));//XXX the version number - don't forget build.gradle
 		JPanel linksProgram = new JPanel(new GridLayout(1, 2, -2, 0));
 		JLabel forum = new JLabel("<html><font color=blue><u>Forums</u></font> -</html>", SwingConstants.RIGHT);
 		JLabel git = new JLabel("<html>- <font color=blue><u>GitHub</u></font></html>", SwingConstants.LEFT);
@@ -428,6 +426,53 @@ public class SkinChecker{
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+		
+		new DropTarget(frame, new DropTargetListener(){
+
+			@Override
+			public void dragEnter(DropTargetDragEvent dtde){				
+			}
+
+			@Override
+			public void dragOver(DropTargetDragEvent dtde){
+			}
+
+			@Override
+			public void dropActionChanged(DropTargetDragEvent dtde){
+			}
+
+			@Override
+			public void dragExit(DropTargetEvent dte){
+			}
+
+			@Override
+			public void drop(DropTargetDropEvent dtde){
+				if(dtde.isDataFlavorSupported(DataFlavor.javaFileListFlavor)){
+					try{
+						dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
+						@SuppressWarnings("unchecked")
+						List<File> files = (List<File>)dtde.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
+						if(files.size() > 0 && files.get(0).isDirectory()){
+							checkSkin(files.get(0));
+						}
+					}catch(UnsupportedFlavorException | IOException e){
+						//Pity, but not important
+					}
+				}
+			}
+		});
+	}
+	
+	/**
+	 * Updates the information displayed in the tabs
+	 * based on the new settings.
+	 */
+	private static void updateView(){
+		if(version != null){
+			for(Model m : listeners){
+				m.updateView(version);
+			}
+		}
 	}
 
 	/**
@@ -438,17 +483,19 @@ public class SkinChecker{
 	 */
 	public static void checkSkin(File folder) throws IOException{
 		if(folder == null){
-			if(chooser.showOpenDialog(frame) != JFileChooser.APPROVE_OPTION){
-				JOptionPane.showMessageDialog(frame, "No skin selected!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+			File selected = Dialog.showFolderOpenDialog();
+			if(selected == null || !selected.exists()){
+				Dialog.showErrorDialog("No skin selected!");
 				return;
+			}else{
+				folder = selected;
 			}
-			folder = chooser.getSelectedFile();
 		}
 
 		File iniFile = new File(folder, "skin.ini");
 		
 		if(!iniFile.exists()){
-			int option = JOptionPane.showOptionDialog(frame, "This folder doesn't have a skin.ini file.\nWithout this file this skin won't even be recognized as a skin!", "Skin Checker", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[]{"OK", "Add empty skin.ini"}, null);
+			int option = Dialog.showDialog("This folder doesn't have a skin.ini file.\nWithout this file this skin won't even be recognized as a skin!", new String[]{"OK", "Add empty skin.ini"});
 			if(option == 1){
 				iniFile.createNewFile();
 			}else{
@@ -459,9 +506,18 @@ public class SkinChecker{
 		skinFolder = folder;
 		skin.setText(skinFolder.getName());
 
+		executeChecks(skinFolder, iniFile);
+	}
+	
+	/**
+	 * Checks the skin denoted by the given folder and ini file.
+	 * @param skinFolder The skin folder.
+	 * @param ini The <tt>skin.ini</tt> file.
+	 */
+	private static void executeChecks(File skinFolder, File ini){
 		skinIni = new SkinIni();
 		try{
-			skinIni.readIni(iniFile);
+			skinIni.readIni(ini);
 		}catch(Throwable e){
 			try{
 				String name = "error-" + getDateTime() + ".txt";
@@ -472,66 +528,71 @@ public class SkinChecker{
 					errl.add("	" + elem.toString());
 				}
 				Files.write(err, errl, StandardOpenOption.CREATE_NEW);
-				JOptionPane.showMessageDialog(frame, "An error occurred while reading the skin.ini\nThe error was saved to: " + err.toAbsolutePath().toString() + "\n" + e.getMessage(), "Skin Checker", JOptionPane.ERROR_MESSAGE);
+				Dialog.showErrorDialog("An error occurred while reading the skin.ini\nThe error was saved to: " + err.toAbsolutePath().toString() + "\n" + e.getMessage());
 			}catch(Exception e1){
-				JOptionPane.showMessageDialog(frame, "An internal error occurred!", "Skin Checker", JOptionPane.ERROR_MESSAGE);
+				Dialog.showErrorDialog("An internal error occurred!");
 			}
 			return;
 		}
 		iniTab.init(skinIni);
+		version = (Version)skinIni.find("Version", -1).getValue();
 
-		allFiles.clear();
-		addAllFiles(skinFolder);
-		allFiles.remove(iniFile);
-
-		for(Info i : info){
-			i.reset();
+		for(Filter<?> filter : filters){
+			filter.reset(skinIni);
 		}
 
-		mapToTabs(imageTabs, imagesMap);
-		mapToTabs(soundTabs, soundsMap);
-
+		Deque<String> path = new ArrayDeque<String>();
+		List<File> foreign = new ArrayList<File>();
+		checkAllFiles(skinFolder, path, foreign);
+		
+		for(Model m : listeners){
+			m.updateView(version);
+		}
+		
 		foreignFiles.clear();
 		int offset = 1 + skinFolder.toString().length();
-		for(File file : allFiles){
-			foreignFiles.addElement(file.toString().substring(offset));
+		for(File file : foreign){
+			if(!file.equals(ini)){
+				foreignFiles.addElement(file.toString().substring(offset));
+			}
 		}
-	}
-
-	/**
-	 * Adds all the files form the given directory
-	 * to the {@link #allFiles} list.
-	 * @param dir The directory to parse
-	 */
-	private static void addAllFiles(File dir){
-		for(File f : dir.listFiles()){
-			if(f.isDirectory()){
-				addAllFiles(f);
-			}else{
-				allFiles.add(f);
+		for(Filter<?> filter : filters){
+			if(filter instanceof ImageFilter){
+				if(((ImageFilter)filter).isLegacy(version)){
+					for(File file : filter.getMatchedFiles()){
+						foreignFiles.addElement(file.toString().substring(offset));
+					}
+				}
 			}
 		}
 	}
 	
 	/**
-	 * Resolves the custom path defined in the skin.ini
-	 * for the given setting (if it exists).
-	 * @param name The name of the setting to read the path from
-	 * @param def The value to return if no custom path was set
-	 * @param customKeyCount 
-	 * @return The custom path if set, the given defaul value otherwise
+	 * Checks all the files in the given directory again the filters.
+	 * @param dir The directory the parse.
+	 * @param path The path stack.
+	 * @param foreign A list of files that did not match any filter.
 	 */
-	protected static String resolveCustomPath(String name, String def, int customKeyCount){
-		Setting<?> setting = skinIni.find(name, customKeyCount);
-		if(setting != null && setting.isEnabled()){
-			Object value = setting.getValue();
-			if(value instanceof String){
-				return (String)value;
+	private static void checkAllFiles(File dir, Deque<String> path, List<File> foreign){
+		for(File f : dir.listFiles()){
+			if(f.isDirectory()){
+				path.push(f.getName());
+				checkAllFiles(f, path, foreign);
+				path.pop();
+			}else{
+				//if none then foreign for sure
+				//no short circuiting because numbers can count for two filters, score and combo
+				boolean found = false;
+				for(Filter<?> filter : filters){
+					found |= filter.check(f, path);
+				}
+				if(!found){
+					foreign.add(f);
+				}
 			}
 		}
-		return def;
 	}
-
+	
 	/**
 	 * Converts the given map of information
 	 * objects to a set of tabbedpanes for
@@ -539,15 +600,19 @@ public class SkinChecker{
 	 * @param tabs The tabbed pane to map the data to
 	 * @param map The data to map to the tabs
 	 */
-	private static void mapToTabs(JTabbedPane tabs, Map<String, Map<String, List<Info>>> map){
+	private static void mapToTabs(JTabbedPane tabs, Map<String, Map<String, List<Filter<?>>>> map){
 		tabs.removeAll();
-		for(Entry<String, Map<String, List<Info>>> entry : map.entrySet()){
+		List<Filter<?>> all = new ArrayList<Filter<?>>(filters.size());
+		for(Entry<String, Map<String, List<Filter<?>>>> entry : map.entrySet()){
 			JTabbedPane inner = new JTabbedPane();
-			for(Entry<String, List<Info>> e : entry.getValue().entrySet()){
+			for(Entry<String, List<Filter<?>>> e : entry.getValue().entrySet()){
+				all.addAll(e.getValue());
 				inner.add(e.getKey(), new JScrollPane(getTableData(e.getValue())));
 			}
 			tabs.add(entry.getKey(), inner);
 		}
+		tabs.insertTab("All", null, new JScrollPane(getTableData(all)), null, 0);
+		tabs.setSelectedIndex(0);
 	}
 
 	/**
@@ -557,9 +622,9 @@ public class SkinChecker{
 	 * @param info The table data
 	 * @return The newly created JTable
 	 */
-	private static JTable getTableData(final List<Info> info){
+	private static JTable getTableData(final List<Filter<?>> info){
 		JTable table = new JTable();
-		Model model = info.get(0) instanceof ImageInfo ? new ImageModel(info) : (info.get(0) instanceof SoundInfo ? new SoundModel(info) : null);
+		Model model = info.get(0) instanceof ImageFilter ? new ImageModel(info) : new SoundModel(info);
 		listeners.add(model);
 		table.setModel(model);
 		return table;
@@ -593,70 +658,28 @@ public class SkinChecker{
 	 * @return A layered map of all the file descriptors
 	 * @throws IOException When an IOException occurs
 	 */
-	private static Map<String, List<Info>> readDataFile(String name, boolean isSound) throws IOException{
-		Map<String, List<Info>> data = new HashMap<String, List<Info>>();
+	private static Map<String, List<Filter<?>>> readDataFile(String name, boolean isSound) throws IOException{
+		Map<String, List<Filter<?>>> data = new HashMap<String, List<Filter<?>>>();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(name)));
-		List<Info> writing = null;
+		List<Filter<?>> writing = null;
 		String line;
 		while((line = reader.readLine()) != null){
 			if(line.trim().isEmpty()){
 				continue;
 			}else if(line.startsWith("===>")){
 				if(writing != null){
-					info.addAll(writing);
+					filters.addAll(writing);
 				}
-				writing = new ArrayList<Info>();
+				writing = new ArrayList<Filter<?>>();
 				data.put(line.substring(4).trim(), writing);
 			}else{
-				if(isSound){
-					writing.add(new SoundInfo(line));
-				}else{
-					writing.add(new ImageInfo(line));
-				}
+				String[] args = line.split(" +");
+				writing.add(isSound ?  new SoundFilter(args) : new ImageFilter(args));
 			}
 		}
-		info.addAll(writing);
+		filters.addAll(writing);
 		reader.close();
 		return data;
-	}
-
-	/**
-	 * Check the SkinChecker version to see
-	 * if we are running the latest version
-	 * @return The latest version
-	 */
-	private static final String checkVersion(){
-		try{
-			HttpURLConnection con = (HttpURLConnection)new URL("https://api.github.com/repos/RoanH/osuSkinChecker/tags").openConnection();
-			con.setRequestMethod("GET");
-			con.addRequestProperty("Accept", "application/vnd.github.v3+json");
-			con.setConnectTimeout(10000);
-			BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-			String line = reader.readLine();
-			reader.close();
-			String[] versions = line.split("\"name\":\"v");
-			int max_main = 0;
-			int max_sub = 0;
-			String[] tmp;
-			for(int i = 1; i < versions.length; i++){
-				tmp = versions[i].split("\",\"")[0].split("\\.");
-				if(Integer.parseInt(tmp[0]) > max_main){
-					max_main = Integer.parseInt(tmp[0]);
-					max_sub = Integer.parseInt(tmp[1]);
-				}else if(Integer.parseInt(tmp[0]) < max_main){
-					continue;
-				}else{
-					if(Integer.parseInt(tmp[1]) > max_sub){
-						max_sub = Integer.parseInt(tmp[1]);
-					}
-				}
-			}
-			return "v" + max_main + "." + max_sub;
-		}catch(Exception e){
-			return null;
-			//No Internet access or something else is wrong,
-			//No problem though since this isn't a critical function
-		}
 	}
 	
 	/**
@@ -666,58 +689,5 @@ public class SkinChecker{
 	 */
 	private static final String getDateTime(){
 		return DateTimeFormatter.ofPattern("yyyy-MM-dd_HH.mm.ss").withZone(ZoneId.systemDefault()).format(Instant.now(Clock.systemDefaultZone()));
-	}
-	
-	/**
-	 * MouseListener that opens the URL it is
-	 * instantiated with when triggered
-	 * @author Roan
-	 */
-	private static final class ClickableLink implements MouseListener{
-		/**
-		 * The target link
-		 */
-		private URI uri = null;
-		
-		/**
-		 * Constructs a new ClickableLink
-		 * with the given url
-		 * @param link The link to browse to
-		 *        when clicked
-		 */
-		private ClickableLink(String link){
-			try{
-				uri = new URI(link);
-			}catch(URISyntaxException e){
-				//pity
-			}
-		}
-
-		@Override
-		public void mouseClicked(MouseEvent e){
-			if(Desktop.isDesktopSupported() && uri != null){
-				try{
-					Desktop.getDesktop().browse(uri);
-				}catch(IOException e1){
-					//pity
-				}
-			}
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e){
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e){
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e){
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e){
-		}
 	}
 }

@@ -34,7 +34,6 @@ import me.roan.osuskinchecker.ini.SkinIni.ManiaIni;
 import me.roan.osuskinchecker.ini.SkinIni.NoteBodyStyle;
 import me.roan.osuskinchecker.ini.SkinIni.SliderStyle;
 import me.roan.osuskinchecker.ini.SkinIni.SpecialStyle;
-import me.roan.osuskinchecker.ini.SkinIni.Version;
 import me.roan.osuskinchecker.ini.SplitLayout.ScrollPane;
 
 /**
@@ -1057,7 +1056,7 @@ public class SkinIniTab extends JTabbedPane{
 		 * @param toggle Whether or not this editor should have an enabled/disable toggle
 		 * @see Setting
 		 */
-		private DoubleSpinnerEditor(String name, String hint, Setting<Double> setting, boolean toggle){
+		private DoubleSpinnerEditor(String hint, Setting<Double> setting, boolean toggle){
 			this(hint, setting, -Double.MAX_VALUE, Double.MAX_VALUE, toggle);
 		}
 		

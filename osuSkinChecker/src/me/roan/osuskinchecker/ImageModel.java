@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * This class determines how a list of
- * {@link ImageInfo} objects are displayed.
+ * {@link ImageFilter} objects are displayed.
  * @author Roan
  * @see Model
  */
@@ -16,15 +16,15 @@ public class ImageModel extends Model{
 
 	/**
 	 * Constructs a new ImageModel with
-	 * the given list of data to display.
-	 * @param list A list with data to display
-	 *        the {@link Info} objects should
-	 *        be of the {@link ImageInfo} type.
-	 * @see Info
+	 * the given list of filters to display.
+	 * @param list A list with filters to display
+	 *        the {@link Filter} objects should
+	 *        be of the {@link ImageFilter} type.
+	 * @see Filter
 	 * @see Model
-	 * @see ImageInfo
+	 * @see ImageFilter
 	 */
-	public ImageModel(List<Info> list){
+	public ImageModel(List<Filter<?>> list){
 		super(list);
 	}
 
@@ -50,18 +50,27 @@ public class ImageModel extends Model{
 
 	@Override
 	public Object getValueAt(int row, int col){
+		ImageFilter filter = (ImageFilter)view.get(row);
 		try{
 			switch(col){
 			case 0:
-				return view.get(row);
+				return filter;
 			case 1:
-				return ((ImageInfo)view.get(row)).hasSDVersion();
+				return filter.isOverriden() ? "Ignored" : (filter.hasSD() ? "Yes" : "No");
 			case 2:
-				ImageInfo info = ((ImageInfo)view.get(row));
-				return (info.ignored && SkinChecker.ignoreEmpty) ? "Ignored" : info.hasHDVersion();
+				if(filter.single){
+					return "N/A";
+				}else if((filter.allEmptySD() && SkinChecker.ignoreEmpty) || filter.isOverriden()){
+					return "Ignored";
+				}else{
+					return filter.hasHD() ? "Yes" : "No";
+				}
 			case 3:
-				ImageInfo i = ((ImageInfo)view.get(row));
-				return (i.variableWithDash || i.variableWithoutDash) ? (i.animated ? ("Yes: " + i.frames + (i.frames == 1 ? " frame" : " frames")) : "No") : "N/A";
+				if(filter.animatedDash || filter.animatedNoDash){
+					return filter.isAnimated() ? ("Yes: " + filter.getFrameString()) : "No";
+				}else{
+					return "N/A";
+				}
 			}
 		}catch(Exception e){
 			return "Error";

@@ -17,9 +17,7 @@ import java.util.Map.Entry;
 import java.util.StringJoiner;
 import java.util.regex.Pattern;
 
-import javax.swing.JOptionPane;
-
-import me.roan.osuskinchecker.SkinChecker;
+import me.roan.util.Dialog;
 
 /**
  * Main class that reflects all the
@@ -32,7 +30,7 @@ public class SkinIni{
 	 * Field for which default values were used
 	 * during the parsing
 	 */
-	private static List<String> usedDefault = new ArrayList<String>();
+	static List<String> usedDefault = new ArrayList<String>();
 	/**
 	 * All the setting in this skin.ini
 	 */
@@ -43,229 +41,229 @@ public class SkinIni{
 	public File ini;
 	/**
 	 * [General]<br>
-	 * <code>Name: < skin name ></code>
+	 * <code>Name: &lt; skin name &gt;</code>
 	 */
 	protected final Setting<String> name = new Setting<String>("Name", "-");
 	/**
 	 * [General]<br>
-	 * <code>Author: < author name ></code>
+	 * <code>Author: &lt; author name &gt;</code>
 	 */
 	protected final Setting<String> author = new Setting<String>("Author", "-");
 	/**
 	 * [General]<br>
-	 * <code>Version: < version ></code>
+	 * <code>Version: &lt; version &gt;</code>
 	 * @see Version
 	 */
 	protected final Setting<Version> version = new Setting<Version>("Version", Version.V1);
 	/**
 	 * [General]<br>
-	 * <code>CursorExpand: < 0:1 ></code>
+	 * <code>CursorExpand: &lt; 0:1 &gt;</code>
 	 */
 	protected final Setting<Boolean> cursorExpand = new Setting<Boolean>("CursorExpand", true);
 	/**
 	 * [General]<br>
-	 * <code>CursorCentre: < 0:1 ></code>
+	 * <code>CursorCentre: &lt; 0:1 &gt;</code>
 	 */
 	protected final Setting<Boolean> cursorCentre = new Setting<Boolean>("CursorCentre", true);
 	/**
 	 * [General]<br>
-	 * <code>CursorRotate: < 0:1 ></code>
+	 * <code>CursorRotate: &lt; 0:1 &gt;</code>
 	 */
 	protected final Setting<Boolean> cursorRotate = new Setting<Boolean>("CursorRotate", true);
 	/**
 	 * [General]<br>
-	 * <code>CursorTrailRotate: < 0:1 ></code>
+	 * <code>CursorTrailRotate: &lt; 0:1 &gt;</code>
 	 */
 	protected final Setting<Boolean> cursorTrailRotate = new Setting<Boolean>("CursorTrailRotate", true);
 	/**
 	 * [General]<br>
-	 * <code>animationFramerate: < framerate ></code>
+	 * <code>animationFramerate: &lt; framerate &gt;</code>
 	 */
 	protected final Setting<Integer> animationFramerate = new Setting<Integer>("AnimationFramerate", false, 1);
 	/**
 	 * [General]<br>
-	 * <code>LayeredHitSounds: < 0:1 ></code>
+	 * <code>LayeredHitSounds: &lt; 0:1 &gt;</code>
 	 */
 	protected final Setting<Boolean> layeredHitSounds = new Setting<Boolean>("LayeredHitSounds", true);
 	/**
 	 * [General]<br>
-	 * <code>ComboBurstRandom: < 0:1 ></code>
+	 * <code>ComboBurstRandom: &lt; 0:1 &gt;</code>
 	 */
 	protected final Setting<Boolean> comboBurstRandom = new Setting<Boolean>("ComboBurstRandom", false);
 	/**
 	 * [General]<br>
-	 * <code>CustomComboBurstSounds: < comma separated list ></code>
+	 * <code>CustomComboBurstSounds: &lt; comma separated list &gt;</code>
 	 */
 	protected final Setting<String> customComboBurstSounds = new Setting<String>("CustomComboBurstSounds", false, "");
 	/**
 	 * [General]<br>
-	 * <code>HitCircleOverlayAboveNumber: < 0:1 ></code>
+	 * <code>HitCircleOverlayAboveNumber: &lt; 0:1 &gt;</code>
 	 */
 	protected final Setting<Boolean> hitCircleOverlayAboveNumber = new Setting<Boolean>("HitCircleOverlayAboveNumber", true);
 	/**
 	 * [General]<br>
-	 * <code>SliderStyle: < style ></code>
+	 * <code>SliderStyle: &lt; style &gt;</code>
 	 * @see SliderStyle
 	 */
 	protected final Setting<SliderStyle> sliderStyle = new Setting<SliderStyle>("SliderStyle", SliderStyle.GRADIENT);
 	/**
 	 * [General]<br>
-	 * <code>SliderBallFlip: < 0:1 ></code>
+	 * <code>SliderBallFlip: &lt; 0:1 &gt;</code>
 	 */
 	protected final Setting<Boolean> sliderBallFlip = new Setting<Boolean>("SliderBallFlip", false);
 	/**
 	 * [General]<br>
-	 * <code>SliderBallFrames: < positive integer ></code>
+	 * <code>SliderBallFrames: &lt; positive integer &gt;</code>
 	 */
 	protected final Setting<Integer> sliderBallFrames = new Setting<Integer>("SliderBallFrames", false, 1);
 	/**
 	 * [General]<br>
-	 * <code>AllowSliderBallTint: < 0:1 ></code>
+	 * <code>AllowSliderBallTint: &lt; 0:1 &gt;</code>
 	 */
 	protected final Setting<Boolean> allowSliderBallTint = new Setting<Boolean>("AllowSliderBallTint", false);
 	/**
 	 * [General]<br>
-	 * <code>SpinnerNoBlink: < 0:1 ></code>
+	 * <code>SpinnerNoBlink: &lt; 0:1 &gt;</code>
 	 */
 	protected final Setting<Boolean> spinnerNoBlink = new Setting<Boolean>("SpinnerNoBlink", false);
 	/**
 	 * [General]<br>
-	 * <code>SpinnerFadePlayfield: < 0:1 ></code>
+	 * <code>SpinnerFadePlayfield: &lt; 0:1 &gt;</code>
 	 */
 	protected final Setting<Boolean> spinnerFadePlayfield = new Setting<Boolean>("SpinnerFadePlayfield", false);
 	/**
 	 * [General]<br>
-	 * <code>SpinnerFrequencyModulate: < 0:1 ></code>
+	 * <code>SpinnerFrequencyModulate: &lt; 0:1 &gt;</code>
 	 */
 	protected final Setting<Boolean> spinnerFrequencyModulate = new Setting<Boolean>("SpinnerFrequencyModulate", true);
 	/**
 	 * [Colours]<br>
-	 * <code>SongSelectActiveText: < rgb color ></code>
+	 * <code>SongSelectActiveText: &lt; rgb color &gt;</code>
 	 */
 	protected final Setting<Colour> songSelectActiveText = new Setting<Colour>("SongSelectActiveText", new Colour(0, 0, 0));
 	/**
 	 * [Colours]<br>
-	 * <code>SongSelectInactiveText: < rgb color ></code>
+	 * <code>SongSelectInactiveText: &lt; rgb color &gt;</code>
 	 */
 	protected final Setting<Colour> songSelectInactiveText = new Setting<Colour>("SongSelectInactiveText", new Colour(255, 255, 255));
 	/**
 	 * [Colours]<br>
-	 * <code>MenuGlow: < rgb color ></code>
+	 * <code>MenuGlow: &lt; rgb color &gt;</code>
 	 */
 	protected final Setting<Colour> menuGlow = new Setting<Colour>("MenuGlow", new Colour(0, 78, 155));
 	/**
 	 * [Colours]<br>
-	 * <code>StarBreakAdditive: < rgb color ></code>
+	 * <code>StarBreakAdditive: &lt; rgb color &gt;</code>
 	 */
 	protected final Setting<Colour> starBreakAdditive = new Setting<Colour>("StarBreakAdditive", new Colour(255, 182, 193));
 	/**
 	 * [Colours]<br>
-	 * <code>InputOverlayText: < rgb color ></code>
+	 * <code>InputOverlayText: &lt; rgb color &gt;</code>
 	 */
 	protected final Setting<Colour> inputOverlayText = new Setting<Colour>("InputOverlayText", new Colour(0, 0, 0));
 	/**
 	 * [Colours]<br>
-	 * <code>SliderBall: < rgb color ></code>
+	 * <code>SliderBall: &lt; rgb color &gt;</code>
 	 */
 	protected final Setting<Colour> sliderBall = new Setting<Colour>("SliderBall", new Colour(2, 170, 255));
 	/**
 	 * [Colours]<br>
-	 * <code>SliderTrackOverride: < rgb color ></code>
+	 * <code>SliderTrackOverride: &lt; rgb color &gt;</code>
 	 */
 	protected final Setting<Colour> sliderTrackOverride = new Setting<Colour>("SliderTrackOverride", new Colour(0, 0, 0));
 	/**
 	 * [Colours]<br>
-	 * <code>SliderBorder: < rgb color ></code>
+	 * <code>SliderBorder: &lt; rgb color &gt;</code>
 	 */
 	protected final Setting<Colour> sliderBorder = new Setting<Colour>("SliderBorder", new Colour(0, 0, 0));
 	/**
 	 * [Colours]<br>
-	 * <code>SpinnerBackground: < rgb color ></code>
+	 * <code>SpinnerBackground: &lt; rgb color &gt;</code>
 	 */
 	protected final Setting<Colour> spinnerBackground = new Setting<Colour>("SpinnerBackground", new Colour(100, 100, 100));
 	/**
 	 * [Colours]<br>
-	 * <code>Combo1: < rgb color ></code>
+	 * <code>Combo1: &lt; rgb color &gt;</code>
 	 */
 	protected final Setting<Colour> combo1 = new Setting<Colour>("Combo1", new Colour(255, 192, 0));
 	/**
 	 * [Colours]<br>
-	 * <code>Combo2: < rgb color ></code>
+	 * <code>Combo2: &lt; rgb color &gt;</code>
 	 */
 	protected final Setting<Colour> combo2 = new Setting<Colour>("Combo2", false, new Colour(0, 0, 0));
 	/**
 	 * [Colours]<br>
-	 * <code>Combo3: < rgb color ></code>
+	 * <code>Combo3: &lt; rgb color &gt;</code>
 	 */
 	protected final Setting<Colour> combo3 = new Setting<Colour>("Combo3", false, new Colour(0, 0, 0));
 	/**
 	 * [Colours]<br>
-	 * <code>Combo4: < rgb color ></code>
+	 * <code>Combo4: &lt; rgb color &gt;</code>
 	 */
 	protected final Setting<Colour> combo4 = new Setting<Colour>("Combo4", false, new Colour(0, 0, 0));
 	/**
 	 * [Colours]<br>
-	 * <code>Combo5: < rgb color ></code>
+	 * <code>Combo5: &lt; rgb color &gt;</code>
 	 */
 	protected final Setting<Colour> combo5 = new Setting<Colour>("Combo5", false, new Colour(0, 0, 0));
 	/**
 	 * [Colours]<br>
-	 * <code>Combo6: < rgb color ></code>
+	 * <code>Combo6: &lt; rgb color &gt;</code>
 	 */
 	protected final Setting<Colour> combo6 = new Setting<Colour>("Combo6", false, new Colour(0, 0, 0));
 	/**
 	 * [Colours]<br>
-	 * <code>Combo7: < rgb color ></code>
+	 * <code>Combo7: &lt; rgb color &gt;</code>
 	 */
 	protected final Setting<Colour> combo7 = new Setting<Colour>("Combo7", false, new Colour(0, 0, 0));
 	/**
 	 * [Colours]<br>
-	 * <code>Combo8: < rgb color ></code>
+	 * <code>Combo8: &lt; rgb color &gt;</code>
 	 */
 	protected final Setting<Colour> combo8 = new Setting<Colour>("Combo8", false, new Colour(0, 0, 0));
 	/**
 	 * [Fonts]<br>
-	 * <code>HitCirclePrefix: < prefix name ></code>
+	 * <code>HitCirclePrefix: &lt; prefix name &gt;</code>
 	 */
 	protected final Setting<String> hitCirclePrefix = new Setting<String>("HitCirclePrefix", "default");
 	/**
 	 * [Fonts]<br>
-	 * <code>HitCircleOverlap: < overlap amount ></code>
+	 * <code>HitCircleOverlap: &lt; overlap amount &gt;</code>
 	 */
 	protected final Setting<Integer> hitCircleOverlap = new Setting<Integer>("HitCircleOverlap", -2);//negative allowed
 	/**
 	 * [Fonts]<br>
-	 * <code>ScorePrefix: < prefix name ></code>
+	 * <code>ScorePrefix: &lt; prefix name &gt;</code>
 	 */
 	protected final Setting<String> scorePrefix = new Setting<String>("ScorePrefix", "score");
 	/**
 	 * [Fonts]<br>
-	 * <code>ScoreOverlap: < overlap amount ></code>
+	 * <code>ScoreOverlap: &lt; overlap amount &gt;</code>
 	 */
 	protected final Setting<Integer> scoreOverlap = new Setting<Integer>("ScoreOverlap", -2);//negative allowed
 	/**
 	 * [Fonts]<br>
-	 * <code>ComboPrefix: < prefix name ></code>
+	 * <code>ComboPrefix: &lt; prefix name &gt;</code>
 	 */
 	protected final Setting<String> comboPrefix = new Setting<String>("ComboPrefix", "score");
 	/**
 	 * [Fonts]<br>
-	 * <code>ComboOverlap: < overlap amount ></code>
+	 * <code>ComboOverlap: &lt; overlap amount &gt;</code>
 	 */
 	protected final Setting<Integer> comboOverlap = new Setting<Integer>("ComboOverlap", -2);//negative allowed
 	/**
 	 * [CatchTheBeat]<br>
-	 * <code>HyperDash: < rgb color ></code>
+	 * <code>HyperDash: &lt; rgb color &gt;</code>
 	 */
 	protected final Setting<Colour> hyperDash = new Setting<Colour>("HyperDash", new Colour(255, 0, 0));
 	/**
 	 * [CatchTheBeat]<br>
-	 * <code>HyperDashFruit: < rgb color ></code>
+	 * <code>HyperDashFruit: &lt; rgb color &gt;</code>
 	 */
 	protected final Setting<Colour> hyperDashFruit = new Setting<Colour>("HyperDashFruit", false, new Colour(0, 0, 0));
 	/**
 	 * [CatchTheBeat]<br>
-	 * <code>HyperDashAfterImage: < rgb color ></code>
+	 * <code>HyperDashAfterImage: &lt; rgb color &gt;</code>
 	 */
 	protected final Setting<Colour> hyperDashAfterImage = new Setting<Colour>("HyperDashAfterImage", false, new Colour(0, 0, 0));
 	/**
@@ -453,7 +451,7 @@ public class SkinIni{
 			for(String setting : usedDefault){
 				defaults.add(setting);
 			}
-			JOptionPane.showMessageDialog(SkinChecker.frame, "Skin.ini fields were found that couldn't be parsed. Default values were used for the following fields:\n" + defaults.toString(), "Skin Checker", JOptionPane.WARNING_MESSAGE);
+			Dialog.showMessageDialog("Skin.ini fields were found that couldn't be parsed. Default values were used for the following fields:\n" + defaults.toString());
 		}
 	}
 	
@@ -475,7 +473,7 @@ public class SkinIni{
 				}
 			}
 			for(Setting<?> setting : section.data){
-				if(setting.isEnabled()){
+				if(setting.isEnabled() && setting.wasUpdated()){
 					writer.println(setting);
 				}
 			}
@@ -676,7 +674,6 @@ public class SkinIni{
 	 * @param line The line to parse
 	 * @return The setting that
 	 *         was updated or created
-	 * @throws IOException When an IOException occurs
 	 * @throws IllegalArgumentException If the given line
 	 *         was not a valid setting for this section
 	 * @see Setting
@@ -684,7 +681,7 @@ public class SkinIni{
 	private Setting<?> parseCtb(String line){
 		String[] args = line.split(":", 2);
 		args[1] = args[1].trim();
-		switch(args[0]){
+		switch(args[0].trim()){
 		case "HyperDash":
 			return parseColor(hyperDash, args[1]);
 		case "HyperDashFruit":
@@ -725,7 +722,6 @@ public class SkinIni{
 	 * @param line The line to parse
 	 * @return The setting that
 	 *         was updated or created
-	 * @throws IOException When an IOException occurs
 	 * @throws IllegalArgumentException If the given line
 	 *         was not a valid setting for this section
 	 * @see Setting
@@ -733,7 +729,7 @@ public class SkinIni{
 	private Setting<?> parseGeneral(String line){
 		String[] args = line.split(":", 2);
 		args[1] = args[1].trim();
-		switch(args[0]){
+		switch(args[0].trim()){
 		case "Name":
 			return name.update(args[1]);
 		case "Author":
@@ -784,7 +780,6 @@ public class SkinIni{
 	 * @param line The line to parse
 	 * @return The setting that
 	 *         was updated or created
-	 * @throws IOException When an IOException occurs
 	 * @throws IllegalArgumentException If the given line
 	 *         was not a valid setting for this section
 	 * @see Setting
@@ -792,7 +787,7 @@ public class SkinIni{
 	private Setting<?> parseFonts(String line){
 		String[] args = line.split(":", 2);
 		args[1] = args[1].trim();
-		switch(args[0]){
+		switch(args[0].trim()){
 		case "HitCirclePrefix":
 			return hitCirclePrefix.update(args[1]);
 		case "HitCircleOverlap":
@@ -816,7 +811,6 @@ public class SkinIni{
 	 * @param line The line to parse
 	 * @return The setting that
 	 *         was updated or created
-	 * @throws IOException When an IOException occurs
 	 * @throws IllegalArgumentException If the given line
 	 *         was not a valid setting for this section
 	 * @see Setting
@@ -824,7 +818,7 @@ public class SkinIni{
 	private Setting<?> parseColours(String line){
 		String[] args = line.split(":", 2);
 		args[1] = args[1].trim();
-		switch(args[0]){
+		switch(args[0].trim()){
 		case "SongSelectActiveText":
 			return parseColor(songSelectActiveText, args[1]);
 		case "SongSelectInactiveText":
@@ -874,237 +868,237 @@ public class SkinIni{
 		 * The maximum key count that will be parsed
 		 * by this program
 		 */
-		protected static final int MAX_KEYS = 12;
+		protected static final int MAX_KEYS = 18;
 		/**
 		 * The key count this mania configuration is for
 		 */
 		protected final int keys;//non negative
 		/**
 		 * [Mania]<br>
-		 * <code>ColumnStart: < offset ></code>
+		 * <code>ColumnStart: &lt; offset &gt;</code>
 		 */
 		protected final Setting<Double> columnStart = new Setting<Double>("ColumnStart", 136.0D);
 		/**
 		 * [Mania]<br>
-		 * <code>ColumnRight: < offset ></code>
+		 * <code>ColumnRight: &lt; offset &gt;</code>
 		 */
 		protected final Setting<Double> columnRight = new Setting<Double>("ColumnRight", 19.0D);
 		/**
 		 * [Mania]<br>
-		 * <code>ColumnSpacing: < list of {@link #keys} - 1 numbers ></code>
+		 * <code>ColumnSpacing: &lt; list of {@link #keys} - 1 numbers &gt;</code>
 		 */
 		protected final Setting<double[]> columnSpacing = new Setting<double[]>("ColumnSpacing", null);//n-1 numbers
 		/**
 		 * [Mania]<br>
-		 * <code>ColumnWidth: < list of {@link #keys} numbers ></code>
+		 * <code>ColumnWidth: &lt; list of {@link #keys} numbers &gt;</code>
 		 */
 		protected final Setting<double[]> columnWidth = new Setting<double[]>("ColumnWidth", null);//n numbers
 		/**
 		 * [Mania]<br>
-		 * <code>ColumnLineWidth: < list of {@link #keys} + 1 numbers ></code>
+		 * <code>ColumnLineWidth: &lt; list of {@link #keys} + 1 numbers &gt;</code>
 		 */
 		protected final Setting<double[]> columnLineWidth = new Setting<double[]>("ColumnLineWidth", null);//n+1 numbers
 		/**
 		 * [Mania]<br>
-		 * <code>BarlineHeight: < height ></code>
+		 * <code>BarlineHeight: &lt; height &gt;</code>
 		 */
 		protected final Setting<Double> barlineHeight = new Setting<Double>("BarlineHeight", 1.2D);
 		/**
 		 * [Mania]<br>
-		 * <code>LightingNWidth: < list of {@link #keys} numbers ></code>
+		 * <code>LightingNWidth: &lt; list of {@link #keys} numbers &gt;</code>
 		 */
 		protected final Setting<double[]> lightingNWidth = new Setting<double[]>("LightingNWidth", null);//n numbers
 		/**
 		 * [Mania]<br>
-		 * <code>LightingLWidth: < list of {@link #keys} numbers ></code>
+		 * <code>LightingLWidth: &lt; list of {@link #keys} numbers &gt;</code>
 		 */
 		protected final Setting<double[]> lightingLWidth = new Setting<double[]>("LightingLWidth", null);//n numbers
 		/**
 		 * [Mania]<br>
-		 * <code>WidthForNoteHeightScale: < width ></code>
+		 * <code>WidthForNoteHeightScale: &lt; width &gt;</code>
 		 */
 		protected final Setting<Double> widthForNoteHeightScale = new Setting<Double>("WidthForNoteHeightScale", false, 1.0D);
 		/**
 		 * [Mania]<br>
-		 * <code>HitPosition: < height ></code>
+		 * <code>HitPosition: &lt; height &gt;</code>
 		 */
 		protected final Setting<Integer> hitPosition = new Setting<Integer>("HitPosition", 402);
 		/**
 		 * [Mania]<br>
-		 * <code>LightPosition: < height ></code>
+		 * <code>LightPosition: &lt; height &gt;</code>
 		 */
 		protected final Setting<Integer> lightPosition = new Setting<Integer>("LightPosition", 413);
 		/**
 		 * [Mania]<br>
-		 * <code>ScorePosition: < height ></code>
+		 * <code>ScorePosition: &lt; height &gt;</code>
 		 */
 		protected final Setting<Integer> scorePosition = new Setting<Integer>("ScorePosition", 325);
 		/**
 		 * [Mania]<br>
-		 * <code>ComboPosition: < height ></code>
+		 * <code>ComboPosition: &lt; height &gt;</code>
 		 */
 		protected final Setting<Integer> comboPosition = new Setting<Integer>("ComboPosition", 111);
 		/**
 		 * [Mania]<br>
-		 * <code>JudgementLine: < 0:1 ></code>
+		 * <code>JudgementLine: &lt; 0:1 &gt;</code>
 		 */
 		protected final Setting<Boolean> judgementLine = new Setting<Boolean>("JudgementLine", true);
 		/**
 		 * [Mania]<br>
-		 * <code>LightFramePerSecond: < unknown ></code>
+		 * <code>LightFramePerSecond: &lt; unknown &gt;</code>
 		 */
 		protected final Setting<Integer> lightFramePerSecond = new Setting<Integer>("LightFramePerSecond", false, 1);
 		/**
 		 * [Mania]<br>
-		 * <code>SpecialStyle: < style ></code>
+		 * <code>SpecialStyle: &lt; style &gt;</code>
 		 * @see SpecialStyle
 		 */
 		protected final Setting<SpecialStyle> specialStyle = new Setting<SpecialStyle>("SpecialStyle", SpecialStyle.NONE);
 		/**
 		 * [Mania]<br>
-		 * <code>ComboBurstStyle: < style ></code>
+		 * <code>ComboBurstStyle: &lt; style &gt;</code>
 		 * @see ComboBurstStyle
 		 */
 		protected final Setting<ComboBurstStyle> comboBurstStyle = new Setting<ComboBurstStyle>("ComboBurstStyle", ComboBurstStyle.RIGHT);
 		/**
 		 * [Mania]<br>
-		 * <code>SplitStages: < 0:1 ></code>
+		 * <code>SplitStages: &lt; 0:1 &gt;</code>
 		 */
 		protected final Setting<Boolean> splitStages = new Setting<Boolean>("SplitStages", false, true);
 		/**
 		 * [Mania]<br>
-		 * <code>StageSeparation: < space ></code>
+		 * <code>StageSeparation: &lt; space &gt;</code>
 		 */
 		protected final Setting<Double> stageSeparation = new Setting<Double>("StageSeparation", 40.0D);
 		/**
 		 * [Mania]<br>
-		 * <code>SeparateScore: < 0:1 ></code>
+		 * <code>SeparateScore: &lt; 0:1 &gt;</code>
 		 */
-		protected final Setting<Boolean> separateScore = new Setting<Boolean>("SeparationScore", true);
+		protected final Setting<Boolean> separateScore = new Setting<Boolean>("SeparateScore", true);
 		/**
 		 * [Mania]<br>
-		 * <code>KeysUnderNotes: < 0:1 ></code>
+		 * <code>KeysUnderNotes: &lt; 0:1 &gt;</code>
 		 */
 		protected final Setting<Boolean> keysUnderNotes = new Setting<Boolean>("KeysUnderNotes", false);
 		/**
 		 * [Mania]<br>
-		 * <code>UpsideDown: < 0:1 ></code>
+		 * <code>UpsideDown: &lt; 0:1 &gt;</code>
 		 */
 		protected final Setting<Boolean> upsideDown = new Setting<Boolean>("UpsideDown", false);
 		/**
 		 * [Mania]<br>
-		 * <code>KeyFlipWhenUpsideDown: < 0:1 ></code>
+		 * <code>KeyFlipWhenUpsideDown: &lt; 0:1 &gt;</code>
 		 */
 		protected final Setting<Boolean> keyFlipWhenUpsideDown = new Setting<Boolean>("KeyFlipWhenUpsideDown", true);
 		/**
 		 * [Mania]<br>
-		 * <code>NoteFlipWhenUpsideDown: < 0:1 ></code>
+		 * <code>NoteFlipWhenUpsideDown: &lt; 0:1 &gt;</code>
 		 */
 		protected final Setting<Boolean> noteFlipWhenUpsideDown = new Setting<Boolean>("NoteFlipWhenUpsideDown", true);
 		/**
 		 * [Mania]<br>
-		 * <code>NoteBodyStyle: < style ></code>
+		 * <code>NoteBodyStyle: &lt; style &gt;</code>
 		 * @see NoteBodyStyle
 		 */
 		protected final Setting<NoteBodyStyle> noteBodyStyle = new Setting<NoteBodyStyle>("NoteBodyStyle", NoteBodyStyle.CASCADINGTH);
 		/**
 		 * [Mania]<br>
-		 * <code>ColourColumnLine: < rgba color ></code>
+		 * <code>ColourColumnLine: &lt; rgba color &gt;</code>
 		 */
 		protected final Setting<Colour> colourColumnLine = new Setting<Colour>("ColourColumnLine", new Colour(255, 255, 255, 255));
 		/**
 		 * [Mania]<br>
-		 * <code>ColourBarline: < rgba color ></code>
+		 * <code>ColourBarline: &lt; rgba color &gt;</code>
 		 */
 		protected final Setting<Colour> colourBarline = new Setting<Colour>("ColourBarline", new Colour(255, 255, 255, 255));
 		/**
 		 * [Mania]<br>
-		 * <code>ColourJudgementLine: < rgb color ></code>
+		 * <code>ColourJudgementLine: &lt; rgb color &gt;</code>
 		 */
 		protected final Setting<Colour> colourJudgementLine = new Setting<Colour>("ColourJudgementLine", new Colour(255, 255, 255));
 		/**
 		 * [Mania]<br>
-		 * <code>ColourKeyWarning: < rgb color ></code>
+		 * <code>ColourKeyWarning: &lt; rgb color &gt;</code>
 		 */
 		protected final Setting<Colour> colourKeyWarning = new Setting<Colour>("ColourKeyWarning", new Colour(0, 0, 0));
 		/**
 		 * [Mania]<br>
-		 * <code>ColourHold: < rgba color ></code>
+		 * <code>ColourHold: &lt; rgba color &gt;</code>
 		 */
 		protected final Setting<Colour> colourHold = new Setting<Colour>("ColourHold", new Colour(255, 191, 51, 255));
 		/**
 		 * [Mania]<br>
-		 * <code>ColourBreak: < rgb color ></code>
+		 * <code>ColourBreak: &lt; rgb color &gt;</code>
 		 */
 		protected final Setting<Colour> colourBreak = new Setting<Colour>("ColourBreak", new Colour(255, 0, 0));
 		/**
 		 * [Mania]<br>
-		 * <code>StageLeft: < image path ></code>
+		 * <code>StageLeft: &lt; image path &gt;</code>
 		 */
 		protected final Setting<String> stageLeft = new Setting<String>("StageLeft", "mania-stage-left");
 		/**
 		 * [Mania]<br>
-		 * <code>StageRight: < image path ></code>
+		 * <code>StageRight: &lt; image path &gt;</code>
 		 */
 		protected final Setting<String> stageRight = new Setting<String>("StageRight", "mania-stage-right");
 		/**
 		 * [Mania]<br>
-		 * <code>StageBottom: < image path ></code>
+		 * <code>StageBottom: &lt; image path &gt;</code>
 		 */
 		protected final Setting<String> stageBottom = new Setting<String>("StageBottom", "mania-stage-bottom");
 		/**
 		 * [Mania]<br>
-		 * <code>StageHint: < image path ></code>
+		 * <code>StageHint: &lt; image path &gt;</code>
 		 */
 		protected final Setting<String> stageHint = new Setting<String>("StageHint", "mania-stage-hint");
 		/**
 		 * [Mania]<br>
-		 * <code>StageLight: < image path ></code>
+		 * <code>StageLight: &lt; image path &gt;</code>
 		 */
 		protected final Setting<String> stageLight = new Setting<String>("StageLight", "mania-stage-light");
 		/**
 		 * [Mania]<br>
-		 * <code>LightingN: < image path ></code>
+		 * <code>LightingN: &lt; image path &gt;</code>
 		 */
 		protected final Setting<String> lightingN = new Setting<String>("LightingN", "LightingN");
 		/**
 		 * [Mania]<br>
-		 * <code>LightingL: < image path ></code>
+		 * <code>LightingL: &lt; image path &gt;</code>
 		 */
 		protected final Setting<String> lightingL = new Setting<String>("LightingL", "LightingL");
 		/**
 		 * [Mania]<br>
-		 * <code>WarningArrow: < image path ></code>
+		 * <code>WarningArrow: &lt; image path &gt;</code>
 		 */
 		protected final Setting<String> warningArrow = new Setting<String>("WarningArrow", "mania-warningarrow");
 		/**
 		 * [Mania]<br>
-		 * <code>Hit0: < image path ></code>
+		 * <code>Hit0: &lt; image path &gt;</code>
 		 */
 		protected final Setting<String> hit0 = new Setting<String>("Hit0", "mania-hit0");
 		/**
 		 * [Mania]<br>
-		 * <code>Hit50: < image path ></code>
+		 * <code>Hit50: &lt; image path &gt;</code>
 		 */
 		protected final Setting<String> hit50 = new Setting<String>("Hit50", "mania-hit50");
 		/**
 		 * [Mania]<br>
-		 * <code>Hit100: < image path ></code>
+		 * <code>Hit100: &lt; image path &gt;</code>
 		 */
 		protected final Setting<String> hit100 = new Setting<String>("Hit100", "mania-hit100");
 		/**
 		 * [Mania]<br>
-		 * <code>Hit200: < image path ></code>
+		 * <code>Hit200: &lt; image path &gt;</code>
 		 */
 		protected final Setting<String> hit200 = new Setting<String>("Hit200", "mania-hit200");
 		/**
 		 * [Mania]<br>
-		 * <code>Hit300: < image path ></code>
+		 * <code>Hit300: &lt; image path &gt;</code>
 		 */
 		protected final Setting<String> hit300 = new Setting<String>("Hit300", "mania-hit300");
 		/**
 		 * [Mania]<br>
-		 * <code>Hit300g: < image path ></code>
+		 * <code>Hit300g: &lt; image path &gt;</code>
 		 */
 		protected final Setting<String> hit300g = new Setting<String>("Hit300g", "mania-hit300g");
 		/**
@@ -1159,7 +1153,7 @@ public class SkinIni{
 		private Setting<?> parseMania(String line) throws IOException{
 			String[] args = line.split(":", 2);
 			args[1] = args[1].trim();
-			switch(args[0]){
+			switch(args[0].trim()){
 			case "ColumnStart":
 				return parseDouble(columnStart, args[1], 0.0D);
 			case "ColumnRight":
@@ -1387,78 +1381,78 @@ public class SkinIni{
 			protected final int key;
 			/**
 			 * [Mania]<br>
-			 * <code>KeyFlipWhenUpsideDown#: < 0:1 ></code>
+			 * <code>KeyFlipWhenUpsideDown#: &lt; 0:1 &gt;</code>
 			 */
 			protected final Setting<Boolean> keyFlipWhenUpsideDown;
 			/**
 			 * [Mania]<br>
-			 * <code>KeyFlipWhenUpsideDown#D: < 0:1 ></code>
+			 * <code>KeyFlipWhenUpsideDown#D: &lt; 0:1 &gt;</code>
 			 */
 			protected final Setting<Boolean> keyFlipWhenUpsideDownD;
 			/**
 			 * [Mania]<br>
-			 * <code>NoteFlipWhenUpsideDown#: < 0:1 ></code>
+			 * <code>NoteFlipWhenUpsideDown#: &lt; 0:1 &gt;</code>
 			 */
 			protected final Setting<Boolean> noteFlipWhenUpsideDown;
 			/**
 			 * [Mania]<br>
-			 * <code>NoteFlipWhenUpsideDown#H: < 0:1 ></code>
+			 * <code>NoteFlipWhenUpsideDown#H: &lt; 0:1 &gt;</code>
 			 */
 			protected final Setting<Boolean> noteFlipWhenUpsideDownH;
 			/**
 			 * [Mania]<br>
-			 * <code>NoteFlipWhenUpsideDown#L: < 0:1 ></code>
+			 * <code>NoteFlipWhenUpsideDown#L: &lt; 0:1 &gt;</code>
 			 */
 			protected final Setting<Boolean> noteFlipWhenUpsideDownL;
 			/**
 			 * [Mania]<br>
-			 * <code>NoteFlipWhenUpsideDown#T: < 0:1 ></code>
+			 * <code>NoteFlipWhenUpsideDown#T: &lt; 0:1 &gt;</code>
 			 */
 			protected final Setting<Boolean> noteFlipWhenUpsideDownT;
 			/**
 			 * [Mania]<br>
-			 * <code>NoteBodyStyle#: < style ></code>
+			 * <code>NoteBodyStyle#: &lt; style &gt;</code>
 			 * @see NoteBodyStyle
 			 */
 			protected final Setting<NoteBodyStyle> noteBodyStyle;
 			/**
 			 * [Mania]<br>
-			 * <code>Colour#: < rgba color ></code>
+			 * <code>Colour#: &lt; rgba color &gt;</code>
 			 */
 			protected final Setting<Colour> colour;
 			/**
 			 * [Mania]<br>
-			 * <code>ColourLight#: < rgb color ></code>
+			 * <code>ColourLight#: &lt; rgb color &gt;</code>
 			 */
 			protected final Setting<Colour> colourLight;
 			/**
 			 * [Mania]<br>
-			 * <code>KeyImage#: < path ></code>
+			 * <code>KeyImage#: &lt; path &gt;</code>
 			 */
 			protected final Setting<String> keyImage;
 			/**
 			 * [Mania]<br>
-			 * <code>KeyImage#D: < path ></code>
+			 * <code>KeyImage#D: &lt; path &gt;</code>
 			 */
 			protected final Setting<String> keyImageD;
 			/**
 			 * [Mania]<br>
-			 * <code>NoteImage#: < path ></code>
+			 * <code>NoteImage#: &lt; path &gt;</code>
 			 */
 			protected final Setting<String> noteImage;
 			/**
 			 * [Mania]<br>
-			 * <code>NoteImage#H: < path ></code>
+			 * <code>NoteImage#H: &lt; path &gt;</code>
 			 */
 			protected final Setting<String> noteImageH;
 			/**
 			 * [Mania]<br>
-			 * <code>NoteImage#L: < path ></code>
+			 * <code>NoteImage#L: &lt; path &gt;</code>
 			 */
 			protected final Setting<String> noteImageL;
 			/**
 			 * [Mania]<br>
-			 * <code>NoteImage#T: < path ></code>
+			 * <code>NoteImage#T: &lt; path &gt;</code>
 			 */
 			protected final Setting<String> noteImageT;
 			
@@ -1773,106 +1767,6 @@ public class SkinIni{
 		}
 	}
 
-	/**
-	 * Enum for all the different NoteBodyStyle options
-	 * @author Roan
-	 * @see Printable
-	 */
-	protected enum Version implements Printable{
-		/**
-		 * Version 1.0
-		 */
-		V1("1", "(Old style)"),
-		/**
-		 * Version 2.0
-		 */
-		V2("2", "(Basic new style)"),
-		/**
-		 * Version 2.1
-		 */
-		V21("2.1", "(Taiko position changes)"),
-		/**
-		 * Version 2.2
-		 */
-		V22("2.2", "(UI changes)"),
-		/**
-		 * Version 2.3
-		 */
-		V23("2.3", "(New Catch catcher style)"),
-		/**
-		 * Version 2.4
-		 */
-		V24("2.4", "(Mania stage scaling reduction)"),
-		/**
-		 * Version 2.5
-		 */
-		V25("2.5", "(Mania upscroll and column improvements)"),
-		/**
-		 * Latest version
-		 */
-		LATEST("latest", "(for personal skins)");
-
-		/**
-		 * The display name for this setting
-		 */
-		public final String name;
-		/**
-		 * The extra information for this setting
-		 */
-		public final String extra;
-
-		/**
-		 * Constructs a new Version with the
-		 * given name and information
-		 * @param name
-		 * @param extra
-		 */
-		private Version(String name, String extra){
-			this.name = name;
-			this.extra = extra;
-		}
-		
-		/**
-		 * Parses the given input for a Version
-		 * @param line The input to parse
-		 * @return The Version parsed from the given input string
-		 */
-		private static Version fromString(String str){
-			switch(str){
-			case "1":
-				return V1;
-			case "2":
-			case "2.0":
-				return V2;
-			case "2.1":
-				return V21;
-			case "2.2":
-				return V22;
-			case "2.3":
-				return V23;
-			case "2.4":
-				return V24;
-			case "2.5":
-				return V25;
-			case "latest":
-				return LATEST;
-			default:
-				usedDefault.add("Version");
-				return V1;
-			}
-		}
-
-		@Override
-		public String toString(){
-			return name + " " + extra;
-		}
-
-		@Override
-		public String print(){
-			return name;
-		}
-	}
-	
 	/**
 	 * Interface that indicates that the
 	 * object has a special {@link #print()}

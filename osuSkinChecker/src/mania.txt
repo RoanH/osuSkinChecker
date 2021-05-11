@@ -1,654 +1,1011 @@
 ===> 1K - Stage
 N png comboburst-mania
-P  1 StageLeft    mania-stage-left   png
-P  1 StageRight   mania-stage-right  png
-NP 1 StageBottom  mania-stage-bottom png
-P  1 StageHint    mania-stage-hint   png
-NP 1 StageLight   mania-stage-light  png
-P  1 WarningArrow mania-warningarrow png
-NP 1 LightingN    lightingN          png
-NP 1 LightingL    lightingL          png
+P   1 StageLeft    mania-stage-left   png -
+P   1 StageRight   mania-stage-right  png -
+N P 1 StageBottom  mania-stage-bottom png -
+P   1 StageHint    mania-stage-hint   png -
+N P 1 StageLight   mania-stage-light  png -
+P   1 WarningArrow mania-warningarrow png -
+N P 1 LightingN    lightingN          png -
+N P 1 LightingL    lightingL          png -
 
 ===> 1K - Keys
-P 1 KeyImage0 mania-key1 png
-P 1 KeyImage0D mania-key1D png
+P 1 KeyImage0 mania-key1 png -
+P 1 KeyImage0D mania-key1D png -
 
 ===> 1K - Notes
-NP 1 NoteImage0  mania-note1  png
-NP 1 NoteImage0H mania-note1H png
-NP 1 NoteImage0T mania-note1T png
-NP 1 NoteImage0L mania-note1L png
+N P 1 NoteImage0  mania-note1  png -
+N P 1 NoteImage0H mania-note1H png -
+N P 1 NoteImage0T mania-note1T png -
+N P 1 NoteImage0L mania-note1L png -
 
 ===> 1K - Hitbursts
-NP 1 Hit0    mania-hit0    png
-NP 1 Hit50   mania-hit50   png
-NP 1 Hit100  mania-hit100  png
-NP 1 Hit200  mania-hit200  png
-NP 1 Hit300  mania-hit300  png
-NP 1 Hit300g mania-hit300g png
+N P 1 Hit0    mania-hit0    png -
+N P 1 Hit50   mania-hit50   png -
+N P 1 Hit100  mania-hit100  png -
+N P 1 Hit200  mania-hit200  png -
+N P 1 Hit300  mania-hit300  png -
+N P 1 Hit300g mania-hit300g png -
 
 ===> 2K - Stage
 N png comboburst-mania
-P  2 StageLeft    mania-stage-left   png
-P  2 StageRight   mania-stage-right  png
-NP 2 StageBottom  mania-stage-bottom png
-P  2 StageHint    mania-stage-hint   png
-NP 2 StageLight   mania-stage-light  png
-P  2 WarningArrow mania-warningarrow png
-NP 2 LightingN    lightingN          png
-NP 2 LightingL    lightingL          png
+P   2 StageLeft    mania-stage-left   png -
+P   2 StageRight   mania-stage-right  png -
+N P 2 StageBottom  mania-stage-bottom png -
+P   2 StageHint    mania-stage-hint   png -
+N P 2 StageLight   mania-stage-light  png -
+P   2 WarningArrow mania-warningarrow png -
+N P 2 LightingN    lightingN          png -
+N P 2 LightingL    lightingL          png -
 
 ===> 2K - Keys
-P 2 KeyImage0 mania-key1 png
-P 2 KeyImage1 mania-key1 png
-P 2 KeyImage0D mania-key1D png
-P 2 KeyImage1D mania-key1D png
+P 2 KeyImage0 mania-key1 png -
+P 2 KeyImage1 mania-key1 png -
+P 2 KeyImage0D mania-key1D png -
+P 2 KeyImage1D mania-key1D png -
 
 ===> 2K - Notes
-NP 2 NoteImage0  mania-note1  png
-NP 2 NoteImage1  mania-note1  png
-NP 2 NoteImage0H mania-note1H png
-NP 2 NoteImage1H mania-note1H png
-NP 2 NoteImage0T mania-note1T png
-NP 2 NoteImage1T mania-note1T png
-NP 2 NoteImage0L mania-note1L png
-NP 2 NoteImage1L mania-note1L png
+N P 2 NoteImage0  mania-note1  png -
+N P 2 NoteImage1  mania-note1  png -
+N P 2 NoteImage0H mania-note1H png -
+N P 2 NoteImage1H mania-note1H png -
+N P 2 NoteImage0T mania-note1T png -
+N P 2 NoteImage1T mania-note1T png -
+N P 2 NoteImage0L mania-note1L png -
+N P 2 NoteImage1L mania-note1L png -
 
 ===> 2K - Hitbursts
-NP 2 Hit0    mania-hit0    png
-NP 2 Hit50   mania-hit50   png
-NP 2 Hit100  mania-hit100  png
-NP 2 Hit200  mania-hit200  png
-NP 2 Hit300  mania-hit300  png
-NP 2 Hit300g mania-hit300g png
+N P 2 Hit0    mania-hit0    png -
+N P 2 Hit50   mania-hit50   png -
+N P 2 Hit100  mania-hit100  png -
+N P 2 Hit200  mania-hit200  png -
+N P 2 Hit300  mania-hit300  png -
+N P 2 Hit300g mania-hit300g png -
 
 ===> 3K - Stage
 N png comboburst-mania
-P  3 StageLeft    mania-stage-left   png
-P  3 StageRight   mania-stage-right  png
-NP 3 StageBottom  mania-stage-bottom png
-P  3 StageHint    mania-stage-hint   png
-NP 3 StageLight   mania-stage-light  png
-P  3 WarningArrow mania-warningarrow png
-NP 3 LightingN    lightingN          png
-NP 3 LightingL    lightingL          png
+P   3 StageLeft    mania-stage-left   png -
+P   3 StageRight   mania-stage-right  png -
+N P 3 StageBottom  mania-stage-bottom png -
+P   3 StageHint    mania-stage-hint   png -
+N P 3 StageLight   mania-stage-light  png -
+P   3 WarningArrow mania-warningarrow png -
+N P 3 LightingN    lightingN          png -
+N P 3 LightingL    lightingL          png -
 
 ===> 3K - Keys
-P 3 KeyImage0 mania-key1 png
-P 3 KeyImage1 mania-keyS png
-P 3 KeyImage2 mania-key1 png
-P 3 KeyImage0D mania-key1D png
-P 3 KeyImage1D mania-keySD png
-P 3 KeyImage2D mania-key1D png
+P 3 KeyImage0 mania-key1 png -
+P 3 KeyImage1 mania-keyS png -
+P 3 KeyImage2 mania-key1 png -
+P 3 KeyImage0D mania-key1D png -
+P 3 KeyImage1D mania-keySD png -
+P 3 KeyImage2D mania-key1D png -
 
 ===> 3K - Notes
-NP 3 NoteImage0  mania-note1  png
-NP 3 NoteImage1  mania-noteS  png
-NP 3 NoteImage2  mania-note1  png
-NP 3 NoteImage0H mania-note1H png
-NP 3 NoteImage1H mania-noteSH png
-NP 3 NoteImage2H mania-note1H png
-NP 3 NoteImage0T mania-note1T png
-NP 3 NoteImage1T mania-noteST png
-NP 3 NoteImage2T mania-note1T png
-NP 3 NoteImage0L mania-note1L png
-NP 3 NoteImage1L mania-noteSL png
-NP 3 NoteImage2L mania-note1L png
+N P 3 NoteImage0  mania-note1  png -
+N P 3 NoteImage1  mania-noteS  png -
+N P 3 NoteImage2  mania-note1  png -
+N P 3 NoteImage0H mania-note1H png -
+N P 3 NoteImage1H mania-noteSH png -
+N P 3 NoteImage2H mania-note1H png -
+N P 3 NoteImage0T mania-note1T png -
+N P 3 NoteImage1T mania-noteST png -
+N P 3 NoteImage2T mania-note1T png -
+N P 3 NoteImage0L mania-note1L png -
+N P 3 NoteImage1L mania-noteSL png -
+N P 3 NoteImage2L mania-note1L png -
 
 ===> 3K - Hitbursts
-NP 3 Hit0    mania-hit0    png
-NP 3 Hit50   mania-hit50   png
-NP 3 Hit100  mania-hit100  png
-NP 3 Hit200  mania-hit200  png
-NP 3 Hit300  mania-hit300  png
-NP 3 Hit300g mania-hit300g png
+N P 3 Hit0    mania-hit0    png -
+N P 3 Hit50   mania-hit50   png -
+N P 3 Hit100  mania-hit100  png -
+N P 3 Hit200  mania-hit200  png -
+N P 3 Hit300  mania-hit300  png -
+N P 3 Hit300g mania-hit300g png -
 
 ===> 4K - Stage
 N png comboburst-mania
-P  4 StageLeft    mania-stage-left   png
-P  4 StageRight   mania-stage-right  png
-NP 4 StageBottom  mania-stage-bottom png
-P  4 StageHint    mania-stage-hint   png
-NP 4 StageLight   mania-stage-light  png
-P  4 WarningArrow mania-warningarrow png
-NP 4 LightingN    lightingN          png
-NP 4 LightingL    lightingL          png
+P   4 StageLeft    mania-stage-left   png -
+P   4 StageRight   mania-stage-right  png -
+N P 4 StageBottom  mania-stage-bottom png -
+P   4 StageHint    mania-stage-hint   png -
+N P 4 StageLight   mania-stage-light  png -
+P   4 WarningArrow mania-warningarrow png -
+N P 4 LightingN    lightingN          png -
+N P 4 LightingL    lightingL          png -
 
 ===> 4K - Keys
-P 4 KeyImage0 mania-key1 png
-P 4 KeyImage1 mania-key2 png
-P 4 KeyImage2 mania-key2 png
-P 4 KeyImage3 mania-key1 png
-P 4 KeyImage0D mania-key1D png
-P 4 KeyImage1D mania-key2D png
-P 4 KeyImage2D mania-key2D png
-P 4 KeyImage3D mania-key1D png
+P 4 KeyImage0 mania-key1 png -
+P 4 KeyImage1 mania-key2 png -
+P 4 KeyImage2 mania-key2 png -
+P 4 KeyImage3 mania-key1 png -
+P 4 KeyImage0D mania-key1D png -
+P 4 KeyImage1D mania-key2D png -
+P 4 KeyImage2D mania-key2D png -
+P 4 KeyImage3D mania-key1D png -
 
 ===> 4K - Notes
-NP 4 NoteImage0  mania-note1  png
-NP 4 NoteImage1  mania-note2  png
-NP 4 NoteImage2  mania-note2  png
-NP 4 NoteImage3  mania-note1  png
-NP 4 NoteImage0H mania-note1H png
-NP 4 NoteImage1H mania-note2H png
-NP 4 NoteImage2H mania-note2H png
-NP 4 NoteImage3H mania-note1H png
-NP 4 NoteImage0T mania-note1T png
-NP 4 NoteImage1T mania-note2T png
-NP 4 NoteImage2T mania-note2T png
-NP 4 NoteImage3T mania-note1T png
-NP 4 NoteImage0L mania-note1L png
-NP 4 NoteImage1L mania-note2L png
-NP 4 NoteImage2L mania-note2L png
-NP 4 NoteImage3L mania-note1L png
+N P 4 NoteImage0  mania-note1  png -
+N P 4 NoteImage1  mania-note2  png -
+N P 4 NoteImage2  mania-note2  png -
+N P 4 NoteImage3  mania-note1  png -
+N P 4 NoteImage0H mania-note1H png -
+N P 4 NoteImage1H mania-note2H png -
+N P 4 NoteImage2H mania-note2H png -
+N P 4 NoteImage3H mania-note1H png -
+N P 4 NoteImage0T mania-note1T png -
+N P 4 NoteImage1T mania-note2T png -
+N P 4 NoteImage2T mania-note2T png -
+N P 4 NoteImage3T mania-note1T png -
+N P 4 NoteImage0L mania-note1L png -
+N P 4 NoteImage1L mania-note2L png -
+N P 4 NoteImage2L mania-note2L png -
+N P 4 NoteImage3L mania-note1L png -
 
 ===> 4K - Hitbursts
-NP 4 Hit0    mania-hit0    png
-NP 4 Hit50   mania-hit50   png
-NP 4 Hit100  mania-hit100  png
-NP 4 Hit200  mania-hit200  png
-NP 4 Hit300  mania-hit300  png
-NP 4 Hit300g mania-hit300g png
+N P 4 Hit0    mania-hit0    png -
+N P 4 Hit50   mania-hit50   png -
+N P 4 Hit100  mania-hit100  png -
+N P 4 Hit200  mania-hit200  png -
+N P 4 Hit300  mania-hit300  png -
+N P 4 Hit300g mania-hit300g png -
 
 ===> 5K - Stage
 N png comboburst-mania
-P  5 StageLeft    mania-stage-left   png
-P  5 StageRight   mania-stage-right  png
-NP 5 StageBottom  mania-stage-bottom png
-P  5 StageHint    mania-stage-hint   png
-NP 5 StageLight   mania-stage-light  png
-P  5 WarningArrow mania-warningarrow png
-NP 5 LightingN    lightingN          png
-NP 5 LightingL    lightingL          png
+P   5 StageLeft    mania-stage-left   png -
+P   5 StageRight   mania-stage-right  png -
+N P 5 StageBottom  mania-stage-bottom png -
+P   5 StageHint    mania-stage-hint   png -
+N P 5 StageLight   mania-stage-light  png -
+P   5 WarningArrow mania-warningarrow png -
+N P 5 LightingN    lightingN          png -
+N P 5 LightingL    lightingL          png -
 
 ===> 5K - Keys
-P 5 KeyImage0 mania-key1 png
-P 5 KeyImage1 mania-key2 png
-P 5 KeyImage2 mania-keyS png
-P 5 KeyImage3 mania-key2 png
-P 5 KeyImage4 mania-key1 png
-P 5 KeyImage0D mania-key1D png
-P 5 KeyImage1D mania-key2D png
-P 5 KeyImage2D mania-keySD png
-P 5 KeyImage3D mania-key2D png
-P 5 KeyImage4D mania-key1D png
+P 5 KeyImage0 mania-key1 png -
+P 5 KeyImage1 mania-key2 png -
+P 5 KeyImage2 mania-keyS png -
+P 5 KeyImage3 mania-key2 png -
+P 5 KeyImage4 mania-key1 png -
+P 5 KeyImage0D mania-key1D png -
+P 5 KeyImage1D mania-key2D png -
+P 5 KeyImage2D mania-keySD png -
+P 5 KeyImage3D mania-key2D png -
+P 5 KeyImage4D mania-key1D png -
 
 ===> 5K - Notes
-NP 5 NoteImage0  mania-note1  png
-NP 5 NoteImage1  mania-note2  png
-NP 5 NoteImage2  mania-noteS  png
-NP 5 NoteImage3  mania-note2  png
-NP 5 NoteImage4  mania-note1  png
-NP 5 NoteImage0H mania-note1H png
-NP 5 NoteImage1H mania-note2H png
-NP 5 NoteImage2H mania-noteSH png
-NP 5 NoteImage3H mania-note2H png
-NP 5 NoteImage4H mania-note1H png
-NP 5 NoteImage0T mania-note1T png
-NP 5 NoteImage1T mania-note2T png
-NP 5 NoteImage2T mania-noteST png
-NP 5 NoteImage3T mania-note2T png
-NP 5 NoteImage4T mania-note1T png
-NP 5 NoteImage0L mania-note1L png
-NP 5 NoteImage1L mania-note2L png
-NP 5 NoteImage2L mania-noteSL png
-NP 5 NoteImage3L mania-note2L png
-NP 5 NoteImage4L mania-note1L png
+N P 5 NoteImage0  mania-note1  png -
+N P 5 NoteImage1  mania-note2  png -
+N P 5 NoteImage2  mania-noteS  png -
+N P 5 NoteImage3  mania-note2  png -
+N P 5 NoteImage4  mania-note1  png -
+N P 5 NoteImage0H mania-note1H png -
+N P 5 NoteImage1H mania-note2H png -
+N P 5 NoteImage2H mania-noteSH png -
+N P 5 NoteImage3H mania-note2H png -
+N P 5 NoteImage4H mania-note1H png -
+N P 5 NoteImage0T mania-note1T png -
+N P 5 NoteImage1T mania-note2T png -
+N P 5 NoteImage2T mania-noteST png -
+N P 5 NoteImage3T mania-note2T png -
+N P 5 NoteImage4T mania-note1T png -
+N P 5 NoteImage0L mania-note1L png -
+N P 5 NoteImage1L mania-note2L png -
+N P 5 NoteImage2L mania-noteSL png -
+N P 5 NoteImage3L mania-note2L png -
+N P 5 NoteImage4L mania-note1L png -
 
 ===> 5K - Hitbursts
-NP 5 Hit0    mania-hit0    png
-NP 5 Hit50   mania-hit50   png
-NP 5 Hit100  mania-hit100  png
-NP 5 Hit200  mania-hit200  png
-NP 5 Hit300  mania-hit300  png
-NP 5 Hit300g mania-hit300g png
+N P 5 Hit0    mania-hit0    png -
+N P 5 Hit50   mania-hit50   png -
+N P 5 Hit100  mania-hit100  png -
+N P 5 Hit200  mania-hit200  png -
+N P 5 Hit300  mania-hit300  png -
+N P 5 Hit300g mania-hit300g png -
 
 ===> 6K - Stage
 N png comboburst-mania
-P  6 StageLeft    mania-stage-left   png
-P  6 StageRight   mania-stage-right  png
-NP 6 StageBottom  mania-stage-bottom png
-P  6 StageHint    mania-stage-hint   png
-NP 6 StageLight   mania-stage-light  png
-P  6 WarningArrow mania-warningarrow png
-NP 6 LightingN    lightingN          png
-NP 6 LightingL    lightingL          png
+P   6 StageLeft    mania-stage-left   png -
+P   6 StageRight   mania-stage-right  png -
+N P 6 StageBottom  mania-stage-bottom png -
+P   6 StageHint    mania-stage-hint   png -
+N P 6 StageLight   mania-stage-light  png -
+P   6 WarningArrow mania-warningarrow png -
+N P 6 LightingN    lightingN          png -
+N P 6 LightingL    lightingL          png -
 
 ===> 6K - Keys
-P 6 KeyImage0 mania-key1 png
-P 6 KeyImage1 mania-key2 png
-P 6 KeyImage2 mania-key1 png
-P 6 KeyImage3 mania-key1 png
-P 6 KeyImage4 mania-key2 png
-P 6 KeyImage5 mania-key1 png
-P 6 KeyImage0D mania-key1D png
-P 6 KeyImage1D mania-key2D png
-P 6 KeyImage2D mania-key1D png
-P 6 KeyImage3D mania-key1D png
-P 6 KeyImage4D mania-key2D png
-P 6 KeyImage5D mania-key1D png
+P 6 KeyImage0 mania-key1 png -
+P 6 KeyImage1 mania-key2 png -
+P 6 KeyImage2 mania-key1 png -
+P 6 KeyImage3 mania-key1 png -
+P 6 KeyImage4 mania-key2 png -
+P 6 KeyImage5 mania-key1 png -
+P 6 KeyImage0D mania-key1D png -
+P 6 KeyImage1D mania-key2D png -
+P 6 KeyImage2D mania-key1D png -
+P 6 KeyImage3D mania-key1D png -
+P 6 KeyImage4D mania-key2D png -
+P 6 KeyImage5D mania-key1D png -
 
 ===> 6K - Notes
-NP 6 NoteImage0  mania-note1  png
-NP 6 NoteImage1  mania-note2  png
-NP 6 NoteImage2  mania-note1  png
-NP 6 NoteImage3  mania-note1  png
-NP 6 NoteImage4  mania-note2  png
-NP 6 NoteImage5  mania-note1  png
-NP 6 NoteImage0H mania-note1H png
-NP 6 NoteImage1H mania-note2H png
-NP 6 NoteImage2H mania-note1H png
-NP 6 NoteImage3H mania-note1H png
-NP 6 NoteImage4H mania-note2H png
-NP 6 NoteImage5H mania-note1H png
-NP 6 NoteImage0T mania-note1T png
-NP 6 NoteImage1T mania-note2T png
-NP 6 NoteImage2T mania-note1T png
-NP 6 NoteImage3T mania-note1T png
-NP 6 NoteImage4T mania-note2T png
-NP 6 NoteImage5T mania-note1T png
-NP 6 NoteImage0L mania-note1L png
-NP 6 NoteImage1L mania-note2L png
-NP 6 NoteImage2L mania-note1L png
-NP 6 NoteImage3L mania-note1L png
-NP 6 NoteImage4L mania-note2L png
-NP 6 NoteImage5L mania-note1L png
+N P 6 NoteImage0  mania-note1  png -
+N P 6 NoteImage1  mania-note2  png -
+N P 6 NoteImage2  mania-note1  png -
+N P 6 NoteImage3  mania-note1  png -
+N P 6 NoteImage4  mania-note2  png -
+N P 6 NoteImage5  mania-note1  png -
+N P 6 NoteImage0H mania-note1H png -
+N P 6 NoteImage1H mania-note2H png -
+N P 6 NoteImage2H mania-note1H png -
+N P 6 NoteImage3H mania-note1H png -
+N P 6 NoteImage4H mania-note2H png -
+N P 6 NoteImage5H mania-note1H png -
+N P 6 NoteImage0T mania-note1T png -
+N P 6 NoteImage1T mania-note2T png -
+N P 6 NoteImage2T mania-note1T png -
+N P 6 NoteImage3T mania-note1T png -
+N P 6 NoteImage4T mania-note2T png -
+N P 6 NoteImage5T mania-note1T png -
+N P 6 NoteImage0L mania-note1L png -
+N P 6 NoteImage1L mania-note2L png -
+N P 6 NoteImage2L mania-note1L png -
+N P 6 NoteImage3L mania-note1L png -
+N P 6 NoteImage4L mania-note2L png -
+N P 6 NoteImage5L mania-note1L png -
 
 ===> 6K - Hitbursts
-NP 6 Hit0    mania-hit0    png
-NP 6 Hit50   mania-hit50   png
-NP 6 Hit100  mania-hit100  png
-NP 6 Hit200  mania-hit200  png
-NP 6 Hit300  mania-hit300  png
-NP 6 Hit300g mania-hit300g png
+N P 6 Hit0    mania-hit0    png -
+N P 6 Hit50   mania-hit50   png -
+N P 6 Hit100  mania-hit100  png -
+N P 6 Hit200  mania-hit200  png -
+N P 6 Hit300  mania-hit300  png -
+N P 6 Hit300g mania-hit300g png -
 
 ===> 7K - Stage
 N png comboburst-mania
-P  7 StageLeft    mania-stage-left   png
-P  7 StageRight   mania-stage-right  png
-NP 7 StageBottom  mania-stage-bottom png
-P  7 StageHint    mania-stage-hint   png
-NP 7 StageLight   mania-stage-light  png
-P  7 WarningArrow mania-warningarrow png
-NP 7 LightingN    lightingN          png
-NP 7 LightingL    lightingL          png
+P   7 StageLeft    mania-stage-left   png -
+P   7 StageRight   mania-stage-right  png -
+N P 7 StageBottom  mania-stage-bottom png -
+P   7 StageHint    mania-stage-hint   png -
+N P 7 StageLight   mania-stage-light  png -
+P   7 WarningArrow mania-warningarrow png -
+N P 7 LightingN    lightingN          png -
+N P 7 LightingL    lightingL          png -
 
 ===> 7K - Keys
-P 7 KeyImage0 mania-key1 png
-P 7 KeyImage1 mania-key2 png
-P 7 KeyImage2 mania-key1 png
-P 7 KeyImage3 mania-keyS png
-P 7 KeyImage4 mania-key1 png
-P 7 KeyImage5 mania-key2 png
-P 7 KeyImage6 mania-key1 png
-P 7 KeyImage0D mania-key1D png
-P 7 KeyImage1D mania-key2D png
-P 7 KeyImage2D mania-key1D png
-P 7 KeyImage3D mania-keySD png
-P 7 KeyImage4D mania-key1D png
-P 7 KeyImage5D mania-key2D png
-P 7 KeyImage6D mania-key1D png
+P 7 KeyImage0 mania-key1 png -
+P 7 KeyImage1 mania-key2 png -
+P 7 KeyImage2 mania-key1 png -
+P 7 KeyImage3 mania-keyS png -
+P 7 KeyImage4 mania-key1 png -
+P 7 KeyImage5 mania-key2 png -
+P 7 KeyImage6 mania-key1 png -
+P 7 KeyImage0D mania-key1D png -
+P 7 KeyImage1D mania-key2D png -
+P 7 KeyImage2D mania-key1D png -
+P 7 KeyImage3D mania-keySD png -
+P 7 KeyImage4D mania-key1D png -
+P 7 KeyImage5D mania-key2D png -
+P 7 KeyImage6D mania-key1D png -
 
 ===> 7K - Notes
-NP 7 NoteImage0  mania-note1  png
-NP 7 NoteImage1  mania-note2  png
-NP 7 NoteImage2  mania-note1  png
-NP 7 NoteImage3  mania-noteS  png
-NP 7 NoteImage4  mania-note1  png
-NP 7 NoteImage5  mania-note2  png
-NP 7 NoteImage6  mania-note1  png
-NP 7 NoteImage0H mania-note1H png
-NP 7 NoteImage1H mania-note2H png
-NP 7 NoteImage2H mania-note1H png
-NP 7 NoteImage3H mania-noteSH png
-NP 7 NoteImage4H mania-note1H png
-NP 7 NoteImage5H mania-note2H png
-NP 7 NoteImage6H mania-note1H png
-NP 7 NoteImage0T mania-note1T png
-NP 7 NoteImage1T mania-note2T png
-NP 7 NoteImage2T mania-note1T png
-NP 7 NoteImage3T mania-noteST png
-NP 7 NoteImage4T mania-note1T png
-NP 7 NoteImage5T mania-note2T png
-NP 7 NoteImage6T mania-note1T png
-NP 7 NoteImage0L mania-note1L png
-NP 7 NoteImage1L mania-note2L png
-NP 7 NoteImage2L mania-note1L png
-NP 7 NoteImage3L mania-noteSL png
-NP 7 NoteImage4L mania-note1L png
-NP 7 NoteImage5L mania-note2L png
-NP 7 NoteImage6L mania-note1L png
+N P 7 NoteImage0  mania-note1  png -
+N P 7 NoteImage1  mania-note2  png -
+N P 7 NoteImage2  mania-note1  png -
+N P 7 NoteImage3  mania-noteS  png -
+N P 7 NoteImage4  mania-note1  png -
+N P 7 NoteImage5  mania-note2  png -
+N P 7 NoteImage6  mania-note1  png -
+N P 7 NoteImage0H mania-note1H png -
+N P 7 NoteImage1H mania-note2H png -
+N P 7 NoteImage2H mania-note1H png -
+N P 7 NoteImage3H mania-noteSH png -
+N P 7 NoteImage4H mania-note1H png -
+N P 7 NoteImage5H mania-note2H png -
+N P 7 NoteImage6H mania-note1H png -
+N P 7 NoteImage0T mania-note1T png -
+N P 7 NoteImage1T mania-note2T png -
+N P 7 NoteImage2T mania-note1T png -
+N P 7 NoteImage3T mania-noteST png -
+N P 7 NoteImage4T mania-note1T png -
+N P 7 NoteImage5T mania-note2T png -
+N P 7 NoteImage6T mania-note1T png -
+N P 7 NoteImage0L mania-note1L png -
+N P 7 NoteImage1L mania-note2L png -
+N P 7 NoteImage2L mania-note1L png -
+N P 7 NoteImage3L mania-noteSL png -
+N P 7 NoteImage4L mania-note1L png -
+N P 7 NoteImage5L mania-note2L png -
+N P 7 NoteImage6L mania-note1L png -
 
 ===> 7K - Hitbursts
-NP 7 Hit0    mania-hit0    png
-NP 7 Hit50   mania-hit50   png
-NP 7 Hit100  mania-hit100  png
-NP 7 Hit200  mania-hit200  png
-NP 7 Hit300  mania-hit300  png
-NP 7 Hit300g mania-hit300g png
+N P 7 Hit0    mania-hit0    png -
+N P 7 Hit50   mania-hit50   png -
+N P 7 Hit100  mania-hit100  png -
+N P 7 Hit200  mania-hit200  png -
+N P 7 Hit300  mania-hit300  png -
+N P 7 Hit300g mania-hit300g png -
 
 ===> 8K - Stage
 N png comboburst-mania
-P  8 StageLeft    mania-stage-left   png
-P  8 StageRight   mania-stage-right  png
-NP 8 StageBottom  mania-stage-bottom png
-P  8 StageHint    mania-stage-hint   png
-NP 8 StageLight   mania-stage-light  png
-P  8 WarningArrow mania-warningarrow png
-NP 8 LightingN    lightingN          png
-NP 8 LightingL    lightingL          png
+P   8 StageLeft    mania-stage-left   png -
+P   8 StageRight   mania-stage-right  png -
+N P 8 StageBottom  mania-stage-bottom png -
+P   8 StageHint    mania-stage-hint   png -
+N P 8 StageLight   mania-stage-light  png -
+P   8 WarningArrow mania-warningarrow png -
+N P 8 LightingN    lightingN          png -
+N P 8 LightingL    lightingL          png -
 
 ===> 8K - Keys
-P 8 KeyImage0 mania-key1 png
-P 8 KeyImage1 mania-key2 png
-P 8 KeyImage2 mania-key1 png
-P 8 KeyImage3 mania-key2 png
-P 8 KeyImage4 mania-key2 png
-P 8 KeyImage5 mania-key1 png
-P 8 KeyImage6 mania-key2 png
-P 8 KeyImage7 mania-key1 png
-P 8 KeyImage0D mania-key1D png
-P 8 KeyImage1D mania-key2D png
-P 8 KeyImage2D mania-key1D png
-P 8 KeyImage3D mania-key2D png
-P 8 KeyImage4D mania-key2D png
-P 8 KeyImage5D mania-key1D png
-P 8 KeyImage6D mania-key2D png
-P 8 KeyImage7D mania-key1D png
+P 8 KeyImage0 mania-key1 png -
+P 8 KeyImage1 mania-key2 png -
+P 8 KeyImage2 mania-key1 png -
+P 8 KeyImage3 mania-key2 png -
+P 8 KeyImage4 mania-key2 png -
+P 8 KeyImage5 mania-key1 png -
+P 8 KeyImage6 mania-key2 png -
+P 8 KeyImage7 mania-key1 png -
+P 8 KeyImage0D mania-key1D png -
+P 8 KeyImage1D mania-key2D png -
+P 8 KeyImage2D mania-key1D png -
+P 8 KeyImage3D mania-key2D png -
+P 8 KeyImage4D mania-key2D png -
+P 8 KeyImage5D mania-key1D png -
+P 8 KeyImage6D mania-key2D png -
+P 8 KeyImage7D mania-key1D png -
 
 ===> 8K - Notes
-NP 8 NoteImage0  mania-note1  png
-NP 8 NoteImage1  mania-note2  png
-NP 8 NoteImage2  mania-note1  png
-NP 8 NoteImage3  mania-note2  png
-NP 8 NoteImage4  mania-note2  png
-NP 8 NoteImage5  mania-note1  png
-NP 8 NoteImage6  mania-note2  png
-NP 8 NoteImage7  mania-note1  png
-NP 8 NoteImage0H mania-note1H png
-NP 8 NoteImage1H mania-note2H png
-NP 8 NoteImage2H mania-note1H png
-NP 8 NoteImage3H mania-note2H png
-NP 8 NoteImage4H mania-note2H png
-NP 8 NoteImage5H mania-note1H png
-NP 8 NoteImage6H mania-note2H png
-NP 8 NoteImage7H mania-note1H png
-NP 8 NoteImage0T mania-note1T png
-NP 8 NoteImage1T mania-note2T png
-NP 8 NoteImage2T mania-note1T png
-NP 8 NoteImage3T mania-note2T png
-NP 8 NoteImage4T mania-note2T png
-NP 8 NoteImage5T mania-note1T png
-NP 8 NoteImage6T mania-note2T png
-NP 8 NoteImage7T mania-note1T png
-NP 8 NoteImage0L mania-note1L png
-NP 8 NoteImage1L mania-note2L png
-NP 8 NoteImage2L mania-note1L png
-NP 8 NoteImage3L mania-note2L png
-NP 8 NoteImage4L mania-note2L png
-NP 8 NoteImage5L mania-note1L png
-NP 8 NoteImage6L mania-note2L png
-NP 8 NoteImage7L mania-note1L png
+N P 8 NoteImage0  mania-note1  png -
+N P 8 NoteImage1  mania-note2  png -
+N P 8 NoteImage2  mania-note1  png -
+N P 8 NoteImage3  mania-note2  png -
+N P 8 NoteImage4  mania-note2  png -
+N P 8 NoteImage5  mania-note1  png -
+N P 8 NoteImage6  mania-note2  png -
+N P 8 NoteImage7  mania-note1  png -
+N P 8 NoteImage0H mania-note1H png -
+N P 8 NoteImage1H mania-note2H png -
+N P 8 NoteImage2H mania-note1H png -
+N P 8 NoteImage3H mania-note2H png -
+N P 8 NoteImage4H mania-note2H png -
+N P 8 NoteImage5H mania-note1H png -
+N P 8 NoteImage6H mania-note2H png -
+N P 8 NoteImage7H mania-note1H png -
+N P 8 NoteImage0T mania-note1T png -
+N P 8 NoteImage1T mania-note2T png -
+N P 8 NoteImage2T mania-note1T png -
+N P 8 NoteImage3T mania-note2T png -
+N P 8 NoteImage4T mania-note2T png -
+N P 8 NoteImage5T mania-note1T png -
+N P 8 NoteImage6T mania-note2T png -
+N P 8 NoteImage7T mania-note1T png -
+N P 8 NoteImage0L mania-note1L png -
+N P 8 NoteImage1L mania-note2L png -
+N P 8 NoteImage2L mania-note1L png -
+N P 8 NoteImage3L mania-note2L png -
+N P 8 NoteImage4L mania-note2L png -
+N P 8 NoteImage5L mania-note1L png -
+N P 8 NoteImage6L mania-note2L png -
+N P 8 NoteImage7L mania-note1L png -
 
 ===> 8K - Hitbursts
-NP 8 Hit0    mania-hit0    png
-NP 8 Hit50   mania-hit50   png
-NP 8 Hit100  mania-hit100  png
-NP 8 Hit200  mania-hit200  png
-NP 8 Hit300  mania-hit300  png
-NP 8 Hit300g mania-hit300g png
+N P 8 Hit0    mania-hit0    png -
+N P 8 Hit50   mania-hit50   png -
+N P 8 Hit100  mania-hit100  png -
+N P 8 Hit200  mania-hit200  png -
+N P 8 Hit300  mania-hit300  png -
+N P 8 Hit300g mania-hit300g png -
 
 ===> 9K - Stage
 N png comboburst-mania
-P  9 StageLeft    mania-stage-left   png
-P  9 StageRight   mania-stage-right  png
-NP 9 StageBottom  mania-stage-bottom png
-P  9 StageHint    mania-stage-hint   png
-NP 9 StageLight   mania-stage-light  png
-P  9 WarningArrow mania-warningarrow png
-NP 9 LightingN    lightingN          png
-NP 9 LightingL    lightingL          png
+P   9 StageLeft    mania-stage-left   png -
+P   9 StageRight   mania-stage-right  png -
+N P 9 StageBottom  mania-stage-bottom png -
+P   9 StageHint    mania-stage-hint   png -
+N P 9 StageLight   mania-stage-light  png -
+P   9 WarningArrow mania-warningarrow png -
+N P 9 LightingN    lightingN          png -
+N P 9 LightingL    lightingL          png -
 
 ===> 9K - Keys
-P 9 KeyImage0 mania-key1 png
-P 9 KeyImage1 mania-key2 png
-P 9 KeyImage2 mania-key1 png
-P 9 KeyImage3 mania-key2 png
-P 9 KeyImage4 mania-keyS png
-P 9 KeyImage5 mania-key2 png
-P 9 KeyImage6 mania-key1 png
-P 9 KeyImage7 mania-key2 png
-P 9 KeyImage8 mania-key1 png
-P 9 KeyImage0D mania-key1D png
-P 9 KeyImage1D mania-key2D png
-P 9 KeyImage2D mania-key1D png
-P 9 KeyImage3D mania-key2D png
-P 9 KeyImage4D mania-keySD png
-P 9 KeyImage5D mania-key2D png
-P 9 KeyImage6D mania-key1D png
-P 9 KeyImage7D mania-key2D png
-P 9 KeyImage8D mania-key1D png
+P 9 KeyImage0 mania-key1 png -
+P 9 KeyImage1 mania-key2 png -
+P 9 KeyImage2 mania-key1 png -
+P 9 KeyImage3 mania-key2 png -
+P 9 KeyImage4 mania-keyS png -
+P 9 KeyImage5 mania-key2 png -
+P 9 KeyImage6 mania-key1 png -
+P 9 KeyImage7 mania-key2 png -
+P 9 KeyImage8 mania-key1 png -
+P 9 KeyImage0D mania-key1D png -
+P 9 KeyImage1D mania-key2D png -
+P 9 KeyImage2D mania-key1D png -
+P 9 KeyImage3D mania-key2D png -
+P 9 KeyImage4D mania-keySD png -
+P 9 KeyImage5D mania-key2D png -
+P 9 KeyImage6D mania-key1D png -
+P 9 KeyImage7D mania-key2D png -
+P 9 KeyImage8D mania-key1D png -
 
 ===> 9K - Notes
-NP 9 NoteImage0  mania-note1  png
-NP 9 NoteImage1  mania-note2  png
-NP 9 NoteImage2  mania-note1  png
-NP 9 NoteImage3  mania-note2  png
-NP 9 NoteImage4  mania-noteS  png
-NP 9 NoteImage5  mania-note2  png
-NP 9 NoteImage6  mania-note1  png
-NP 9 NoteImage7  mania-note2  png
-NP 9 NoteImage8  mania-note1  png
-NP 9 NoteImage0H mania-note1H png
-NP 9 NoteImage1H mania-note2H png
-NP 9 NoteImage2H mania-note1H png
-NP 9 NoteImage3H mania-note2H png
-NP 9 NoteImage4H mania-noteSH png
-NP 9 NoteImage5H mania-note2H png
-NP 9 NoteImage6H mania-note1H png
-NP 9 NoteImage7H mania-note2H png
-NP 9 NoteImage8H mania-note1H png
-NP 9 NoteImage0T mania-note1T png
-NP 9 NoteImage1T mania-note2T png
-NP 9 NoteImage2T mania-note1T png
-NP 9 NoteImage3T mania-note2T png
-NP 9 NoteImage4T mania-noteST png
-NP 9 NoteImage5T mania-note2T png
-NP 9 NoteImage6T mania-note1T png
-NP 9 NoteImage7T mania-note2T png
-NP 9 NoteImage8T mania-note1T png
-NP 9 NoteImage0L mania-note1L png
-NP 9 NoteImage1L mania-note2L png
-NP 9 NoteImage2L mania-note1L png
-NP 9 NoteImage3L mania-note2L png
-NP 9 NoteImage4L mania-noteSL png
-NP 9 NoteImage5L mania-note2L png
-NP 9 NoteImage6L mania-note1L png
-NP 9 NoteImage7L mania-note2L png
-NP 9 NoteImage8L mania-note1L png
+N P 9 NoteImage0  mania-note1  png -
+N P 9 NoteImage1  mania-note2  png -
+N P 9 NoteImage2  mania-note1  png -
+N P 9 NoteImage3  mania-note2  png -
+N P 9 NoteImage4  mania-noteS  png -
+N P 9 NoteImage5  mania-note2  png -
+N P 9 NoteImage6  mania-note1  png -
+N P 9 NoteImage7  mania-note2  png -
+N P 9 NoteImage8  mania-note1  png -
+N P 9 NoteImage0H mania-note1H png -
+N P 9 NoteImage1H mania-note2H png -
+N P 9 NoteImage2H mania-note1H png -
+N P 9 NoteImage3H mania-note2H png -
+N P 9 NoteImage4H mania-noteSH png -
+N P 9 NoteImage5H mania-note2H png -
+N P 9 NoteImage6H mania-note1H png -
+N P 9 NoteImage7H mania-note2H png -
+N P 9 NoteImage8H mania-note1H png -
+N P 9 NoteImage0T mania-note1T png -
+N P 9 NoteImage1T mania-note2T png -
+N P 9 NoteImage2T mania-note1T png -
+N P 9 NoteImage3T mania-note2T png -
+N P 9 NoteImage4T mania-noteST png -
+N P 9 NoteImage5T mania-note2T png -
+N P 9 NoteImage6T mania-note1T png -
+N P 9 NoteImage7T mania-note2T png -
+N P 9 NoteImage8T mania-note1T png -
+N P 9 NoteImage0L mania-note1L png -
+N P 9 NoteImage1L mania-note2L png -
+N P 9 NoteImage2L mania-note1L png -
+N P 9 NoteImage3L mania-note2L png -
+N P 9 NoteImage4L mania-noteSL png -
+N P 9 NoteImage5L mania-note2L png -
+N P 9 NoteImage6L mania-note1L png -
+N P 9 NoteImage7L mania-note2L png -
+N P 9 NoteImage8L mania-note1L png -
 
 ===> 9K - Hitbursts
-NP 9 Hit0    mania-hit0    png
-NP 9 Hit50   mania-hit50   png
-NP 9 Hit100  mania-hit100  png
-NP 9 Hit200  mania-hit200  png
-NP 9 Hit300  mania-hit300  png
-NP 9 Hit300g mania-hit300g png
+N P 9 Hit0    mania-hit0    png -
+N P 9 Hit50   mania-hit50   png -
+N P 9 Hit100  mania-hit100  png -
+N P 9 Hit200  mania-hit200  png -
+N P 9 Hit300  mania-hit300  png -
+N P 9 Hit300g mania-hit300g png -
 
 ===> 10K - Stage
 N png comboburst-mania
-P  10 StageLeft    mania-stage-left   png
-P  10 StageRight   mania-stage-right  png
-NP 10 StageBottom  mania-stage-bottom png
-P  10 StageHint    mania-stage-hint   png
-NP 10 StageLight   mania-stage-light  png
-P  10 WarningArrow mania-warningarrow png
-NP 10 LightingN    lightingN          png
-NP 10 LightingL    lightingL          png
+P   10 StageLeft    mania-stage-left   png -
+P   10 StageRight   mania-stage-right  png -
+N P 10 StageBottom  mania-stage-bottom png -
+P   10 StageHint    mania-stage-hint   png -
+N P 10 StageLight   mania-stage-light  png -
+P   10 WarningArrow mania-warningarrow png -
+N P 10 LightingN    lightingN          png -
+N P 10 LightingL    lightingL          png -
 
 ===> 10K - Keys
-P 10 KeyImage0 mania-key1 png
-P 10 KeyImage1 mania-key2 png
-P 10 KeyImage2 mania-key1 png
-P 10 KeyImage3 mania-key2 png
-P 10 KeyImage4 mania-key1 png
-P 10 KeyImage5 mania-key1 png
-P 10 KeyImage6 mania-key2 png
-P 10 KeyImage7 mania-key1 png
-P 10 KeyImage8 mania-key2 png
-P 10 KeyImage9 mania-key1 png
-P 10 KeyImage0D mania-key1D png
-P 10 KeyImage1D mania-key2D png
-P 10 KeyImage2D mania-key1D png
-P 10 KeyImage3D mania-key2D png
-P 10 KeyImage4D mania-key1D png
-P 10 KeyImage5D mania-key1D png
-P 10 KeyImage6D mania-key2D png
-P 10 KeyImage7D mania-key1D png
-P 10 KeyImage8D mania-key2D png
-P 10 KeyImage9D mania-key1D png
+P 10 KeyImage0 mania-key1 png -
+P 10 KeyImage1 mania-key2 png -
+P 10 KeyImage2 mania-key1 png -
+P 10 KeyImage3 mania-key2 png -
+P 10 KeyImage4 mania-key1 png -
+P 10 KeyImage5 mania-key1 png -
+P 10 KeyImage6 mania-key2 png -
+P 10 KeyImage7 mania-key1 png -
+P 10 KeyImage8 mania-key2 png -
+P 10 KeyImage9 mania-key1 png -
+P 10 KeyImage0D mania-key1D png -
+P 10 KeyImage1D mania-key2D png -
+P 10 KeyImage2D mania-key1D png -
+P 10 KeyImage3D mania-key2D png -
+P 10 KeyImage4D mania-key1D png -
+P 10 KeyImage5D mania-key1D png -
+P 10 KeyImage6D mania-key2D png -
+P 10 KeyImage7D mania-key1D png -
+P 10 KeyImage8D mania-key2D png -
+P 10 KeyImage9D mania-key1D png -
 
 ===> 10K - Notes
-NP 10 NoteImage0  mania-note1  png
-NP 10 NoteImage1  mania-note2  png
-NP 10 NoteImage2  mania-note1  png
-NP 10 NoteImage3  mania-note2  png
-NP 10 NoteImage4  mania-note1  png
-NP 10 NoteImage5  mania-note1  png
-NP 10 NoteImage6  mania-note2  png
-NP 10 NoteImage7  mania-note1  png
-NP 10 NoteImage8  mania-note2  png
-NP 10 NoteImage9  mania-note1  png
-NP 10 NoteImage0H mania-note1H png
-NP 10 NoteImage1H mania-note2H png
-NP 10 NoteImage2H mania-note1H png
-NP 10 NoteImage3H mania-note2H png
-NP 10 NoteImage4H mania-note1H png
-NP 10 NoteImage5H mania-note1H png
-NP 10 NoteImage6H mania-note2H png
-NP 10 NoteImage7H mania-note1H png
-NP 10 NoteImage8H mania-note2H png
-NP 10 NoteImage9H mania-note1H png
-NP 10 NoteImage0T mania-note1T png
-NP 10 NoteImage1T mania-note2T png
-NP 10 NoteImage2T mania-note1T png
-NP 10 NoteImage3T mania-note2T png
-NP 10 NoteImage4T mania-note1T png
-NP 10 NoteImage5T mania-note1T png
-NP 10 NoteImage6T mania-note2T png
-NP 10 NoteImage7T mania-note1T png
-NP 10 NoteImage8T mania-note2T png
-NP 10 NoteImage9T mania-note1T png
-NP 10 NoteImage0L mania-note1L png
-NP 10 NoteImage1L mania-note2L png
-NP 10 NoteImage2L mania-note1L png
-NP 10 NoteImage3L mania-note2L png
-NP 10 NoteImage4L mania-note1L png
-NP 10 NoteImage5L mania-note1L png
-NP 10 NoteImage6L mania-note2L png
-NP 10 NoteImage7L mania-note1L png
-NP 10 NoteImage8L mania-note2L png
-NP 10 NoteImage9L mania-note1L png
+N P 10 NoteImage0  mania-note1  png -
+N P 10 NoteImage1  mania-note2  png -
+N P 10 NoteImage2  mania-note1  png -
+N P 10 NoteImage3  mania-note2  png -
+N P 10 NoteImage4  mania-note1  png -
+N P 10 NoteImage5  mania-note1  png -
+N P 10 NoteImage6  mania-note2  png -
+N P 10 NoteImage7  mania-note1  png -
+N P 10 NoteImage8  mania-note2  png -
+N P 10 NoteImage9  mania-note1  png -
+N P 10 NoteImage0H mania-note1H png -
+N P 10 NoteImage1H mania-note2H png -
+N P 10 NoteImage2H mania-note1H png -
+N P 10 NoteImage3H mania-note2H png -
+N P 10 NoteImage4H mania-note1H png -
+N P 10 NoteImage5H mania-note1H png -
+N P 10 NoteImage6H mania-note2H png -
+N P 10 NoteImage7H mania-note1H png -
+N P 10 NoteImage8H mania-note2H png -
+N P 10 NoteImage9H mania-note1H png -
+N P 10 NoteImage0T mania-note1T png -
+N P 10 NoteImage1T mania-note2T png -
+N P 10 NoteImage2T mania-note1T png -
+N P 10 NoteImage3T mania-note2T png -
+N P 10 NoteImage4T mania-note1T png -
+N P 10 NoteImage5T mania-note1T png -
+N P 10 NoteImage6T mania-note2T png -
+N P 10 NoteImage7T mania-note1T png -
+N P 10 NoteImage8T mania-note2T png -
+N P 10 NoteImage9T mania-note1T png -
+N P 10 NoteImage0L mania-note1L png -
+N P 10 NoteImage1L mania-note2L png -
+N P 10 NoteImage2L mania-note1L png -
+N P 10 NoteImage3L mania-note2L png -
+N P 10 NoteImage4L mania-note1L png -
+N P 10 NoteImage5L mania-note1L png -
+N P 10 NoteImage6L mania-note2L png -
+N P 10 NoteImage7L mania-note1L png -
+N P 10 NoteImage8L mania-note2L png -
+N P 10 NoteImage9L mania-note1L png -
 
 ===> 10K - Hitbursts
-NP 10 Hit0    mania-hit0    png
-NP 10 Hit50   mania-hit50   png
-NP 10 Hit100  mania-hit100  png
-NP 10 Hit200  mania-hit200  png
-NP 10 Hit300  mania-hit300  png
-NP 10 Hit300g mania-hit300g png
+N P 10 Hit0    mania-hit0    png -
+N P 10 Hit50   mania-hit50   png -
+N P 10 Hit100  mania-hit100  png -
+N P 10 Hit200  mania-hit200  png -
+N P 10 Hit300  mania-hit300  png -
+N P 10 Hit300g mania-hit300g png -
 
 ===> 12K - Stage
 N png comboburst-mania
-P  12 StageLeft    mania-stage-left   png
-P  12 StageRight   mania-stage-right  png
-NP 12 StageBottom  mania-stage-bottom png
-P  12 StageHint    mania-stage-hint   png
-NP 12 StageLight   mania-stage-light  png
-P  12 WarningArrow mania-warningarrow png
-NP 12 LightingN    lightingN          png
-NP 12 LightingL    lightingL          png
+P   12 StageLeft    mania-stage-left   png -
+P   12 StageRight   mania-stage-right  png -
+N P 12 StageBottom  mania-stage-bottom png -
+P   12 StageHint    mania-stage-hint   png -
+N P 12 StageLight   mania-stage-light  png -
+P   12 WarningArrow mania-warningarrow png -
+N P 12 LightingN    lightingN          png -
+N P 12 LightingL    lightingL          png -
 
 ===> 12K - Keys
-P 12 KeyImage0 mania-key1 png
-P 12 KeyImage1 mania-key2 png
-P 12 KeyImage2 mania-key1 png
-P 12 KeyImage3 mania-key2 png
-P 12 KeyImage4 mania-key1 png
-P 12 KeyImage5 mania-key2 png
-P 12 KeyImage6 mania-key2 png
-P 12 KeyImage7 mania-key1 png
-P 12 KeyImage8 mania-key2 png
-P 12 KeyImage9 mania-key1 png
-P 12 KeyImage10 mania-key2 png
-P 12 KeyImage11 mania-key1 png
-P 12 KeyImage0D mania-key1D png
-P 12 KeyImage1D mania-key2D png
-P 12 KeyImage2D mania-key1D png
-P 12 KeyImage3D mania-key2D png
-P 12 KeyImage4D mania-key1D png
-P 12 KeyImage5D mania-key2D png
-P 12 KeyImage6D mania-key2D png
-P 12 KeyImage7D mania-key1D png
-P 12 KeyImage8D mania-key2D png
-P 12 KeyImage9D mania-key1D png
-P 12 KeyImage10D mania-key2D png
-P 12 KeyImage11D mania-key1D png
+P 12 KeyImage0   mania-key1  png -
+P 12 KeyImage1   mania-key2  png -
+P 12 KeyImage2   mania-key1  png -
+P 12 KeyImage3   mania-key2  png -
+P 12 KeyImage4   mania-key1  png -
+P 12 KeyImage5   mania-key2  png -
+P 12 KeyImage6   mania-key2  png -
+P 12 KeyImage7   mania-key1  png -
+P 12 KeyImage8   mania-key2  png -
+P 12 KeyImage9   mania-key1  png -
+P 12 KeyImage10  mania-key2  png -
+P 12 KeyImage11  mania-key1  png -
+P 12 KeyImage0D  mania-key1D png -
+P 12 KeyImage1D  mania-key2D png -
+P 12 KeyImage2D  mania-key1D png -
+P 12 KeyImage3D  mania-key2D png -
+P 12 KeyImage4D  mania-key1D png -
+P 12 KeyImage5D  mania-key2D png -
+P 12 KeyImage6D  mania-key2D png -
+P 12 KeyImage7D  mania-key1D png -
+P 12 KeyImage8D  mania-key2D png -
+P 12 KeyImage9D  mania-key1D png -
+P 12 KeyImage10D mania-key2D png -
+P 12 KeyImage11D mania-key1D png -
 
 ===> 12K - Notes
-NP 12 NoteImage0  mania-note1  png
-NP 12 NoteImage1  mania-note2  png
-NP 12 NoteImage2  mania-note1  png
-NP 12 NoteImage3  mania-note2  png
-NP 12 NoteImage4  mania-note1  png
-NP 12 NoteImage5  mania-note2  png
-NP 12 NoteImage6  mania-note2  png
-NP 12 NoteImage7  mania-note1  png
-NP 12 NoteImage8  mania-note2  png
-NP 12 NoteImage9  mania-note1  png
-NP 12 NoteImage10  mania-note2  png
-NP 12 NoteImage11  mania-note1  png
-NP 12 NoteImage0H mania-note1H png
-NP 12 NoteImage1H mania-note2H png
-NP 12 NoteImage2H mania-note1H png
-NP 12 NoteImage3H mania-note2H png
-NP 12 NoteImage4H mania-note1H png
-NP 12 NoteImage5H mania-note2H png
-NP 12 NoteImage6H mania-note2H png
-NP 12 NoteImage7H mania-note1H png
-NP 12 NoteImage8H mania-note2H png
-NP 12 NoteImage9H mania-note1H png
-NP 12 NoteImage10H mania-note2H png
-NP 12 NoteImage11H mania-note1H png
-NP 12 NoteImage0T mania-note1T png
-NP 12 NoteImage1T mania-note2T png
-NP 12 NoteImage2T mania-note1T png
-NP 12 NoteImage3T mania-note2T png
-NP 12 NoteImage4T mania-note1T png
-NP 12 NoteImage5T mania-note2T png
-NP 12 NoteImage6T mania-note2T png
-NP 12 NoteImage7T mania-note1T png
-NP 12 NoteImage8T mania-note2T png
-NP 12 NoteImage9T mania-note1T png
-NP 12 NoteImage10T mania-note2T png
-NP 12 NoteImage11T mania-note1T png
-NP 12 NoteImage0L mania-note1L png
-NP 12 NoteImage1L mania-note2L png
-NP 12 NoteImage2L mania-note1L png
-NP 12 NoteImage3L mania-note2L png
-NP 12 NoteImage4L mania-note1L png
-NP 12 NoteImage5L mania-note2L png
-NP 12 NoteImage6L mania-note2L png
-NP 12 NoteImage7L mania-note1L png
-NP 12 NoteImage8L mania-note2L png
-NP 12 NoteImage9L mania-note1L png
-NP 12 NoteImage10L mania-note2L png
-NP 12 NoteImage11L mania-note1L png
+N P 12 NoteImage0   mania-note1  png -
+N P 12 NoteImage1   mania-note2  png -
+N P 12 NoteImage2   mania-note1  png -
+N P 12 NoteImage3   mania-note2  png -
+N P 12 NoteImage4   mania-note1  png -
+N P 12 NoteImage5   mania-note2  png -
+N P 12 NoteImage6   mania-note2  png -
+N P 12 NoteImage7   mania-note1  png -
+N P 12 NoteImage8   mania-note2  png -
+N P 12 NoteImage9   mania-note1  png -
+N P 12 NoteImage10  mania-note2  png -
+N P 12 NoteImage11  mania-note1  png -
+N P 12 NoteImage0H  mania-note1H png -
+N P 12 NoteImage1H  mania-note2H png -
+N P 12 NoteImage2H  mania-note1H png -
+N P 12 NoteImage3H  mania-note2H png -
+N P 12 NoteImage4H  mania-note1H png -
+N P 12 NoteImage5H  mania-note2H png -
+N P 12 NoteImage6H  mania-note2H png -
+N P 12 NoteImage7H  mania-note1H png -
+N P 12 NoteImage8H  mania-note2H png -
+N P 12 NoteImage9H  mania-note1H png -
+N P 12 NoteImage10H mania-note2H png -
+N P 12 NoteImage11H mania-note1H png -
+N P 12 NoteImage0T  mania-note1T png -
+N P 12 NoteImage1T  mania-note2T png -
+N P 12 NoteImage2T  mania-note1T png -
+N P 12 NoteImage3T  mania-note2T png -
+N P 12 NoteImage4T  mania-note1T png -
+N P 12 NoteImage5T  mania-note2T png -
+N P 12 NoteImage6T  mania-note2T png -
+N P 12 NoteImage7T  mania-note1T png -
+N P 12 NoteImage8T  mania-note2T png -
+N P 12 NoteImage9T  mania-note1T png -
+N P 12 NoteImage10T mania-note2T png -
+N P 12 NoteImage11T mania-note1T png -
+N P 12 NoteImage0L  mania-note1L png -
+N P 12 NoteImage1L  mania-note2L png -
+N P 12 NoteImage2L  mania-note1L png -
+N P 12 NoteImage3L  mania-note2L png -
+N P 12 NoteImage4L  mania-note1L png -
+N P 12 NoteImage5L  mania-note2L png -
+N P 12 NoteImage6L  mania-note2L png -
+N P 12 NoteImage7L  mania-note1L png -
+N P 12 NoteImage8L  mania-note2L png -
+N P 12 NoteImage9L  mania-note1L png -
+N P 12 NoteImage10L mania-note2L png -
+N P 12 NoteImage11L mania-note1L png -
 
 ===> 12K - Hitbursts
-NP 12 Hit0    mania-hit0    png
-NP 12 Hit50   mania-hit50   png
-NP 12 Hit100  mania-hit100  png
-NP 12 Hit200  mania-hit200  png
-NP 12 Hit300  mania-hit300  png
-NP 12 Hit300g mania-hit300g png
+N P 12 Hit0    mania-hit0    png -
+N P 12 Hit50   mania-hit50   png -
+N P 12 Hit100  mania-hit100  png -
+N P 12 Hit200  mania-hit200  png -
+N P 12 Hit300  mania-hit300  png -
+N P 12 Hit300g mania-hit300g png -
+
+===> 14K - Stage
+N png comboburst-mania
+P   14 StageLeft    mania-stage-left   png -
+P   14 StageRight   mania-stage-right  png -
+N P 14 StageBottom  mania-stage-bottom png -
+P   14 StageHint    mania-stage-hint   png -
+N P 14 StageLight   mania-stage-light  png -
+P   14 WarningArrow mania-warningarrow png -
+N P 14 LightingN    lightingN          png -
+N P 14 LightingL    lightingL          png -
+
+===> 14K - Keys
+P 14 KeyImage0   mania-key1  png -
+P 14 KeyImage1   mania-key2  png -
+P 14 KeyImage2   mania-key1  png -
+P 14 KeyImage3   mania-key2  png -
+P 14 KeyImage4   mania-key1  png -
+P 14 KeyImage5   mania-key2  png -
+P 14 KeyImage6   mania-key1  png -
+P 14 KeyImage7   mania-key1  png -
+P 14 KeyImage8   mania-key2  png -
+P 14 KeyImage9   mania-key1  png -
+P 14 KeyImage10  mania-key2  png -
+P 14 KeyImage11  mania-key1  png -
+P 14 KeyImage12  mania-key2  png -
+P 14 KeyImage13  mania-key1  png -
+P 14 KeyImage0D  mania-key1D png -
+P 14 KeyImage1D  mania-key2D png -
+P 14 KeyImage2D  mania-key1D png -
+P 14 KeyImage3D  mania-key2D png -
+P 14 KeyImage4D  mania-key1D png -
+P 14 KeyImage5D  mania-key2D png -
+P 14 KeyImage6D  mania-key1D png -
+P 14 KeyImage7D  mania-key1D png -
+P 14 KeyImage8D  mania-key2D png -
+P 14 KeyImage9D  mania-key1D png -
+P 14 KeyImage10D mania-key2D png -
+P 14 KeyImage11D mania-key1D png -
+P 14 KeyImage12D mania-key2D png -
+P 14 KeyImage13D mania-key1D png -
+
+===> 14K - Notes
+N P 14 NoteImage0   mania-note1  png -
+N P 14 NoteImage1   mania-note2  png -
+N P 14 NoteImage2   mania-note1  png -
+N P 14 NoteImage3   mania-note2  png -
+N P 14 NoteImage4   mania-note1  png -
+N P 14 NoteImage5   mania-note2  png -
+N P 14 NoteImage6   mania-note1  png -
+N P 14 NoteImage7   mania-note1  png -
+N P 14 NoteImage8   mania-note2  png -
+N P 14 NoteImage9   mania-note1  png -
+N P 14 NoteImage10  mania-note2  png -
+N P 14 NoteImage11  mania-note1  png -
+N P 14 NoteImage12  mania-note2  png -
+N P 14 NoteImage13  mania-note1  png -
+N P 14 NoteImage0H  mania-note1H png -
+N P 14 NoteImage1H  mania-note2H png -
+N P 14 NoteImage2H  mania-note1H png -
+N P 14 NoteImage3H  mania-note2H png -
+N P 14 NoteImage4H  mania-note1H png -
+N P 14 NoteImage5H  mania-note2H png -
+N P 14 NoteImage6H  mania-note1H png -
+N P 14 NoteImage7H  mania-note1H png -
+N P 14 NoteImage8H  mania-note2H png -
+N P 14 NoteImage9H  mania-note1H png -
+N P 14 NoteImage10H mania-note2H png -
+N P 14 NoteImage11H mania-note1H png -
+N P 14 NoteImage12H mania-note2H png -
+N P 14 NoteImage13H mania-note1H png -
+N P 14 NoteImage0T  mania-note1T png -
+N P 14 NoteImage1T  mania-note2T png -
+N P 14 NoteImage2T  mania-note1T png -
+N P 14 NoteImage3T  mania-note2T png -
+N P 14 NoteImage4T  mania-note1T png -
+N P 14 NoteImage5T  mania-note2T png -
+N P 14 NoteImage6T  mania-note1T png -
+N P 14 NoteImage7T  mania-note1T png -
+N P 14 NoteImage8T  mania-note2T png -
+N P 14 NoteImage9T  mania-note1T png -
+N P 14 NoteImage10T mania-note2T png -
+N P 14 NoteImage11T mania-note1T png -
+N P 14 NoteImage12T mania-note2T png -
+N P 14 NoteImage13T mania-note1T png -
+N P 14 NoteImage0L  mania-note1L png -
+N P 14 NoteImage1L  mania-note2L png -
+N P 14 NoteImage2L  mania-note1L png -
+N P 14 NoteImage3L  mania-note2L png -
+N P 14 NoteImage4L  mania-note1L png -
+N P 14 NoteImage5L  mania-note2L png -
+N P 14 NoteImage6L  mania-note1L png -
+N P 14 NoteImage7L  mania-note1L png -
+N P 14 NoteImage8L  mania-note2L png -
+N P 14 NoteImage9L  mania-note1L png -
+N P 14 NoteImage10L mania-note2L png -
+N P 14 NoteImage11L mania-note1L png -
+N P 14 NoteImage12L mania-note2L png -
+N P 14 NoteImage13L mania-note1L png -
+
+===> 14K - Hitbursts
+N P 14 Hit0    mania-hit0    png -
+N P 14 Hit50   mania-hit50   png -
+N P 14 Hit100  mania-hit100  png -
+N P 14 Hit200  mania-hit200  png -
+N P 14 Hit300  mania-hit300  png -
+N P 14 Hit300g mania-hit300g png -
+
+===> 16K - Stage
+N png comboburst-mania
+P   16 StageLeft    mania-stage-left   png -
+P   16 StageRight   mania-stage-right  png -
+N P 16 StageBottom  mania-stage-bottom png -
+P   16 StageHint    mania-stage-hint   png -
+N P 16 StageLight   mania-stage-light  png -
+P   16 WarningArrow mania-warningarrow png -
+N P 16 LightingN    lightingN          png -
+N P 16 LightingL    lightingL          png -
+
+===> 16K - Keys
+P 16 KeyImage0   mania-key1  png -
+P 16 KeyImage1   mania-key2  png -
+P 16 KeyImage2   mania-key1  png -
+P 16 KeyImage3   mania-key2  png -
+P 16 KeyImage4   mania-key1  png -
+P 16 KeyImage5   mania-key2  png -
+P 16 KeyImage6   mania-key1  png -
+P 16 KeyImage7   mania-key2  png -
+P 16 KeyImage8   mania-key2  png -
+P 16 KeyImage9   mania-key1  png -
+P 16 KeyImage10  mania-key2  png -
+P 16 KeyImage11  mania-key1  png -
+P 16 KeyImage12  mania-key2  png -
+P 16 KeyImage13  mania-key1  png -
+P 16 KeyImage14  mania-key2  png -
+P 16 KeyImage15  mania-key1  png -
+P 16 KeyImage0D  mania-key1D png -
+P 16 KeyImage1D  mania-key2D png -
+P 16 KeyImage2D  mania-key1D png -
+P 16 KeyImage3D  mania-key2D png -
+P 16 KeyImage4D  mania-key1D png -
+P 16 KeyImage5D  mania-key2D png -
+P 16 KeyImage6D  mania-key1D png -
+P 16 KeyImage7D  mania-key2D png -
+P 16 KeyImage8D  mania-key2D png -
+P 16 KeyImage9D  mania-key1D png -
+P 16 KeyImage10D mania-key2D png -
+P 16 KeyImage11D mania-key1D png -
+P 16 KeyImage12D mania-key2D png -
+P 16 KeyImage13D mania-key1D png -
+P 16 KeyImage14D mania-key2D png -
+P 16 KeyImage15D mania-key1D png -
+
+===> 16K - Notes
+N P 16 NoteImage0   mania-note1  png -
+N P 16 NoteImage1   mania-note2  png -
+N P 16 NoteImage2   mania-note1  png -
+N P 16 NoteImage3   mania-note2  png -
+N P 16 NoteImage4   mania-note1  png -
+N P 16 NoteImage5   mania-note2  png -
+N P 16 NoteImage6   mania-note1  png -
+N P 16 NoteImage7   mania-note2  png -
+N P 16 NoteImage8   mania-note2  png -
+N P 16 NoteImage9   mania-note1  png -
+N P 16 NoteImage10  mania-note2  png -
+N P 16 NoteImage11  mania-note1  png -
+N P 16 NoteImage12  mania-note2  png -
+N P 16 NoteImage13  mania-note1  png -
+N P 16 NoteImage14  mania-note2  png -
+N P 16 NoteImage15  mania-note1  png -
+N P 16 NoteImage0H  mania-note1H png -
+N P 16 NoteImage1H  mania-note2H png -
+N P 16 NoteImage2H  mania-note1H png -
+N P 16 NoteImage3H  mania-note2H png -
+N P 16 NoteImage4H  mania-note1H png -
+N P 16 NoteImage5H  mania-note2H png -
+N P 16 NoteImage6H  mania-note1H png -
+N P 16 NoteImage7H  mania-note2H png -
+N P 16 NoteImage8H  mania-note2H png -
+N P 16 NoteImage9H  mania-note1H png -
+N P 16 NoteImage10H mania-note2H png -
+N P 16 NoteImage11H mania-note1H png -
+N P 16 NoteImage12H mania-note2H png -
+N P 16 NoteImage13H mania-note1H png -
+N P 16 NoteImage14H mania-note2H png -
+N P 16 NoteImage15H mania-note1H png -
+N P 16 NoteImage0T  mania-note1T png -
+N P 16 NoteImage1T  mania-note2T png -
+N P 16 NoteImage2T  mania-note1T png -
+N P 16 NoteImage3T  mania-note2T png -
+N P 16 NoteImage4T  mania-note1T png -
+N P 16 NoteImage5T  mania-note2T png -
+N P 16 NoteImage6T  mania-note1T png -
+N P 16 NoteImage7T  mania-note2T png -
+N P 16 NoteImage8T  mania-note2T png -
+N P 16 NoteImage9T  mania-note1T png -
+N P 16 NoteImage10T mania-note2T png -
+N P 16 NoteImage11T mania-note1T png -
+N P 16 NoteImage12T mania-note2T png -
+N P 16 NoteImage13T mania-note1T png -
+N P 16 NoteImage14T mania-note2T png -
+N P 16 NoteImage15T mania-note1T png -
+N P 16 NoteImage0L  mania-note1L png -
+N P 16 NoteImage1L  mania-note2L png -
+N P 16 NoteImage2L  mania-note1L png -
+N P 16 NoteImage3L  mania-note2L png -
+N P 16 NoteImage4L  mania-note1L png -
+N P 16 NoteImage5L  mania-note2L png -
+N P 16 NoteImage6L  mania-note1L png -
+N P 16 NoteImage7L  mania-note2L png -
+N P 16 NoteImage8L  mania-note2L png -
+N P 16 NoteImage9L  mania-note1L png -
+N P 16 NoteImage10L mania-note2L png -
+N P 16 NoteImage11L mania-note1L png -
+N P 16 NoteImage12L mania-note2L png -
+N P 16 NoteImage13L mania-note1L png -
+N P 16 NoteImage14L mania-note2L png -
+N P 16 NoteImage15L mania-note1L png -
+
+===> 16K - Hitbursts
+N P 16 Hit0    mania-hit0    png -
+N P 16 Hit50   mania-hit50   png -
+N P 16 Hit100  mania-hit100  png -
+N P 16 Hit200  mania-hit200  png -
+N P 16 Hit300  mania-hit300  png -
+N P 16 Hit300g mania-hit300g png -
+
+===> 18K - Stage
+N png comboburst-mania
+P   18 StageLeft    mania-stage-left   png -
+P   18 StageRight   mania-stage-right  png -
+N P 18 StageBottom  mania-stage-bottom png -
+P   18 StageHint    mania-stage-hint   png -
+N P 18 StageLight   mania-stage-light  png -
+P   18 WarningArrow mania-warningarrow png -
+N P 18 LightingN    lightingN          png -
+N P 18 LightingL    lightingL          png -
+
+===> 18K - Keys
+P 18 KeyImage0   mania-key1  png -
+P 18 KeyImage1   mania-key2  png -
+P 18 KeyImage2   mania-key1  png -
+P 18 KeyImage3   mania-key2  png -
+P 18 KeyImage4   mania-key1  png -
+P 18 KeyImage5   mania-key2  png -
+P 18 KeyImage6   mania-key1  png -
+P 18 KeyImage7   mania-key2  png -
+P 18 KeyImage8   mania-key1  png -
+P 18 KeyImage9   mania-key1  png -
+P 18 KeyImage10  mania-key2  png -
+P 18 KeyImage11  mania-key1  png -
+P 18 KeyImage12  mania-key2  png -
+P 18 KeyImage13  mania-key1  png -
+P 18 KeyImage14  mania-key2  png -
+P 18 KeyImage15  mania-key1  png -
+P 18 KeyImage16  mania-key2  png -
+P 18 KeyImage17  mania-key1  png -
+P 18 KeyImage0D  mania-key1D png -
+P 18 KeyImage1D  mania-key2D png -
+P 18 KeyImage2D  mania-key1D png -
+P 18 KeyImage3D  mania-key2D png -
+P 18 KeyImage4D  mania-key1D png -
+P 18 KeyImage5D  mania-key2D png -
+P 18 KeyImage6D  mania-key1D png -
+P 18 KeyImage7D  mania-key2D png -
+P 18 KeyImage8D  mania-key1D png -
+P 18 KeyImage9D  mania-key1D png -
+P 18 KeyImage10D mania-key2D png -
+P 18 KeyImage11D mania-key1D png -
+P 18 KeyImage12D mania-key2D png -
+P 18 KeyImage13D mania-key1D png -
+P 18 KeyImage14D mania-key2D png -
+P 18 KeyImage15D mania-key1D png -
+P 18 KeyImage16D mania-key2D png -
+P 18 KeyImage17D mania-key1D png -
+
+===> 18K - Notes
+N P 18 NoteImage0   mania-note1  png -
+N P 18 NoteImage1   mania-note2  png -
+N P 18 NoteImage2   mania-note1  png -
+N P 18 NoteImage3   mania-note2  png -
+N P 18 NoteImage4   mania-note1  png -
+N P 18 NoteImage5   mania-note2  png -
+N P 18 NoteImage6   mania-note1  png -
+N P 18 NoteImage7   mania-note2  png -
+N P 18 NoteImage8   mania-note1  png -
+N P 18 NoteImage9   mania-note1  png -
+N P 18 NoteImage10  mania-note2  png -
+N P 18 NoteImage11  mania-note1  png -
+N P 18 NoteImage12  mania-note2  png -
+N P 18 NoteImage13  mania-note1  png -
+N P 18 NoteImage14  mania-note2  png -
+N P 18 NoteImage15  mania-note1  png -
+N P 18 NoteImage16  mania-note2  png -
+N P 18 NoteImage17  mania-note1  png -
+N P 18 NoteImage0H  mania-note1H png -
+N P 18 NoteImage1H  mania-note2H png -
+N P 18 NoteImage2H  mania-note1H png -
+N P 18 NoteImage3H  mania-note2H png -
+N P 18 NoteImage4H  mania-note1H png -
+N P 18 NoteImage5H  mania-note2H png -
+N P 18 NoteImage6H  mania-note1H png -
+N P 18 NoteImage7H  mania-note2H png -
+N P 18 NoteImage8H  mania-note1H png -
+N P 18 NoteImage9H  mania-note1H png -
+N P 18 NoteImage10H mania-note2H png -
+N P 18 NoteImage11H mania-note1H png -
+N P 18 NoteImage12H mania-note2H png -
+N P 18 NoteImage13H mania-note1H png -
+N P 18 NoteImage14H mania-note2H png -
+N P 18 NoteImage15H mania-note1H png -
+N P 18 NoteImage16H mania-note2H png -
+N P 18 NoteImage17H mania-note1H png -
+N P 18 NoteImage0T  mania-note1T png -
+N P 18 NoteImage1T  mania-note2T png -
+N P 18 NoteImage2T  mania-note1T png -
+N P 18 NoteImage3T  mania-note2T png -
+N P 18 NoteImage4T  mania-note1T png -
+N P 18 NoteImage5T  mania-note2T png -
+N P 18 NoteImage6T  mania-note1T png -
+N P 18 NoteImage7T  mania-note2T png -
+N P 18 NoteImage8T  mania-note1T png -
+N P 18 NoteImage9T  mania-note1T png -
+N P 18 NoteImage10T mania-note2T png -
+N P 18 NoteImage11T mania-note1T png -
+N P 18 NoteImage12T mania-note2T png -
+N P 18 NoteImage13T mania-note1T png -
+N P 18 NoteImage14T mania-note2T png -
+N P 18 NoteImage15T mania-note1T png -
+N P 18 NoteImage16T mania-note2T png -
+N P 18 NoteImage17T mania-note1T png -
+N P 18 NoteImage0L  mania-note1L png -
+N P 18 NoteImage1L  mania-note2L png -
+N P 18 NoteImage2L  mania-note1L png -
+N P 18 NoteImage3L  mania-note2L png -
+N P 18 NoteImage4L  mania-note1L png -
+N P 18 NoteImage5L  mania-note2L png -
+N P 18 NoteImage6L  mania-note1L png -
+N P 18 NoteImage7L  mania-note2L png -
+N P 18 NoteImage8L  mania-note1L png -
+N P 18 NoteImage9L  mania-note1L png -
+N P 18 NoteImage10L mania-note2L png -
+N P 18 NoteImage11L mania-note1L png -
+N P 18 NoteImage12L mania-note2L png -
+N P 18 NoteImage13L mania-note1L png -
+N P 18 NoteImage14L mania-note2L png -
+N P 18 NoteImage15L mania-note1L png -
+N P 18 NoteImage16L mania-note2L png -
+N P 18 NoteImage17L mania-note1L png -
+
+===> 18K - Hitbursts
+N P 18 Hit0    mania-hit0    png -
+N P 18 Hit50   mania-hit50   png -
+N P 18 Hit100  mania-hit100  png -
+N P 18 Hit200  mania-hit200  png -
+N P 18 Hit300  mania-hit300  png -
+N P 18 Hit300g mania-hit300g png -
