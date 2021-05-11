@@ -3,6 +3,7 @@
 - png cursortrail
 - png cursormiddle
 - png cursor-smoke
+- png cursor-ripple
 
 ===> Ranking Letters
 - png ranking-xh

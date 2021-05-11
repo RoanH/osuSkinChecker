@@ -23,25 +23,25 @@ N png sliderendcircleoverlay
 
 ===> Slider
 N png sliderfollowcircle
-NM png sliderb
-- png sliderb-nd
-- png sliderb-spec
+M png sliderb
+O false sliderb png sliderb-nd
+O false sliderb png sliderb-spec
 - png sliderscorepoint
 
 ===> Spinner
-O true png spinner-background
-O true png spinner-circle
-O true png spinner-metre
-O false png spinner-bottom
-O false png spinner-glow
-O false png spinner-middle
-O false png spinner-middle2
-O false png spinner-top
+O true spinner-background png spinner-background
+O true spinner-background png spinner-circle
+O true spinner-background png spinner-metre
+O false spinner-background png spinner-bottom
+O false spinner-background png spinner-glow
+O false spinner-background png spinner-middle
+O false spinner-background png spinner-middle2
+O false spinner-background png spinner-top
 - png spinner-approachcircle
 - png spinner-rpm
 - png spinner-clear
 - png spinner-spin
-L png spinner-osu
+L 1 png spinner-osu
 
 ===> Hitbursts
 N png hit0
@@ -55,8 +55,8 @@ N png hit300g
 - png particle100
 - png particle300
 - png lighting
-L png sliderpoint10
-L png sliderpoint30
+L 1 png sliderpoint10
+L 1 png sliderpoint30
 
 ===> Target Practice
 - png selection-mod-target

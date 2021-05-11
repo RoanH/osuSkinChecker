@@ -23,7 +23,7 @@ javadoc{
 
 compileJava.options.encoding = 'UTF-8'
 sourceCompatibility = 1.8
-version = 'v2.2'//Don't forget SkinChecker.java
+version = 'v3.3'//Don't forget SkinChecker.java
 shadowJar.archiveName = 'SkinChecker-' + project.version + '.jar'
 
 repositories{
@@ -40,7 +40,7 @@ repositories{
 }
 
 dependencies{
-	implementation 'com.github.RoanH:Util:v1.2'
+	implementation 'com.github.RoanH:Util:v1.4'
 }
 
 application{
