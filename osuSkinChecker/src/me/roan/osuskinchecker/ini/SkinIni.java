@@ -378,7 +378,7 @@ public class SkinIni{
 								if(line.startsWith("Keys:")){
 									try{
 										int keys = Integer.parseInt(line.substring(5).trim());
-										if(keys >= 1 && keys <= ManiaIni.MAX_KEYS && !(keys > 10 && keys % 2 == 0)){
+										if(keys >= 1 && keys <= ManiaIni.MAX_KEYS && !(keys >= 10 && keys % 2 != 0)){
 											mania[keys - 1] = (maniaIni = new ManiaIni(keys));
 											section.mania = maniaIni;
 											break;
