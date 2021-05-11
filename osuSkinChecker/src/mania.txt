@@ -1,6 +1,6 @@
 ===> 1K - Stage
 N png comboburst-mania
-P  1 StageLeft    mania-stage-left   png - -
+P  1 StageLeft    mania-stage-left   png -
 P  1 StageRight   mania-stage-right  png -
 N P 1 StageBottom  mania-stage-bottom png -
 P  1 StageHint    mania-stage-hint   png -
