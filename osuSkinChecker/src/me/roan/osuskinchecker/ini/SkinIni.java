@@ -17,9 +17,7 @@ import java.util.Map.Entry;
 import java.util.StringJoiner;
 import java.util.regex.Pattern;
 
-import javax.swing.JOptionPane;
-
-import me.roan.osuskinchecker.SkinChecker;
+import me.roan.util.Dialog;
 
 /**
  * Main class that reflects all the
@@ -32,7 +30,7 @@ public class SkinIni{
 	 * Field for which default values were used
 	 * during the parsing
 	 */
-	private static List<String> usedDefault = new ArrayList<String>();
+	static List<String> usedDefault = new ArrayList<String>();
 	/**
 	 * All the setting in this skin.ini
 	 */
@@ -453,7 +451,7 @@ public class SkinIni{
 			for(String setting : usedDefault){
 				defaults.add(setting);
 			}
-			JOptionPane.showMessageDialog(SkinChecker.frame, "Skin.ini fields were found that couldn't be parsed. Default values were used for the following fields:\n" + defaults.toString(), "Skin Checker", JOptionPane.WARNING_MESSAGE);
+			Dialog.showMessageDialog("Skin.ini fields were found that couldn't be parsed. Default values were used for the following fields:\n" + defaults.toString());
 		}
 	}
 	
@@ -475,7 +473,7 @@ public class SkinIni{
 				}
 			}
 			for(Setting<?> setting : section.data){
-				if(setting.isEnabled()){
+				if(setting.isEnabled() && setting.wasUpdated()){
 					writer.println(setting);
 				}
 			}
@@ -683,7 +681,7 @@ public class SkinIni{
 	private Setting<?> parseCtb(String line){
 		String[] args = line.split(":", 2);
 		args[1] = args[1].trim();
-		switch(args[0]){
+		switch(args[0].trim()){
 		case "HyperDash":
 			return parseColor(hyperDash, args[1]);
 		case "HyperDashFruit":
@@ -731,7 +729,7 @@ public class SkinIni{
 	private Setting<?> parseGeneral(String line){
 		String[] args = line.split(":", 2);
 		args[1] = args[1].trim();
-		switch(args[0]){
+		switch(args[0].trim()){
 		case "Name":
 			return name.update(args[1]);
 		case "Author":
@@ -789,7 +787,7 @@ public class SkinIni{
 	private Setting<?> parseFonts(String line){
 		String[] args = line.split(":", 2);
 		args[1] = args[1].trim();
-		switch(args[0]){
+		switch(args[0].trim()){
 		case "HitCirclePrefix":
 			return hitCirclePrefix.update(args[1]);
 		case "HitCircleOverlap":
@@ -820,7 +818,7 @@ public class SkinIni{
 	private Setting<?> parseColours(String line){
 		String[] args = line.split(":", 2);
 		args[1] = args[1].trim();
-		switch(args[0]){
+		switch(args[0].trim()){
 		case "SongSelectActiveText":
 			return parseColor(songSelectActiveText, args[1]);
 		case "SongSelectInactiveText":
@@ -1155,7 +1153,7 @@ public class SkinIni{
 		private Setting<?> parseMania(String line) throws IOException{
 			String[] args = line.split(":", 2);
 			args[1] = args[1].trim();
-			switch(args[0]){
+			switch(args[0].trim()){
 			case "ColumnStart":
 				return parseDouble(columnStart, args[1], 0.0D);
 			case "ColumnRight":
@@ -1769,106 +1767,6 @@ public class SkinIni{
 		}
 	}
 
-	/**
-	 * Enum for all the different NoteBodyStyle options
-	 * @author Roan
-	 * @see Printable
-	 */
-	protected enum Version implements Printable{
-		/**
-		 * Version 1.0
-		 */
-		V1("1", "(Old style)"),
-		/**
-		 * Version 2.0
-		 */
-		V2("2", "(Basic new style)"),
-		/**
-		 * Version 2.1
-		 */
-		V21("2.1", "(Taiko position changes)"),
-		/**
-		 * Version 2.2
-		 */
-		V22("2.2", "(UI changes)"),
-		/**
-		 * Version 2.3
-		 */
-		V23("2.3", "(New Catch catcher style)"),
-		/**
-		 * Version 2.4
-		 */
-		V24("2.4", "(Mania stage scaling reduction)"),
-		/**
-		 * Version 2.5
-		 */
-		V25("2.5", "(Mania upscroll and column improvements)"),
-		/**
-		 * Latest version
-		 */
-		LATEST("latest", "(for personal skins)");
-
-		/**
-		 * The display name for this setting
-		 */
-		public final String name;
-		/**
-		 * The extra information for this setting
-		 */
-		public final String extra;
-
-		/**
-		 * Constructs a new Version with the
-		 * given name and information
-		 * @param name The display name for this version
-		 * @param extra The description for this version
-		 */
-		private Version(String name, String extra){
-			this.name = name;
-			this.extra = extra;
-		}
-		
-		/**
-		 * Parses the given input for a Version
-		 * @param str The input to parse
-		 * @return The Version parsed from the given input string
-		 */
-		private static Version fromString(String str){
-			switch(str){
-			case "1":
-				return V1;
-			case "2":
-			case "2.0":
-				return V2;
-			case "2.1":
-				return V21;
-			case "2.2":
-				return V22;
-			case "2.3":
-				return V23;
-			case "2.4":
-				return V24;
-			case "2.5":
-				return V25;
-			case "latest":
-				return LATEST;
-			default:
-				usedDefault.add("Version");
-				return V1;
-			}
-		}
-
-		@Override
-		public String toString(){
-			return name + " " + extra;
-		}
-
-		@Override
-		public String print(){
-			return name;
-		}
-	}
-	
 	/**
 	 * Interface that indicates that the
 	 * object has a special {@link #print()}

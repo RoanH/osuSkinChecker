@@ -25,7 +25,6 @@ public class Setting<T>{
 	private boolean enabled = true;
 	/**
 	 * Whether or not this setting was updated
-	 * during the initialisation phase
 	 */
 	private boolean wasUpdated = false;
 	/**
@@ -63,6 +62,16 @@ public class Setting<T>{
 	}
 	
 	/**
+	 * Checks whether or not this setting was updated
+	 * during this session. A setting always counts as
+	 * updated if it was read from the <code>skin.ini</code>
+	 * @return True if this setting was updated.
+	 */
+	protected boolean wasUpdated(){
+		return wasUpdated;
+	}
+	
+	/**
 	 * Gets the name of this setting
 	 * @return The name of this setting
 	 */
@@ -96,8 +105,8 @@ public class Setting<T>{
 		if(!(wasUpdated && singleUpdateMode)){
 			if(singleUpdateMode){
 				enabled = true;
-				wasUpdated = true;
 			}
+			wasUpdated = true;
 			value = newValue;
 		}
 		return this;

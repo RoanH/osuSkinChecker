@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * This class determines how a list of
- * {@link SoundInfo} objects are displayed.
+ * {@link SoundFilter} objects are displayed.
  * @author Roan
  * @see Model
  */
@@ -17,14 +17,11 @@ public class SoundModel extends Model{
 	/**
 	 * Constructs a new SoundModel with
 	 * the given list of data to display.
-	 * @param list A list with data to display
-	 *        the {@link Info} objects should
-	 *        be of the {@link SoundInfo} type.
-	 * @see Info
+	 * @param list A list with data to display.
+	 * @see Filter
 	 * @see Model
-	 * @see SoundInfo
 	 */
-	public SoundModel(List<Info> list){
+	public SoundModel(List<Filter<?>> list){
 		super(list);
 	}
 
@@ -51,7 +48,7 @@ public class SoundModel extends Model{
 			case 0:
 				return view.get(row);
 			case 1:
-				return ((SoundInfo)view.get(row)).exists() == true ? "Yes" : "No";
+				return view.get(row).hasMatch() ? "Yes" : "No";
 			}
 		}catch(Exception e){
 			return "Error";
