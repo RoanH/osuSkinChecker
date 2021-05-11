@@ -515,7 +515,7 @@ public class SkinIniTab extends JTabbedPane{
 				if(ini.keys % 2 == 0 && ini.keys >= 4){
 					content.add(new JSeparator());
 					content.add(Box.createVerticalStrut(2));
-					content.add(new ComboBoxEditor<SpecialStyle>("what special style (if avaible) should be used for this keycount", ini.specialStyle, SpecialStyle.values()));
+					content.add(new ComboBoxEditor<SpecialStyle>("what special style (if available) should be used for this keycount", ini.specialStyle, SpecialStyle.values()));
 					content.add(Box.createVerticalStrut(2));
 				}
 				content.add(new JSeparator());
