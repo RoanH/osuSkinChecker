@@ -411,7 +411,7 @@ public class SkinIniTab extends JTabbedPane{
 		 * @see SkinIni
 		 */
 		private ManiaTab(SkinIni ini){
-			for(int i = 1; i <= 10; i++){
+			for(int i = 1; i <= ManiaIni.MAX_KEYS; i += i >= 10 ? 2 : 1){
 				ManiaKeyTab tab = new ManiaKeyTab();
 				if(ini.mania[i - 1] != null){
 					tab.init(ini.mania[i - 1], i);
@@ -515,7 +515,7 @@ public class SkinIniTab extends JTabbedPane{
 				if(ini.keys % 2 == 0 && ini.keys >= 4){
 					content.add(new JSeparator());
 					content.add(Box.createVerticalStrut(2));
-					content.add(new ComboBoxEditor<SpecialStyle>("what special style (if avaible) should be used for this keycount", ini.specialStyle, SpecialStyle.values()));
+					content.add(new ComboBoxEditor<SpecialStyle>("what special style (if available) should be used for this keycount", ini.specialStyle, SpecialStyle.values()));
 					content.add(Box.createVerticalStrut(2));
 				}
 				content.add(new JSeparator());
