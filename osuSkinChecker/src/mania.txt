@@ -1,11 +1,11 @@
 ===> 1K - Stage
 N png comboburst-mania
-P  1 StageLeft    mania-stage-left   png -
-P  1 StageRight   mania-stage-right  png -
+P   1 StageLeft    mania-stage-left   png -
+P   1 StageRight   mania-stage-right  png -
 N P 1 StageBottom  mania-stage-bottom png -
-P  1 StageHint    mania-stage-hint   png -
+P   1 StageHint    mania-stage-hint   png -
 N P 1 StageLight   mania-stage-light  png -
-P  1 WarningArrow mania-warningarrow png -
+P   1 WarningArrow mania-warningarrow png -
 N P 1 LightingN    lightingN          png -
 N P 1 LightingL    lightingL          png -
 
@@ -29,12 +29,12 @@ N P 1 Hit300g mania-hit300g png -
 
 ===> 2K - Stage
 N png comboburst-mania
-P  2 StageLeft    mania-stage-left   png -
-P  2 StageRight   mania-stage-right  png -
+P   2 StageLeft    mania-stage-left   png -
+P   2 StageRight   mania-stage-right  png -
 N P 2 StageBottom  mania-stage-bottom png -
-P  2 StageHint    mania-stage-hint   png -
+P   2 StageHint    mania-stage-hint   png -
 N P 2 StageLight   mania-stage-light  png -
-P  2 WarningArrow mania-warningarrow png -
+P   2 WarningArrow mania-warningarrow png -
 N P 2 LightingN    lightingN          png -
 N P 2 LightingL    lightingL          png -
 
@@ -64,12 +64,12 @@ N P 2 Hit300g mania-hit300g png -
 
 ===> 3K - Stage
 N png comboburst-mania
-P  3 StageLeft    mania-stage-left   png -
-P  3 StageRight   mania-stage-right  png -
+P   3 StageLeft    mania-stage-left   png -
+P   3 StageRight   mania-stage-right  png -
 N P 3 StageBottom  mania-stage-bottom png -
-P  3 StageHint    mania-stage-hint   png -
+P   3 StageHint    mania-stage-hint   png -
 N P 3 StageLight   mania-stage-light  png -
-P  3 WarningArrow mania-warningarrow png -
+P   3 WarningArrow mania-warningarrow png -
 N P 3 LightingN    lightingN          png -
 N P 3 LightingL    lightingL          png -
 
@@ -105,12 +105,12 @@ N P 3 Hit300g mania-hit300g png -
 
 ===> 4K - Stage
 N png comboburst-mania
-P  4 StageLeft    mania-stage-left   png -
-P  4 StageRight   mania-stage-right  png -
+P   4 StageLeft    mania-stage-left   png -
+P   4 StageRight   mania-stage-right  png -
 N P 4 StageBottom  mania-stage-bottom png -
-P  4 StageHint    mania-stage-hint   png -
+P   4 StageHint    mania-stage-hint   png -
 N P 4 StageLight   mania-stage-light  png -
-P  4 WarningArrow mania-warningarrow png -
+P   4 WarningArrow mania-warningarrow png -
 N P 4 LightingN    lightingN          png -
 N P 4 LightingL    lightingL          png -
 
@@ -152,12 +152,12 @@ N P 4 Hit300g mania-hit300g png -
 
 ===> 5K - Stage
 N png comboburst-mania
-P  5 StageLeft    mania-stage-left   png -
-P  5 StageRight   mania-stage-right  png -
+P   5 StageLeft    mania-stage-left   png -
+P   5 StageRight   mania-stage-right  png -
 N P 5 StageBottom  mania-stage-bottom png -
-P  5 StageHint    mania-stage-hint   png -
+P   5 StageHint    mania-stage-hint   png -
 N P 5 StageLight   mania-stage-light  png -
-P  5 WarningArrow mania-warningarrow png -
+P   5 WarningArrow mania-warningarrow png -
 N P 5 LightingN    lightingN          png -
 N P 5 LightingL    lightingL          png -
 
@@ -205,12 +205,12 @@ N P 5 Hit300g mania-hit300g png -
 
 ===> 6K - Stage
 N png comboburst-mania
-P  6 StageLeft    mania-stage-left   png -
-P  6 StageRight   mania-stage-right  png -
+P   6 StageLeft    mania-stage-left   png -
+P   6 StageRight   mania-stage-right  png -
 N P 6 StageBottom  mania-stage-bottom png -
-P  6 StageHint    mania-stage-hint   png -
+P   6 StageHint    mania-stage-hint   png -
 N P 6 StageLight   mania-stage-light  png -
-P  6 WarningArrow mania-warningarrow png -
+P   6 WarningArrow mania-warningarrow png -
 N P 6 LightingN    lightingN          png -
 N P 6 LightingL    lightingL          png -
 
@@ -264,12 +264,12 @@ N P 6 Hit300g mania-hit300g png -
 
 ===> 7K - Stage
 N png comboburst-mania
-P  7 StageLeft    mania-stage-left   png -
-P  7 StageRight   mania-stage-right  png -
+P   7 StageLeft    mania-stage-left   png -
+P   7 StageRight   mania-stage-right  png -
 N P 7 StageBottom  mania-stage-bottom png -
-P  7 StageHint    mania-stage-hint   png -
+P   7 StageHint    mania-stage-hint   png -
 N P 7 StageLight   mania-stage-light  png -
-P  7 WarningArrow mania-warningarrow png -
+P   7 WarningArrow mania-warningarrow png -
 N P 7 LightingN    lightingN          png -
 N P 7 LightingL    lightingL          png -
 
@@ -329,12 +329,12 @@ N P 7 Hit300g mania-hit300g png -
 
 ===> 8K - Stage
 N png comboburst-mania
-P  8 StageLeft    mania-stage-left   png -
-P  8 StageRight   mania-stage-right  png -
+P   8 StageLeft    mania-stage-left   png -
+P   8 StageRight   mania-stage-right  png -
 N P 8 StageBottom  mania-stage-bottom png -
-P  8 StageHint    mania-stage-hint   png -
+P   8 StageHint    mania-stage-hint   png -
 N P 8 StageLight   mania-stage-light  png -
-P  8 WarningArrow mania-warningarrow png -
+P   8 WarningArrow mania-warningarrow png -
 N P 8 LightingN    lightingN          png -
 N P 8 LightingL    lightingL          png -
 
@@ -400,12 +400,12 @@ N P 8 Hit300g mania-hit300g png -
 
 ===> 9K - Stage
 N png comboburst-mania
-P  9 StageLeft    mania-stage-left   png -
-P  9 StageRight   mania-stage-right  png -
+P   9 StageLeft    mania-stage-left   png -
+P   9 StageRight   mania-stage-right  png -
 N P 9 StageBottom  mania-stage-bottom png -
-P  9 StageHint    mania-stage-hint   png -
+P   9 StageHint    mania-stage-hint   png -
 N P 9 StageLight   mania-stage-light  png -
-P  9 WarningArrow mania-warningarrow png -
+P   9 WarningArrow mania-warningarrow png -
 N P 9 LightingN    lightingN          png -
 N P 9 LightingL    lightingL          png -
 
@@ -477,12 +477,12 @@ N P 9 Hit300g mania-hit300g png -
 
 ===> 10K - Stage
 N png comboburst-mania
-P  10 StageLeft    mania-stage-left   png -
-P  10 StageRight   mania-stage-right  png -
+P   10 StageLeft    mania-stage-left   png -
+P   10 StageRight   mania-stage-right  png -
 N P 10 StageBottom  mania-stage-bottom png -
-P  10 StageHint    mania-stage-hint   png -
+P   10 StageHint    mania-stage-hint   png -
 N P 10 StageLight   mania-stage-light  png -
-P  10 WarningArrow mania-warningarrow png -
+P   10 WarningArrow mania-warningarrow png -
 N P 10 LightingN    lightingN          png -
 N P 10 LightingL    lightingL          png -
 
