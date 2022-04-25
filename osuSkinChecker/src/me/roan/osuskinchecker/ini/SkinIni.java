@@ -17,7 +17,7 @@ import java.util.Map.Entry;
 import java.util.StringJoiner;
 import java.util.regex.Pattern;
 
-import me.roan.util.Dialog;
+import dev.roanh.util.Dialog;
 
 /**
  * Main class that reflects all the

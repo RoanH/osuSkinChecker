@@ -18,7 +18,6 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -57,12 +56,12 @@ import me.roan.osuskinchecker.ini.SkinIni;
 import me.roan.osuskinchecker.ini.SkinIniTab;
 import me.roan.osuskinchecker.ini.SplitLayout;
 import me.roan.osuskinchecker.ini.Version;
-import me.roan.util.ClickableLink;
-import me.roan.util.Dialog;
-import me.roan.util.ExclamationMarkPath;
-import me.roan.util.FileSelector;
-import me.roan.util.FileSelector.FileExtension;
-import me.roan.util.Util;
+import dev.roanh.util.ClickableLink;
+import dev.roanh.util.Dialog;
+import dev.roanh.util.ExclamationMarkPath;
+import dev.roanh.util.FileSelector;
+import dev.roanh.util.FileSelector.FileExtension;
+import dev.roanh.util.Util;
 
 /**
  * This program can be used to see what
@@ -333,13 +332,13 @@ public class SkinChecker{
 		});
 		print.addActionListener((e)->{
 			if(skinFolder != null){
-				File dest = Dialog.showFileSaveDialog(txtExtension, "foreign files");
+				Path dest = Dialog.showFileSaveDialog(txtExtension, "foreign files");
 				if(dest == null){
 					return;
 				}
 				
 				try{
-					final PrintWriter writer = new PrintWriter(new FileOutputStream(dest));
+					final PrintWriter writer = new PrintWriter(Files.newOutputStream(dest, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE, StandardOpenOption.CREATE));
 					writer.println("========== Images ==========");
 					for(Entry<String, Map<String, List<Filter<?>>>> m : imagesMap.entrySet()){
 						for(Entry<String, List<Filter<?>>> ml : m.getValue().entrySet()){
@@ -364,7 +363,7 @@ public class SkinChecker{
 					writer.flush();
 					writer.close();
 					Dialog.showMessageDialog("File list succesfully exported");
-				}catch(FileNotFoundException e1){
+				}catch(IOException e1){
 					Dialog.showErrorDialog("An error occured: " + e1.getMessage());
 				}
 
@@ -483,12 +482,12 @@ public class SkinChecker{
 	 */
 	public static void checkSkin(File folder) throws IOException{
 		if(folder == null){
-			File selected = Dialog.showFolderOpenDialog();
-			if(selected == null || !selected.exists()){
+			Path selected = Dialog.showFolderOpenDialog();
+			if(selected == null || Files.notExists(selected)){
 				Dialog.showErrorDialog("No skin selected!");
 				return;
 			}else{
-				folder = selected;
+				folder = selected.toFile();
 			}
 		}
 

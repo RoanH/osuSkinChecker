@@ -35,13 +35,10 @@ repositories{
 		}
 	}
 	mavenCentral()
-	maven{
-		url "https://jitpack.io"
-	}
 }
 
 dependencies{
-	implementation 'com.github.RoanH:Util:v1.4'
+	implementation 'dev.roanh.util:util:2.1'
 }
 
 application{
