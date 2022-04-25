@@ -43,7 +43,6 @@ javadoc:
     - ./gradlew -PnexusPublic=${NEXUS_PUBLIC} javadoc
     - mv ./build/docs/javadoc/* ../javadoc
   stage: javadoc
-  environment: javadoc
   artifacts:
     name: "$PROJECTNAME"
     expire_in: 1 week
@@ -57,7 +56,6 @@ compile:
     - mv ./build/libs/* ../
     - mv ./build/launch4j/*.exe ../
   stage: compile
-  environment: builds
   artifacts:
     name: "${PROJECTNAME}"
     expire_in: 1 week
