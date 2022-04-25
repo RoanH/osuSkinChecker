@@ -33,6 +33,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -604,9 +605,26 @@ public class SkinChecker{
 		List<Filter<?>> all = new ArrayList<Filter<?>>(filters.size());
 		for(Entry<String, Map<String, List<Filter<?>>>> entry : map.entrySet()){
 			JTabbedPane inner = new JTabbedPane();
-			for(Entry<String, List<Filter<?>>> e : entry.getValue().entrySet()){
-				all.addAll(e.getValue());
-				inner.add(e.getKey(), new JScrollPane(getTableData(e.getValue())));
+			if(entry.getKey().equals("Mania")){
+				//The mania tab is special and split the sub items with an extra layer of tabs
+				Map<String, JTabbedPane> keys = new HashMap<String, JTabbedPane>();
+				for(int i = 1; i <= 18; i++){
+					if(i < 10 || (i >= 10 && i % 2 == 0)){
+						JTabbedPane pane = new JTabbedPane();
+						inner.addTab(i + "K", pane);
+						keys.put(i + "K", pane);
+					}
+				}
+				
+				for(Entry<String, List<Filter<?>>> e : entry.getValue().entrySet()){
+					String[] args = e.getKey().split(" - ");
+					keys.get(args[0]).add(args[1], new JScrollPane(getTableData(e.getValue())));
+				}
+			}else{
+				for(Entry<String, List<Filter<?>>> e : entry.getValue().entrySet()){
+					all.addAll(e.getValue());
+					inner.add(e.getKey(), new JScrollPane(getTableData(e.getValue())));
+				}
 			}
 			tabs.add(entry.getKey(), inner);
 		}
@@ -658,7 +676,7 @@ public class SkinChecker{
 	 * @throws IOException When an IOException occurs
 	 */
 	private static Map<String, List<Filter<?>>> readDataFile(String name, boolean isSound) throws IOException{
-		Map<String, List<Filter<?>>> data = new HashMap<String, List<Filter<?>>>();
+		Map<String, List<Filter<?>>> data = new LinkedHashMap<String, List<Filter<?>>>();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(name)));
 		List<Filter<?>> writing = null;
 		String line;
