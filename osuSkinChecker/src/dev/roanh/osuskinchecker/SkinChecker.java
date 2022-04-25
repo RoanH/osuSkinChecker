@@ -168,10 +168,8 @@ public class SkinChecker{
 	 */
 	public static void main(String[] args){
 		ExclamationMarkPath.check(args);
-		try{
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		}catch(Throwable t){
-		}
+		Util.installUI();
+
 		try{
 			readDatabase();
 			for(Filter<?> filter : filters){

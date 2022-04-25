@@ -34,6 +34,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.plaf.SpinnerUI;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
@@ -1651,31 +1652,21 @@ public class SkinIniTab extends JTabbedPane{
 	 * @author Roan
 	 * @param <T> The number type for this spinner
 	 */
-	private static final class Spinner<T extends Number & Comparable<T>> extends JPanel implements ComponentListener, DocumentListener, ChangeListener{
+	private static final class Spinner<T extends Number & Comparable<T>> extends JPanel implements ComponentListener, ChangeListener{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = -5798808556648418260L;
 		/**
-		 * The spinner used to change the value
-		 * if there is enough space for it
+		 * The spinner used to change the value.
 		 */
 		private JSpinner spinner;
-		/**
-		 * The text field used to change the value
-		 * used when there is not enough space for the spinner
-		 */
-		private JFormattedTextField field;
 		/**
 		 * Whether or not no button are shown at
 		 * the moment. In other words if #spinner or
 		 * #field is currently being displayed.
 		 */
 		private boolean noButtons = false;
-		/**
-		 * Whether to respond to event or not
-		 */
-		private boolean ignoreEvents = false;
 		/**
 		 * The listener to inform of change to this object
 		 */
@@ -1692,84 +1683,59 @@ public class SkinIniTab extends JTabbedPane{
 		private Spinner(SpinnerChangeListener<T> listener, T value, T min, T max){
 			super(new BorderLayout());
 			this.listener = listener;
-			this.setBackground(Color.BLACK);
-			field = new JFormattedTextField(value);
 			spinner = new JSpinner(new SpinnerNumberModel(value, min, max, 1));
 			this.addComponentListener(this);
 			this.add(spinner);
 			spinner.addChangeListener(this);
 			
-			System.out.println("layout: " + spinner.getLayout());
-			LayoutManager mgr = spinner.getLayout();
-			for(Component c : spinner.getComponents()){
-				System.out.println(c);
-				if(!(c instanceof NumberEditor)){
-					c.setVisible(false);
-					mgr.removeLayoutComponent(c);
-					System.out.println("Name: " + c.getName());
-					//"Previous" and "Next" are the names
-					mgr.addLayoutComponent(c.getName(), c);
-				}else{
-					c.setBackground(Color.RED);
-				}
-			}
+//			System.out.println("layout: " + spinner.getLayout());
+//			LayoutManager mgr = spinner.getLayout();
+//			for(Component c : spinner.getComponents()){
+//				System.out.println(c);
+//				if(!(c instanceof NumberEditor)){
+//					//c.setVisible(false);
+//					mgr.removeLayoutComponent(c);
+//					System.out.println("Name: " + c.getName());
+//					//"Previous" and "Next" are the names
+//					//mgr.addLayoutComponent("Next", c);
+//				}else{
+//					c.setBackground(Color.RED);
+//				}
+//			}
+//			SpinnerUI ui = spinner.getUI();
+//			ui.uninstallUI(spinner);
+//			ui.installUI(spinner);
+//			spinner.revalidate();
 			
-			field.getDocument().addDocumentListener(this);
-			((PlainDocument)field.getDocument()).setDocumentFilter(new DocumentFilter(){
-				
-				@Override
-				public void insertString(FilterBypass fb, int offset, String text, AttributeSet attr) throws BadLocationException{
-					replace(fb, offset, 0, text, attr);
-				}
-
-				@SuppressWarnings("unchecked")
-				@Override
-				public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException{
-					String str = fb.getDocument().getText(0, offset) + text + fb.getDocument().getText(offset + length, fb.getDocument().getLength() - offset - length);
-					T obj;
-					System.out.println("huh");
-					if(value instanceof Double){
-						obj = (T)(Number)Double.parseDouble(str);
-					}else{
-						obj = (T)(Number)Integer.parseInt(str);
-					}
-					if(obj.compareTo(min) >= 0 && 0 >= obj.compareTo(max)){
-						fb.replace(offset, length, text, attrs);
-					}
-				}
-			});
 		}
 		
 		private void setComponent(){
 			if(this.getWidth() < 40){
 				if(!noButtons){
-					this.removeAll();					
-					this.add(field);
+					for(Component c : spinner.getComponents()){
+						if(!(c instanceof NumberEditor)){
+							spinner.getLayout().removeLayoutComponent(c);
+						}
+					}
+					spinner.revalidate();
 					noButtons = true;
+					this.repaint();
 				}
 			}else{
 				if(noButtons){
-					this.removeAll();
-					this.add(spinner);
+					SpinnerUI ui = spinner.getUI();
+					ui.uninstallUI(spinner);
+					ui.installUI(spinner);
+					spinner.revalidate();
 					noButtons = false;
+					this.repaint();
 				}
-			}
-		}
-		
-		@SuppressWarnings("unchecked")
-		private void fieldUpdate(){
-			if(!ignoreEvents){
-				ignoreEvents = true;
-				spinner.setValue(field.getValue());
-				ignoreEvents = false;
-				listener.update((T)spinner.getValue());
 			}
 		}
 		
 		@Override
 		public void setEnabled(boolean enabled){
 			super.setEnabled(enabled);
-			field.setEnabled(enabled);
 			spinner.setEnabled(enabled);
 		}
 
@@ -1793,56 +1759,20 @@ public class SkinIniTab extends JTabbedPane{
 		@SuppressWarnings("unchecked")
 		@Override
 		public void stateChanged(ChangeEvent e){
-			if(!ignoreEvents){
-				ignoreEvents = true;
-				field.setValue(spinner.getValue());
-				ignoreEvents = false;
-				listener.update((T)spinner.getValue());
-			}
+//			if(!ignoreEvents){
+//				ignoreEvents = true;
+//				field.setValue(spinner.getValue());
+//				ignoreEvents = false;
+//				listener.update((T)spinner.getValue());
+//			}
 		}
 
-		@Override
-		public void insertUpdate(DocumentEvent e){
-			fieldUpdate();
-		}
 
-		@Override
-		public void removeUpdate(DocumentEvent e){
-			fieldUpdate();
-		}
-
-		@Override
-		public void changedUpdate(DocumentEvent e){
-			fieldUpdate();
-		}
 		
 		@FunctionalInterface
 		private static abstract interface SpinnerChangeListener<T>{
 			
 			public abstract void update(T newValue);
-		}
-		
-		private static final class NumberFilter extends DocumentFilter{
-			
-			private Class<? extends Number> type;
-			
-			private NumberFilter(Class<? extends Number> type){
-				this.type = type;
-			}
-			
-			@Override
-			public void insertString(FilterBypass fb, int offset, String text, AttributeSet attr) throws BadLocationException{
-				replace(fb, offset, 0, text, attr);
-			}
-
-			@Override
-			public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException{
-				String str = fb.getDocument().getText(0, offset) + text + fb.getDocument().getText(offset + length, fb.getDocument().getLength() - offset - length);
-				
-				//if(spinner.){
-				//	fb.replace(offset, length, text, attrs);
-				//}
-			}
 		}
 	}
 }
