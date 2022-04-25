@@ -13,7 +13,7 @@ C HitCirclePrefix default png -9
 ===> Hitcircle
 - png approachcircle
 - png hitcircle
-N png hitcircleoverlay
+- png hitcircleoverlay
 N png followpoint
 - png reversearrow
 - png sliderstartcircle
