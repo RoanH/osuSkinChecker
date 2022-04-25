@@ -606,7 +606,7 @@ public class SkinChecker{
 		for(Entry<String, Map<String, List<Filter<?>>>> entry : map.entrySet()){
 			JTabbedPane inner = new JTabbedPane();
 			if(entry.getKey().equals("Mania")){
-				//The mania tab is special and split the sub items with an extra layer of tabs
+				//The mania tab is special and splits the sub items with an extra layer of tabs
 				Map<String, JTabbedPane> keys = new HashMap<String, JTabbedPane>();
 				for(int i = 1; i <= 18; i++){
 					if(i < 10 || (i >= 10 && i % 2 == 0)){
