@@ -1,11 +1,11 @@
-package me.roan.osuskinchecker;
+package dev.roanh.osuskinchecker;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
-import me.roan.osuskinchecker.ini.Version;
+import dev.roanh.osuskinchecker.ini.Version;
 
 /**
  * Abstract base class for table models

@@ -1,4 +1,4 @@
-package me.roan.osuskinchecker;
+package dev.roanh.osuskinchecker;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -6,8 +6,8 @@ import java.util.Deque;
 import java.util.List;
 import java.util.Locale;
 
-import me.roan.osuskinchecker.ini.SkinIni;
-import me.roan.osuskinchecker.ini.Version;
+import dev.roanh.osuskinchecker.ini.SkinIni;
+import dev.roanh.osuskinchecker.ini.Version;
 
 /**
  * Abstract base class for filters.

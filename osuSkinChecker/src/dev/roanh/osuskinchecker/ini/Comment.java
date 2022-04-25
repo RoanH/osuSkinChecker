@@ -1,4 +1,4 @@
-package me.roan.osuskinchecker.ini;
+package dev.roanh.osuskinchecker.ini;
 
 /**
  * Represents a comment, empty line

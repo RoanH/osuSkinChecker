@@ -1,6 +1,6 @@
-package me.roan.osuskinchecker.ini;
+package dev.roanh.osuskinchecker.ini;
 
-import me.roan.osuskinchecker.ini.SkinIni.Printable;
+import dev.roanh.osuskinchecker.ini.SkinIni.Printable;
 
 /**
  * Enum for all the different NoteBodyStyle options

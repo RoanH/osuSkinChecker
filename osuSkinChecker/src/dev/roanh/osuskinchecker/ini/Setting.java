@@ -1,8 +1,8 @@
-package me.roan.osuskinchecker.ini;
+package dev.roanh.osuskinchecker.ini;
 
 import java.util.StringJoiner;
 
-import me.roan.osuskinchecker.ini.SkinIni.Printable;
+import dev.roanh.osuskinchecker.ini.SkinIni.Printable;
 
 /**
  * Represents a setting in the skin.ini

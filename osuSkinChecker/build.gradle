@@ -42,7 +42,7 @@ dependencies{
 }
 
 application{
-	mainClassName = 'me.roan.osuskinchecker.SkinChecker'
+	mainClassName = 'dev.roanh.osuskinchecker.SkinChecker'
 }
 
 launch4j{

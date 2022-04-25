@@ -1,11 +1,11 @@
-package me.roan.osuskinchecker;
+package dev.roanh.osuskinchecker;
 
 import java.io.File;
 import java.util.Deque;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import me.roan.osuskinchecker.ini.Version;
+import dev.roanh.osuskinchecker.ini.Version;
 
 /**
  * SoundFilter objects are used to describe a

@@ -1,9 +1,9 @@
-package me.roan.osuskinchecker.ini;
+package dev.roanh.osuskinchecker.ini;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import me.roan.osuskinchecker.ini.SkinIni.ManiaIni;
+import dev.roanh.osuskinchecker.ini.SkinIni.ManiaIni;
 
 /**
  * Represents a section in the skin.ini

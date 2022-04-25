@@ -1,4 +1,4 @@
-package me.roan.osuskinchecker;
+package dev.roanh.osuskinchecker;
 
 import java.awt.BorderLayout;
 import java.awt.Desktop;
@@ -52,10 +52,10 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
-import me.roan.osuskinchecker.ini.SkinIni;
-import me.roan.osuskinchecker.ini.SkinIniTab;
-import me.roan.osuskinchecker.ini.SplitLayout;
-import me.roan.osuskinchecker.ini.Version;
+import dev.roanh.osuskinchecker.ini.SkinIni;
+import dev.roanh.osuskinchecker.ini.SkinIniTab;
+import dev.roanh.osuskinchecker.ini.SplitLayout;
+import dev.roanh.osuskinchecker.ini.Version;
 import dev.roanh.util.ClickableLink;
 import dev.roanh.util.Dialog;
 import dev.roanh.util.ExclamationMarkPath;

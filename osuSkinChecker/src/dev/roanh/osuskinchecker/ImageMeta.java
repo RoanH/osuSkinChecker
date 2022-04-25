@@ -1,4 +1,4 @@
-package me.roan.osuskinchecker;
+package dev.roanh.osuskinchecker;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package me.roan.osuskinchecker;
+package dev.roanh.osuskinchecker;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -9,9 +9,9 @@ import java.util.Locale;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
-import me.roan.osuskinchecker.ini.Setting;
-import me.roan.osuskinchecker.ini.SkinIni;
-import me.roan.osuskinchecker.ini.Version;
+import dev.roanh.osuskinchecker.ini.Setting;
+import dev.roanh.osuskinchecker.ini.SkinIni;
+import dev.roanh.osuskinchecker.ini.Version;
 
 /**
  * Represent a filter that matches image files.
