@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
-import java.awt.LayoutManager;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
@@ -19,21 +18,15 @@ import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
-import javax.swing.JSpinner.NumberEditor;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.BevelBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.plaf.SpinnerUI;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
@@ -972,8 +965,8 @@ public class SkinIniTab extends JTabbedPane{
 			super(new SplitLayout());
 			add(new JLabel(" " + setting.getName() + " (" + hint + "): "));
 			JPanel p = new JPanel(new BorderLayout());
-			JSpinner spinner = new JSpinner(new SpinnerNumberModel((int)setting.getValue(), min, max, 1));
-			p.add(new Spinner<Integer>(val->setting.update(val), setting.getValue(), min, max), BorderLayout.CENTER);
+			Spinner<Integer> spinner = new Spinner<Integer>(setting::update, setting.getValue(), min, max);
+			p.add(spinner, BorderLayout.CENTER);
 			if(toggle){
 				JCheckBox enabled = new JCheckBox("", setting.isEnabled());
 				spinner.setEnabled(setting.isEnabled());
@@ -1097,11 +1090,8 @@ public class SkinIniTab extends JTabbedPane{
 			super(new SplitLayout());
 			JPanel settings = new JPanel(new BorderLayout());
 			add(new JLabel(" " + setting.getName() + " (" + hint + "): "));
-			JSpinner spinner = new JSpinner(new SpinnerNumberModel((double)setting.getValue(), min, max, 1.0D));
-			spinner.addChangeListener((event)->{
-				setting.update((double)spinner.getValue());
-			});
-			settings.add(new Spinner<Double>(val->setting.update(val), setting.getValue(), min, max), BorderLayout.CENTER);
+			Spinner<Double> spinner = new Spinner<Double>(setting::update, setting.getValue(), min, max);
+			settings.add(spinner, BorderLayout.CENTER);
 			if(toggle){
 				JCheckBox enabled = new JCheckBox("", setting.isEnabled());
 				settings.add(enabled, BorderLayout.LINE_START);
@@ -1583,7 +1573,7 @@ public class SkinIniTab extends JTabbedPane{
 	}
 	
 	/**
-	 * Specialized text field that only allows
+	 * Specialised text field that only allows
 	 * a comma separated list of positive integers as input
 	 * @author Roan
 	 */
@@ -1657,6 +1647,9 @@ public class SkinIniTab extends JTabbedPane{
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = -5798808556648418260L;
+		/**
+		 * Maximum width of the spinner before spinner buttons are removed.
+		 */
 		private static final int MIN_WIDTH = 40;
 		/**
 		 * Whether or not no button are shown at
@@ -1681,6 +1674,10 @@ public class SkinIniTab extends JTabbedPane{
 			setButtons();
 		}
 		
+		/**
+		 * Adds or removes the spinner buttons depending
+		 * on the current width of this spinner.
+		 */
 		private void setButtons(){
 			if(this.getWidth() < MIN_WIDTH){
 				if(!noButtons){
@@ -1725,6 +1722,10 @@ public class SkinIniTab extends JTabbedPane{
 		@FunctionalInterface
 		private static abstract interface SpinnerChangeListener<T>{
 			
+			/**
+			 * Called when the spinner value changed.
+			 * @param newValue The new spinner value.
+			 */
 			public abstract void update(T newValue);
 		}
 	}
