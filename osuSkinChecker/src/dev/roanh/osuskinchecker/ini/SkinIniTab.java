@@ -1683,8 +1683,8 @@ public class SkinIniTab extends JTabbedPane{
 							this.remove(c);
 						}
 					}
-					this.revalidate();
 					noButtons = true;
+					this.revalidate();
 					this.repaint();
 				}
 			}else{
@@ -1692,8 +1692,8 @@ public class SkinIniTab extends JTabbedPane{
 					SpinnerUI ui = this.getUI();
 					ui.uninstallUI(this);
 					ui.installUI(this);
-					this.revalidate();
 					noButtons = false;
+					this.revalidate();
 					this.repaint();
 				}
 			}
