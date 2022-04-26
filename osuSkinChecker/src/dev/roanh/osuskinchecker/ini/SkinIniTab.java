@@ -2,7 +2,10 @@ package dev.roanh.osuskinchecker.ini;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.regex.Pattern;
@@ -24,6 +27,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.BevelBorder;
+import javax.swing.plaf.SpinnerUI;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
@@ -961,11 +965,8 @@ public class SkinIniTab extends JTabbedPane{
 			super(new SplitLayout());
 			add(new JLabel(" " + setting.getName() + " (" + hint + "): "));
 			JPanel p = new JPanel(new BorderLayout());
-			JSpinner spinner = new JSpinner(new SpinnerNumberModel((int)setting.getValue(), min, max, 1));
+			Spinner<Integer> spinner = new Spinner<Integer>(setting::update, setting.getValue(), min, max);
 			p.add(spinner, BorderLayout.CENTER);
-			spinner.addChangeListener((e)->{
-				setting.update((Integer)spinner.getValue());
-			});
 			if(toggle){
 				JCheckBox enabled = new JCheckBox("", setting.isEnabled());
 				spinner.setEnabled(setting.isEnabled());
@@ -1089,10 +1090,7 @@ public class SkinIniTab extends JTabbedPane{
 			super(new SplitLayout());
 			JPanel settings = new JPanel(new BorderLayout());
 			add(new JLabel(" " + setting.getName() + " (" + hint + "): "));
-			JSpinner spinner = new JSpinner(new SpinnerNumberModel((double)setting.getValue(), min, max, 1.0D));
-			spinner.addChangeListener((event)->{
-				setting.update((double)spinner.getValue());
-			});
+			Spinner<Double> spinner = new Spinner<Double>(setting::update, setting.getValue(), min, max);
 			settings.add(spinner, BorderLayout.CENTER);
 			if(toggle){
 				JCheckBox enabled = new JCheckBox("", setting.isEnabled());
@@ -1568,18 +1566,14 @@ public class SkinIniTab extends JTabbedPane{
 		private DoubleArray(double[] data){
 			this.setLayout(new GridLayout(1, data.length, 2, 0));
 			for(int i = 0; i < data.length; i++){
-				JSpinner spinner = new JSpinner(new SpinnerNumberModel(data[i], 0.0D, Double.MAX_VALUE, 1.0D));
 				final int field = i;
-				spinner.addChangeListener((e)->{
-					data[field] = (double)spinner.getValue();
-				});
-				this.add(spinner);
+				this.add(new Spinner<Double>(val->data[field] = val, data[field], 0.0D, Double.MAX_VALUE));
 			}
 		}
 	}
 	
 	/**
-	 * Specialized text field that only allows
+	 * Specialised text field that only allows
 	 * a comma separated list of positive integers as input
 	 * @author Roan
 	 */
@@ -1639,6 +1633,102 @@ public class SkinIniTab extends JTabbedPane{
 					fb.remove(offset, length);
 				}
 			}
+		}
+	}
+	
+	/**
+	 * Number spinner that hides its spinner buttons when it
+	 * becomes too small and would obstruct the value.
+	 * @author Roan
+	 * @param <T> The number type for this spinner.
+	 */
+	private static final class Spinner<T extends Number & Comparable<T>> extends JSpinner implements ComponentListener{
+		/**
+		 * Serial ID
+		 */
+		private static final long serialVersionUID = -5798808556648418260L;
+		/**
+		 * Maximum width of the spinner before spinner buttons are removed.
+		 */
+		private static final int MIN_WIDTH = 40;
+		/**
+		 * Whether or not spinner buttons are shown at the moment.
+		 */
+		private boolean noButtons = false;
+		
+		/**
+		 * Constructs a new Spinner with the given value bounds and listener.
+		 * @param listener The listener to inform when the value changes.
+		 * @param value The initial value for this spinner.
+		 * @param min The minimum value for this spinner.
+		 * @param max The maximum value for this spinner.
+		 */
+		@SuppressWarnings("unchecked")
+		private Spinner(SpinnerChangeListener<T> listener, T value, T min, T max){
+			super(new SpinnerNumberModel(value, min, max, 1));
+			this.addComponentListener(this);
+			this.addChangeListener(e->listener.update((T)this.getValue()));
+			setButtons();
+		}
+		
+		/**
+		 * Adds or removes the spinner buttons depending
+		 * on the current width of this spinner.
+		 */
+		private void setButtons(){
+			if(this.getWidth() < MIN_WIDTH){
+				if(!noButtons){
+					for(Component c : this.getComponents()){
+						if(!(c instanceof NumberEditor)){
+							this.remove(c);
+						}
+					}
+					noButtons = true;
+					this.revalidate();
+					this.repaint();
+				}
+			}else{
+				if(noButtons){
+					SpinnerUI ui = this.getUI();
+					ui.uninstallUI(this);
+					ui.installUI(this);
+					noButtons = false;
+					this.revalidate();
+					this.repaint();
+				}
+			}
+		}
+
+		@Override
+		public void componentResized(ComponentEvent e){
+			setButtons();
+		}
+
+		@Override
+		public void componentMoved(ComponentEvent e){			
+		}
+
+		@Override
+		public void componentShown(ComponentEvent e){			
+		}
+
+		@Override
+		public void componentHidden(ComponentEvent e){			
+		}
+
+		/**
+		 * Interface that receives updates when the value of a spinner changes.
+		 * @author Roan
+		 * @param <T> The spinner data type.
+		 */
+		@FunctionalInterface
+		private static abstract interface SpinnerChangeListener<T>{
+			
+			/**
+			 * Called when the spinner value changed.
+			 * @param newValue The new spinner value.
+			 */
+			public abstract void update(T newValue);
 		}
 	}
 }

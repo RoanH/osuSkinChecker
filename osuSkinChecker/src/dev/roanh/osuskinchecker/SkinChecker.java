@@ -51,7 +51,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 
 import dev.roanh.osuskinchecker.ini.SkinIni;
 import dev.roanh.osuskinchecker.ini.SkinIniTab;
@@ -168,10 +167,8 @@ public class SkinChecker{
 	 */
 	public static void main(String[] args){
 		ExclamationMarkPath.check(args);
-		try{
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		}catch(Throwable t){
-		}
+		Util.installUI();
+
 		try{
 			readDatabase();
 			for(Filter<?> filter : filters){
