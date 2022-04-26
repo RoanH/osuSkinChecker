@@ -1652,11 +1652,12 @@ public class SkinIniTab extends JTabbedPane{
 	 * @author Roan
 	 * @param <T> The number type for this spinner
 	 */
-	private static final class Spinner<T extends Number & Comparable<T>> extends JPanel implements ComponentListener, ChangeListener{
+	private static final class Spinner<T extends Number & Comparable<T>> extends JPanel implements ComponentListener{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = -5798808556648418260L;
+		private static final int MIN_WIDTH = 40;
 		/**
 		 * The spinner used to change the value.
 		 */
@@ -1667,10 +1668,6 @@ public class SkinIniTab extends JTabbedPane{
 		 * #field is currently being displayed.
 		 */
 		private boolean noButtons = false;
-		/**
-		 * The listener to inform of change to this object
-		 */
-		private SpinnerChangeListener<T> listener;
 		
 		/**
 		 * Constructs a new Spinner with the given value
@@ -1680,47 +1677,25 @@ public class SkinIniTab extends JTabbedPane{
 		 * @param min The minimum value for this spinner
 		 * @param max The maximum value for this spinner
 		 */
+		@SuppressWarnings("unchecked")
 		private Spinner(SpinnerChangeListener<T> listener, T value, T min, T max){
 			super(new BorderLayout());
-			this.listener = listener;
 			spinner = new JSpinner(new SpinnerNumberModel(value, min, max, 1));
 			this.addComponentListener(this);
 			this.add(spinner, BorderLayout.CENTER);
-			spinner.addChangeListener(this);
-			
-//			System.out.println("layout: " + spinner.getLayout());
-//			LayoutManager mgr = spinner.getLayout();
-//			for(Component c : spinner.getComponents()){
-//				System.out.println(c);
-//				if(!(c instanceof NumberEditor)){
-//					//c.setVisible(false);
-//					mgr.removeLayoutComponent(c);
-//					System.out.println("Name: " + c.getName());
-//					//"Previous" and "Next" are the names
-//					//mgr.addLayoutComponent("Next", c);
-//				}else{
-//					c.setBackground(Color.RED);
-//				}
-//			}
-//			SpinnerUI ui = spinner.getUI();
-//			ui.uninstallUI(spinner);
-//			ui.installUI(spinner);
-//			spinner.revalidate();
-			
+			spinner.addChangeListener(e->listener.update((T)spinner.getValue()));
+			setButtons();
 		}
 		
-		private void setComponent(){
-			System.out.println("resize: " + this.getWidth());
-			if(this.getWidth() < 40){
+		private void setButtons(){
+			if(this.getWidth() < MIN_WIDTH){
 				if(!noButtons){
-					System.out.println("hi");
 					for(Component c : spinner.getComponents()){
 						if(!(c instanceof NumberEditor)){
 							spinner.remove(c);
-							//spinner.getLayout().removeLayoutComponent(c);
 						}
 					}
-					this.revalidate();
+					spinner.revalidate();
 					noButtons = true;
 					this.repaint();
 				}
@@ -1744,7 +1719,7 @@ public class SkinIniTab extends JTabbedPane{
 
 		@Override
 		public void componentResized(ComponentEvent e){
-			setComponent();
+			setButtons();
 		}
 
 		@Override
@@ -1759,19 +1734,6 @@ public class SkinIniTab extends JTabbedPane{
 		public void componentHidden(ComponentEvent e){			
 		}
 
-		@SuppressWarnings("unchecked")
-		@Override
-		public void stateChanged(ChangeEvent e){
-//			if(!ignoreEvents){
-//				ignoreEvents = true;
-//				field.setValue(spinner.getValue());
-//				ignoreEvents = false;
-//				listener.update((T)spinner.getValue());
-//			}
-		}
-
-
-		
 		@FunctionalInterface
 		private static abstract interface SpinnerChangeListener<T>{
 			
