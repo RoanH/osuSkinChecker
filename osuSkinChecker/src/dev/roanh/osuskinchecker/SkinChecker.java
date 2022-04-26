@@ -50,7 +50,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
+import javax.swing.table.TableRowSorter;
 
 import dev.roanh.osuskinchecker.ini.SkinIni;
 import dev.roanh.osuskinchecker.ini.SkinIniTab;
@@ -627,6 +629,28 @@ public class SkinChecker{
 		}
 		tabs.insertTab("All", null, new JScrollPane(getTableData(all)), null, 0);
 		tabs.setSelectedIndex(0);
+	}
+	
+	private static void buildAllTab(List<Filter<?>> all){//TODO replace with raw data
+		JPanel content = new JPanel();
+		JCheckBox standard = new JCheckBox("Standard", true);
+		JCheckBox ctb = new JCheckBox("Catch", true);
+		JCheckBox mania = new JCheckBox("Mania", true);
+		JCheckBox taiko = new JCheckBox("taiko", true);
+		
+		JTable table = getTableData(all);
+		TableRowSorter<Model> sorter = new TableRowSorter<Model>((Model)table.getModel());
+		sorter.setRowFilter(new RowFilter<Model, Object>(){
+			@Override
+			public boolean include(Entry<? extends Model, ? extends Object> entry){
+				return true;//filter.apply(model.get((Integer)entry.getIdentifier()));
+			}
+		});
+		table.setRowSorter(sorter);
+		
+		
+		
+		
 	}
 
 	/**
