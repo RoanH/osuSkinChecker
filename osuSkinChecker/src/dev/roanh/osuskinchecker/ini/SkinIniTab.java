@@ -1652,16 +1652,12 @@ public class SkinIniTab extends JTabbedPane{
 	 * @author Roan
 	 * @param <T> The number type for this spinner
 	 */
-	private static final class Spinner<T extends Number & Comparable<T>> extends JPanel implements ComponentListener{
+	private static final class Spinner<T extends Number & Comparable<T>> extends JSpinner implements ComponentListener{
 		/**
 		 * Serial ID
 		 */
 		private static final long serialVersionUID = -5798808556648418260L;
 		private static final int MIN_WIDTH = 40;
-		/**
-		 * The spinner used to change the value.
-		 */
-		private JSpinner spinner;
 		/**
 		 * Whether or not no button are shown at
 		 * the moment. In other words if #spinner or
@@ -1679,42 +1675,34 @@ public class SkinIniTab extends JTabbedPane{
 		 */
 		@SuppressWarnings("unchecked")
 		private Spinner(SpinnerChangeListener<T> listener, T value, T min, T max){
-			super(new BorderLayout());
-			spinner = new JSpinner(new SpinnerNumberModel(value, min, max, 1));
+			super(new SpinnerNumberModel(value, min, max, 1));
 			this.addComponentListener(this);
-			this.add(spinner, BorderLayout.CENTER);
-			spinner.addChangeListener(e->listener.update((T)spinner.getValue()));
+			this.addChangeListener(e->listener.update((T)this.getValue()));
 			setButtons();
 		}
 		
 		private void setButtons(){
 			if(this.getWidth() < MIN_WIDTH){
 				if(!noButtons){
-					for(Component c : spinner.getComponents()){
+					for(Component c : this.getComponents()){
 						if(!(c instanceof NumberEditor)){
-							spinner.remove(c);
+							this.remove(c);
 						}
 					}
-					spinner.revalidate();
+					this.revalidate();
 					noButtons = true;
 					this.repaint();
 				}
 			}else{
 				if(noButtons){
-					SpinnerUI ui = spinner.getUI();
-					ui.uninstallUI(spinner);
-					ui.installUI(spinner);
-					spinner.revalidate();
+					SpinnerUI ui = this.getUI();
+					ui.uninstallUI(this);
+					ui.installUI(this);
+					this.revalidate();
 					noButtons = false;
 					this.repaint();
 				}
 			}
-		}
-		
-		@Override
-		public void setEnabled(boolean enabled){
-			super.setEnabled(enabled);
-			spinner.setEnabled(enabled);
 		}
 
 		@Override
