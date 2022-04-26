@@ -51,7 +51,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 
 import dev.roanh.osuskinchecker.ini.SkinIni;
 import dev.roanh.osuskinchecker.ini.SkinIniTab;
