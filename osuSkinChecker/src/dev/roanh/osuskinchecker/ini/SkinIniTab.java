@@ -1716,6 +1716,11 @@ public class SkinIniTab extends JTabbedPane{
 		public void componentHidden(ComponentEvent e){			
 		}
 
+		/**
+		 * Interface that receives updates when the value of a spinner changes.
+		 * @author Roan
+		 * @param <T> The spinner data type.
+		 */
 		@FunctionalInterface
 		private static abstract interface SpinnerChangeListener<T>{
 			
