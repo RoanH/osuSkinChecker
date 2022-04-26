@@ -1638,9 +1638,9 @@ public class SkinIniTab extends JTabbedPane{
 	
 	/**
 	 * Number spinner that hides its spinner buttons when it
-	 * becomes too small and would obstruct the value
+	 * becomes too small and would obstruct the value.
 	 * @author Roan
-	 * @param <T> The number type for this spinner
+	 * @param <T> The number type for this spinner.
 	 */
 	private static final class Spinner<T extends Number & Comparable<T>> extends JSpinner implements ComponentListener{
 		/**
@@ -1652,19 +1652,16 @@ public class SkinIniTab extends JTabbedPane{
 		 */
 		private static final int MIN_WIDTH = 40;
 		/**
-		 * Whether or not no button are shown at
-		 * the moment. In other words if #spinner or
-		 * #field is currently being displayed.
+		 * Whether or not spinner buttons are shown at the moment.
 		 */
 		private boolean noButtons = false;
 		
 		/**
-		 * Constructs a new Spinner with the given value
-		 * bounds and listener
-		 * @param listener The listener to inform when the value changes
-		 * @param value The initial value for this spinner
-		 * @param min The minimum value for this spinner
-		 * @param max The maximum value for this spinner
+		 * Constructs a new Spinner with the given value bounds and listener.
+		 * @param listener The listener to inform when the value changes.
+		 * @param value The initial value for this spinner.
+		 * @param min The minimum value for this spinner.
+		 * @param max The maximum value for this spinner.
 		 */
 		@SuppressWarnings("unchecked")
 		private Spinner(SpinnerChangeListener<T> listener, T value, T min, T max){
