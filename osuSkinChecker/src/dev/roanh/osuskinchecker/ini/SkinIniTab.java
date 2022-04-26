@@ -1685,7 +1685,7 @@ public class SkinIniTab extends JTabbedPane{
 			this.listener = listener;
 			spinner = new JSpinner(new SpinnerNumberModel(value, min, max, 1));
 			this.addComponentListener(this);
-			this.add(spinner);
+			this.add(spinner, BorderLayout.CENTER);
 			spinner.addChangeListener(this);
 			
 //			System.out.println("layout: " + spinner.getLayout());
@@ -1710,14 +1710,17 @@ public class SkinIniTab extends JTabbedPane{
 		}
 		
 		private void setComponent(){
+			System.out.println("resize: " + this.getWidth());
 			if(this.getWidth() < 40){
 				if(!noButtons){
+					System.out.println("hi");
 					for(Component c : spinner.getComponents()){
 						if(!(c instanceof NumberEditor)){
-							spinner.getLayout().removeLayoutComponent(c);
+							spinner.remove(c);
+							//spinner.getLayout().removeLayoutComponent(c);
 						}
 					}
-					spinner.revalidate();
+					this.revalidate();
 					noButtons = true;
 					this.repaint();
 				}
