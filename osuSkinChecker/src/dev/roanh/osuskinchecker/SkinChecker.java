@@ -666,10 +666,10 @@ public class SkinChecker{
 		JTable table = getTableData(map.values().stream().flatMap(m->m.values().stream()).flatMap(List::stream).collect(Collectors.toList()));
 		Model model = (Model)table.getModel();
 		TableRowSorter<Model> sorter = new TableRowSorter<Model>(model);
-		sorter.setRowFilter(new RowFilter<Model, Object>(){
+		sorter.setRowFilter(new RowFilter<Model, Integer>(){
 			@Override
-			public boolean include(Entry<? extends Model, ? extends Object> entry){
-				Filter<?> filter = model.get((Integer)entry.getIdentifier());
+			public boolean include(Entry<? extends Model, ? extends Integer> entry){
+				Filter<?> filter = model.get(entry.getIdentifier());
 				
 				if(!standard.isSelected() && imagesMap.get("osu!").values().stream().flatMap(List::stream).anyMatch(filter::equals)){
 					return false;
