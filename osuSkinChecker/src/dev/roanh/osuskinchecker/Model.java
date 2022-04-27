@@ -56,6 +56,10 @@ public abstract class Model extends DefaultTableModel{
 		}
 		this.fireTableDataChanged();
 	}
+	
+	public Filter<?> get(int index){
+		return data.get(index);
+	}
 
 	@Override
 	public int getRowCount(){

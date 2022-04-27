@@ -627,30 +627,38 @@ public class SkinChecker{
 			}
 			tabs.add(entry.getKey(), inner);
 		}
-		tabs.insertTab("All", null, new JScrollPane(getTableData(all)), null, 0);
+		//tabs.insertTab("All", null, new JScrollPane(getTableData(all)), null, 0);
+		tabs.insertTab("All", null, buildAllTab(all), null, 0);
 		tabs.setSelectedIndex(0);
 	}
 	
-	private static void buildAllTab(List<Filter<?>> all){//TODO replace with raw data
-		JPanel content = new JPanel();
+	private static JPanel buildAllTab(List<Filter<?>> all){//TODO replace with raw data
+		JPanel content = new JPanel(new BorderLayout());
 		JCheckBox standard = new JCheckBox("Standard", true);
 		JCheckBox ctb = new JCheckBox("Catch", true);
 		JCheckBox mania = new JCheckBox("Mania", true);
 		JCheckBox taiko = new JCheckBox("taiko", true);
 		
 		JTable table = getTableData(all);
-		TableRowSorter<Model> sorter = new TableRowSorter<Model>((Model)table.getModel());
+		Model model = (Model)table.getModel();
+		TableRowSorter<Model> sorter = new TableRowSorter<Model>(model);
 		sorter.setRowFilter(new RowFilter<Model, Object>(){
 			@Override
 			public boolean include(Entry<? extends Model, ? extends Object> entry){
-				return true;//filter.apply(model.get((Integer)entry.getIdentifier()));
+				Filter<?> filter = model.get((Integer)entry.getIdentifier());
+				return standard.isSelected() ? true : imagesMap.get("osu!").values().stream().flatMap(List::stream).noneMatch(filter::equals);
+				//entry.
+				//return true;//filter.apply(model.get((Integer)entry.getIdentifier()));
 			}
 		});
 		table.setRowSorter(sorter);
 		
+		standard.addActionListener(e->model.fireTableDataChanged());
 		
+		content.add(standard, BorderLayout.PAGE_START);
+		content.add(new JScrollPane(table), BorderLayout.CENTER);
 		
-		
+		return content;
 	}
 
 	/**
