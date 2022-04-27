@@ -2,6 +2,7 @@ package dev.roanh.osuskinchecker;
 
 import java.awt.BorderLayout;
 import java.awt.Desktop;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -40,6 +41,7 @@ import java.util.Map.Entry;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -48,6 +50,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
@@ -634,10 +637,24 @@ public class SkinChecker{
 	
 	private static JPanel buildAllTab(List<Filter<?>> all){//TODO replace with raw data
 		JPanel content = new JPanel(new BorderLayout());
+		
+		JPanel buttons = new JPanel();
+		buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
 		JCheckBox standard = new JCheckBox("Standard", true);
 		JCheckBox ctb = new JCheckBox("Catch", true);
 		JCheckBox mania = new JCheckBox("Mania", true);
-		JCheckBox taiko = new JCheckBox("taiko", true);
+		JCheckBox taiko = new JCheckBox("Taiko", true);
+		
+		buttons.add(new JLabel(" Gamemode includes "));
+		buttons.add(new JSeparator(JSeparator.VERTICAL));
+		buttons.add(standard);
+		buttons.add(new JSeparator(JSeparator.VERTICAL));
+		buttons.add(ctb);
+		buttons.add(new JSeparator(JSeparator.VERTICAL));
+		buttons.add(mania);
+		buttons.add(new JSeparator(JSeparator.VERTICAL));
+		buttons.add(taiko);
+		buttons.add(new JPanel(new BorderLayout()));
 		
 		JTable table = getTableData(all);
 		Model model = (Model)table.getModel();
@@ -646,16 +663,19 @@ public class SkinChecker{
 			@Override
 			public boolean include(Entry<? extends Model, ? extends Object> entry){
 				Filter<?> filter = model.get((Integer)entry.getIdentifier());
-				return standard.isSelected() ? true : imagesMap.get("osu!").values().stream().flatMap(List::stream).noneMatch(filter::equals);
-				//entry.
-				//return true;//filter.apply(model.get((Integer)entry.getIdentifier()));
+				
+				if(!standard.isSelected() && imagesMap.get("osu!").values().stream().flatMap(List::stream).anyMatch(filter::equals)){
+					return false;
+				}
+				
+				return true;
 			}
 		});
 		table.setRowSorter(sorter);
 		
 		standard.addActionListener(e->model.fireTableDataChanged());
 		
-		content.add(standard, BorderLayout.PAGE_START);
+		content.add(buttons, BorderLayout.PAGE_START);
 		content.add(new JScrollPane(table), BorderLayout.CENTER);
 		
 		return content;
