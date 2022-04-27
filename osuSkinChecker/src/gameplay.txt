@@ -1,9 +1,9 @@
 ===> Scorebar
 - png scorebar-bg
 N png scorebar-colour
-- png scorebar-ki
-- png scorebar-kidanger
-- png scorebar-kidanger2
+O false scorebar-marker png scorebar-ki
+O false scorebar-marker png scorebar-kidanger
+O false scorebar-marker png scorebar-kidanger2
 - png scorebar-marker
 
 ===> Countdown
@@ -35,7 +35,7 @@ N png play-skip
 - png star2
 - png menu-button-background
 - png play-unranked
-- png play-warningarrow
+O false arrow-pause O false arrow-warning png play-warningarrow
 - png arrow-pause
 - png arrow-warning
 - png section-pass

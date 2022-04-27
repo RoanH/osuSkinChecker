@@ -54,6 +54,7 @@ N png menu-back
 - png selection-mod-flashlight
 - png selection-mod-relax
 - png selection-mod-relax2
+- png selection-mod-target
 - png selection-mod-spunout
 - png selection-mod-autoplay
 - png selection-mod-cinema
@@ -70,6 +71,8 @@ N png menu-back
 - png selection-mod-keycoop
 - png selection-mod-mirror
 - png selection-mod-random
+- png selection-mod-touchdevice
+- png selection-mod-freemodallowed
 
 ===> Ranking Screen
 - png ranking-title
@@ -80,7 +83,7 @@ N png menu-back
 - png ranking-perfect
 - png ranking-winner
 L 1 png ranking-replay
-L 1 png ranking-retry
+- png ranking-retry
 
 ===> Pause Screen
 - png,jpg,jpeg pause-overlay

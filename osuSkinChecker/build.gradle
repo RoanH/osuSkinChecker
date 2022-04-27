@@ -2,8 +2,8 @@ plugins{
 	id 'java'
 	id 'application'
 	id 'eclipse'
-	id 'com.github.johnrengelman.shadow' version '5.1.0'
-	id 'edu.sc.seis.launch4j' version '2.4.6'
+	id 'com.github.johnrengelman.shadow' version '7.1.2'
+	id 'edu.sc.seis.launch4j' version '2.5.1'
 }
 
 sourceSets{
@@ -23,35 +23,34 @@ javadoc{
 
 compileJava.options.encoding = 'UTF-8'
 sourceCompatibility = 1.8
-version = 'v2.3'//Don't forget SkinChecker.java
+version = 'v3.4'//Don't forget SkinChecker.java
 shadowJar.archiveName = 'SkinChecker-' + project.version + '.jar'
 
 repositories{
 	//Local cache
 	if(project.hasProperty("nexusPublic")){
 		maven{
+			allowInsecureProtocol = true
 			url "$nexusPublic"
 		}
 	}
-	jcenter()
-	maven{
-		url "https://jitpack.io"
-	}
+	mavenCentral()
 }
 
 dependencies{
-	implementation 'com.github.RoanH:Util:v1.3'
+	implementation 'dev.roanh.util:util:2.1'
 }
 
 application{
-	mainClassName = 'me.roan.osuskinchecker.SkinChecker'
+	mainClassName = 'dev.roanh.osuskinchecker.SkinChecker'
 }
 
 launch4j{
+	jarTask = project.tasks.shadowJar
 	mainClassName = application.mainClassName
-	jar = "${projectDir}/build/libs/" + shadowJar.archiveName
 	icon = "${projectDir}/skinchecker.ico"
 	jreMinVersion = project.sourceCompatibility
+	bundledJrePath = "%JAVA_HOME%"
 	outfile = project.name.substring(3) + '-' + project.version + '.exe'
 	fileDescription = project.name
 	version = project.version.substring(1)

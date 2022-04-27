@@ -13,7 +13,7 @@ C HitCirclePrefix default png -9
 ===> Hitcircle
 - png approachcircle
 - png hitcircle
-N png hitcircleoverlay
+- png hitcircleoverlay
 N png followpoint
 - png reversearrow
 - png sliderstartcircle
@@ -23,9 +23,9 @@ N png sliderendcircleoverlay
 
 ===> Slider
 N png sliderfollowcircle
-N M png sliderb
-- png sliderb-nd
-- png sliderb-spec
+M png sliderb
+O false sliderb png sliderb-nd
+O false sliderb png sliderb-spec
 - png sliderscorepoint
 
 ===> Spinner
@@ -59,7 +59,6 @@ L 1 png sliderpoint10
 L 1 png sliderpoint30
 
 ===> Target Practice
-- png selection-mod-target
 - png target
 - png targetoverlay
 - png target-pt-1
