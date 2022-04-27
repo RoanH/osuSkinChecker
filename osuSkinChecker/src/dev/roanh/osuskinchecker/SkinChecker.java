@@ -38,6 +38,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -184,10 +185,15 @@ public class SkinChecker{
 		}
 
 		imageTabs = new JTabbedPane();
-		soundTabs = new JTabbedPane();
 		mapToTabs(imageTabs, imagesMap);
+		imageTabs.insertTab("All", null, buildAllTab(imagesMap), null, 0);
+		imageTabs.setSelectedIndex(0);
+
+		soundTabs = new JTabbedPane();
 		mapToTabs(soundTabs, soundsMap);
-		
+		soundTabs.insertTab("All", null, new JScrollPane(getTableData(soundsMap.values().stream().flatMap(m->m.values().stream()).flatMap(List::stream).collect(Collectors.toList()))), null, 0);
+		soundTabs.setSelectedIndex(0);
+
 		skin = new JLabel("<html><i>no skin selected</i></html>");
 		buildGUI();
 	}
@@ -630,12 +636,9 @@ public class SkinChecker{
 			}
 			tabs.add(entry.getKey(), inner);
 		}
-		//tabs.insertTab("All", null, new JScrollPane(getTableData(all)), null, 0);
-		tabs.insertTab("All", null, buildAllTab(all), null, 0);
-		tabs.setSelectedIndex(0);
 	}
 	
-	private static JPanel buildAllTab(List<Filter<?>> all){//TODO replace with raw data
+	private static JPanel buildAllTab(Map<String, Map<String, List<Filter<?>>>> map){
 		JPanel content = new JPanel(new BorderLayout());
 		
 		JPanel buttons = new JPanel();
@@ -656,7 +659,7 @@ public class SkinChecker{
 		buttons.add(taiko);
 		buttons.add(new JPanel(new BorderLayout()));
 		
-		JTable table = getTableData(all);
+		JTable table = getTableData(map.values().stream().flatMap(m->m.values().stream()).flatMap(List::stream).collect(Collectors.toList()));
 		Model model = (Model)table.getModel();
 		TableRowSorter<Model> sorter = new TableRowSorter<Model>(model);
 		sorter.setRowFilter(new RowFilter<Model, Object>(){
