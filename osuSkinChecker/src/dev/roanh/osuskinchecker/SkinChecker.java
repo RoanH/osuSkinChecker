@@ -387,12 +387,14 @@ public class SkinChecker{
 		controls.setBorder(BorderFactory.createTitledBorder("Filter"));
 		content.add(controlPanel, BorderLayout.PAGE_START);
 
-		JPanel links = new JPanel(new GridLayout(2, 1));
+		JPanel links = new JPanel(new GridLayout(3, 1));
 		links.setBorder(BorderFactory.createTitledBorder("Links"));
 		JLabel sheet = new JLabel("<html>Spreadsheet&nbsp;with&nbsp;information&nbsp;on&nbsp;each&nbsp;file:&nbsp;<font color=blue><u>https://docs.google.com/spreadsheets/d/1bhnV-CQRMy3Z0npQd9XSoTdkYxz0ew5e648S00qkJZ8</font></u></html>");
 		JLabel wiki = new JLabel("<html>osu!&nbsp;wiki&nbsp;page&nbsp;on&nbsp;the&nbsp;skin.ini:&nbsp;<font color=blue><u>https://osu.ppy.sh/help/wiki/Skinning/skin.ini</font></u></html>");
+		JLabel tutorial = new JLabel("<html>Skinning&nbsp;tutorial:&nbsp;<font color=blue><u>https://skinship.xyz/tutorial/introduction</font></u></html>");
 		links.add(sheet);
 		links.add(wiki);
+		links.add(tutorial);
 		
 		JPanel info = new JPanel(new GridLayout(2, 1));
 		info.add(Util.getVersionLabel("osuSkinChecker", "v3.3"));//XXX the version number - don't forget build.gradle
@@ -407,6 +409,7 @@ public class SkinChecker{
 		sheet.addMouseListener(new ClickableLink("https://docs.google.com/spreadsheets/d/1bhnV-CQRMy3Z0npQd9XSoTdkYxz0ew5e648S00qkJZ8/edit"));
 		forum.addMouseListener(new ClickableLink("https://osu.ppy.sh/community/forums/topics/617168"));
 		git.addMouseListener(new ClickableLink("https://github.com/RoanH/osuSkinChecker"));
+		tutorial.addMouseListener(new ClickableLink("https://skinship.xyz/tutorial/introduction"));
 		
 		JPanel right = new JPanel(new GridLayout(2, 1));
 		right.setBorder(BorderFactory.createTitledBorder("Information"));
