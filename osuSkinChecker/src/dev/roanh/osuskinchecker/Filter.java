@@ -1,6 +1,6 @@
 package dev.roanh.osuskinchecker;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
@@ -62,9 +62,9 @@ public abstract class Filter<T>{
 	 * @return True if the file matched this filter,
 	 *         false otherwise.
 	 */
-	public boolean check(File file, Deque<String> path){
+	public boolean check(Path file, Deque<String> path){
 		//check extension here, delegate other checks to subclass
-		String fn = file.getName().toLowerCase(Locale.ROOT);
+		String fn = file.getFileName().toString().toLowerCase(Locale.ROOT);
 		for(String ext : extensions){
 			if(fn.endsWith("." + ext)){
 				if((fn.startsWith(name) && path.isEmpty()) || allowNonRoot()){
@@ -118,7 +118,7 @@ public abstract class Filter<T>{
 	 * @return A description of the matched file or <code>
 	 *         null</code> if this file did not match the filter.
 	 */
-	protected abstract T matches(File file, String fn, Deque<String> path);
+	protected abstract T matches(Path file, String fn, Deque<String> path);
 	
 	/**
 	 * Whether or not this filter matches files with a non
@@ -148,7 +148,7 @@ public abstract class Filter<T>{
 	 * Gets a list of all the files that matched this filter.
 	 * @return A list of all the files that matched this filter.
 	 */
-	public abstract List<File> getMatchedFiles();
+	public abstract List<Path> getMatchedFiles();
 	
 	@Override
 	public String toString(){

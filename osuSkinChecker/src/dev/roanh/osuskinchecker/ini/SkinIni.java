@@ -1,13 +1,12 @@
 package dev.roanh.osuskinchecker.ini;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +37,7 @@ public class SkinIni{
 	/**
 	 * The original file location of this skin.ini
 	 */
-	public File ini;
+	public Path ini;
 	/**
 	 * [General]<br>
 	 * <code>Name: &lt; skin name &gt;</code>
@@ -277,7 +276,7 @@ public class SkinIni{
 	 * @param file The skin.ini file to read
 	 * @throws IOException When an IOException occurs
 	 */
-	public void readIni(File file) throws IOException{
+	public void readIni(Path file) throws IOException{
 		ini = file;
 		usedDefault.clear();
 		data = new ArrayList<Section>();
@@ -343,7 +342,7 @@ public class SkinIni{
 		});
 		
 		String line = null;
-		try(BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))){
+		try(BufferedReader reader = new BufferedReader(new InputStreamReader(Files.newInputStream(file)))){
 			while((line = reader.readLine()) != null){
 				line = line.replaceFirst("^[\t ]*", "");
 				if(header.matcher(line.trim()).matches()){
@@ -458,29 +457,27 @@ public class SkinIni{
 	/**
 	 * Writes this skin.ini configuration
 	 * to the given file
-	 * @param file The file to write to
-	 * @throws FileNotFoundException When the given file
-	 *         does not exist
+	 * @param file The file to write to (will overwrite).
+	 * @throws IOException When an IO exception occurs.
 	 */
-	public void writeIni(File file) throws FileNotFoundException{
-		PrintWriter writer = new PrintWriter(new FileOutputStream(file));
+	public void writeIni(Path file) throws IOException{
+		try(PrintWriter writer = new PrintWriter(Files.newOutputStream(file, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE))){
+			for(Section section : data){
+				if(section.name != null){
+					writer.println(section.name);
+					if(section.isMania()){
+						writer.println("Keys: " + section.mania.keys);
+					}
+				}
+				for(Setting<?> setting : section.data){
+					if(setting.isEnabled() && setting.wasUpdated()){
+						writer.println(setting);
+					}
+				}
+			}
 
-		for(Section section : data){
-			if(section.name != null){
-				writer.println(section.name);
-				if(section.isMania()){
-					writer.println("Keys: " + section.mania.keys);
-				}
-			}
-			for(Setting<?> setting : section.data){
-				if(setting.isEnabled() && setting.wasUpdated()){
-					writer.println(setting);
-				}
-			}
+			writer.flush();
 		}
-
-		writer.flush();
-		writer.close();
 	}
 	
 	/**

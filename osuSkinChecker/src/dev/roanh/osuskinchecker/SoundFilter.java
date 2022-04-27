@@ -1,6 +1,6 @@
 package dev.roanh.osuskinchecker;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.Deque;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -15,7 +15,7 @@ import dev.roanh.osuskinchecker.ini.Version;
  * @see Filter
  * @see SoundModel
  */
-public final class SoundFilter extends Filter<File>{
+public final class SoundFilter extends Filter<Path>{
 	/**
 	 * Sequence regex.
 	 */
@@ -36,7 +36,7 @@ public final class SoundFilter extends Filter<File>{
 	}
 
 	@Override
-	protected File matches(File file, String fn, Deque<String> path){
+	protected Path matches(Path file, String fn, Deque<String> path){
 		fn = fn.substring(name.length());
 		if(fn.length() == 0){
 			return file;
@@ -64,7 +64,7 @@ public final class SoundFilter extends Filter<File>{
 	}
 
 	@Override
-	public List<File> getMatchedFiles(){
+	public List<Path> getMatchedFiles(){
 		return matches;
 	}
 }
