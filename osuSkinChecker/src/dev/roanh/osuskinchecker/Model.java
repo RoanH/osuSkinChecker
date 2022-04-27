@@ -57,6 +57,11 @@ public abstract class Model extends DefaultTableModel{
 		this.fireTableDataChanged();
 	}
 	
+	/**
+	 * Gets the table entry at the given index (row).
+	 * @param index The row to get.
+	 * @return The filter at the given table row.
+	 */
 	public Filter<?> get(int index){
 		return view.get(index);
 	}
