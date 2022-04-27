@@ -37,9 +37,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -48,9 +50,12 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
+import javax.swing.table.TableRowSorter;
 
 import dev.roanh.osuskinchecker.ini.SkinIni;
 import dev.roanh.osuskinchecker.ini.SkinIniTab;
@@ -179,10 +184,15 @@ public class SkinChecker{
 		}
 
 		imageTabs = new JTabbedPane();
-		soundTabs = new JTabbedPane();
 		mapToTabs(imageTabs, imagesMap);
+		imageTabs.insertTab("All", null, buildAllTab(imagesMap), null, 0);
+		imageTabs.setSelectedIndex(0);
+
+		soundTabs = new JTabbedPane();
 		mapToTabs(soundTabs, soundsMap);
-		
+		soundTabs.insertTab("All", null, new JScrollPane(getTableData(soundsMap.values().stream().flatMap(m->m.values().stream()).flatMap(List::stream).collect(Collectors.toList()))), null, 0);
+		soundTabs.setSelectedIndex(0);
+
 		skin = new JLabel("<html><i>no skin selected</i></html>");
 		buildGUI();
 	}
@@ -625,8 +635,72 @@ public class SkinChecker{
 			}
 			tabs.add(entry.getKey(), inner);
 		}
-		tabs.insertTab("All", null, new JScrollPane(getTableData(all)), null, 0);
-		tabs.setSelectedIndex(0);
+	}
+	
+	/**
+	 * Builds the images tab 'All' tab with gamemode filters.
+	 * @param map The image filter data.
+	 * @return The constructed 'All' tab.
+	 */
+	private static JPanel buildAllTab(Map<String, Map<String, List<Filter<?>>>> map){
+		JPanel content = new JPanel(new BorderLayout());
+		
+		JPanel buttons = new JPanel();
+		buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
+		JCheckBox standard = new JCheckBox("Standard", true);
+		JCheckBox ctb = new JCheckBox("Catch", true);
+		JCheckBox mania = new JCheckBox("Mania", true);
+		JCheckBox taiko = new JCheckBox("Taiko", true);
+		
+		buttons.add(new JLabel(" Included gamemodes "));
+		buttons.add(new JSeparator(JSeparator.VERTICAL));
+		buttons.add(standard);
+		buttons.add(new JSeparator(JSeparator.VERTICAL));
+		buttons.add(ctb);
+		buttons.add(new JSeparator(JSeparator.VERTICAL));
+		buttons.add(mania);
+		buttons.add(new JSeparator(JSeparator.VERTICAL));
+		buttons.add(taiko);
+		buttons.add(new JPanel(new BorderLayout()));
+		
+		JTable table = getTableData(map.values().stream().flatMap(m->m.values().stream()).flatMap(List::stream).collect(Collectors.toList()));
+		Model model = (Model)table.getModel();
+		TableRowSorter<Model> sorter = new TableRowSorter<Model>(model);
+		sorter.setRowFilter(new RowFilter<Model, Integer>(){
+			@Override
+			public boolean include(Entry<? extends Model, ? extends Integer> entry){
+				Filter<?> filter = model.get(entry.getIdentifier());
+				
+				if(!standard.isSelected() && imagesMap.get("osu!").values().stream().flatMap(List::stream).anyMatch(filter::equals)){
+					return false;
+				}
+				
+				if(!ctb.isSelected() && imagesMap.get("Catch").values().stream().flatMap(List::stream).anyMatch(filter::equals)){
+					return false;
+				}
+				
+				if(!taiko.isSelected() && imagesMap.get("Taiko").values().stream().flatMap(List::stream).anyMatch(filter::equals)){
+					return false;
+				}
+				
+				if(!mania.isSelected() && imagesMap.get("Mania").values().stream().flatMap(List::stream).anyMatch(filter::equals)){
+					return false;
+				}
+				
+				return true;
+			}
+		});
+		table.setRowSorter(sorter);
+		
+		standard.addActionListener(e->model.fireTableDataChanged());
+		ctb.addActionListener(e->model.fireTableDataChanged());
+		taiko.addActionListener(e->model.fireTableDataChanged());
+		mania.addActionListener(e->model.fireTableDataChanged());
+		
+		content.add(buttons, BorderLayout.PAGE_START);
+		content.add(new JScrollPane(table), BorderLayout.CENTER);
+		
+		return content;
 	}
 
 	/**
