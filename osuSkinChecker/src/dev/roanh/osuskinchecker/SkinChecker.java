@@ -590,7 +590,7 @@ public class SkinChecker{
 					path.push(f.getFileName().toString());
 					checkAllFiles(f, path, foreign);
 					path.pop();
-				}else{
+				}else if(Files.isRegularFile(f)){
 					//if none then foreign for sure
 					//no short circuiting because numbers can count for two filters, score and combo
 					boolean found = false;
