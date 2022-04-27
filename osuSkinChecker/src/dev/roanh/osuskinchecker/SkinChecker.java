@@ -668,12 +668,27 @@ public class SkinChecker{
 					return false;
 				}
 				
+				if(!ctb.isSelected() && imagesMap.get("Catch").values().stream().flatMap(List::stream).anyMatch(filter::equals)){
+					return false;
+				}
+				
+				if(!taiko.isSelected() && imagesMap.get("Taiko").values().stream().flatMap(List::stream).anyMatch(filter::equals)){
+					return false;
+				}
+				
+				if(!mania.isSelected() && imagesMap.get("Mania").values().stream().flatMap(List::stream).anyMatch(filter::equals)){
+					return false;
+				}
+				
 				return true;
 			}
 		});
 		table.setRowSorter(sorter);
 		
 		standard.addActionListener(e->model.fireTableDataChanged());
+		ctb.addActionListener(e->model.fireTableDataChanged());
+		taiko.addActionListener(e->model.fireTableDataChanged());
+		mania.addActionListener(e->model.fireTableDataChanged());
 		
 		content.add(buttons, BorderLayout.PAGE_START);
 		content.add(new JScrollPane(table), BorderLayout.CENTER);

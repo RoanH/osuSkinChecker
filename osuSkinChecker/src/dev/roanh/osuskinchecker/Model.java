@@ -58,7 +58,7 @@ public abstract class Model extends DefaultTableModel{
 	}
 	
 	public Filter<?> get(int index){
-		return data.get(index);
+		return view.get(index);
 	}
 
 	@Override
