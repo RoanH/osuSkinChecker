@@ -1,7 +1,8 @@
 package dev.roanh.osuskinchecker;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
@@ -17,7 +18,7 @@ public class ImageMeta{
 	/**
 	 * The image file.
 	 */
-	private final File file;
+	private final Path file;
 	/**
 	 * Whether or not this is a HD image file.
 	 */
@@ -33,7 +34,7 @@ public class ImageMeta{
 	 * @param file The file the metadata is for.
 	 * @param hd If the given file is a HD file.
 	 */
-	protected ImageMeta(File file, boolean hd){
+	protected ImageMeta(Path file, boolean hd){
 		this(file, hd, -1);
 	}
 	
@@ -44,7 +45,7 @@ public class ImageMeta{
 	 * @param hd If the given file is a HD file.
 	 * @param seq The animation sequence number.
 	 */
-	protected ImageMeta(File file, boolean hd, int seq){
+	protected ImageMeta(Path file, boolean hd, int seq){
 		this.file = file;
 		this.hd = hd;
 		this.sequenceNum = seq;
@@ -54,7 +55,7 @@ public class ImageMeta{
 	 * Gets the file this ImageMeta is for.
 	 * @return The file for this ImageMeta.
 	 */
-	public File getFile(){
+	public Path getFile(){
 		return file;
 	}
 	
@@ -106,23 +107,25 @@ public class ImageMeta{
 	 * @param img The image file to check
 	 * @return Whether or not the image is empty
 	 */
-	private static boolean isEmptyImage(File img){
-		if(img.exists()){
-			Iterator<ImageReader> readers = ImageIO.getImageReadersBySuffix(img.getName().substring(img.getName().lastIndexOf('.') + 1));
-			while(readers.hasNext()){
-				ImageReader reader = readers.next();
-				try(ImageInputStream in = ImageIO.createImageInputStream(img)){
-					reader.setInput(in);
-					boolean empty = reader.getWidth(0) == 1 && reader.getHeight(0) == 1;
-					reader.dispose();
-					return empty;
-				}catch(IOException e){
-					return false;
+	private static boolean isEmptyImage(Path img){
+		if(Files.exists(img)){
+			String name = img.getFileName().toString();
+			if(name.contains(".")){
+				Iterator<ImageReader> readers = ImageIO.getImageReadersBySuffix(name.substring(name.lastIndexOf('.') + 1));
+				while(readers.hasNext()){
+					ImageReader reader = readers.next();
+					try(ImageInputStream in = ImageIO.createImageInputStream(Files.newInputStream(img))){
+						reader.setInput(in);
+						boolean empty = reader.getWidth(0) == 1 && reader.getHeight(0) == 1;
+						reader.dispose();
+						return empty;
+					}catch(IOException e){
+						return false;
+					}
 				}
+				return false;
 			}
-			return false;
-		}else{
-			return true;
 		}
+		return true;
 	}
 }

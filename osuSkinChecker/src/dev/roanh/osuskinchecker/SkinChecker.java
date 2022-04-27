@@ -17,12 +17,13 @@ import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.time.Clock;
@@ -98,7 +99,7 @@ public class SkinChecker{
 	/**
 	 * Folder of the skin currently being checked.
 	 */
-	private static File skinFolder;
+	private static Path skinFolder;
 	/**
 	 * Whether or not to check for missing SD images.
 	 */
@@ -224,14 +225,8 @@ public class SkinChecker{
 		ActionListener defaultSave = (e)->{
 			if(skinIni != null){
 				try{
-					try{
-						skinIni.ini.createNewFile();
-					}catch(IOException e1){
-						Dialog.showErrorDialog("Failed to create the skin.ini file!");
-						return;
-					}
 					skinIni.writeIni(skinIni.ini);
-				}catch(FileNotFoundException e1){
+				}catch(IOException e1){
 					Dialog.showErrorDialog("An error occurred while writing the new skin.ini!");
 				}
 				Dialog.showMessageDialog("Succesfully saved the skin.ini file.");
@@ -242,7 +237,7 @@ public class SkinChecker{
 		saveBack.addActionListener((e)->{
 			if(skinIni != null){
 				try{
-					Files.move(skinIni.ini.toPath(), new File(skinIni.ini.getParentFile(), "backup-" + getDateTime() + ".ini").toPath(), StandardCopyOption.REPLACE_EXISTING);
+					Files.move(skinIni.ini, skinIni.ini.getParent().resolve("backup-" + getDateTime() + ".ini"), StandardCopyOption.REPLACE_EXISTING);
 				}catch(IOException e2){
 					Dialog.showErrorDialog("Failed to create a backup!");
 					return;
@@ -319,7 +314,7 @@ public class SkinChecker{
 		openFolder.addActionListener((e)->{
 			if(skinFolder != null){
 				try{
-					Desktop.getDesktop().open(skinFolder);
+					Desktop.getDesktop().open(skinFolder.toFile());
 				}catch(IOException e1){
 					e1.printStackTrace();
 				}
@@ -463,7 +458,7 @@ public class SkinChecker{
 						@SuppressWarnings("unchecked")
 						List<File> files = (List<File>)dtde.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
 						if(files.size() > 0 && files.get(0).isDirectory()){
-							checkSkin(files.get(0));
+							checkSkin(files.get(0).toPath());
 						}
 					}catch(UnsupportedFlavorException | IOException e){
 						//Pity, but not important
@@ -491,30 +486,30 @@ public class SkinChecker{
 	 * @param folder The skin folder to check
 	 * @throws IOException When an IOException occurs
 	 */
-	public static void checkSkin(File folder) throws IOException{
+	public static void checkSkin(Path folder) throws IOException{
 		if(folder == null){
 			Path selected = Dialog.showFolderOpenDialog();
 			if(selected == null || Files.notExists(selected)){
 				Dialog.showErrorDialog("No skin selected!");
 				return;
 			}else{
-				folder = selected.toFile();
+				folder = selected;
 			}
 		}
 
-		File iniFile = new File(folder, "skin.ini");
+		Path iniFile = folder.resolve("skin.ini");
 		
-		if(!iniFile.exists()){
+		if(Files.notExists(iniFile)){
 			int option = Dialog.showDialog("This folder doesn't have a skin.ini file.\nWithout this file this skin won't even be recognized as a skin!", new String[]{"OK", "Add empty skin.ini"});
 			if(option == 1){
-				iniFile.createNewFile();
+				Files.createFile(iniFile);
 			}else{
 				return;
 			}
 		}
 		
 		skinFolder = folder;
-		skin.setText(skinFolder.getName());
+		skin.setText(skinFolder.getFileName().toString());
 
 		executeChecks(skinFolder, iniFile);
 	}
@@ -524,14 +519,14 @@ public class SkinChecker{
 	 * @param skinFolder The skin folder.
 	 * @param ini The <tt>skin.ini</tt> file.
 	 */
-	private static void executeChecks(File skinFolder, File ini){
+	private static void executeChecks(Path skinFolder, Path ini){
 		skinIni = new SkinIni();
 		try{
 			skinIni.readIni(ini);
 		}catch(Throwable e){
 			try{
-				String name = "error-" + getDateTime() + ".txt";
-				Path err = new File(name).toPath();
+				//Path err = new File(name).toPath();
+				Path err = Paths.get("error-" + getDateTime() + ".txt");
 				List<String> errl = new ArrayList<String>(30);
 				errl.add(e.toString());
 				for(StackTraceElement elem : e.getStackTrace()){
@@ -552,8 +547,13 @@ public class SkinChecker{
 		}
 
 		Deque<String> path = new ArrayDeque<String>();
-		List<File> foreign = new ArrayList<File>();
-		checkAllFiles(skinFolder, path, foreign);
+		List<Path> foreign = new ArrayList<Path>();
+		try{
+			checkAllFiles(skinFolder, path, foreign);
+		}catch(IOException e){
+			Dialog.showErrorDialog("An internal error occurred parsing the given skin!\nCause: " + e.getMessage());
+			return;
+		}
 		
 		for(Model m : listeners){
 			m.updateView(version);
@@ -561,7 +561,7 @@ public class SkinChecker{
 		
 		foreignFiles.clear();
 		int offset = 1 + skinFolder.toString().length();
-		for(File file : foreign){
+		for(Path file : foreign){
 			if(!file.equals(ini)){
 				foreignFiles.addElement(file.toString().substring(offset));
 			}
@@ -569,7 +569,7 @@ public class SkinChecker{
 		for(Filter<?> filter : filters){
 			if(filter instanceof ImageFilter){
 				if(((ImageFilter)filter).isLegacy(version)){
-					for(File file : filter.getMatchedFiles()){
+					for(Path file : filter.getMatchedFiles()){
 						foreignFiles.addElement(file.toString().substring(offset));
 					}
 				}
@@ -582,22 +582,25 @@ public class SkinChecker{
 	 * @param dir The directory the parse.
 	 * @param path The path stack.
 	 * @param foreign A list of files that did not match any filter.
+	 * @throws IOException When an IO exception occurs.
 	 */
-	private static void checkAllFiles(File dir, Deque<String> path, List<File> foreign){
-		for(File f : dir.listFiles()){
-			if(f.isDirectory()){
-				path.push(f.getName());
-				checkAllFiles(f, path, foreign);
-				path.pop();
-			}else{
-				//if none then foreign for sure
-				//no short circuiting because numbers can count for two filters, score and combo
-				boolean found = false;
-				for(Filter<?> filter : filters){
-					found |= filter.check(f, path);
-				}
-				if(!found){
-					foreign.add(f);
+	private static void checkAllFiles(Path dir, Deque<String> path, List<Path> foreign) throws IOException{
+		try(DirectoryStream<Path> files = Files.newDirectoryStream(dir)){
+			for(Path f : files){
+				if(Files.isDirectory(f)){
+					path.push(f.getFileName().toString());
+					checkAllFiles(f, path, foreign);
+					path.pop();
+				}else{
+					//if none then foreign for sure
+					//no short circuiting because numbers can count for two filters, score and combo
+					boolean found = false;
+					for(Filter<?> filter : filters){
+						found |= filter.check(f, path);
+					}
+					if(!found){
+						foreign.add(f);
+					}
 				}
 			}
 		}

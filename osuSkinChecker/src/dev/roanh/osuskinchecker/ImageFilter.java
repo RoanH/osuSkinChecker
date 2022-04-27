@@ -1,6 +1,6 @@
 package dev.roanh.osuskinchecker;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.Iterator;
@@ -229,7 +229,7 @@ public class ImageFilter extends Filter<ImageMeta>{
 	}
 
 	@Override
-	protected ImageMeta matches(File file, String fn, Deque<String> path){
+	protected ImageMeta matches(Path file, String fn, Deque<String> path){
 		boolean hd = false;
 		
 		//name without base
@@ -354,7 +354,7 @@ public class ImageFilter extends Filter<ImageMeta>{
 	}
 
 	@Override
-	public List<File> getMatchedFiles(){
+	public List<Path> getMatchedFiles(){
 		return matches.stream().map(ImageMeta::getFile).collect(Collectors.toList());
 	}
 	
