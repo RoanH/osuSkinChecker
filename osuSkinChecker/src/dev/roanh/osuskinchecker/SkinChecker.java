@@ -2,7 +2,6 @@ package dev.roanh.osuskinchecker;
 
 import java.awt.BorderLayout;
 import java.awt.Desktop;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -638,6 +637,11 @@ public class SkinChecker{
 		}
 	}
 	
+	/**
+	 * Builds the images tab 'All' tab with gamemode filters.
+	 * @param map The image filter data.
+	 * @return The constructed 'All' tab.
+	 */
 	private static JPanel buildAllTab(Map<String, Map<String, List<Filter<?>>>> map){
 		JPanel content = new JPanel(new BorderLayout());
 		
