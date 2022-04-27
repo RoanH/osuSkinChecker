@@ -525,7 +525,6 @@ public class SkinChecker{
 			skinIni.readIni(ini);
 		}catch(Throwable e){
 			try{
-				//Path err = new File(name).toPath();
 				Path err = Paths.get("error-" + getDateTime() + ".txt");
 				List<String> errl = new ArrayList<String>(30);
 				errl.add(e.toString());
