@@ -652,7 +652,7 @@ public class SkinChecker{
 		JCheckBox mania = new JCheckBox("Mania", true);
 		JCheckBox taiko = new JCheckBox("Taiko", true);
 		
-		buttons.add(new JLabel(" Gamemode includes "));
+		buttons.add(new JLabel(" Included gamemodes "));
 		buttons.add(new JSeparator(JSeparator.VERTICAL));
 		buttons.add(standard);
 		buttons.add(new JSeparator(JSeparator.VERTICAL));
