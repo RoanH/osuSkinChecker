@@ -43,4 +43,4 @@ Format for the .txt files that contain all the data about all the files.
 8. The filename of the file is the name of the file without the extension, hd indicator and animation indicators.
    If this ends up being an empty string - should be used instead.
 
-9. The extra layer of tabs for mania is created programmatically and this part of this specification.
+9. The extra layer of tabs for mania is created programmatically and thus not part of this specification.
