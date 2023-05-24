@@ -8,7 +8,7 @@ So a little while ago I was asked to write a program to show what files were mis
 And now I'm finally done :D
 
 The program looks like this:<br>
-![GUI](https://i.imgur.com/gyABSvL.png)
+![GUI](https://media.roanh.dev/skinchecker/gui.png)
 
 It is a simple program that shows you which elements of your skin are skinned and which elements are not. It also shows if there's an SD/HD image in the skin for each element or not. For files that can be animated it also shows whether or not they are animated and if they are how many frames the animation consists of. Lastly, it also reports a missing skin.ini file and will read and use custom paths from the skin.ini if they exist. The program also includes an editor for the `skin.ini`.
 
