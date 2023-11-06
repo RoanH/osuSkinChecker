@@ -4,12 +4,17 @@
 - png menu-snow
 - png options-offset-tick
 
+===> Song Selection Background
+- png songselect-bottom
+- png songselect-top
+
 ===> Song Selection Carousel
 - png menu-button-background
 - png star
 - png star2
 
 ===> Song Selection Buttons
+- png rank-forum
 - png selection-mode
 - png selection-mode-over
 - png selection-mods
