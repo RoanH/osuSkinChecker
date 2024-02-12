@@ -430,7 +430,6 @@ public class SkinChecker{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		
-		
 		new DropTarget(frame, new DropTargetListener(){
 
 			@Override
