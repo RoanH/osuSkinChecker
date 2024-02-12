@@ -42,7 +42,7 @@ sourceCompatibility = 1.8
 javadoc.options.memberLevel = JavadocMemberLevel.PRIVATE
 group = 'dev.roanh.osuskinchecker'
 ext.artifact = 'osuskinchecker'
-shadowJar.archiveName = 'osuSkinChecker-v' + version + '.jar'
+shadowJar.archiveName = 'SkinChecker-v' + version + '.jar'
 application.mainClassName = 'dev.roanh.osuskinchecker.SkinChecker'
 
 spotbugs{
@@ -71,7 +71,7 @@ publishing{
 			pom{
 				name = project.eclipse.project.name
 				description = 'Simple program to check for missing files in an osu! skin.'
-				url = 'https://github.com/RoanH/osuSkinChecker'
+				url = 'https://github.com/RoanH/SkinChecker'
 				licenses{
 					license{
 						name = 'GNU General Public License v3.0'
@@ -86,9 +86,9 @@ publishing{
 					}
 				}
 				scm{
-					connection = 'scm:git:git@github.com:RoanH/osuSkinChecker.git'
+					connection = 'scm:git:git@github.com:RoanH/SkinChecker.git'
 					developerConnection = 'scm:git:git@git.roanh.dev:roan/osuSkinChecker.git'
-					url = 'https://github.com/RoanH/osuSkinChecker'
+					url = 'https://github.com/RoanH/SkinChecker'
 				}
 			}
 		}
