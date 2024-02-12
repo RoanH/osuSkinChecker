@@ -2,7 +2,7 @@ image: openjdk:8
 
 variables:
   SUFFIX: "${CI_PIPELINE_ID}-${CI_COMMIT_REF_NAME}"
-  PROJECTNAME: osuSkinChecker
+  PROJECTNAME: SkinChecker
 
 before_script:
   - java -version
