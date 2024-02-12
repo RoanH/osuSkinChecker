@@ -613,7 +613,6 @@ public class SkinChecker{
 	 */
 	private static void mapToTabs(JTabbedPane tabs, Map<String, Map<String, List<Filter<?>>>> map){
 		tabs.removeAll();
-		List<Filter<?>> all = new ArrayList<Filter<?>>(filters.size());
 		for(Entry<String, Map<String, List<Filter<?>>>> entry : map.entrySet()){
 			JTabbedPane inner = new JTabbedPane();
 			if(entry.getKey().equals("Mania")){
@@ -633,7 +632,6 @@ public class SkinChecker{
 				}
 			}else{
 				for(Entry<String, List<Filter<?>>> e : entry.getValue().entrySet()){
-					all.addAll(e.getValue());
 					inner.add(e.getKey(), new JScrollPane(getTableData(e.getValue())));
 				}
 			}
