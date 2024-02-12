@@ -50,5 +50,28 @@
     <Field name="mania"/>
     <Class name="dev.roanh.osuskinchecker.ini.Section"/>
   </Match>
+  
+  <Match>
+    <!-- Existing files should have a filename -->
+    <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    <Or>
+      <Method name="check"/>
+      <Method name="isEmptyImage"/>
+      <Method name="checkAllFiles"/>
+      <Method name="checkSkin"/>
+    </Or>
+    <Or>
+      <Class name="dev.roanh.osuskinchecker.Filter"/>
+      <Class name="dev.roanh.osuskinchecker.ImageMeta"/>
+      <Class name="dev.roanh.osuskinchecker.SkinChecker"/>
+    </Or>
+  </Match>
+  
+  <Match>
+    <!-- Regular files should have a parent -->
+    <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    <Class name="dev.roanh.osuskinchecker.SkinChecker"/>
+    <Method name="buildGUI$2"/>
+  </Match>
 
 </FindBugsFilter>
