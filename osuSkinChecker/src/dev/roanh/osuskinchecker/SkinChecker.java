@@ -19,7 +19,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -341,7 +343,7 @@ public class SkinChecker{
 					return;
 				}
 				
-				try(PrintWriter writer = new PrintWriter(Files.newOutputStream(dest))){
+				try(PrintWriter writer = new PrintWriter(new OutputStreamWriter(Files.newOutputStream(dest), StandardCharsets.UTF_8))){
 					writer.println("========== Images ==========");
 					for(Entry<String, Map<String, List<Filter<?>>>> m : imagesMap.entrySet()){
 						for(Entry<String, List<Filter<?>>> ml : m.getValue().entrySet()){
@@ -749,7 +751,7 @@ public class SkinChecker{
 	 */
 	private static Map<String, List<Filter<?>>> readDataFile(String name, boolean isSound) throws IOException{
 		Map<String, List<Filter<?>>> data = new LinkedHashMap<String, List<Filter<?>>>();
-		try(BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(name)))){
+		try(BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(name), StandardCharsets.UTF_8))){
 			List<Filter<?>> writing = null;
 			
 			String line;

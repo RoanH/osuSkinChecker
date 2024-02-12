@@ -3,6 +3,7 @@ package dev.roanh.osuskinchecker.ini;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -461,7 +462,7 @@ public class SkinIni{
 	 * @throws IOException When an IO exception occurs.
 	 */
 	public void writeIni(Path file) throws IOException{
-		try(PrintWriter writer = new PrintWriter(Files.newOutputStream(file))){
+		try(PrintWriter writer = new PrintWriter(new OutputStreamWriter(Files.newOutputStream(file), StandardCharsets.UTF_8))){
 			for(Section section : data){
 				if(section.name != null){
 					writer.println(section.name);
