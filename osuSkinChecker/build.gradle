@@ -110,7 +110,7 @@ launch4j{
 	icon = "${projectDir}/skinchecker.ico"
 	jreMinVersion = project.sourceCompatibility
 	bundledJrePath = "%JAVA_HOME%"
-	outfile = rootProject.name + '-v' + project.version + '.exe'
+	outfile = 'SkinChecker-v' + project.version + '.exe'
 	fileDescription = "SkinChecker"
 	productName = rootProject.name
 	version = project.version
