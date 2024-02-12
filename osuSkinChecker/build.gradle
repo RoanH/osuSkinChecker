@@ -111,7 +111,7 @@ launch4j{
 	jreMinVersion = project.sourceCompatibility
 	bundledJrePath = "%JAVA_HOME%"
 	outfile = rootProject.name + '-v' + project.version + '.exe'
-	fileDescription = "osuSkinChecker"
+	fileDescription = "SkinChecker"
 	productName = rootProject.name
 	version = project.version
 	textVersion = project.version
