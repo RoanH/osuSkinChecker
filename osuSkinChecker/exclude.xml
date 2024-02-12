@@ -73,5 +73,15 @@
     <Class name="dev.roanh.osuskinchecker.SkinChecker"/>
     <Method name="buildGUI$2"/>
   </Match>
+  
+  <Match>
+    <!-- Not ideal, but these are set in the read method which is basically the constructor -->
+    <Bug pattern="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR"/>
+    <Class name="dev.roanh.osuskinchecker.ini.SkinIni"/>
+    <Or>
+      <Field name="data"/>
+      <Field name="ini"/>
+    </Or>
+  </Match>
 
 </FindBugsFilter>
