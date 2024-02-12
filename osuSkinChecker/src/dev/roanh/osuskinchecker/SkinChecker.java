@@ -201,6 +201,7 @@ public class SkinChecker{
 	/**
 	 * Builds the GUI
 	 */
+	@SuppressWarnings("unused")
 	public static void buildGUI(){
 		try{
 			Image icon = ImageIO.read(ClassLoader.getSystemResource("skinchecker.png"));
@@ -428,6 +429,7 @@ public class SkinChecker{
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+		
 		
 		new DropTarget(frame, new DropTargetListener(){
 
