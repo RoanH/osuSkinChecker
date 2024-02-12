@@ -1,7 +1,8 @@
 image: openjdk:8
 
 variables:
-  PROJECTNAME: "osuSkinChecker"
+  SUFFIX: "${CI_PIPELINE_ID}-${CI_COMMIT_REF_NAME}"
+  PROJECTNAME: osuSkinChecker
 
 before_script:
   - java -version
@@ -10,9 +11,27 @@ before_script:
   - chmod -R 755 ./*
 
 stages:
+  - check
   - compile
   - status
   - javadoc
+
+endings:
+  allow_failure: true
+  script: curl ${SERVER}ci/lf.sh | bash
+  stage: check
+
+spotbugs:
+  allow_failure: true
+  script:
+    - ./gradlew -PrefName=${CI_COMMIT_REF_NAME} -PnexusPublic=${NEXUS_PUBLIC} :spotbugsMain
+  stage: check
+  artifacts:
+    name: "SpotBugs-${SUFFIX}"
+    expire_in: 1 week
+    when: always
+    paths:
+      - ./${PROJECTNAME}/build/reports/spotbugs/main/spotbugs.html
 
 pending:
   allow_failure: true
@@ -39,26 +58,25 @@ verify:
 
 javadoc:
   script:
-    - mkdir ../javadoc
-    - ./gradlew -PnexusPublic=${NEXUS_PUBLIC} javadoc
-    - mv ./build/docs/javadoc/* ../javadoc
+    - ./gradlew -PrefName=${CI_COMMIT_REF_NAME} -PnexusPublic=${NEXUS_PUBLIC} :javadoc
+    - mv ./build/docs/javadoc ../
   stage: javadoc
   artifacts:
-    name: "$PROJECTNAME"
+    name: "Javadoc-${SUFFIX}"
     expire_in: 1 week
     paths:
       - javadoc/
 
 compile:
   script:
-    - ./gradlew -PnexusPublic=${NEXUS_PUBLIC} shadowJar
-    - ./gradlew -PnexusPublic=${NEXUS_PUBLIC} createExe
-    - mv ./build/libs/* ../
-    - mv ./build/launch4j/*.exe ../
+    - ./gradlew -PrefName=${CI_COMMIT_REF_NAME} -PnexusPublic=${NEXUS_PUBLIC} :shadowJar
+    - ./gradlew -PrefName=${CI_COMMIT_REF_NAME} -PnexusPublic=${NEXUS_PUBLIC} :createExe
+    - mv ./build/libs/* ..
+    - mv ./build/launch4j/*.exe ..
   stage: compile
   artifacts:
-    name: "${PROJECTNAME}"
+    name: osuSkinChecker-${SUFFIX}
     expire_in: 1 week
     paths:
-      - ${PROJECTNAME:3}-*.jar
-      - ${PROJECTNAME:3}-*.exe
+      - ${PROJECTNAME}-*.jar
+      - ${PROJECTNAME}-*.exe
