@@ -620,7 +620,7 @@ public class SkinChecker{
 				//The mania tab is special and splits the sub items with an extra layer of tabs
 				Map<String, JTabbedPane> keys = new HashMap<String, JTabbedPane>();
 				for(int i = 1; i <= 18; i++){
-					if(i < 10 || (i >= 10 && i % 2 == 0)){
+					if(i < 10 || i % 2 == 0){
 						JTabbedPane pane = new JTabbedPane();
 						inner.addTab(i + "K", pane);
 						keys.put(i + "K", pane);
