@@ -4,9 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -342,7 +342,7 @@ public class SkinIni{
 		});
 		
 		String line = null;
-		try(BufferedReader reader = new BufferedReader(new InputStreamReader(Files.newInputStream(file)))){
+		try(BufferedReader reader = new BufferedReader(new InputStreamReader(Files.newInputStream(file), StandardCharsets.UTF_8))){
 			while((line = reader.readLine()) != null){
 				line = line.replaceFirst("^[\t ]*", "");
 				if(header.matcher(line.trim()).matches()){
@@ -461,7 +461,7 @@ public class SkinIni{
 	 * @throws IOException When an IO exception occurs.
 	 */
 	public void writeIni(Path file) throws IOException{
-		try(PrintWriter writer = new PrintWriter(Files.newOutputStream(file, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE))){
+		try(PrintWriter writer = new PrintWriter(Files.newOutputStream(file))){
 			for(Section section : data){
 				if(section.name != null){
 					writer.println(section.name);
