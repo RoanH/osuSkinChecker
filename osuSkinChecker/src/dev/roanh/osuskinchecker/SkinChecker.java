@@ -340,8 +340,7 @@ public class SkinChecker{
 					return;
 				}
 				
-				try{
-					final PrintWriter writer = new PrintWriter(Files.newOutputStream(dest, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE, StandardOpenOption.CREATE));
+				try(PrintWriter writer = new PrintWriter(Files.newOutputStream(dest))){
 					writer.println("========== Images ==========");
 					for(Entry<String, Map<String, List<Filter<?>>>> m : imagesMap.entrySet()){
 						for(Entry<String, List<Filter<?>>> ml : m.getValue().entrySet()){
@@ -364,12 +363,10 @@ public class SkinChecker{
 						}
 					}
 					writer.flush();
-					writer.close();
 					Dialog.showMessageDialog("File list succesfully exported");
 				}catch(IOException e1){
 					Dialog.showErrorDialog("An error occured: " + e1.getMessage());
 				}
-
 			}else{
 				Dialog.showErrorDialog("No skin currently selected!");
 			}
@@ -753,26 +750,28 @@ public class SkinChecker{
 	 */
 	private static Map<String, List<Filter<?>>> readDataFile(String name, boolean isSound) throws IOException{
 		Map<String, List<Filter<?>>> data = new LinkedHashMap<String, List<Filter<?>>>();
-		BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(name)));
-		List<Filter<?>> writing = null;
-		String line;
-		while((line = reader.readLine()) != null){
-			if(line.trim().isEmpty()){
-				continue;
-			}else if(line.startsWith("===>")){
-				if(writing != null){
-					filters.addAll(writing);
+		try(BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(name)))){
+			List<Filter<?>> writing = null;
+			
+			String line;
+			while((line = reader.readLine()) != null){
+				if(line.trim().isEmpty()){
+					continue;
+				}else if(line.startsWith("===>")){
+					if(writing != null){
+						filters.addAll(writing);
+					}
+					writing = new ArrayList<Filter<?>>();
+					data.put(line.substring(4).trim(), writing);
+				}else{
+					String[] args = line.split(" +");
+					writing.add(isSound ?  new SoundFilter(args) : new ImageFilter(args));
 				}
-				writing = new ArrayList<Filter<?>>();
-				data.put(line.substring(4).trim(), writing);
-			}else{
-				String[] args = line.split(" +");
-				writing.add(isSound ?  new SoundFilter(args) : new ImageFilter(args));
 			}
+			
+			filters.addAll(writing);
+			return data;
 		}
-		filters.addAll(writing);
-		reader.close();
-		return data;
 	}
 	
 	/**
