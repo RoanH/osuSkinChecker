@@ -75,7 +75,7 @@ compile:
     - mv ./build/launch4j/*.exe ..
   stage: compile
   artifacts:
-    name: osuSkinChecker-${SUFFIX}
+    name: SkinChecker-${SUFFIX}
     expire_in: 1 week
     paths:
       - ${PROJECTNAME}-*.jar
