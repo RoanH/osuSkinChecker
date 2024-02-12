@@ -532,7 +532,7 @@ public class SkinChecker{
 				}
 				Files.write(err, errl, StandardOpenOption.CREATE_NEW);
 				Dialog.showErrorDialog("An error occurred while reading the skin.ini\nThe error was saved to: " + err.toAbsolutePath().toString() + "\n" + e.getMessage());
-			}catch(Exception e1){
+			}catch(Throwable e1){
 				Dialog.showErrorDialog("An internal error occurred!");
 			}
 			return;

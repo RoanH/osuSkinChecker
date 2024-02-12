@@ -425,7 +425,7 @@ public class SkinIni{
 					section.data.add(setting);
 				}
 			}	
-		}catch(Exception e){
+		}catch(Throwable e){
 			e.printStackTrace();
 			throw new IllegalArgumentException("Error on line: " + line + "\nCause: " + e.getMessage(), e);
 		}
@@ -1373,10 +1373,6 @@ public class SkinIni{
 		 */
 		protected static final class Column{
 			/**
-			 * The key number these column setting are for
-			 */
-			protected final int key;
-			/**
 			 * [Mania]<br>
 			 * <code>KeyFlipWhenUpsideDown#: &lt; 0:1 &gt;</code>
 			 */
@@ -1454,15 +1450,11 @@ public class SkinIni{
 			protected final Setting<String> noteImageT;
 			
 			/**
-			 * Constructs a new column
-			 * setting object for the
-			 * given key number
-			 * @param key The column
-			 *        these setting are for
+			 * Constructs a new column setting object
+			 * for the given key number.
+			 * @param key The column these setting are for.
 			 */
 			private Column(int key){
-				this.key = key;
-				
 				colour = new Setting<Colour>("Colour" + key, new Colour(0, 0, 0, 255));
 				colourLight = new Setting<Colour>("ColourLight" + key, new Colour(255, 255, 255));
 				

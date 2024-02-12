@@ -34,5 +34,21 @@
     <Bug pattern="SF_SWITCH_FALLTHROUGH"/>
     <Class name="dev.roanh.osuskinchecker.ImageFilter"/>
   </Match>
+  
+  <Match>
+    <!-- Not intended to be serialisable -->
+    <Bug pattern="SE_BAD_FIELD"/>
+    <Or>
+      <Class name="dev.roanh.osuskinchecker.ini.SkinIniTab$ColorEditor"/>
+      <Class name="dev.roanh.osuskinchecker.ini.SkinIniTab$ColorSelector"/>
+    </Or>
+  </Match>
+  
+  <Match>
+    <!-- Not ideal, but very error prone to change while it works fine right now -->
+    <Bug pattern="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR"/>
+    <Field name="mania"/>
+    <Class name="dev.roanh.osuskinchecker.ini.Section"/>
+  </Match>
 
 </FindBugsFilter>
