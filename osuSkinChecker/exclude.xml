@@ -12,5 +12,21 @@
       <Bug pattern="MS_PKGPROTECT"/>
     </Or>
   </Match>
+  
+  <Match>
+    <!-- For the SkinIniTab -->
+    <Bug pattern="CI_CONFUSED_INHERITANCE"/>
+    <Or>
+      <Class name="dev.roanh.osuskinchecker.ini.SkinIni$ManiaIni"/>
+      <Class name="dev.roanh.osuskinchecker.ini.SkinIni$ManiaIni$Column"/>
+    </Or>
+  </Match>
+  
+  <Match>
+    <!-- This is fine and one of the more readable methods to do this -->
+    <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"/>
+    <Class name="dev.roanh.osuskinchecker.ini.SkinIni"/>
+    <Field name="singleUpdateMode"/>
+  </Match>
 
 </FindBugsFilter>
