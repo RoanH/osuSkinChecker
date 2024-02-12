@@ -78,5 +78,5 @@ compile:
     name: SkinChecker-${SUFFIX}
     expire_in: 1 week
     paths:
-      - ${PROJECTNAME}-*.jar
-      - ${PROJECTNAME}-*.exe
+      - SkinChecker-*.jar
+      - SkinChecker-*.exe
