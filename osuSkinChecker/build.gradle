@@ -71,7 +71,7 @@ publishing{
 			pom{
 				name = project.eclipse.project.name
 				description = 'Simple program to check for missing files in an osu! skin.'
-				url = 'https://github.com/RoanH/SkinChecker'
+				url = 'https://github.com/RoanH/osuSkinChecker'
 				licenses{
 					license{
 						name = 'GNU General Public License v3.0'
@@ -86,9 +86,9 @@ publishing{
 					}
 				}
 				scm{
-					connection = 'scm:git:git@github.com:RoanH/SkinChecker.git'
+					connection = 'scm:git:git@github.com:RoanH/osuSkinChecker.git'
 					developerConnection = 'scm:git:git@git.roanh.dev:roan/osuSkinChecker.git'
-					url = 'https://github.com/RoanH/SkinChecker'
+					url = 'https://github.com/RoanH/osuSkinChecker'
 				}
 			}
 		}
