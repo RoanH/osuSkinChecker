@@ -90,6 +90,8 @@ public class ImageFilter extends Filter<ImageMeta>{
 			case "O":
 				overrides.add(new OverrideRelation(Boolean.parseBoolean(args[++c]), args[++c]));
 				break;
+			default:
+				break;
 			}
 			c++;
 		}

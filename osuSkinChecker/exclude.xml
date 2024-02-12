@@ -28,5 +28,11 @@
     <Class name="dev.roanh.osuskinchecker.ini.SkinIni"/>
     <Field name="singleUpdateMode"/>
   </Match>
+  
+  <Match>
+    <!-- Intentional -->
+    <Bug pattern="SF_SWITCH_FALLTHROUGH"/>
+    <Class name="dev.roanh.osuskinchecker.ImageFilter"/>
+  </Match>
 
 </FindBugsFilter>
