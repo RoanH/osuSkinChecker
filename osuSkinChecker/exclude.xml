@@ -71,7 +71,6 @@
     <!-- Regular files should have a parent -->
     <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
     <Class name="dev.roanh.osuskinchecker.SkinChecker"/>
-    <Method name="buildGUI$2"/>
   </Match>
   
   <Match>
