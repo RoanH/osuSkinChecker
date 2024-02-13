@@ -1,4 +1,4 @@
-# <img src="osuSkinChecker/src/skinchecker.png" width="40"/> osu! Skin Checker [![](https://img.shields.io/github/release/RoanH/osuSkinChecker.svg)](https://github.com/RoanH/osuSkinChecker/releases) [![](https://img.shields.io/github/downloads/RoanH/osuSkinChecker/total.svg)](#downloads)
+# <img src="osuSkinChecker/resources/skinchecker.png" width="40"/> osu! Skin Checker [![](https://img.shields.io/github/release/RoanH/osuSkinChecker.svg)](https://github.com/RoanH/osuSkinChecker/releases) [![](https://img.shields.io/github/downloads/RoanH/osuSkinChecker/total.svg)](#downloads)
 Simple program to check if all the elements for an osu! skin are present.
 
 [Jump directly to downloads](#downloads)
