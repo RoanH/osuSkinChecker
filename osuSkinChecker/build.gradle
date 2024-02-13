@@ -1,30 +1,23 @@
 plugins{
+	id 'eclipse'
 	id 'java'
 	id 'application'
-	id 'eclipse'
+	id 'maven-publish'
 	id 'com.github.johnrengelman.shadow' version '7.1.2'
 	id 'edu.sc.seis.launch4j' version '2.5.1'
+	id 'com.github.spotbugs' version '5.0.14'
 }
 
 sourceSets{
 	main{
-		java{
-			srcDirs = ['src']
-		}
-		resources{
-			srcDirs = ['src']
-		}
+		java.srcDirs = ['src']
+		resources.srcDirs = ['resources']
 	}
 }
 
-javadoc{
-	options.memberLevel = JavadocMemberLevel.PRIVATE
+dependencies{
+	implementation 'dev.roanh.util:util:2.1'
 }
-
-compileJava.options.encoding = 'UTF-8'
-sourceCompatibility = 1.8
-version = 'v3.4'//Don't forget SkinChecker.java
-shadowJar.archiveName = 'SkinChecker-' + project.version + '.jar'
 
 repositories{
 	//Local cache
@@ -37,12 +30,78 @@ repositories{
 	mavenCentral()
 }
 
-dependencies{
-	implementation 'dev.roanh.util:util:2.1'
+version = findProperty("refName") ?: 'SNAPSHOT'
+if(version.matches("v\\d+\\.\\d+")){
+	version = version.substring(1)
 }
 
-application{
-	mainClassName = 'dev.roanh.osuskinchecker.SkinChecker'
+eclipse.classpath.downloadSources = true
+eclipse.classpath.downloadJavadoc = true
+compileJava.options.encoding = 'UTF-8'
+sourceCompatibility = 1.8
+javadoc.options.memberLevel = JavadocMemberLevel.PRIVATE
+group = 'dev.roanh.osuskinchecker'
+ext.artifact = 'osuskinchecker'
+shadowJar.archiveName = 'SkinChecker-v' + version + '.jar'
+application.mainClassName = 'dev.roanh.osuskinchecker.SkinChecker'
+
+spotbugs{
+	showProgress = true
+	effort = 'max'
+	reportLevel = 'low'
+	excludeFilter = file("$rootDir/exclude.xml")
+}
+
+tasks.withType(com.github.spotbugs.snom.SpotBugsTask){
+	reports{
+		html{
+			required = true
+			outputLocation = file("$buildDir/reports/spotbugs/main/spotbugs.html")
+			stylesheet = 'fancy-hist.xsl'
+		}
+	}
+}
+
+publishing{
+	publications{
+		mavenJava(MavenPublication){
+			from components.java
+			artifactId = project.artifact
+
+			pom{
+				name = project.eclipse.project.name
+				description = 'Simple program to check for missing files in an osu! skin.'
+				url = 'https://github.com/RoanH/osuSkinChecker'
+				licenses{
+					license{
+						name = 'GNU General Public License v3.0'
+						url = 'https://www.gnu.org/licenses/gpl-3.0.txt'
+					}
+				}
+				developers{
+					developer{
+						id = 'RoanH'
+						name = 'Roan Hofland'
+						email = 'roan@roanh.dev'
+					}
+				}
+				scm{
+					connection = 'scm:git:git@github.com:RoanH/osuSkinChecker.git'
+					developerConnection = 'scm:git:git@git.roanh.dev:roan/osuSkinChecker.git'
+					url = 'https://github.com/RoanH/osuSkinChecker'
+				}
+			}
+		}
+	}
+}
+
+shadowJar{
+	into("META-INF/maven/$project.group/$project.artifact"){
+		from{
+			generatePomFileForMavenJavaPublication
+		}
+		rename ".*", "pom.xml"
+	}
 }
 
 launch4j{
@@ -51,9 +110,10 @@ launch4j{
 	icon = "${projectDir}/skinchecker.ico"
 	jreMinVersion = project.sourceCompatibility
 	bundledJrePath = "%JAVA_HOME%"
-	outfile = project.name.substring(3) + '-' + project.version + '.exe'
-	fileDescription = project.name
-	version = project.version.substring(1)
-	textVersion = project.version.substring(1)
+	outfile = 'SkinChecker-v' + project.version + '.exe'
+	fileDescription = "SkinChecker"
+	productName = rootProject.name
+	version = project.version
+	textVersion = project.version
 	copyright = "Roan Hofland"
 }

@@ -3,10 +3,11 @@ package dev.roanh.osuskinchecker.ini;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -342,7 +343,7 @@ public class SkinIni{
 		});
 		
 		String line = null;
-		try(BufferedReader reader = new BufferedReader(new InputStreamReader(Files.newInputStream(file)))){
+		try(BufferedReader reader = new BufferedReader(new InputStreamReader(Files.newInputStream(file), StandardCharsets.UTF_8))){
 			while((line = reader.readLine()) != null){
 				line = line.replaceFirst("^[\t ]*", "");
 				if(header.matcher(line.trim()).matches()){
@@ -425,7 +426,7 @@ public class SkinIni{
 					section.data.add(setting);
 				}
 			}	
-		}catch(Exception e){
+		}catch(Throwable e){
 			e.printStackTrace();
 			throw new IllegalArgumentException("Error on line: " + line + "\nCause: " + e.getMessage(), e);
 		}
@@ -461,7 +462,7 @@ public class SkinIni{
 	 * @throws IOException When an IO exception occurs.
 	 */
 	public void writeIni(Path file) throws IOException{
-		try(PrintWriter writer = new PrintWriter(Files.newOutputStream(file, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE))){
+		try(PrintWriter writer = new PrintWriter(new OutputStreamWriter(Files.newOutputStream(file), StandardCharsets.UTF_8))){
 			for(Section section : data){
 				if(section.name != null){
 					writer.println(section.name);
@@ -1373,10 +1374,6 @@ public class SkinIni{
 		 */
 		protected static final class Column{
 			/**
-			 * The key number these column setting are for
-			 */
-			protected final int key;
-			/**
 			 * [Mania]<br>
 			 * <code>KeyFlipWhenUpsideDown#: &lt; 0:1 &gt;</code>
 			 */
@@ -1454,15 +1451,11 @@ public class SkinIni{
 			protected final Setting<String> noteImageT;
 			
 			/**
-			 * Constructs a new column
-			 * setting object for the
-			 * given key number
-			 * @param key The column
-			 *        these setting are for
+			 * Constructs a new column setting object
+			 * for the given key number.
+			 * @param key The column these setting are for.
 			 */
 			private Column(int key){
-				this.key = key;
-				
 				colour = new Setting<Colour>("Colour" + key, new Colour(0, 0, 0, 255));
 				colourLight = new Setting<Colour>("ColourLight" + key, new Colour(255, 255, 255));
 				

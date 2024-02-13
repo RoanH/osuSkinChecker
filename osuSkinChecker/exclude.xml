@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter xmlns="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://github.com/spotbugs/filter/3.0.0 https://raw.githubusercontent.com/spotbugs/spotbugs/3.1.0/spotbugs/etc/findbugsfilter.xsd">
+  <!-- https://spotbugs.readthedocs.io/en/stable/filter.html -->
+
+  <Match>
+    <Or>
+      <Bug pattern="EI_EXPOSE_REP"/>
+      <Bug pattern="EI_EXPOSE_REP2"/>
+      <Bug pattern="EI_EXPOSE_STATIC_REP2"/>
+      <Bug pattern="MS_CANNOT_BE_FINAL"/>
+      <Bug pattern="MS_EXPOSE_REP"/>
+      <Bug pattern="MS_PKGPROTECT"/>
+    </Or>
+  </Match>
+  
+  <Match>
+    <!-- For the SkinIniTab -->
+    <Bug pattern="CI_CONFUSED_INHERITANCE"/>
+    <Or>
+      <Class name="dev.roanh.osuskinchecker.ini.SkinIni$ManiaIni"/>
+      <Class name="dev.roanh.osuskinchecker.ini.SkinIni$ManiaIni$Column"/>
+    </Or>
+  </Match>
+  
+  <Match>
+    <!-- This is fine and one of the more readable methods to do this -->
+    <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"/>
+    <Class name="dev.roanh.osuskinchecker.ini.SkinIni"/>
+    <Field name="singleUpdateMode"/>
+  </Match>
+  
+  <Match>
+    <!-- Intentional -->
+    <Bug pattern="SF_SWITCH_FALLTHROUGH"/>
+    <Class name="dev.roanh.osuskinchecker.ImageFilter"/>
+  </Match>
+  
+  <Match>
+    <!-- Not intended to be serialisable -->
+    <Bug pattern="SE_BAD_FIELD"/>
+    <Or>
+      <Class name="dev.roanh.osuskinchecker.ini.SkinIniTab$ColorEditor"/>
+      <Class name="dev.roanh.osuskinchecker.ini.SkinIniTab$ColorSelector"/>
+    </Or>
+  </Match>
+  
+  <Match>
+    <!-- Not ideal, but very error prone to change while it works fine right now -->
+    <Bug pattern="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR"/>
+    <Field name="mania"/>
+    <Class name="dev.roanh.osuskinchecker.ini.Section"/>
+  </Match>
+  
+  <Match>
+    <!-- Existing files should have a filename -->
+    <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    <Or>
+      <Method name="check"/>
+      <Method name="isEmptyImage"/>
+      <Method name="checkAllFiles"/>
+      <Method name="checkSkin"/>
+    </Or>
+    <Or>
+      <Class name="dev.roanh.osuskinchecker.Filter"/>
+      <Class name="dev.roanh.osuskinchecker.ImageMeta"/>
+      <Class name="dev.roanh.osuskinchecker.SkinChecker"/>
+    </Or>
+  </Match>
+  
+  <Match>
+    <!-- Regular files should have a parent -->
+    <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    <Class name="dev.roanh.osuskinchecker.SkinChecker"/>
+  </Match>
+  
+  <Match>
+    <!-- Not ideal, but these are set in the read method which is basically the constructor -->
+    <Bug pattern="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR"/>
+    <Class name="dev.roanh.osuskinchecker.ini.SkinIni"/>
+    <Or>
+      <Field name="data"/>
+      <Field name="ini"/>
+    </Or>
+  </Match>
+
+</FindBugsFilter>

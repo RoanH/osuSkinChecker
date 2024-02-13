@@ -19,7 +19,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -201,6 +203,7 @@ public class SkinChecker{
 	/**
 	 * Builds the GUI
 	 */
+	@SuppressWarnings("unused")
 	public static void buildGUI(){
 		try{
 			Image icon = ImageIO.read(ClassLoader.getSystemResource("skinchecker.png"));
@@ -340,8 +343,7 @@ public class SkinChecker{
 					return;
 				}
 				
-				try{
-					final PrintWriter writer = new PrintWriter(Files.newOutputStream(dest, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE, StandardOpenOption.CREATE));
+				try(PrintWriter writer = new PrintWriter(new OutputStreamWriter(Files.newOutputStream(dest), StandardCharsets.UTF_8))){
 					writer.println("========== Images ==========");
 					for(Entry<String, Map<String, List<Filter<?>>>> m : imagesMap.entrySet()){
 						for(Entry<String, List<Filter<?>>> ml : m.getValue().entrySet()){
@@ -364,12 +366,10 @@ public class SkinChecker{
 						}
 					}
 					writer.flush();
-					writer.close();
 					Dialog.showMessageDialog("File list succesfully exported");
 				}catch(IOException e1){
 					Dialog.showErrorDialog("An error occured: " + e1.getMessage());
 				}
-
 			}else{
 				Dialog.showErrorDialog("No skin currently selected!");
 			}
@@ -533,7 +533,7 @@ public class SkinChecker{
 				}
 				Files.write(err, errl, StandardOpenOption.CREATE_NEW);
 				Dialog.showErrorDialog("An error occurred while reading the skin.ini\nThe error was saved to: " + err.toAbsolutePath().toString() + "\n" + e.getMessage());
-			}catch(Exception e1){
+			}catch(Throwable e1){
 				Dialog.showErrorDialog("An internal error occurred!");
 			}
 			return;
@@ -614,14 +614,13 @@ public class SkinChecker{
 	 */
 	private static void mapToTabs(JTabbedPane tabs, Map<String, Map<String, List<Filter<?>>>> map){
 		tabs.removeAll();
-		List<Filter<?>> all = new ArrayList<Filter<?>>(filters.size());
 		for(Entry<String, Map<String, List<Filter<?>>>> entry : map.entrySet()){
 			JTabbedPane inner = new JTabbedPane();
 			if(entry.getKey().equals("Mania")){
 				//The mania tab is special and splits the sub items with an extra layer of tabs
 				Map<String, JTabbedPane> keys = new HashMap<String, JTabbedPane>();
 				for(int i = 1; i <= 18; i++){
-					if(i < 10 || (i >= 10 && i % 2 == 0)){
+					if(i < 10 || i % 2 == 0){
 						JTabbedPane pane = new JTabbedPane();
 						inner.addTab(i + "K", pane);
 						keys.put(i + "K", pane);
@@ -634,7 +633,6 @@ public class SkinChecker{
 				}
 			}else{
 				for(Entry<String, List<Filter<?>>> e : entry.getValue().entrySet()){
-					all.addAll(e.getValue());
 					inner.add(e.getKey(), new JScrollPane(getTableData(e.getValue())));
 				}
 			}
@@ -753,26 +751,28 @@ public class SkinChecker{
 	 */
 	private static Map<String, List<Filter<?>>> readDataFile(String name, boolean isSound) throws IOException{
 		Map<String, List<Filter<?>>> data = new LinkedHashMap<String, List<Filter<?>>>();
-		BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(name)));
-		List<Filter<?>> writing = null;
-		String line;
-		while((line = reader.readLine()) != null){
-			if(line.trim().isEmpty()){
-				continue;
-			}else if(line.startsWith("===>")){
-				if(writing != null){
-					filters.addAll(writing);
+		try(BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(name), StandardCharsets.UTF_8))){
+			List<Filter<?>> writing = null;
+			
+			String line;
+			while((line = reader.readLine()) != null){
+				if(line.trim().isEmpty()){
+					continue;
+				}else if(line.startsWith("===>")){
+					if(writing != null){
+						filters.addAll(writing);
+					}
+					writing = new ArrayList<Filter<?>>();
+					data.put(line.substring(4).trim(), writing);
+				}else{
+					String[] args = line.split(" +");
+					writing.add(isSound ?  new SoundFilter(args) : new ImageFilter(args));
 				}
-				writing = new ArrayList<Filter<?>>();
-				data.put(line.substring(4).trim(), writing);
-			}else{
-				String[] args = line.split(" +");
-				writing.add(isSound ?  new SoundFilter(args) : new ImageFilter(args));
 			}
+			
+			filters.addAll(writing);
+			return data;
 		}
-		filters.addAll(writing);
-		reader.close();
-		return data;
 	}
 	
 	/**

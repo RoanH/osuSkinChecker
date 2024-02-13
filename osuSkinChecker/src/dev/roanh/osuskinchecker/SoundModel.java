@@ -43,15 +43,11 @@ public class SoundModel extends Model{
 
 	@Override
 	public Object getValueAt(int row, int col){
-		try{
-			switch(col){
-			case 0:
-				return view.get(row);
-			case 1:
-				return view.get(row).hasMatch() ? "Yes" : "No";
-			}
-		}catch(Exception e){
-			return "Error";
+		switch(col){
+		case 0:
+			return view.get(row);
+		case 1:
+			return view.get(row).hasMatch() ? "Yes" : "No";
 		}
 		return null;
 	}

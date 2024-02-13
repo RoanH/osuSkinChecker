@@ -63,8 +63,13 @@ public class SplitLayout implements LayoutManager2{
 
 	@Override
 	public void layoutContainer(Container parent){
-		first.setBounds(0, 0, (int)((parent.getWidth() / 3.0) * 2.0), parent.getHeight());
-		second.setBounds((int)((parent.getWidth() / 3.0) * 2.0), 0, (int)(parent.getWidth() / 3.0), parent.getHeight());
+		if(first != null){
+			first.setBounds(0, 0, (int)((parent.getWidth() / 3.0) * 2.0), parent.getHeight());
+		}
+		
+		if(second != null){
+			second.setBounds((int)((parent.getWidth() / 3.0) * 2.0), 0, (int)(parent.getWidth() / 3.0), parent.getHeight());
+		}
 	}
 
 	@Override
